@@ -1,0 +1,5 @@
+{
+  "namespace": "customModifiersInMelvor",
+  "icon": "assets/logo.png",
+  "setup": "setup.mjs"
+}

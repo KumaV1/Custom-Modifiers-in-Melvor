@@ -1,0 +1,9 @@
+.git/**
+.vs/**
+node_modules
+packed
+dist
+package
+build
+package-lock.json
+_modIoImages
