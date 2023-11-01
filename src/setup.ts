@@ -4,9 +4,11 @@ import { Constants } from './Constants';
 import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
 import { MonsterTypeMappingManager } from './modifiers/MonsterTypeMappingManager';
 import { languages } from './languages'
+import { MonsterTypeOverview } from './components/MonsterTypeOverview'
 
 // Data
 // Game data for registration
+import ModData from '../data/data.json'
 
 // Images
 // #region Image imports
@@ -14,10 +16,14 @@ import '../assets/logo.png'
 // #endregion
 
 export async function setup(ctx: Modding.ModContext) {
+    // Register our GameData    
+    await ctx.gameData.addPackage(ModData);
+
     // Register custom modifier logic patches and localized texts
     initCustomModifiers(ctx);
     initLanguage(ctx);
     initApiEndpoints(ctx);
+    initOverviewContainer(ctx);
 }
 
 /**
@@ -70,4 +76,21 @@ function initLanguage(ctx: Modding.ModContext) {
             loadedLangJson[`${Constants.MOD_NAMESPACE}_${key}`] = value;
         }
     }
+}
+
+/**
+ * Initializes the container that is then accessed through an entry in the sidebar
+ * @param ctx
+ */
+function initOverviewContainer(ctx: Modding.ModContext) {
+    // Because we're loading our templates.min.html file via the manifest.json,
+    // the templates aren't available until after the setup() function runs
+    ctx.onInterfaceReady(() => {
+        // @ts-ignore: The container is guaranteed to exist
+        const contentContainerElement: Element = document.getElementById('main-container');
+
+        // Add template to container
+        // Create overview by using component and template definitions
+        ui.create(MonsterTypeOverview(), contentContainerElement);
+    });
 }

@@ -74,21 +74,21 @@ export class MonsterTypeMappingManager {
 
 	/**
 	 * Checks whether the given enemy is defined to be of the given type
-	 * @param enemy
+	 * @param monster
 	 * @param type
 	 */
-	public static enemyIsOfType(enemy: Enemy, type: MonsterType): boolean {
-		if (!enemy) {
+	public static monsterIsOfType(monster: Monster | undefined, type: MonsterType): boolean {
+		if (!monster) {
 			return false;
         }
 
 		switch (type) {
 			case MonsterType.Human:
-				return MonsterTypeMappingManager._humans.some(id => id === enemy.monster?.id)
+				return MonsterTypeMappingManager._humans.some(id => id === monster.id)
 			case MonsterType.Dragon:
-				return MonsterTypeMappingManager._dragons.some(id => id === enemy.monster?.id)
+				return MonsterTypeMappingManager._dragons.some(id => id === monster.id)
 			case MonsterType.Undead:
-				return MonsterTypeMappingManager._undeads.some(id => id === enemy.monster?.id)
+				return MonsterTypeMappingManager._undeads.some(id => id === monster.id)
 			default:
 				return false;
 		}

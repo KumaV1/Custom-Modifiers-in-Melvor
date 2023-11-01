@@ -67,9 +67,9 @@ export class CustomModifiersManager {
 		 * Remark: We do not have to patch this property onto the player, as not setting it will just trigger a "falsey" match, resulting in the same outcome
 		 */
 		this.context.patch(Enemy, "setStatsFromMonster").after(function (monster: any): void {
-			this.isHuman = MonsterTypeMappingManager.enemyIsOfType(this, MonsterType.Human);
-			this.isDragon = MonsterTypeMappingManager.enemyIsOfType(this, MonsterType.Dragon);
-			this.isUndead = MonsterTypeMappingManager.enemyIsOfType(this, MonsterType.Undead);
+			this.isHuman = MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Human);
+			this.isDragon = MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Dragon);
+			this.isUndead = MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Undead);
 		});
 
 		/**

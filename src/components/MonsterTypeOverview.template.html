@@ -1,0 +1,40 @@
+<template id="custom-Modifiers-in-Melvor__monster-type-overview-container-template">
+    <div class="row gutters-tiny dow-deck" id="custom-Modifiers-in-Melvor__monster-type-overview-container">
+        <div class="col-12">
+            <div class="block block-rounded block-content block-content-full">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="font-w600 mb-2 text-primary text-center">Humans (TRANSLATE ME)</h2>
+                        <div class="row">
+                            <template v-for="monster in humans">
+                                <img class="p-2 combat-enemy-img-sm"
+                                     v-bind:title="monster.name"
+                                     v-bind:src="monster.media">
+                            </template>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <h2 class="font-w600 mb-2 text-primary text-center">Dragons (TRANSLATE ME)</h2>
+                        <div class="row">
+                            <template v-for="monster in dragons">
+                                <img class="p-2 combat-enemy-img-sm"
+                                     v-bind:title="monster.name"
+                                     v-bind:src="monster.media">
+                            </template>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <h2 class="font-w600 mb-2 text-primary text-center">Undead (TRANSLATE ME)</h2>
+                        <div class="row">
+                            <template v-for="monster in undead">
+                                <img class="p-2 combat-enemy-img-sm"
+                                     v-bind:title="monster.name"
+                                     v-bind:src="monster.media">
+                            </template>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
