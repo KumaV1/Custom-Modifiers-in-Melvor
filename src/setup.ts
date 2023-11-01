@@ -27,7 +27,9 @@ export async function setup(ctx: Modding.ModContext) {
  */
 function initApiEndpoints(ctx: Modding.ModContext) {
     ctx.api({
-        addDragons: (monsterIds: string[]) => MonsterTypeMappingManager.addDragons(monsterIds)
+        addHumans: (monsterIds: string[]) => MonsterTypeMappingManager.addHumans(monsterIds),
+        addDragons: (monsterIds: string[]) => MonsterTypeMappingManager.addDragons(monsterIds),
+        addUndeads: (monsterIds: string[]) => MonsterTypeMappingManager.addUndeads(monsterIds)
     });
 }
 

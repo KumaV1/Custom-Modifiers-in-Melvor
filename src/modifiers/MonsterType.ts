@@ -1,3 +1,5 @@
 export enum MonsterType {
-    Dragon = "dragon"
+    Human = "human",
+    Dragon = "dragon",
+    Undead = "undead"
 }
