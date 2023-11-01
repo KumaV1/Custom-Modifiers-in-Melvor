@@ -24,3 +24,9 @@ mod.api.customModifiersInMelvor.addDragons(["MOD_NAMESPACE:MONSTER_ID", "MOD_NAM
 ```
 
 **NOTE**: In the future, there will be a "Monster typing overview" in the game, that will make it easy for users and developers alike to see exactly which types are currently allocated to which monsters.
+
+#### "[...] trait applied" modifiers
+The idea for those mainly stems from temporary making type specific modifiers effect the enemy, where the enemy isn't inherently of that type.
+
+#### "From [...]" modifiers
+To throw an existing idea in here, as an equivalent to "[...] against type", one could also add the same modifiers as "[...] from type".
