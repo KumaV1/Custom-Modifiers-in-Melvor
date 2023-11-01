@@ -55,7 +55,7 @@ export class MonsterTypeMappingManager {
 		"melvorTotH:TwinSeaDragonSerpent"
 	];
 
-	private static _undeads: string[] = [
+	private static _undead: string[] = [
 		"melvorD:PirateCaptain",
 		"melvorD:ZombieHand",
 		"melvorD:Zombie",
@@ -88,7 +88,7 @@ export class MonsterTypeMappingManager {
 			case MonsterType.Dragon:
 				return MonsterTypeMappingManager._dragons.some(id => id === monster.id)
 			case MonsterType.Undead:
-				return MonsterTypeMappingManager._undeads.some(id => id === monster.id)
+				return MonsterTypeMappingManager._undead.some(id => id === monster.id)
 			default:
 				return false;
 		}
@@ -108,6 +108,10 @@ export class MonsterTypeMappingManager {
         }
 	}
 
+	public static getHumans() {
+		return MonsterTypeMappingManager._humans;
+	}
+
 	/**
 	 * Add monster to the list of dragons
 	 * @param monsterIds
@@ -122,6 +126,10 @@ export class MonsterTypeMappingManager {
 		}
 	}
 
+	public static getDragons() {
+		return MonsterTypeMappingManager._dragons;
+	}
+
 	/**
 	 * Add monster to the list of undeads
 	 * @param monsterIds
@@ -132,7 +140,11 @@ export class MonsterTypeMappingManager {
 		}
 
 		for (var i = 0; i < monsterIds.length; i++) {
-			MonsterTypeMappingManager._undeads.push(monsterIds[i]);
+			MonsterTypeMappingManager._undead.push(monsterIds[i]);
 		}
+	}
+
+	public static getUndead() {
+		return MonsterTypeMappingManager._undead;
 	}
 }

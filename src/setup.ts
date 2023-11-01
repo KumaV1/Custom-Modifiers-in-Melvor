@@ -3,7 +3,8 @@
 import { Constants } from './Constants';
 import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
 import { MonsterTypeMappingManager } from './modifiers/MonsterTypeMappingManager';
-import { languages } from './languages'
+import { Translation } from './translation/Translation';
+import { languages } from './translation/languages'
 import { MonsterTypeOverview } from './components/MonsterTypeOverview'
 
 // Data
@@ -20,9 +21,10 @@ export async function setup(ctx: Modding.ModContext) {
     await ctx.gameData.addPackage(ModData);
 
     // Register custom modifier logic patches and localized texts
-    initCustomModifiers(ctx);
-    initLanguage(ctx);
     initApiEndpoints(ctx);
+    initCustomModifiers(ctx);
+    initTranslation(ctx);
+    initLanguage(ctx);
     initOverviewContainer(ctx);
 }
 
@@ -33,9 +35,15 @@ export async function setup(ctx: Modding.ModContext) {
  */
 function initApiEndpoints(ctx: Modding.ModContext) {
     ctx.api({
+        // Add types to your own monsters
         addHumans: (monsterIds: string[]) => MonsterTypeMappingManager.addHumans(monsterIds),
         addDragons: (monsterIds: string[]) => MonsterTypeMappingManager.addDragons(monsterIds),
-        addUndeads: (monsterIds: string[]) => MonsterTypeMappingManager.addUndeads(monsterIds)
+        addUndeads: (monsterIds: string[]) => MonsterTypeMappingManager.addUndeads(monsterIds),
+
+        // Get current typing list, might be handy for debugging, although there is the type overviewe now
+        getHumans: () => MonsterTypeMappingManager.getHumans(),
+        getDragons: () => MonsterTypeMappingManager.getDragons(),
+        getUndead: () => MonsterTypeMappingManager.getUndead(),
     });
 }
 
@@ -48,6 +56,16 @@ function initCustomModifiers(ctx: Modding.ModContext) {
 
     customModifiers.registerModifiers();
     customModifiers.patchMethods();
+}
+
+/**
+ * Patches multiple name/description getters, so they check our custom injected translations
+ * @param ctx
+ */
+function initTranslation(ctx: Modding.ModContext) {
+    const translation = new Translation(ctx);
+
+    translation.init();
 }
 
 /**
@@ -64,7 +82,8 @@ function initLanguage(ctx: Modding.ModContext) {
     // Melvor includes functionality to automatically retrieve translations by category (see "LanguageCategory" in the schema)
     // and entity id - for those calls, a mod prefix isn't necessary, which is why we create this const array
     const keysToNotPrefix: string[] = [
-        'MODIFIER_DATA'
+        'MODIFIER_DATA',
+        'PAGE_NAME'
     ];
 
     // Based on how translation is retrieved, 
