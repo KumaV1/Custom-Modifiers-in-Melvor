@@ -1,0 +1,105 @@
+{
+  "$schema": "https://melvoridle.com/assets/schema/gameData.json",
+  "namespace": "customModifiersInMelvor",
+  "data": {
+    "monsters": [
+      {
+        "id": "Test_Monster",
+        "name": "Test Monster",
+        "media": "https://cdn.melvor.net/core/v018/assets/media/skills/summoning/summoning.svg",
+        "levels": {
+          "Attack": 100,
+          "Defence": 1,
+          "Hitpoints": 999999,
+          "Magic": 100,
+          "Ranged": 100,
+          "Strength": 100
+        },
+        "equipmentStats": [
+          {
+            "key": "attackSpeed",
+            "value": 2400
+          }
+        ],
+        "ignoreCompletion": true,
+        "attackType": "melee",
+        "specialAttacks": [ "customModifiersInMelvor:Test_Special_Attack" ],
+        "passives": [ "customModifiersInMelvor:Test_Passive" ],
+        "lootChance": 100,
+        "lootTable": [
+          {
+            "itemID": "melvorF:Melee_Accuracy_Potion_I",
+            "minQuantity": 1,
+            "maxQuantity": 1,
+            "weight": 1
+          }
+        ],
+        "gpDrops": {
+          "min": 1,
+          "max": 1
+        },
+        "canSlayer": true,
+        "isBoss": true,
+        "selectedSpell": "melvorD:WindStrike",
+        "description": "A monster made for testing"
+      }
+    ],
+    "combatAreas": [
+      {
+        "id": "Test_Area",
+        "name": "Test area",
+        "media": "https://cdn.melvor.net/core/v018/assets/media/skills/summoning/summoning.svg",
+        "difficulty": [
+          2
+        ],
+        "monsterIDs": [
+          "customModifiersInMelvor:Test_Monster"
+        ],
+        "entryRequirements": []
+      }
+    ],
+    "combatAreaDisplayOrder": [
+      {
+        "insertAt": "End",
+        "ids": [
+          "customModifiersInMelvor:Test_Area"
+        ]
+      }
+    ],
+    "combatPassives": [
+      {
+        "id": "Test_Passive",
+        "name": "Test Passive",
+        "modifiers": {
+          "increasedMaxHitPercentAgainstDragons": 10
+        }
+      }
+    ],
+    "attacks": [
+      {
+        "id": "Test_Special_Attack",
+        "name": "Test special attack",
+        "defaultChance": 100,
+        "damage": [
+          {
+            "damageType": "Normal",
+            "amplitude": 100
+          }
+        ],
+        "prehitEffects": [],
+        "onhitEffects": [],
+        "cantMiss": true,
+        "attackCount": 1,
+        "attackInterval": 50,
+        "lifesteal": 0,
+        "description": "Deals ${attackDamageMaxValue0}% of your normal damage (cannot miss) and does whatever you configured for testing",
+        "descriptionGenerator": "Deals <damage> and <hitEffect>",
+        "attackTypes": [
+          "melee",
+          "ranged",
+          "magic"
+        ]
+      }
+    ]
+  }
+}

@@ -38,7 +38,8 @@ declare global {
 	interface Character {
 		isHuman: boolean,
 		isDragon: boolean,
-		isUndead: boolean
+		isUndead: boolean,
+		isBoss: boolean // as player doesn't have this property (understandably); just intellisense and compiler error prevention as mentioned before
 	}
 }
 
@@ -63,13 +64,39 @@ export class CustomModifiersManager {
 	 */
 	public patchMethods() {
 		/**
+		 * This method is called during initialization of both player and enemies, as quick safety measure for a "clean state" before setting everything up. (to avoid undefined/null/nan)
+		 * However, as we do not actually add our properties to Melvor's definition of the class, the dynamic build up doesn't include our properties,
+		 * so we handle those ourselves. Should in theory take care of all instances, so including cases such as area modifiers
+		 */
+		this.context.patch(CombatModifiers, "reset").after(function () {
+			this.humanTraitApplied ??= 0;
+			this.increasedMaxHitPercentAgainstHumans ??= 0;
+			this.decreasedMaxHitPercentAgainstHumans ??= 0;
+			this.dragonTraitApplied ??= 0;
+			this.increasedMaxHitPercentAgainstDragons ??= 0;
+			this.decreasedMaxHitPercentAgainstDragons ??= 0;
+			this.undeadTraitApplied ??= 0;
+			this.increasedMaxHitPercentAgainstUndead ??= 0;
+			this.decreasedMaxHitPercentAgainstUndead ??= 0;
+			this.increasedMaxHitPercentAgainstBosses ??= 0;
+			this.decreasedMaxHitPercentAgainstBosses ??= 0;
+		});
+
+		/**
 		 * Apply type flags to the enemy on spawn, so modifier checks don't have to check the array constantly.
 		 * Remark: We do not have to patch this property onto the player, as not setting it will just trigger a "falsey" match, resulting in the same outcome
 		 */
 		this.context.patch(Enemy, "setStatsFromMonster").after(function (monster: any): void {
-			this.isHuman = MonsterTypeMappingManager.enemyIsOfType(this, MonsterType.Human);
-			this.isDragon = MonsterTypeMappingManager.enemyIsOfType(this, MonsterType.Dragon);
-			this.isUndead = MonsterTypeMappingManager.enemyIsOfType(this, MonsterType.Undead);
+			this.isHuman = MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Human);
+			this.isDragon = MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Dragon);
+			this.isUndead = MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Undead);
+		});
+
+		/**
+		 * Well, the player is a human, right?
+		 */
+		this.context.patch(Player, "initializeForCombat").after(function () {
+			this.isHuman = true;
 		});
 
 		/**
@@ -92,16 +119,16 @@ export class CustomModifiersManager {
 	 */
 	private static customGetMaxHitModifier(entity: Character, maxHitModifier: number): number {
 		if (entity.manager.fightInProgress) {
-			if (entity.manager.enemy.isHuman || entity.modifiers.humanTraitApplied > 0) {
+			if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
 				maxHitModifier += entity.modifiers.increasedMaxHitPercentAgainstHumans - entity.modifiers.decreasedMaxHitPercentAgainstHumans;
 			}
-			if (entity.manager.enemy.isDragon || entity.modifiers.dragonTraitApplied > 0) {
+			if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
 				maxHitModifier += entity.modifiers.increasedMaxHitPercentAgainstDragons - entity.modifiers.decreasedMaxHitPercentAgainstDragons;
 			}
-			if (entity.manager.enemy.isUndead || entity.modifiers.undeadTraitApplied > 0) {
+			if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
 				maxHitModifier += entity.modifiers.increasedMaxHitPercentAgainstUndead - entity.modifiers.decreasedMaxHitPercentAgainstUndead;
 			}
-			if (entity.manager.enemy.isBoss) {
+			if (entity.target.isBoss) {
 				maxHitModifier += entity.modifiers.increasedMaxHitPercentAgainstBosses - entity.modifiers.decreasedMaxHitPercentAgainstBosses;
 			}
 		}

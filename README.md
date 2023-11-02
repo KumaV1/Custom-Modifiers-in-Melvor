@@ -5,7 +5,7 @@ This mod implements a couple of new modifiers to melvor.
 You don't have to care about this mod, unless another mod specifically defines this mod as a dependency. In that case, please make sure that this mod is loaded before any mods that uses this mod.
 
 ## Developers
-Feel free to have a look at the `src/modifiers/CombatModifiersManager.ts` file, to have a look at what modifiers you can implement. (TODO: Modifiers will probably be moved to their own file)
+Feel free to have a look at one of the files in `src/translation/languages`, which includes the effects of all modifiers
 
 Of course, if you use any of these modifiers, remember to flag this mod as a dependency for your mod.
 
@@ -20,10 +20,12 @@ Basically, for each type, there is a static array of monster ids, that will be c
 If you add new monsters in your mod, then you will have to specifically register the types to the monsters you implement, in order for corresponding modifiers to take effect. 
 To do so, you will have to call the following method(s) during your setup.
 ```js
+mod.api.customModifiersInMelvor.addHumans(["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
 mod.api.customModifiersInMelvor.addDragons(["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
+mod.api.customModifiersInMelvor.addUndead(["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
 ```
 
-**NOTE**: In the future, there will be a "Monster typing overview" in the game, that will make it easy for users and developers alike to see exactly which types are currently allocated to which monsters.
+**NOTE**: You should use the in-game "monster types" entry in the modding-section of the sidebar, to verify that your monsters have been typed correctly.
 
 #### "[...] trait applied" modifiers
 The idea for those mainly stems from temporary making type specific modifiers effect the enemy, where the enemy isn't inherently of that type.

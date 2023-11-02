@@ -1,0 +1,21 @@
+{
+  "$schema": "https://melvoridle.com/assets/schema/gameData.json",
+  "namespace": "customModifiersInMelvor",
+  "data": {
+    "pages": [
+      {
+        "id": "Monster_Types_Overview",
+        "customName": "Monster types",
+        "media": "https://cdn.melvor.net/core/v018/assets/media/skills/combat/combat.svg",
+        "containerID": "custom-Modifiers-in-Melvor__monster-type-overview-container",
+        "headerBgClass": "bg-statistics",
+        "hasGameGuide": false,
+        "canBeDefault": false,
+        "sidebarItem": {
+          "categoryID": "Modding",
+          "icon": "https://cdn.melvor.net/core/v018/assets/media/skills/combat/combat.svg"
+        }
+      }
+    ]
+  }
+}
