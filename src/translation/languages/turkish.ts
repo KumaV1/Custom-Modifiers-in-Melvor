@@ -1,13 +1,12 @@
 /** CURRENTLY NO TRANSLATION AVAILABLE - FEEL FREE TO UPDATE THIS FILE */
 export const tr = {
+    // ### Monster type overview
     PAGE_NAME_Monster_Types_Overview: "Monster types",
 
-    // ### Monster type translation for type overview page
     Monster_Type_Human_Plural: "Humans",
     Monster_Type_Dragon_Plural: "Dragons",
     Monster_Type_Undead_Plural: "Undead",
 
-    // ### Type overview page remarks
     Monster_Type_Overview_Remarks_Prefix: "Please be aware of the following points:",
     Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor does not inherintly include type definitions. Instead, they have been added by the 'Custom Modifiers in Melvor' mod",
     Monster_Type_Overview_Remarks_Displayed_Type_Allocation: "This display shows all defined type allocations. If a monster isn't displayed in a section, then they are not typed as such",
@@ -15,13 +14,26 @@ export const tr = {
     Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "For any monsters added through other mods, said mods have to set type definitions themselves for those monsters. If a mod doesn't have this mod as dependency, it generally means that none of their monsters are affected by this type definition",
 
     // ### Modifiers
+    // #### Spawn modifiers (TODO: Possibly make equivalent increased/decreased chance to self-apply?)
+    MODIFIER_DATA_increasedChanceToApplySlowOnSpawn: "+${value}% chance to apply 25% increased attack interval for three turns to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplySlowOnSpawn: "-${value}% chance to apply 25% increased attack interval for three turns to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplyStunOnSpawn: "+${value}% chance to apply stun for one turn to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplyStunOnSpawn: "-${value}% chance to apply stun for one turn to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplyPoisonOnSpawn: "+${value}% chance to apply poison for one turn to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplyPoisonOnSpawn: "-${value}% chance to apply poison for one turn to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplyDeadlyPoisonOnSpawn: "+${value}% chance to apply deadly poison for one turn to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplyDeadlyPoisonOnSpawn: "-${value}% chance to apply deadly poison for one turn to the Target on spawn or revive",
+
+    // #### Trait application modifiers (aka "treated as type")
     MODIFIER_DATA_humanTraitApplied: "Marks the affected as humans",
+    MODIFIER_DATA_dragonTraitApplied: "Marks the affected as dragon",
+    MODIFIER_DATA_undeadTraitApplied: "Marks the affected as undead",
+
+    // #### Type modifiers
     MODIFIER_DATA_increasedMaxHitPercentAgainstHumans: "+${value}% Max Hit when fighting humans",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstHumans: "-${value}% Max Hit when fighting humans",
-    MODIFIER_DATA_dragonTraitApplied: "Marks the affected as dragon",
     MODIFIER_DATA_increasedMaxHitPercentAgainstDragons: "+${value}% Max Hit when fighting dragons",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstDragons: "-${value}% Max Hit when fighting dragons",
-    MODIFIER_DATA_undeadTraitApplied: "Marks the affected as undead",
     MODIFIER_DATA_increasedMaxHitPercentAgainstUndead: "+${value}% Max Hit when fighting undead",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstUndead: "-${value}% Max Hit when fighting undead",
     MODIFIER_DATA_increasedMaxHitPercentAgainstBosses: "+${value}% Max Hit when fighting bosses",
