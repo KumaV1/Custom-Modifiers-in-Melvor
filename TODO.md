@@ -1,4 +1,9 @@
-* Add "chance to apply X on spawn"
+# FOR DEATH MARK IMPLEMENTATION
+* Tested and is working, only issue being the non increasing modifier value (which is technically useless anyway...)
+and the description being reliant on a modifier being setup, unnecessarily :/
+
+# LATER STUFF
+
 * Maybe add "death mark" and "canTriggerDeathMark" modifiers (use "sticky" notification to communicate that execution happened)
 * Add "slayer (area) creature" and "slayer task monster (aka +x% y to slayer tasks)" as additional conditions
   * both conditions seem to currently have "increased/decreased % damage", but nothing else

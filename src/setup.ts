@@ -15,6 +15,7 @@ import ModTestData from '../data/test-data.json'
 // Images
 // #region Image imports
 import '../assets/logo.png'
+import '../assets/Death_Mark.png'
 // #endregion
 
 export async function setup(ctx: Modding.ModContext) {
@@ -85,6 +86,7 @@ function initLanguage(ctx: Modding.ModContext) {
     // Melvor includes functionality to automatically retrieve translations by category (see "LanguageCategory" in the schema)
     // and entity id - for those calls, a mod prefix isn't necessary, which is why we create this const array
     const keysToNotPrefix: string[] = [
+        'COMBAT_MISC',
         'MODIFIER_DATA',
         'PAGE_NAME'
     ];

@@ -38,4 +38,13 @@
     MODIFIER_DATA_decreasedMaxHitPercentAgainstUndead: "-${value}% Maximalschaden gegen Untote",
     MODIFIER_DATA_increasedMaxHitPercentAgainstBosses: "+${value}% Maximalschaden gegen Bosse",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstBosses: "-${value}% Maximalschaden gegen Bosse",
+
+    // #### Death mark (not to be confused with mark of death)
+    COMBAT_MISC_Death_Mark_Effect: "Todesurteil",
+    MODIFIER_DATA_deathMark: "Wenn Lebenspunkte unter ${value}/${stacks}/${stack}/${count}% (MAX ${maxStacks}% / 5,000) der maximalen Lebenspunkte fallen, werde sofort hingerichtet",
+    MODIFIER_DATA_increasedDeathMarkOnHit: "+${value} Todesurteil-Stapel, wenn ein Angriff trifft",
+    MODIFIER_DATA_increasedChanceToApplyStackOfDeathMark: "+${value}% Chance einen Stapel Todesurteil beim Gegner hinzuzufügen",
+    MODIFIER_DATA_decreasedChanceToApplyStackOfDeathMark: "-${value}% Chance einen Stapel Todesurteil beim Gegner hinzuzufügen",
+    MODIFIER_DATA_increasedDeathMarkImmunity: "+${value} Chance, der Anwendung von Todesurteil-Stapeln zu widerstehen",
+    MODIFIER_DATA_decreasedDeathMarkImmunity: "-${value} Chance, der Anwendung von Todesurteil-Stapeln zu widerstehen",
 };

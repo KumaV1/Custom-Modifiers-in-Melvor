@@ -1,5 +1,6 @@
-import { MonsterTypeMappingManager } from './MonsterTypeMappingManager'
+﻿import { MonsterTypeMappingManager } from './MonsterTypeMappingManager'
 import { MonsterType } from './MonsterType'
+import { Constants } from './Constants';
 
 /** For typescript intellisense and not throwing errors */
 declare global {
@@ -12,6 +13,12 @@ declare global {
 		decreasedChanceToApplyPoisonOnSpawn: Standard,
 		increasedChanceToApplyDeadlyPoisonOnSpawn: Standard,
 		decreasedChanceToApplyDeadlyPoisonOnSpawn: Standard,
+		deathMark: Standard,
+		increasedDeathMarkOnHit: Standard,
+		increasedChanceToApplyStackOfDeathMark: Standard,
+		decreasedChanceToApplyStackOfDeathMark: Standard,
+		increasedDeathMarkImmunity: Standard,
+		decreasedDeathMarkImmunity: Standard,
 		humanTraitApplied: Standard,
 		increasedMaxHitPercentAgainstHumans: Standard,
 		decreasedMaxHitPercentAgainstHumans: Standard,
@@ -34,6 +41,12 @@ declare global {
 		decreasedChanceToApplyPoisonOnSpawn: number,
 		increasedChanceToApplyDeadlyPoisonOnSpawn: number,
 		decreasedChanceToApplyDeadlyPoisonOnSpawn: number,
+		deathMark: number,
+		increasedDeathMarkOnHit: number,
+		increasedChanceToApplyStackOfDeathMark: number,
+		decreasedChanceToApplyStackOfDeathMark: number,
+		increasedDeathMarkImmunity: number,
+		decreasedDeathMarkImmunity: number,
 		humanTraitApplied: number,
 		increasedMaxHitPercentAgainstHumans: number,
 		decreasedMaxHitPercentAgainstHumans: number,
@@ -57,6 +70,10 @@ declare global {
 		isUndead: boolean,
 		isBoss: boolean // as player doesn't have this property (understandably); just intellisense and compiler error prevention as mentioned before
 	}
+
+	interface Game {
+		deathMarkEffect: StackingEffect
+	}
 }
 
 /**
@@ -70,6 +87,7 @@ export class CustomModifiersManager {
 	 */
 	public registerModifiers() {
 		this.registerSpawnModifiers();
+		this.registerDeathMarkModifiers();
 		this.registerTraitApplicationModifiers();
 		this.registerHumanModifiers();
 		this.registerDragonModifiers();
@@ -81,9 +99,12 @@ export class CustomModifiersManager {
 	 * Patch pre existing logic, to also take our custom modifiers into account
 	 */
 	public patchMethods() {
+		this.patchGame();
+		this.patchAddHitpoints();
 		this.patchCombatModifiersReset();
 		this.patchMonsterTypeAllocation();
 		this.patchApplyUniqueSpawnEffects();
+		this.patchApplyOnHitEffects();
 		this.patchGetMaxHitModifier();
 	}
 	
@@ -164,6 +185,66 @@ export class CustomModifiersManager {
 			description: '',
 			isSkill: false,
 			isNegative: false,
+			tags: ['combat']
+		};
+	}
+
+	/**
+	 * 
+	 */
+	private registerDeathMarkModifiers() {
+		modifierData.deathMark = {
+			get langDescription() {
+				return getLangString('MODIFIER_DATA_deathMark');
+			},
+			description: '',
+			isSkill: false,
+			isNegative: true,
+			tags: ['combat']
+		};
+		modifierData.increasedDeathMarkOnHit = {
+			get langDescription() {
+				return getLangString('MODIFIER_DATA_increasedDeathMarkOnHit');
+			},
+			description: '',
+			isSkill: false,
+			isNegative: false,
+			tags: ['combat']
+		};
+		modifierData.increasedChanceToApplyStackOfDeathMark = {
+			get langDescription() {
+				return getLangString('MODIFIER_DATA_increasedChanceToApplyStackOfDeathMark');
+			},
+			description: '',
+			isSkill: false,
+			isNegative: false,
+			tags: ['combat']
+		};
+		modifierData.decreasedChanceToApplyStackOfDeathMark = {
+			get langDescription() {
+				return getLangString('MODIFIER_DATA_decreasedChanceToApplyStackOfDeathMark');
+			},
+			description: '',
+			isSkill: false,
+			isNegative: true,
+			tags: ['combat']
+		};
+		modifierData.increasedDeathMarkImmunity = {
+			get langDescription() {
+				return getLangString('MODIFIER_DATA_increasedDeathMarkImmunity');
+			},
+			description: '',
+			isSkill: false,
+			isNegative: false,
+			tags: ['combat']
+		};
+		modifierData.decreasedDeathMarkImmunity = {
+			get langDescription() {
+				return getLangString('MODIFIER_DATA_decreasedDeathMarkImmunity');
+			},
+			description: '',
+			isSkill: false,
+			isNegative: true,
 			tags: ['combat']
 		};
 	}
@@ -301,6 +382,18 @@ export class CustomModifiersManager {
 
 	// #region Method patching
 
+	private patchGame() {
+		/**
+		 * Register custom effects as properties on the Game object (akin to e.g. "unholyMarkEffect") 
+		 */
+		this.context.patch(Game, "postDataRegistration").after(function () {
+			const effect = this.stackingEffects.getObjectByID(Constants.DEATH_MARK_EFFECT_FULL_ID);
+			if (effect) {
+				this.deathMarkEffect = effect;
+            }
+		});
+	}
+
 	/**
 	 * 
 	 */
@@ -319,6 +412,12 @@ export class CustomModifiersManager {
 			this.decreasedChanceToApplyPoisonOnSpawn ??= 0;
 			this.increasedChanceToApplyDeadlyPoisonOnSpawn ??= 0;
 			this.decreasedChanceToApplyDeadlyPoisonOnSpawn ??= 0;
+			this.deathMark ??= 0;
+			this.increasedDeathMarkOnHit ??= 0;
+			this.increasedChanceToApplyStackOfDeathMark ??= 0;
+			this.decreasedChanceToApplyStackOfDeathMark ??= 0;
+			this.increasedDeathMarkImmunity ??= 0;
+			this.decreasedDeathMarkImmunity ??= 0;
 			this.humanTraitApplied ??= 0;
 			this.increasedMaxHitPercentAgainstHumans ??= 0;
 			this.decreasedMaxHitPercentAgainstHumans ??= 0;
@@ -368,6 +467,45 @@ export class CustomModifiersManager {
 	}
 
 	/**
+	 * Whenever the amount of HP changes, check the death mark threshold.
+	 * The original function doesn't really do anything aside from changing hp, only setting some "rerender/recompute" flags,
+	 * so it's pretty much perfect
+	 */
+	private patchAddHitpoints() {
+		this.context.patch(Player, "addHitpoints").after(function () {
+			CustomModifiersManager.customPatchAddHitpoints(this);
+		});
+		this.context.patch(Enemy, "addHitpoints").after(function () {
+			CustomModifiersManager.customPatchAddHitpoints(this);
+		});
+	}	
+
+	/**
+	 * "On hit effect" means both literal "on hit modifiers" but also stuff like "roll to poison, only because you actually hit the enemy".
+	 * REMARK: We patch 'clampDamageValue' because it is only ever called in ONE location. We don't patch to modify its functionality,
+	 * we actually patch it as a means of injecting our code into the process we want to (there is no natural method to beforé/after patch).
+	 * 
+	 * More specifically, the patched method is called only when the entity's target has been rolled to hit,
+	 * which is the condition for which we want to implement some more stuff
+	 */
+	private patchApplyOnHitEffects() {
+		this.context.patch(Player, "clampDamageValue").after(function (returnedDamage) {
+			// do some custom stuff
+			CustomModifiersManager.customApplyOnHitEffects(this);
+
+			// run original stuff
+			return returnedDamage;
+		});
+		this.context.patch(Enemy, "clampDamageValue").after(function (returnedDamage) {
+			// do some custom stuff
+			CustomModifiersManager.customApplyOnHitEffects(this);
+
+			// run original stuff
+			return returnedDamage;
+		});
+	}
+
+	/**
 	 * 
 	 */
 	private patchGetMaxHitModifier() {
@@ -400,6 +538,69 @@ export class CustomModifiersManager {
 		if (rollPercentage(entity.modifiers.increasedChanceToApplyDeadlyPoisonOnSpawn - entity.modifiers.decreasedChanceToApplyDeadlyPoisonOnSpawn)) {
 			entity.applyDOT(deadlyPoisonEffect, entity.target, 0);
 		}
+	}
+
+	/**
+	 * 
+	 * @param entity
+	 */
+	private static customPatchAddHitpoints(entity: Character) {
+		// If death marks are applied and hitpoints are under certain threshold, execute character
+		if (entity.modifiers.deathMark > 0 && entity.hitpoints <= Constants.DEATH_MARK_MAX_FLAT_HP) {
+			const maxHpPercentage = (entity.hitpoints / entity.stats.maxHitpoints) * 100;
+			const effect = entity.stackingEffect.get(entity.game.deathMarkEffect);
+			if (effect === undefined) {
+				console.log("effect not found on game object");
+			}
+			else {
+				if (maxHpPercentage < effect.stacks) {
+					// If the one who got death mark triggered on them was the player, 
+					// then build a notification for them, so they know it was death mark that killed them
+					if (entity instanceof Player) {
+						const notification: NotificationData = {
+							media: "assets/media/main/error.svg",
+							quantity: 1,
+							text: "Oh dear, you have been executed",
+							isImportant: true,
+							isError: false
+						};
+						entity.game.notifications.addNotification(
+							new ErrorNotification("DEATH_MARK_TRIGGERED"),
+							notification
+						);
+                    }
+
+					// Flat out set hp to zero
+					entity.hitpoints = 0;
+				}
+            }
+
+			if (maxHpPercentage < entity.modifiers.deathMark) {
+				entity.hitpoints = 0;
+            }
+        }
+	}
+
+	/**
+	 * 
+	 * @param entity
+	 */
+	private static customApplyOnHitEffects(entity: Character): void {
+		if (entity.target.barrier <= 0 && entity.game.deathMarkEffect !== undefined) {
+			if (entity.modifiers.increasedDeathMarkOnHit > 0) {
+				if (rollPercentage(100 - (entity.target.modifiers.increasedDeathMarkImmunity - entity.target.modifiers.decreasedDeathMarkImmunity))) {
+					entity.applyStackingEffect(entity.game.deathMarkEffect, entity.target, entity.modifiers.increasedDeathMarkOnHit);
+					entity.target.rendersRequired.effects = true;
+				}
+			}
+
+			if (rollPercentage(entity.modifiers.increasedChanceToApplyStackOfDeathMark - entity.modifiers.decreasedChanceToApplyStackOfDeathMark)) {
+				if (rollPercentage(100 - (entity.target.modifiers.increasedDeathMarkImmunity - entity.target.modifiers.decreasedDeathMarkImmunity))) {
+					entity.applyStackingEffect(entity.game.deathMarkEffect, entity.target, 1);
+					entity.target.rendersRequired.effects = true;
+				}
+			}
+        }		
 	}
 
 	/**
