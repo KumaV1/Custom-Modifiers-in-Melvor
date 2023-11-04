@@ -47,4 +47,14 @@
     MODIFIER_DATA_decreasedChanceToApplyStackOfDeathMark: "-${value}% Chance einen Stapel Todesurteil beim Gegner hinzuzufügen",
     MODIFIER_DATA_increasedDeathMarkImmunity: "+${value} Chance, der Anwendung von Todesurteil-Stapeln zu widerstehen",
     MODIFIER_DATA_decreasedDeathMarkImmunity: "-${value} Chance, der Anwendung von Todesurteil-Stapeln zu widerstehen",
+
+    // #### Skilling
+    MODIFIER_DATA_increasedFlatGlobalSkillXP: "+${value} Fertigkeits-EP (Nach %-ualen Bonusen)",
+    MODIFIER_DATA_decreasedFlatGlobalSkillXP: "-${value} Fertigkeits-EP (Nach %-ualen Bonusen)",
+    MODIFIER_DATA_increasedFlatSkillXP: "+${value} Fertigkeits-EP in ${skillName} (Nach %-ualen Bonusen)",
+    MODIFIER_DATA_decreasedFlatSkillXP: "-${value} Fertigkeits-EP in ${skillName} (Nach %-ualen Bonusen)",
+    MODIFIER_DATA_increasedFlatGlobalSkillXPPerSkillLevel: "+${value} Fertigkeits-EP pro Level in der derzeit trainierten Fertigkeit (Nach %-ualen Bonusen)",
+    MODIFIER_DATA_decreasedFlatGlobalSkillXPPerSkillLevel: "-${value} Fertigkeits-EP pro Level in der derzeit trainierten Fertigkeit (Nach %-ualen Bonusen)",
+    MODIFIER_DATA_increasedFlatSkillXPPerSkillLevel: "+${value} Fertigkeits-EP in ${skillName} pro Level in ${skillName} (Nach %-ualen Bonusen)",
+    MODIFIER_DATA_decreasedFlatSkillXPPerSkillLevel: "-${value} Fertigkeits-EP in ${skillName} pro Level in ${skillName} (Nach %-ualen Bonusen)"
 };

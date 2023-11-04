@@ -4,6 +4,39 @@ import { Constants } from './Constants';
 
 /** For typescript intellisense and not throwing errors */
 declare global {
+	interface StandardModifierObject<Standard> {
+		/** Increases total xp gain for all skills (so unaffected by xp multipliers!) */
+		increasedFlatGlobalSkillXP: Standard,
+		/** Decreases total xp gain for all skills (so unaffected by xp multipliers!) */
+		decreasedFlatGlobalSkillXP: Standard,
+		/** Increases total xp gain for all skills (so unaffected by xp multipliers!) */
+		increasedFlatGlobalSkillXPPerSkillLevel: Standard,
+		/** Decreases total xp gain for all skills (so unaffected by xp multipliers!) */
+		decreasedFlatGlobalSkillXPPerSkillLevel: Standard
+	}
+
+	interface SkillModifierObject<Skill> {
+		/** Increases total xp gain for given skill (so unaffected by xp multipliers!) */
+		increasedFlatSkillXP: Skill,
+		/** Decreased total xp gain for given skill (so unaffected by xp multipliers!) */
+		decreasedFlatSkillXP: Skill,
+		/** Increases total xp gain for given skill (so unaffected by xp multipliers!) */
+		increasedFlatSkillXPPerSkillLevel: Skill,
+		/** Decreased total xp gain for given skill (so unaffected by xp multipliers!) */
+		decreasedFlatSkillXPPerSkillLevel: Skill,
+	}
+
+	interface PlayerModifiers {
+		/** Increases total xp gain for all skills (so unaffected by xp multipliers!) */
+		increasedFlatGlobalSkillXP: number,
+		/** Decreases total xp gain for all skills (so unaffected by xp multipliers!) */
+		decreasedFlatGlobalSkillXP: number,
+		/** Increases total xp gain for all skills (so unaffected by xp multipliers!) */
+		increasedFlatGlobalSkillXPPerSkillLevel: number,
+		/** Decreases total xp gain for all skills (so unaffected by xp multipliers!) */
+		decreasedFlatGlobalSkillXPPerSkillLevel: number
+	}
+
 	interface CombatModifierObject<Standard> {
 		increasedChanceToApplySlowOnSpawn: Standard,
 		decreasedChanceToApplySlowOnSpawn: Standard,
@@ -13,6 +46,7 @@ declare global {
 		decreasedChanceToApplyPoisonOnSpawn: Standard,
 		increasedChanceToApplyDeadlyPoisonOnSpawn: Standard,
 		decreasedChanceToApplyDeadlyPoisonOnSpawn: Standard,
+		/** Flag (by the custom effect) that effect has been applied, it's NOT an increasing value */
 		deathMark: Standard,
 		increasedDeathMarkOnHit: Standard,
 		increasedChanceToApplyStackOfDeathMark: Standard,
@@ -29,7 +63,7 @@ declare global {
 		increasedMaxHitPercentAgainstUndead: Standard,
 		decreasedMaxHitPercentAgainstUndead: Standard,
 		increasedMaxHitPercentAgainstBosses: Standard,
-		decreasedMaxHitPercentAgainstBosses: Standard,
+		decreasedMaxHitPercentAgainstBosses: Standard
 	}
 
 	interface CombatModifiers {
@@ -57,12 +91,8 @@ declare global {
 		increasedMaxHitPercentAgainstUndead: number,
 		decreasedMaxHitPercentAgainstUndead: number,
 		increasedMaxHitPercentAgainstBosses: number,
-		decreasedMaxHitPercentAgainstBosses: number,
+		decreasedMaxHitPercentAgainstBosses: number
 	}
-
-	//interface PlayerModifiers {
-
-	//}
 
 	interface Character {
 		isHuman: boolean,
@@ -86,6 +116,7 @@ export class CustomModifiersManager {
 	 * Registers all custom modifers, so they are known by the game
 	 */
 	public registerModifiers() {
+		this.registerSkillModifiers();
 		this.registerSpawnModifiers();
 		this.registerDeathMarkModifiers();
 		this.registerTraitApplicationModifiers();
@@ -99,6 +130,7 @@ export class CustomModifiersManager {
 	 * Patch pre existing logic, to also take our custom modifiers into account
 	 */
 	public patchMethods() {
+		this.patchSkillingActions();
 		this.patchGame();
 		this.patchAddHitpoints();
 		this.patchCombatModifiersReset();
@@ -110,6 +142,81 @@ export class CustomModifiersManager {
 	
 
 	// #region Modifier Registration
+
+	private registerSkillModifiers() {
+		modifierData.increasedFlatGlobalSkillXP = {
+			get langDescription() {
+				return getLangString('MODIFIER_DATA_increasedFlatGlobalSkillXP');
+			},
+			description: '',
+			isSkill: false,
+			isNegative: false,
+			tags: [],
+		};
+		modifierData.decreasedFlatGlobalSkillXP = {
+			get langDescription() {
+				return getLangString('MODIFIER_DATA_decreasedFlatGlobalSkillXP');
+			},
+			description: '',
+			isSkill: false,
+			isNegative: true,
+			tags: [],
+		};
+		modifierData.increasedFlatSkillXP = {
+			get langDescription() {
+				return getLangString('MODIFIER_DATA_increasedFlatSkillXP');
+			},
+			description: '',
+			isSkill: true,
+			isNegative: false,
+			tags: [],
+		};
+		modifierData.decreasedFlatSkillXP = {
+			get langDescription() {
+				return getLangString('MODIFIER_DATA_decreasedFlatSkillXP');
+			},
+			description: '',
+			isSkill: true,
+			isNegative: false,
+			tags: [],
+		};
+		modifierData.increasedFlatGlobalSkillXPPerSkillLevel = {
+			get langDescription() {
+				return getLangString('MODIFIER_DATA_increasedFlatGlobalSkillXPPerSkillLevel');
+			},
+			description: '',
+			isSkill: false,
+			isNegative: false,
+			tags: [],
+		};
+		modifierData.decreasedFlatGlobalSkillXPPerSkillLevel = {
+			get langDescription() {
+				return getLangString('MODIFIER_DATA_decreasedFlatGlobalSkillXPPerSkillLevel');
+			},
+			description: '',
+			isSkill: false,
+			isNegative: false,
+			tags: [],
+		};
+		modifierData.increasedFlatSkillXPPerSkillLevel = {
+			get langDescription() {
+				return getLangString('MODIFIER_DATA_increasedFlatSkillXPPerSkillLevel');
+			},
+			description: '',
+			isSkill: true,
+			isNegative: false,
+			tags: [],
+		};
+		modifierData.decreasedFlatSkillXPPerSkillLevel = {
+			get langDescription() {
+				return getLangString('MODIFIER_DATA_decreasedFlatSkillXPPerSkillLevel');
+			},
+			description: '',
+			isSkill: true,
+			isNegative: false,
+			tags: [],
+		};
+	}
 
 	/**
 	 * 
@@ -382,6 +489,31 @@ export class CustomModifiersManager {
 
 	// #region Method patching
 
+	private patchSkillingActions() {
+		/**
+		 * Patch "modifyXp" to add flat xp. 
+		 * The original method already checked "halfSkillXp" for provided value, 
+		 * but we have to check ourselves for our new modifiers
+		 */
+		// @ts-ignore You can actually patch base classes no problem
+		this.context.patch(Skill, "modifyXP").after(function (currentAmount) {
+			let flatXp = this.game.modifiers.increasedFlatGlobalSkillXP
+				- this.game.modifiers.decreasedFlatGlobalSkillXP
+				+ (this.game.modifiers.increasedFlatGlobalSkillXPPerSkillLevel * this.level)
+				- (this.game.modifiers.decreasedFlatGlobalSkillXPPerSkillLevel * this.level);
+			flatXp += this.game.modifiers.getSkillModifierValue('increasedFlatSkillXP', this)
+				- this.game.modifiers.getSkillModifierValue('decreasedFlatSkillXP', this)
+				+ (this.game.modifiers.getSkillModifierValue('increasedFlatSkillXPPerSkillLevel', this) * this.level)
+				- ((this.game.modifiers.getSkillModifierValue('decreasedFlatSkillXPPerSkillLevel', this) * this.level));
+
+			flatXp = Math.max(0, flatXp); // avoid skill xp actually ending up being reduced
+
+			return this.game.modifiers.halfSkillXP
+				? currentAmount + (flatXp / 2)
+				: currentAmount + flatXp;
+		});
+	}
+
 	private patchGame() {
 		/**
 		 * Register custom effects as properties on the Game object (akin to e.g. "unholyMarkEffect") 
@@ -402,6 +534,9 @@ export class CustomModifiersManager {
 		 * This method is called during initialization of both player and enemies, as quick safety measure for a "clean state" before setting everything up. (to avoid undefined/null/nan)
 		 * However, as we do not actually add our properties to Melvor's definition of the class, the dynamic build up doesn't include our properties,
 		 * so we handle those ourselves. Should in theory take care of all instances, so including cases such as area modifiers
+		 * 
+		 * REMARK: We don't have to do the same for player modifiers actually, as those are either initialized as 0 by default, 
+		 * or "getSkillModifierValue" parses undefined to 0 anyway
 		 */
 		this.context.patch(CombatModifiers, "reset").after(function () {
 			this.increasedChanceToApplySlowOnSpawn ??= 0;
