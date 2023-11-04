@@ -16,6 +16,22 @@
           "icon": "https://cdn.melvor.net/core/v018/assets/media/skills/combat/combat.svg"
         }
       }
+    ],
+    "stackingEffects": [
+      {
+        "id": "Death_Mark_Effect",
+        "stacksToAdd": 1,
+        "maxStacks": 20,
+        "modifiers": {
+          "deathMark": 1
+        },
+        "name": "Death mark",
+        "media": "assets/customModifiersInMelvor/Death_Mark.png",
+        "langname": {
+          "category": "COMBAT_MISC",
+          "id": "Death_Mark_Effect"
+        }
+      }
     ]
   }
 }

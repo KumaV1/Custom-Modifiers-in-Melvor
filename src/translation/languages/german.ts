@@ -14,15 +14,47 @@
     Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "Monster, welche durch andere Mods hinzugefügt werden, müssen von besagten Mods selbst mit der entsprechenden Monsterart-Zuweisung ausgestattet werden. Wenn ein Mod den Basis-Mod nicht als Anforderung konfiguriert hat, dann bedeutet das grundsätzlich, dass keines der Monster in irgendeinerweise von dieser Monsterart-Zuweisung beeinflusst sind",
 
     // ### Modifiers
+    // #### Spawn modifiers (TODO: Possibly make equivalent increased/decreased chance to self-apply?)
+    MODIFIER_DATA_increasedChanceToApplySlowOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass +25% Angriffsintervall für drei Runden auf das Ziel angewendet wird",
+    MODIFIER_DATA_decreasedChanceToApplySlowOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass +25% Angriffsintervall für drei Runden auf das Ziel angewendet wird",
+    MODIFIER_DATA_increasedChanceToApplyStunOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass das Ziel für eine Runde betäubt wird",
+    MODIFIER_DATA_decreasedChanceToApplyStunOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass das Ziel für eine Runde betäubt wird",
+    MODIFIER_DATA_increasedChanceToApplyPoisonOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass Giftschaden beim Gegner verursacht wird",
+    MODIFIER_DATA_decreasedChanceToApplyPoisonOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass Giftschaden beim Gegner verursacht wird",
+    MODIFIER_DATA_increasedChanceToApplyDeadlyPoisonOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass tödlicher Giftschaden beim Gegner verursacht wird",
+    MODIFIER_DATA_decreasedChanceToApplyDeadlyPoisonOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass tödlicher Giftschaden beim Gegner verursacht wird",
+
+    // #### Trait application modifiers (aka "treated as type")
     MODIFIER_DATA_humanTraitApplied: "Markiert den Betroffenen als Mensch",
+    MODIFIER_DATA_dragonTraitApplied: "Markiert den Betroffenen als Drachen",
+    MODIFIER_DATA_undeadTraitApplied: "Markiert den Betroffenen als Untot",
+
+    // #### Type modifiers
     MODIFIER_DATA_increasedMaxHitPercentAgainstHumans: "+${value}% Maximalschaden gegen Menschen",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstHumans: "-${value}% Maximalschaden gegen Menschen",
-    MODIFIER_DATA_dragonTraitApplied: "Markiert den Betroffenen als Drachen",
     MODIFIER_DATA_increasedMaxHitPercentAgainstDragons: "+${value}% Maximalschaden gegen Drachen",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstDragons: "-${value}% Maximalschaden gegen Drachen",
-    MODIFIER_DATA_undeadTraitApplied: "Markiert den Betroffenen als Untot",
     MODIFIER_DATA_increasedMaxHitPercentAgainstUndead: "+${value}% Maximalschaden gegen Untote",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstUndead: "-${value}% Maximalschaden gegen Untote",
     MODIFIER_DATA_increasedMaxHitPercentAgainstBosses: "+${value}% Maximalschaden gegen Bosse",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstBosses: "-${value}% Maximalschaden gegen Bosse",
+
+    // #### Death mark (not to be confused with mark of death)
+    COMBAT_MISC_Death_Mark_Effect: "Todesurteil",
+    MODIFIER_DATA_deathMark: "Wenn Lebenspunkte unter ${value}/${stacks}/${stack}/${count}% (MAX ${maxStacks}% / 5,000) der maximalen Lebenspunkte fallen, werde sofort hingerichtet",
+    MODIFIER_DATA_increasedDeathMarkOnHit: "+${value} Todesurteil-Stapel, wenn ein Angriff trifft",
+    MODIFIER_DATA_increasedChanceToApplyStackOfDeathMark: "+${value}% Chance einen Stapel Todesurteil beim Gegner hinzuzufügen",
+    MODIFIER_DATA_decreasedChanceToApplyStackOfDeathMark: "-${value}% Chance einen Stapel Todesurteil beim Gegner hinzuzufügen",
+    MODIFIER_DATA_increasedDeathMarkImmunity: "+${value} Chance, der Anwendung von Todesurteil-Stapeln zu widerstehen",
+    MODIFIER_DATA_decreasedDeathMarkImmunity: "-${value} Chance, der Anwendung von Todesurteil-Stapeln zu widerstehen",
+
+    // #### Skilling
+    MODIFIER_DATA_increasedFlatGlobalSkillXP: "+${value} Fertigkeits-EP (Nach %-ualen Bonusen)",
+    MODIFIER_DATA_decreasedFlatGlobalSkillXP: "-${value} Fertigkeits-EP (Nach %-ualen Bonusen)",
+    MODIFIER_DATA_increasedFlatSkillXP: "+${value} Fertigkeits-EP in ${skillName} (Nach %-ualen Bonusen)",
+    MODIFIER_DATA_decreasedFlatSkillXP: "-${value} Fertigkeits-EP in ${skillName} (Nach %-ualen Bonusen)",
+    MODIFIER_DATA_increasedFlatGlobalSkillXPPerSkillLevel: "+${value} Fertigkeits-EP pro Level in der derzeit trainierten Fertigkeit (Nach %-ualen Bonusen)",
+    MODIFIER_DATA_decreasedFlatGlobalSkillXPPerSkillLevel: "-${value} Fertigkeits-EP pro Level in der derzeit trainierten Fertigkeit (Nach %-ualen Bonusen)",
+    MODIFIER_DATA_increasedFlatSkillXPPerSkillLevel: "+${value} Fertigkeits-EP in ${skillName} pro Level in ${skillName} (Nach %-ualen Bonusen)",
+    MODIFIER_DATA_decreasedFlatSkillXPPerSkillLevel: "-${value} Fertigkeits-EP in ${skillName} pro Level in ${skillName} (Nach %-ualen Bonusen)"
 };

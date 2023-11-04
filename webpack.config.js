@@ -28,8 +28,8 @@ module.exports = {
   module: {
     generator: {
       'asset/resource': {
-        publicPath: 'assets/',
-        outputPath: 'assets/',
+            publicPath: 'assets/customModifiersInMelvor',
+            outputPath: 'assets/customModifiersInMelvor',
         filename: '[name][ext]',
       },
     },

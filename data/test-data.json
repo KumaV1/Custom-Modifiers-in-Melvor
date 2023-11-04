@@ -71,7 +71,9 @@
         "id": "Test_Passive",
         "name": "Test Passive",
         "modifiers": {
-          "increasedMaxHitPercentAgainstDragons": 10
+          "increasedDeathMarkOnHit": 1,
+          "increasedDeathMarkImmunity": 100,
+          "decreasedDeathMarkImmunity": 50
         }
       }
     ],
