@@ -40,6 +40,7 @@
     MODIFIER_DATA_decreasedMaxHitPercentAgainstBosses: "-${value}% Maximalschaden gegen Bosse",
 
     // #### Death mark (not to be confused with mark of death)
+    Death_Mark_Notification_Text: "Du bist durch Todesurteil hingerichtet worden",
     COMBAT_MISC_Death_Mark_Effect: "Todesurteil",
     MODIFIER_DATA_deathMark: "Wenn Lebenspunkte unter ${value}/${stacks}/${stack}/${count}% (MAX ${maxStacks}% / 5,000) der maximalen Lebenspunkte fallen, werde sofort hingerichtet",
     MODIFIER_DATA_increasedDeathMarkOnHit: "+${value} Todesurteil-Stapel, wenn ein Angriff trifft",
@@ -49,6 +50,10 @@
     MODIFIER_DATA_decreasedDeathMarkImmunity: "-${value} Chance, der Anwendung von Todesurteil-Stapeln zu widerstehen",
 
     // #### Skilling
+    MODIFIER_DATA_increasedGlobalSkillXPPerLevel: "+${value}% Fertigkeits-EP pro Level in der derzeit trainierten Fertigkeit",
+    MODIFIER_DATA_decreasedGlobalSkillXPPerLevel: "-${value}% Fertigkeits-EP pro Level in der derzeit trainierten Fertigkeit",
+    MODIFIER_DATA_increasedSkillXPPerSkillLevel: "+${value}% Fertigkeits-EP in ${skillName} pro Level in ${skillName}",
+    MODIFIER_DATA_decreasedSkillXPPerSkillLevel: "-${value}% Fertigkeits-EP in ${skillName} pro Level in ${skillName}",
     MODIFIER_DATA_increasedFlatGlobalSkillXP: "+${value} Fertigkeits-EP (Nach %-ualen Bonusen)",
     MODIFIER_DATA_decreasedFlatGlobalSkillXP: "-${value} Fertigkeits-EP (Nach %-ualen Bonusen)",
     MODIFIER_DATA_increasedFlatSkillXP: "+${value} Fertigkeits-EP in ${skillName} (Nach %-ualen Bonusen)",
