@@ -66,17 +66,46 @@ declare global {
         decreasedChanceToApplyStackOfDeathMark: Standard,
         increasedDeathMarkImmunity: Standard,
         decreasedDeathMarkImmunity: Standard,
+
         humanTraitApplied: Standard,
+        dragonTraitApplied: Standard,
+        undeadTraitApplied: Standard,
+
         increasedMaxHitPercentAgainstHumans: Standard,
         decreasedMaxHitPercentAgainstHumans: Standard,
-        dragonTraitApplied: Standard,
         increasedMaxHitPercentAgainstDragons: Standard,
         decreasedMaxHitPercentAgainstDragons: Standard,
-        undeadTraitApplied: Standard,
         increasedMaxHitPercentAgainstUndead: Standard,
         decreasedMaxHitPercentAgainstUndead: Standard,
         increasedMaxHitPercentAgainstBosses: Standard,
-        decreasedMaxHitPercentAgainstBosses: Standard
+        decreasedMaxHitPercentAgainstBosses: Standard,
+
+        increasedMaxHitFlatAgainstHumans: Standard,
+        decreasedMaxHitFlatAgainstHumans: Standard,
+        increasedMaxHitFlatAgainstDragons: Standard,
+        decreasedMaxHitFlatAgainstDragons: Standard,
+        increasedMaxHitFlatAgainstUndead: Standard,
+        decreasedMaxHitFlatAgainstUndead: Standard,
+        increasedMaxHitFlatAgainstBosses: Standard,
+        decreasedMaxHitFlatAgainstBosses: Standard,
+
+        increasedMinHitBasedOnMaxHitAgainstHumans: Standard,
+        decreasedMinHitBasedOnMaxHitAgainstHumans: Standard,
+        increasedMinHitBasedOnMaxHitAgainstDragons: Standard,
+        decreasedMinHitBasedOnMaxHitAgainstDragons: Standard,
+        increasedMinHitBasedOnMaxHitAgainstUndead: Standard,
+        decreasedMinHitBasedOnMaxHitAgainstUndead: Standard,
+        increasedMinHitBasedOnMaxHitAgainstBosses: Standard,
+        decreasedMinHitBasedOnMaxHitAgainstBosses: Standard,
+
+        increasedFlatMinHitAgainstHumans: Standard,
+        decreasedFlatMinHitAgainstHumans: Standard,
+        increasedFlatMinHitAgainstDragons: Standard,
+        decreasedFlatMinHitAgainstDragons: Standard,
+        increasedFlatMinHitAgainstUndead: Standard,
+        decreasedFlatMinHitAgainstUndead: Standard,
+        increasedFlatMinHitAgainstBosses: Standard,
+        decreasedFlatMinHitAgainstBosses: Standard
     }
 
     interface CombatModifiers {
@@ -88,23 +117,53 @@ declare global {
         decreasedChanceToApplyPoisonOnSpawn: number,
         increasedChanceToApplyDeadlyPoisonOnSpawn: number,
         decreasedChanceToApplyDeadlyPoisonOnSpawn: number,
+
         deathMark: number,
         increasedDeathMarkOnHit: number,
         increasedChanceToApplyStackOfDeathMark: number,
         decreasedChanceToApplyStackOfDeathMark: number,
         increasedDeathMarkImmunity: number,
         decreasedDeathMarkImmunity: number,
+
         humanTraitApplied: number,
+        dragonTraitApplied: number,
+        undeadTraitApplied: number,
+
         increasedMaxHitPercentAgainstHumans: number,
         decreasedMaxHitPercentAgainstHumans: number,
-        dragonTraitApplied: number,
         increasedMaxHitPercentAgainstDragons: number,
         decreasedMaxHitPercentAgainstDragons: number,
-        undeadTraitApplied: number,
         increasedMaxHitPercentAgainstUndead: number,
         decreasedMaxHitPercentAgainstUndead: number,
         increasedMaxHitPercentAgainstBosses: number,
-        decreasedMaxHitPercentAgainstBosses: number
+        decreasedMaxHitPercentAgainstBosses: number,
+
+        increasedMaxHitFlatAgainstHumans: number,
+        decreasedMaxHitFlatAgainstHumans: number,
+        increasedMaxHitFlatAgainstDragons: number,
+        decreasedMaxHitFlatAgainstDragons: number,
+        increasedMaxHitFlatAgainstUndead: number,
+        decreasedMaxHitFlatAgainstUndead: number,
+        increasedMaxHitFlatAgainstBosses: number,
+        decreasedMaxHitFlatAgainstBosses: number,
+
+        increasedMinHitBasedOnMaxHitAgainstHumans: number,
+        decreasedMinHitBasedOnMaxHitAgainstHumans: number,
+        increasedMinHitBasedOnMaxHitAgainstDragons: number,
+        decreasedMinHitBasedOnMaxHitAgainstDragons: number,
+        increasedMinHitBasedOnMaxHitAgainstUndead: number,
+        decreasedMinHitBasedOnMaxHitAgainstUndead: number,
+        increasedMinHitBasedOnMaxHitAgainstBosses: number,
+        decreasedMinHitBasedOnMaxHitAgainstBosses: number,
+
+        increasedFlatMinHitAgainstHumans: number,
+        decreasedFlatMinHitAgainstHumans: number,
+        increasedFlatMinHitAgainstDragons: number,
+        decreasedFlatMinHitAgainstDragons: number,
+        increasedFlatMinHitAgainstUndead: number,
+        decreasedFlatMinHitAgainstUndead: number,
+        increasedFlatMinHitAgainstBosses: number,
+        decreasedFlatMinHitAgainstBosses: number
     }
 
     interface Character {
@@ -150,7 +209,8 @@ export class CustomModifiersManager {
         this.patchMonsterTypeAllocation();
         this.patchApplyUniqueSpawnEffects();
         this.patchApplyOnHitEffects();
-        this.patchGetMaxHitModifier();
+        this.patchMinHitCalculations();
+        this.patchMaxHitCalculations();
     }
 
 
@@ -543,7 +603,7 @@ export class CustomModifiersManager {
          * 
          */
         // @ts-ignore You can actually patch base classes no problem
-        this.context.patch(Agility, "getXPModifier").after(function (currentAmount) {
+        this.context.patch(Skill, "getXPModifier").after(function (currentAmount) {
             currentAmount += (this.game.modifiers.increasedGlobalSkillXPPerLevel * this.level)
                 - (this.game.modifiers.decreasedGlobalSkillXPPerLevel * this.level)
                 + this.game.modifiers.getSkillModifierValue('increasedSkillXPPerSkillLevel', this)
@@ -702,10 +762,28 @@ export class CustomModifiersManager {
         });
     }
 
+    private patchMinHitCalculations() {
+        /** Patch percentage and flat modifiers
+         * Also because existing flat modifiers aren't based on enemies and 
+         * the method we could have patched is therefore part of the CombatModifiers class (which doesn't have battle context)
+         * 
+         * REMARK: I'm not sure about being able to provide result of before patch to original call, so
+         * instead just used after patch as usual, repeating the "clampValue" call at the end to avoid invalid values
+         */
+        this.context.patch(Player, "modifyMinHit").after(function (minHit: number) {
+            minHit += CustomModifiersManager.customGetMinModifier(this, minHit);
+            return clampValue(minHit, 1, this.stats.maxHit);
+        });
+        this.context.patch(Enemy, "modifyMinHit").after(function (minHit: number) {
+            minHit += CustomModifiersManager.customGetMinModifier(this, minHit);
+            return clampValue(minHit, 1, this.stats.maxHit);
+        });
+    }
+
     /**
      * 
      */
-    private patchGetMaxHitModifier() {
+    private patchMaxHitCalculations() {
         /**
          * Patches new max hit percentage increasing modifiers into base logic.
          * Presumably two patches, as the base class "Character" is abstract and therefore cannot be patched
@@ -715,6 +793,16 @@ export class CustomModifiersManager {
         });
         this.context.patch(Enemy, "getMaxHitModifier").after(function (maxHitModifier: number): number {
             return CustomModifiersManager.customGetMaxHitModifier(this, maxHitModifier);
+        });
+
+        /**
+         * Patches new max hit flat increasing modifiers into base logic
+         */
+        this.context.patch(Player, "modifyMaxHit").after(function (maxHit) {
+            return CustomModifiersManager.customModifyMaxHit(this, maxHit);
+        });
+        this.context.patch(Enemy, "modifyMaxHit").after(function (maxHit) {
+            return CustomModifiersManager.customModifyMaxHit(this, maxHit);
         });
     }
 
@@ -799,6 +887,45 @@ export class CustomModifiersManager {
     /**
      * 
      * @param entity The player or the enemy the player is fighting
+     * @param minHit Current value of the max hit modifier, before custom logic
+     */
+    private static customGetMinModifier(entity: Character, minHit: number): number {
+        if (entity.manager.fightInProgress) {
+            // Percentage modifiers
+            if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
+                minHit += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstHumans - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstHumans)) / 100);
+            }
+            if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
+                minHit += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstDragons - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstDragons)) / 100);
+            }
+            if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
+                minHit += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstUndead - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstUndead)) / 100);
+            }
+            if (entity.target.isBoss) {
+                minHit += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstBosses - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstBosses)) / 100);
+            }
+
+            // Flat modifiers
+            if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
+                minHit += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstHumans - entity.modifiers.decreasedFlatMinHitAgainstHumans);
+            }
+            if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
+                minHit += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstDragons - entity.modifiers.decreasedFlatMinHitAgainstDragons);
+            }
+            if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
+                minHit += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstUndead - entity.modifiers.decreasedFlatMinHitAgainstUndead);
+            }
+            if (entity.target.isBoss) {
+                minHit += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstBosses - entity.modifiers.decreasedFlatMinHitAgainstBosses);
+            }
+        }
+
+        return minHit;
+    }
+
+    /**
+     * Patches percentage based max hit modifiers
+     * @param entity The player or the enemy the player is fighting
      * @param maxHitModifier Current value of the max hit modifier, before custom logic
      * @returns
      */
@@ -819,6 +946,30 @@ export class CustomModifiersManager {
         }
 
         return maxHitModifier;
+    }
+
+    /**
+     * Patches flat based max hit modifiers
+     * @param entity
+     * @param maxHit
+     */
+    private static customModifyMaxHit(entity: Character, maxHit: number): number {
+        if (entity.manager.fightInProgress) {
+            if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
+                maxHit += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstBosses - entity.modifiers.decreasedMaxHitFlatAgainstHumans);
+            }                                                                                                      
+            if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {                        
+                maxHit += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstBosses - entity.modifiers.decreasedMaxHitFlatAgainstDragons);
+            }                                                                                                      
+            if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {                        
+                maxHit += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstBosses - entity.modifiers.decreasedMaxHitFlatAgainstUndead);
+            }                                                                                                      
+            if (entity.target.isBoss) {                                                                            
+                maxHit += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstBosses - entity.modifiers.decreasedMaxHitFlatAgainstBosses);
+            }
+        }
+
+        return maxHit;
     }
 
     // #endregion

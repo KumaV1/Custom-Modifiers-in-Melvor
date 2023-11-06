@@ -23,10 +23,20 @@ export const en = {
     MODIFIER_DATA_increasedChanceToApplyDeadlyPoisonOnSpawn: "+${value}% chance to apply deadly poison to the Target on spawn or revive",
     MODIFIER_DATA_decreasedChanceToApplyDeadlyPoisonOnSpawn: "-${value}% chance to apply deadly poison to the Target on spawn or revive",
 
+    // #### Death mark (not to be confused with mark of death)
+    Death_Mark_Notification_Text: "You have been executed by death mark",
+    COMBAT_MISC_Death_Mark_Effect: "Death mark",
+    MODIFIER_DATA_deathMark: "If percentage of max HP left is lower than the amount of stacks (MAX 20% / 5,000), get executed immediately",
+    MODIFIER_DATA_increasedDeathMarkOnHit: "+${value} Death Mark stacks applied when hitting with an attack",
+    MODIFIER_DATA_increasedChanceToApplyStackOfDeathMark: "+${value}% chance to apply one stack of death mark on the enemy",
+    MODIFIER_DATA_decreasedChanceToApplyStackOfDeathMark: "-${value}% chance to apply one stack of death mark on the enemy",
+    MODIFIER_DATA_increasedDeathMarkImmunity: "+${value} chance to resist application of death mark stacks",
+    MODIFIER_DATA_decreasedDeathMarkImmunity: "-${value} chance to resist application of death mark stacks",
+
     // #### Trait application (aka "treated as type")
     MODIFIER_DATA_humanTraitApplied: "Marks the affected as humans",
     MODIFIER_DATA_dragonTraitApplied: "Marks the affected as dragon",
-    MODIFIER_DATA_undeadTraitApplied: "Marks the affected as undead", 
+    MODIFIER_DATA_undeadTraitApplied: "Marks the affected as undead",
 
     // #### Type
     MODIFIER_DATA_increasedMaxHitPercentAgainstHumans: "+${value}% Max Hit when fighting humans",
@@ -38,15 +48,32 @@ export const en = {
     MODIFIER_DATA_increasedMaxHitPercentAgainstBosses: "+${value}% Max Hit when fighting bosses",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstBosses: "-${value}% Max Hit when fighting bosses",
 
-    // #### Death mark (not to be confused with mark of death)
-    Death_Mark_Notification_Text: "You have been executed by death mark",
-    COMBAT_MISC_Death_Mark_Effect: "Death mark",
-    MODIFIER_DATA_deathMark: "If percentage of max HP left is lower than the amount of stacks (MAX 20% / 5,000), get executed immediately",
-    MODIFIER_DATA_increasedDeathMarkOnHit: "+${value} Death Mark stacks applied when hitting with an attack",
-    MODIFIER_DATA_increasedChanceToApplyStackOfDeathMark: "+${value}% chance to apply one stack of death mark on the enemy",
-    MODIFIER_DATA_decreasedChanceToApplyStackOfDeathMark: "-${value}% chance to apply one stack of death mark on the enemy",
-    MODIFIER_DATA_increasedDeathMarkImmunity: "+${value} chance to resist application of death mark stacks",
-    MODIFIER_DATA_decreasedDeathMarkImmunity: "-${value} chance to resist application of death mark stacks",
+    MODIFIER_DATA_increasedMaxHitFlatAgainstHumans: "+${value} Max Hit when fighting humans",
+    MODIFIER_DATA_decreasedMaxHitFlatAgainstHumans: "-${value} Max Hit when fighting humans",
+    MODIFIER_DATA_increasedMaxHitFlatAgainstDragons: "+${value} Max Hit when fighting dragons",
+    MODIFIER_DATA_decreasedMaxHitFlatAgainstDragons: "-${value} Max Hit when fighting dragons",
+    MODIFIER_DATA_increasedMaxHitFlatAgainstUndead: "+${value} Max Hit when fighting undead",
+    MODIFIER_DATA_decreasedMaxHitFlatAgainstUndead: "-${value} Max Hit when fighting undead",
+    MODIFIER_DATA_increasedMaxHitFlatAgainstBosses: "+${value} Max Hit when fighting bosses",
+    MODIFIER_DATA_decreasedMaxHitFlatAgainstBosses: "-${value} Max Hit when fighting bosses",
+
+    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstHumans: "+${value} Minium Hit when fighting humans",
+    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstHumans: "-${value} Minium Hit when fighting humans",
+    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstDragons: "+${value} Minium Hit when fighting dragons",
+    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstDragons: "-${value} Minium Hit when fighting dragons",
+    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstUndead: "+${value} Minium Hit when fighting undead",
+    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstUndead: "-${value} Minium Hit when fighting undead",
+    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstBosses: "+${value} Minium Hit when fighting bosses",
+    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstBosses: "-${value} Minium Hit when fighting bosses",
+
+    MODIFIER_DATA_increasedFlatMinHitAgainstHumans: "+${value} Minium Hit when fighting humans",
+    MODIFIER_DATA_decreasedFlatMinHitAgainstHumans: "-${value} Minium Hit when fighting humans",
+    MODIFIER_DATA_increasedFlatMinHitAgainstDragons: "+${value} Minium Hit when fighting dragons",
+    MODIFIER_DATA_decreasedFlatMinHitAgainstDragons: "-${value} Minium Hit when fighting dragons",
+    MODIFIER_DATA_increasedFlatMinHitAgainstUndead: "+${value} Minium Hit when fighting undead",
+    MODIFIER_DATA_decreasedFlatMinHitAgainstUndead: "-${value} Minium Hit when fighting undead",
+    MODIFIER_DATA_increasedFlatMinHitAgainstBosses: "+${value} Minium Hit when fighting bosses",
+    MODIFIER_DATA_decreasedFlatMinHitAgainstBosses: "-${value} Minium Hit when fighting bosses",
 
     // #### Skilling
     MODIFIER_DATA_increasedGlobalSkillXPPerLevel: "+${value}% Global Skill XP per level in currently training skill",

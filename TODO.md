@@ -1,6 +1,5 @@
 # Soon
-* Add the following custom modifiers by type as addition to max hit
-  * increased/decreased min hit (Flat min hit modifiers; %, if also added, should be based on max hit I guess, so before modifyMinHit)
+* Add the following custom modifiers by type as addition to max/min hit
   * increased/decreased damage taken (already exists for bosses I think)
   * increased/decreased damage reduction
 * Add "slayer (area) creature" and "slayer task monster (aka +x% y to slayer tasks)" as additional conditions

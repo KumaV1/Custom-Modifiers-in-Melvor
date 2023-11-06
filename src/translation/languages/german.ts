@@ -24,6 +24,16 @@
     MODIFIER_DATA_increasedChanceToApplyDeadlyPoisonOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass tödlicher Giftschaden beim Gegner verursacht wird",
     MODIFIER_DATA_decreasedChanceToApplyDeadlyPoisonOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass tödlicher Giftschaden beim Gegner verursacht wird",
 
+    // #### Death mark (not to be confused with mark of death)
+    Death_Mark_Notification_Text: "Du bist durch Todesurteil hingerichtet worden",
+    COMBAT_MISC_Death_Mark_Effect: "Todesurteil",
+    MODIFIER_DATA_deathMark: "Wenn Lebenspunkte unter ${value}/${stacks}/${stack}/${count}% (MAX ${maxStacks}% / 5,000) der maximalen Lebenspunkte fallen, werde sofort hingerichtet",
+    MODIFIER_DATA_increasedDeathMarkOnHit: "+${value} Todesurteil-Stapel, wenn ein Angriff trifft",
+    MODIFIER_DATA_increasedChanceToApplyStackOfDeathMark: "+${value}% Chance einen Stapel Todesurteil beim Gegner hinzuzufügen",
+    MODIFIER_DATA_decreasedChanceToApplyStackOfDeathMark: "-${value}% Chance einen Stapel Todesurteil beim Gegner hinzuzufügen",
+    MODIFIER_DATA_increasedDeathMarkImmunity: "+${value} Chance, der Anwendung von Todesurteil-Stapeln zu widerstehen",
+    MODIFIER_DATA_decreasedDeathMarkImmunity: "-${value} Chance, der Anwendung von Todesurteil-Stapeln zu widerstehen",
+
     // #### Trait application modifiers (aka "treated as type")
     MODIFIER_DATA_humanTraitApplied: "Markiert den Betroffenen als Mensch",
     MODIFIER_DATA_dragonTraitApplied: "Markiert den Betroffenen als Drachen",
@@ -39,15 +49,32 @@
     MODIFIER_DATA_increasedMaxHitPercentAgainstBosses: "+${value}% Maximalschaden gegen Bosse",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstBosses: "-${value}% Maximalschaden gegen Bosse",
 
-    // #### Death mark (not to be confused with mark of death)
-    Death_Mark_Notification_Text: "Du bist durch Todesurteil hingerichtet worden",
-    COMBAT_MISC_Death_Mark_Effect: "Todesurteil",
-    MODIFIER_DATA_deathMark: "Wenn Lebenspunkte unter ${value}/${stacks}/${stack}/${count}% (MAX ${maxStacks}% / 5,000) der maximalen Lebenspunkte fallen, werde sofort hingerichtet",
-    MODIFIER_DATA_increasedDeathMarkOnHit: "+${value} Todesurteil-Stapel, wenn ein Angriff trifft",
-    MODIFIER_DATA_increasedChanceToApplyStackOfDeathMark: "+${value}% Chance einen Stapel Todesurteil beim Gegner hinzuzufügen",
-    MODIFIER_DATA_decreasedChanceToApplyStackOfDeathMark: "-${value}% Chance einen Stapel Todesurteil beim Gegner hinzuzufügen",
-    MODIFIER_DATA_increasedDeathMarkImmunity: "+${value} Chance, der Anwendung von Todesurteil-Stapeln zu widerstehen",
-    MODIFIER_DATA_decreasedDeathMarkImmunity: "-${value} Chance, der Anwendung von Todesurteil-Stapeln zu widerstehen",
+    MODIFIER_DATA_increasedMaxHitFlatAgainstHumans: "+${value} Maximalschaden gegen Menschen",
+    MODIFIER_DATA_decreasedMaxHitFlatAgainstHumans: "-${value} Maximalschaden gegen Menschen",
+    MODIFIER_DATA_increasedMaxHitFlatAgainstDragons: "+${value} Maximalschaden gegen Drachen",
+    MODIFIER_DATA_decreasedMaxHitFlatAgainstDragons: "-${value} Maximalschaden gegen Drachen",
+    MODIFIER_DATA_increasedMaxHitFlatAgainstUndead: "+${value} Maximalschaden gegen Untote",
+    MODIFIER_DATA_decreasedMaxHitFlatAgainstUndead: "-${value} Maximalschaden gegen Untote",
+    MODIFIER_DATA_increasedMaxHitFlatAgainstBosses: "+${value} Maximalschaden gegen Bosse",
+    MODIFIER_DATA_decreasedMaxHitFlatAgainstBosses: "-${value} Maximalschaden gegen Bosse",
+
+    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstHumans: "+${value} Minimalschaden gegen fighting Menschen",
+    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstHumans: "-${value} Minimalschaden gegen fighting Menschen",
+    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstDragons: "+${value} Minimalschaden gegen fighting Drachen",
+    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstDragons: "-${value} Minimalschaden gegen fighting Drachen",
+    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstUndead: "+${value} Minimalschaden gegen fighting Untote",
+    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstUndead: "-${value} Minimalschaden gegen fighting Untote",
+    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstBosses: "+${value} Minimalschaden gegen fighting Bosse",
+    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstBosses: "-${value} Minimalschaden gegen fighting Bosse",
+
+    MODIFIER_DATA_increasedFlatMinHitAgainstHumans: "+${value} Minimalschaden gegen fighting Menschen",
+    MODIFIER_DATA_decreasedFlatMinHitAgainstHumans: "-${value} Minimalschaden gegen fighting Menschen",
+    MODIFIER_DATA_increasedFlatMinHitAgainstDragons: "+${value} Minimalschaden gegen fighting Drachen",
+    MODIFIER_DATA_decreasedFlatMinHitAgainstDragons: "-${value} Minimalschaden gegen fighting Drachen",
+    MODIFIER_DATA_increasedFlatMinHitAgainstUndead: "+${value} Minimalschaden gegen fighting Untote",
+    MODIFIER_DATA_decreasedFlatMinHitAgainstUndead: "-${value} Minimalschaden gegen fighting Untote",
+    MODIFIER_DATA_increasedFlatMinHitAgainstBosses: "+${value} Minimalschaden gegen fighting Bosse",
+    MODIFIER_DATA_decreasedFlatMinHitAgainstBosses: "-${value} Minimalschaden gegen fighting Bosse",
 
     // #### Skilling
     MODIFIER_DATA_increasedGlobalSkillXPPerLevel: "+${value}% Fertigkeits-EP pro Level in der derzeit trainierten Fertigkeit",
