@@ -71,6 +71,13 @@ declare global {
         dragonTraitApplied: Standard,
         undeadTraitApplied: Standard,
 
+        increasedDamageToHumans: Standard,
+        decreasedDamageToHumans: Standard,
+        increasedDamageToDragons: Standard,
+        decreasedDamageToDragons: Standard,
+        increasedDamageToUndead: Standard,
+        decreasedDamageToUndead: Standard,
+
         increasedMaxHitPercentAgainstHumans: Standard,
         decreasedMaxHitPercentAgainstHumans: Standard,
         increasedMaxHitPercentAgainstDragons: Standard,
@@ -128,6 +135,13 @@ declare global {
         humanTraitApplied: number,
         dragonTraitApplied: number,
         undeadTraitApplied: number,
+
+        increasedDamageToHumans: number,
+        decreasedDamageToHumans: number,
+        increasedDamageToDragons: number,
+        decreasedDamageToDragons: number,
+        increasedDamageToUndead: number,
+        decreasedDamageToUndead: number,
 
         increasedMaxHitPercentAgainstHumans: number,
         decreasedMaxHitPercentAgainstHumans: number,
@@ -520,6 +534,60 @@ export class CustomModifiersManager {
             isNegative: true,
             tags: ['combat']
         };
+        modifierData.increasedMaxHitFlatAgainstHumans = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMaxHitFlatAgainstHumans');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMaxHitFlatAgainstHumans = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMaxHitFlatAgainstHumans');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedFlatMinHitAgainstHumans = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedFlatMinHitAgainstHumans');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedFlatMinHitAgainstHumans = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedFlatMinHitAgainstHumans');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedMinHitBasedOnMaxHitAgainstHumans = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstHumans');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMinHitBasedOnMaxHitAgainstHumans = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstHumans');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
     }
 
     /**
@@ -538,6 +606,60 @@ export class CustomModifiersManager {
         modifierData.decreasedMaxHitPercentAgainstDragons = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitPercentAgainstDragons');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedMaxHitFlatAgainstDragons = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMaxHitFlatAgainstDragons');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMaxHitFlatAgainstDragons = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMaxHitFlatAgainstDragons');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedFlatMinHitAgainstDragons = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedFlatMinHitAgainstDragons');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedFlatMinHitAgainstDragons = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedFlatMinHitAgainstDragons');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedMinHitBasedOnMaxHitAgainstDragons = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstDragons');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMinHitBasedOnMaxHitAgainstDragons = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstDragons');
             },
             description: '',
             isSkill: false,
@@ -568,6 +690,60 @@ export class CustomModifiersManager {
             isNegative: true,
             tags: ['combat']
         };
+        modifierData.increasedMaxHitFlatAgainstUndead = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMaxHitFlatAgainstUndead');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMaxHitFlatAgainstUndead = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMaxHitFlatAgainstUndead');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedFlatMinHitAgainstUndead = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedFlatMinHitAgainstUndead');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedFlatMinHitAgainstUndead = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedFlatMinHitAgainstUndead');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedMinHitBasedOnMaxHitAgainstUndead = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstUndead');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMinHitBasedOnMaxHitAgainstUndead = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstUndead');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
     }
 
     /**
@@ -586,6 +762,60 @@ export class CustomModifiersManager {
         modifierData.decreasedMaxHitPercentAgainstBosses = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitPercentAgainstBosses');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedMaxHitFlatAgainstBosses = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMaxHitFlatAgainstBosses');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMaxHitFlatAgainstBosses = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMaxHitFlatAgainstBosses');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedFlatMinHitAgainstBosses = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedFlatMinHitAgainstBosses');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedFlatMinHitAgainstBosses = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedFlatMinHitAgainstBosses');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedMinHitBasedOnMaxHitAgainstBosses = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstBosses');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMinHitBasedOnMaxHitAgainstBosses = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstBosses');
             },
             description: '',
             isSkill: false,
@@ -676,16 +906,40 @@ export class CustomModifiersManager {
             this.increasedDeathMarkImmunity ??= 0;
             this.decreasedDeathMarkImmunity ??= 0;
             this.humanTraitApplied ??= 0;
+            this.dragonTraitApplied ??= 0;
+            this.undeadTraitApplied ??= 0;
             this.increasedMaxHitPercentAgainstHumans ??= 0;
             this.decreasedMaxHitPercentAgainstHumans ??= 0;
-            this.dragonTraitApplied ??= 0;
             this.increasedMaxHitPercentAgainstDragons ??= 0;
             this.decreasedMaxHitPercentAgainstDragons ??= 0;
-            this.undeadTraitApplied ??= 0;
             this.increasedMaxHitPercentAgainstUndead ??= 0;
             this.decreasedMaxHitPercentAgainstUndead ??= 0;
             this.increasedMaxHitPercentAgainstBosses ??= 0;
             this.decreasedMaxHitPercentAgainstBosses ??= 0;
+            this.increasedMaxHitFlatAgainstHumans ??= 0;
+            this.decreasedMaxHitFlatAgainstHumans ??= 0;
+            this.increasedMaxHitFlatAgainstDragons ??= 0;
+            this.decreasedMaxHitFlatAgainstDragons ??= 0;
+            this.increasedMaxHitFlatAgainstUndead ??= 0;
+            this.decreasedMaxHitFlatAgainstUndead ??= 0;
+            this.increasedMaxHitFlatAgainstBosses ??= 0;
+            this.decreasedMaxHitFlatAgainstBosses ??= 0;
+            this.increasedMinHitBasedOnMaxHitAgainstHumans ??= 0;
+            this.decreasedMinHitBasedOnMaxHitAgainstHumans ??= 0;
+            this.increasedMinHitBasedOnMaxHitAgainstDragons ??= 0;
+            this.decreasedMinHitBasedOnMaxHitAgainstDragons ??= 0;
+            this.increasedMinHitBasedOnMaxHitAgainstUndead ??= 0;
+            this.decreasedMinHitBasedOnMaxHitAgainstUndead ??= 0;
+            this.increasedMinHitBasedOnMaxHitAgainstBosses ??= 0;
+            this.decreasedMinHitBasedOnMaxHitAgainstBosses ??= 0;
+            this.increasedFlatMinHitAgainstHumans ??= 0;
+            this.decreasedFlatMinHitAgainstHumans ??= 0;
+            this.increasedFlatMinHitAgainstDragons ??= 0;
+            this.decreasedFlatMinHitAgainstDragons ??= 0;
+            this.increasedFlatMinHitAgainstUndead ??= 0;
+            this.decreasedFlatMinHitAgainstUndead ??= 0;
+            this.increasedFlatMinHitAgainstBosses ??= 0;
+            this.decreasedFlatMinHitAgainstBosses ??= 0;
         });
     }
 
@@ -803,6 +1057,18 @@ export class CustomModifiersManager {
         });
         this.context.patch(Enemy, "modifyMaxHit").after(function (maxHit) {
             return CustomModifiersManager.customModifyMaxHit(this, maxHit);
+        });
+    }
+
+    /**
+     * 
+     */
+    private patchDamageModifierCalculations() {
+        this.context.patch(Player, "getDamageModifiers").after(function (totalModifier: number, target: Character) {
+            return CustomModifiersManager.customGetDamageModifiers(this, totalModifier);
+        });
+        this.context.patch(Enemy, "getDamageModifiers").after(function (totalModifier: number, target: Character) {
+            return CustomModifiersManager.customGetDamageModifiers(this, totalModifier);
         });
     }
 
@@ -970,6 +1236,28 @@ export class CustomModifiersManager {
         }
 
         return maxHit;
+    }
+
+    /**
+     * 
+     * @param entity
+     * @param maxHit
+     * @returns
+     */
+    private static customGetDamageModifiers(entity: Character, totalModifier: number): number {
+        if (entity.manager.fightInProgress) {
+            if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
+                totalModifier += entity.modifiers.increasedDamageToHumans - entity.modifiers.decreasedDamageToHumans;
+            }
+            if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
+                totalModifier += entity.modifiers.increasedDamageToDragons - entity.modifiers.decreasedDamageToDragons;
+            }
+            if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
+                totalModifier += entity.modifiers.increasedDamageToUndead - entity.modifiers.decreasedDamageToUndead;
+            }
+        }
+
+        return totalModifier;
     }
 
     // #endregion

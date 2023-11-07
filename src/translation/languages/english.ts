@@ -39,6 +39,13 @@ export const en = {
     MODIFIER_DATA_undeadTraitApplied: "Marks the affected as undead",
 
     // #### Type
+    MODIFIER_DATA_increasedDamageToHumans: "+${value}% Damage To Humans",
+    MODIFIER_DATA_decreasedDamageToHumans: "-${value}% Damage To Humans",
+    MODIFIER_DATA_increasedDamageToDragons: "+${value}% Damage To Dragons",
+    MODIFIER_DATA_decreasedDamageToDragons: "-${value}% Damage To Dragons",
+    MODIFIER_DATA_increasedDamageToUndead: "+${value}% Damage To Undead",
+    MODIFIER_DATA_decreasedDamageToUndead: "-${value}% Damage To Undead",
+
     MODIFIER_DATA_increasedMaxHitPercentAgainstHumans: "+${value}% Max Hit when fighting humans",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstHumans: "-${value}% Max Hit when fighting humans",
     MODIFIER_DATA_increasedMaxHitPercentAgainstDragons: "+${value}% Max Hit when fighting dragons",

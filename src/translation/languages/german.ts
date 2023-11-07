@@ -40,6 +40,13 @@
     MODIFIER_DATA_undeadTraitApplied: "Markiert den Betroffenen als Untot",
 
     // #### Type modifiers
+    MODIFIER_DATA_increasedDamageToHumans: "+${value}% Schaden gegen Menschen",
+    MODIFIER_DATA_decreasedDamageToHumans: "-${value}% Schaden gegen Menschen",
+    MODIFIER_DATA_increasedDamageToDragons: "+${value}% Schaden gegen Drachen",
+    MODIFIER_DATA_decreasedDamageToDragons: "-${value}% Schaden gegen Drachen",
+    MODIFIER_DATA_increasedDamageToUndead: "+${value}% Schaden gegen Untote",
+    MODIFIER_DATA_decreasedDamageToUndead: "-${value}% Schaden gegen Untote",
+
     MODIFIER_DATA_increasedMaxHitPercentAgainstHumans: "+${value}% Maximalschaden gegen Menschen",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstHumans: "-${value}% Maximalschaden gegen Menschen",
     MODIFIER_DATA_increasedMaxHitPercentAgainstDragons: "+${value}% Maximalschaden gegen Drachen",

@@ -1,10 +1,11 @@
 # Soon
-* Add the following custom modifiers by type as addition to max/min hit
-  * increased/decreased damage taken (already exists for bosses I think)
-  * increased/decreased damage reduction
 * Add "slayer (area) creature" and "slayer task monster (aka +x% y to slayer tasks)" as additional conditions
   * both conditions seem to currently have "increased/decreased % damage", but nothing else
- 
+  * area handable through "this.manager.areaType"
+  * monster handable through "this.manager.onSlayerTask"
+* Change all "against bosses" modifiers to player modifiers, as they only make sense on a player
 # FINDINGS
 Accuracy cannot get patched (before/after anyway), because "modifier.js" doesn't have a reference to the ongoing battle (?)
 and the end of "modifyAccuracy" has a "globalAccuracyHPScaling" calculation, but no way to patch inbetween... (except for a replace-patch on the whole function)
+
+Damage reduction can't really be patchex (except for replace), because of the same issue as Accuracy (a major re-calculation towards the end of an important function that you must keep after custom logic, but not possible to)
