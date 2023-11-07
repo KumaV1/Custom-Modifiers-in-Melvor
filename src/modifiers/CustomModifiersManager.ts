@@ -6,6 +6,42 @@ import { Constants } from '../Constants'
 /** For typescript intellisense and not throwing errors */
 declare global {
     interface StandardModifierObject<Standard> {
+        increasedMaxHitPercentToCombatAreaMonsters: Standard,
+        decreasedMaxHitPercentToCombatAreaMonsters: Standard,
+        increasedMaxHitFlatToCombatAreaMonsters: Standard,
+        decreasedMaxHitFlatToCombatAreaMonsters: Standard,
+        increasedMinHitBasedOnMaxHitToCombatAreaMonsters: Standard,
+        decreasedMinHitBasedOnMaxHitToCombatAreaMonsters: Standard,
+        increasedFlatMinHitToCombatAreaMonsters: Standard,
+        decreasedFlatMinHitToCombatAreaMonsters: Standard,
+
+        increasedMaxHitPercentToSlayerAreaMonsters: Standard,
+        decreasedMaxHitPercentToSlayerAreaMonsters: Standard,
+        increasedMaxHitFlatToSlayerAreaMonsters: Standard,
+        decreasedMaxHitFlatToSlayerAreaMonsters: Standard,
+        increasedMinHitBasedOnMaxHitToSlayerAreaMonsters: Standard,
+        decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters: Standard,
+        increasedFlatMinHitToSlayerAreaMonsters: Standard,
+        decreasedFlatMinHitToSlayerAreaMonsters: Standard,
+
+        increasedMaxHitPercentToDungeonMonsters: Standard,
+        decreasedMaxHitPercentToDungeonMonsters: Standard,
+        increasedMaxHitFlatToDungeonMonsters: Standard,
+        decreasedMaxHitFlatToDungeonMonsters: Standard,
+        increasedMinHitBasedOnMaxHitToDungeonMonsters: Standard,
+        decreasedMinHitBasedOnMaxHitToDungeonMonsters: Standard,
+        increasedFlatMinHitToDungeonMonsters: Standard,
+        decreasedFlatMinHitToDungeonMonsters: Standard,
+
+        increasedMaxHitPercentToSlayerTasks: Standard,
+        decreasedMaxHitPercentToSlayerTasks: Standard,
+        increasedMaxHitFlatToSlayerTasks: Standard,
+        decreasedMaxHitFlatToSlayerTasks: Standard,
+        increasedMinHitBasedOnMaxHitToSlayerTasks: Standard,
+        decreasedMinHitBasedOnMaxHitToSlayerTasks: Standard,
+        increasedFlatMinHitToSlayerTasks: Standard,
+        decreasedFlatMinHitToSlayerTasks: Standard,
+
         /** Percentage */
         increasedGlobalSkillXPPerLevel: Standard,
         /** Percentage */
@@ -36,6 +72,42 @@ declare global {
     }
 
     interface PlayerModifiers {
+        increasedMaxHitPercentToCombatAreaMonsters: number,
+        decreasedMaxHitPercentToCombatAreaMonsters: number,
+        increasedMaxHitFlatToCombatAreaMonsters: number,
+        decreasedMaxHitFlatToCombatAreaMonsters: number,
+        increasedMinHitBasedOnMaxHitToCombatAreaMonsters: number,
+        decreasedMinHitBasedOnMaxHitToCombatAreaMonsters: number,
+        increasedFlatMinHitToCombatAreaMonsters: number,
+        decreasedFlatMinHitToCombatAreaMonsters: number,
+
+        increasedMaxHitPercentToSlayerAreaMonsters: number,
+        decreasedMaxHitPercentToSlayerAreaMonsters: number,
+        increasedMaxHitFlatToSlayerAreaMonsters: number,
+        decreasedMaxHitFlatToSlayerAreaMonsters: number,
+        increasedMinHitBasedOnMaxHitToSlayerAreaMonsters: number,
+        decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters: number,
+        increasedFlatMinHitToSlayerAreaMonsters: number,
+        decreasedFlatMinHitToSlayerAreaMonsters: number,
+
+        increasedMaxHitPercentToDungeonMonsters: number,
+        decreasedMaxHitPercentToDungeonMonsters: number,
+        increasedMaxHitFlatToDungeonMonsters: number,
+        decreasedMaxHitFlatToDungeonMonsters: number,
+        increasedMinHitBasedOnMaxHitToDungeonMonsters: number,
+        decreasedMinHitBasedOnMaxHitToDungeonMonsters: number,
+        increasedFlatMinHitToDungeonMonsters: number,
+        decreasedFlatMinHitToDungeonMonsters: number,
+
+        increasedMaxHitPercentToSlayerTasks: number,
+        decreasedMaxHitPercentToSlayerTasks: number,
+        increasedMaxHitFlatToSlayerTasks: number,
+        decreasedMaxHitFlatToSlayerTasks: number,
+        increasedMinHitBasedOnMaxHitToSlayerTasks: number,
+        decreasedMinHitBasedOnMaxHitToSlayerTasks: number,
+        increasedFlatMinHitToSlayerTasks: number,
+        decreasedFlatMinHitToSlayerTasks: number,
+
         /** Percentage */
         increasedGlobalSkillXPPerLevel: number,
         /** Percentage */
@@ -59,13 +131,14 @@ declare global {
         decreasedChanceToApplyPoisonOnSpawn: Standard,
         increasedChanceToApplyDeadlyPoisonOnSpawn: Standard,
         decreasedChanceToApplyDeadlyPoisonOnSpawn: Standard,
+
         /** Flag (by the custom effect) that effect has been applied, it's NOT an increasing value */
         deathMark: Standard,
         increasedDeathMarkOnHit: Standard,
         increasedChanceToApplyStackOfDeathMark: Standard,
         decreasedChanceToApplyStackOfDeathMark: Standard,
         increasedDeathMarkImmunity: Standard,
-        decreasedDeathMarkImmunity: Standard,
+        decreasedDeathMarkImmunity: Standard,        
 
         humanTraitApplied: Standard,
         dragonTraitApplied: Standard,
@@ -73,44 +146,43 @@ declare global {
 
         increasedDamageToHumans: Standard,
         decreasedDamageToHumans: Standard,
-        increasedDamageToDragons: Standard,
-        decreasedDamageToDragons: Standard,
-        increasedDamageToUndead: Standard,
-        decreasedDamageToUndead: Standard,
-
         increasedMaxHitPercentAgainstHumans: Standard,
         decreasedMaxHitPercentAgainstHumans: Standard,
-        increasedMaxHitPercentAgainstDragons: Standard,
-        decreasedMaxHitPercentAgainstDragons: Standard,
-        increasedMaxHitPercentAgainstUndead: Standard,
-        decreasedMaxHitPercentAgainstUndead: Standard,
-        increasedMaxHitPercentAgainstBosses: Standard,
-        decreasedMaxHitPercentAgainstBosses: Standard,
-
         increasedMaxHitFlatAgainstHumans: Standard,
         decreasedMaxHitFlatAgainstHumans: Standard,
-        increasedMaxHitFlatAgainstDragons: Standard,
-        decreasedMaxHitFlatAgainstDragons: Standard,
-        increasedMaxHitFlatAgainstUndead: Standard,
-        decreasedMaxHitFlatAgainstUndead: Standard,
-        increasedMaxHitFlatAgainstBosses: Standard,
-        decreasedMaxHitFlatAgainstBosses: Standard,
-
         increasedMinHitBasedOnMaxHitAgainstHumans: Standard,
         decreasedMinHitBasedOnMaxHitAgainstHumans: Standard,
-        increasedMinHitBasedOnMaxHitAgainstDragons: Standard,
-        decreasedMinHitBasedOnMaxHitAgainstDragons: Standard,
-        increasedMinHitBasedOnMaxHitAgainstUndead: Standard,
-        decreasedMinHitBasedOnMaxHitAgainstUndead: Standard,
-        increasedMinHitBasedOnMaxHitAgainstBosses: Standard,
-        decreasedMinHitBasedOnMaxHitAgainstBosses: Standard,
-
         increasedFlatMinHitAgainstHumans: Standard,
         decreasedFlatMinHitAgainstHumans: Standard,
+
+        increasedDamageToDragons: Standard,
+        decreasedDamageToDragons: Standard,
+        increasedMaxHitPercentAgainstDragons: Standard,
+        decreasedMaxHitPercentAgainstDragons: Standard,
+        increasedMaxHitFlatAgainstDragons: Standard,
+        decreasedMaxHitFlatAgainstDragons: Standard,
+        increasedMinHitBasedOnMaxHitAgainstDragons: Standard,
+        decreasedMinHitBasedOnMaxHitAgainstDragons: Standard,
         increasedFlatMinHitAgainstDragons: Standard,
         decreasedFlatMinHitAgainstDragons: Standard,
+
+        increasedDamageToUndead: Standard,
+        decreasedDamageToUndead: Standard,
+        increasedMaxHitPercentAgainstUndead: Standard,
+        decreasedMaxHitPercentAgainstUndead: Standard,
+        increasedMaxHitFlatAgainstUndead: Standard,
+        decreasedMaxHitFlatAgainstUndead: Standard,
+        increasedMinHitBasedOnMaxHitAgainstUndead: Standard,
+        decreasedMinHitBasedOnMaxHitAgainstUndead: Standard,
         increasedFlatMinHitAgainstUndead: Standard,
         decreasedFlatMinHitAgainstUndead: Standard,
+
+        increasedMaxHitPercentAgainstBosses: Standard,
+        decreasedMaxHitPercentAgainstBosses: Standard,
+        increasedMaxHitFlatAgainstBosses: Standard,
+        decreasedMaxHitFlatAgainstBosses: Standard,
+        increasedMinHitBasedOnMaxHitAgainstBosses: Standard,
+        decreasedMinHitBasedOnMaxHitAgainstBosses: Standard,
         increasedFlatMinHitAgainstBosses: Standard,
         decreasedFlatMinHitAgainstBosses: Standard
     }
@@ -138,44 +210,43 @@ declare global {
 
         increasedDamageToHumans: number,
         decreasedDamageToHumans: number,
-        increasedDamageToDragons: number,
-        decreasedDamageToDragons: number,
-        increasedDamageToUndead: number,
-        decreasedDamageToUndead: number,
-
         increasedMaxHitPercentAgainstHumans: number,
         decreasedMaxHitPercentAgainstHumans: number,
-        increasedMaxHitPercentAgainstDragons: number,
-        decreasedMaxHitPercentAgainstDragons: number,
-        increasedMaxHitPercentAgainstUndead: number,
-        decreasedMaxHitPercentAgainstUndead: number,
-        increasedMaxHitPercentAgainstBosses: number,
-        decreasedMaxHitPercentAgainstBosses: number,
-
         increasedMaxHitFlatAgainstHumans: number,
         decreasedMaxHitFlatAgainstHumans: number,
-        increasedMaxHitFlatAgainstDragons: number,
-        decreasedMaxHitFlatAgainstDragons: number,
-        increasedMaxHitFlatAgainstUndead: number,
-        decreasedMaxHitFlatAgainstUndead: number,
-        increasedMaxHitFlatAgainstBosses: number,
-        decreasedMaxHitFlatAgainstBosses: number,
-
         increasedMinHitBasedOnMaxHitAgainstHumans: number,
         decreasedMinHitBasedOnMaxHitAgainstHumans: number,
-        increasedMinHitBasedOnMaxHitAgainstDragons: number,
-        decreasedMinHitBasedOnMaxHitAgainstDragons: number,
-        increasedMinHitBasedOnMaxHitAgainstUndead: number,
-        decreasedMinHitBasedOnMaxHitAgainstUndead: number,
-        increasedMinHitBasedOnMaxHitAgainstBosses: number,
-        decreasedMinHitBasedOnMaxHitAgainstBosses: number,
-
         increasedFlatMinHitAgainstHumans: number,
         decreasedFlatMinHitAgainstHumans: number,
+
+        increasedDamageToDragons: number,
+        decreasedDamageToDragons: number,
+        increasedMaxHitPercentAgainstDragons: number,
+        decreasedMaxHitPercentAgainstDragons: number,
+        increasedMaxHitFlatAgainstDragons: number,
+        decreasedMaxHitFlatAgainstDragons: number,
+        increasedMinHitBasedOnMaxHitAgainstDragons: number,
+        decreasedMinHitBasedOnMaxHitAgainstDragons: number,
         increasedFlatMinHitAgainstDragons: number,
         decreasedFlatMinHitAgainstDragons: number,
+
+        increasedDamageToUndead: number,
+        decreasedDamageToUndead: number,
+        increasedMaxHitPercentAgainstUndead: number,
+        decreasedMaxHitPercentAgainstUndead: number,
+        increasedMaxHitFlatAgainstUndead: number,
+        decreasedMaxHitFlatAgainstUndead: number,
+        increasedMinHitBasedOnMaxHitAgainstUndead: number,
+        decreasedMinHitBasedOnMaxHitAgainstUndead: number,
         increasedFlatMinHitAgainstUndead: number,
         decreasedFlatMinHitAgainstUndead: number,
+
+        increasedMaxHitPercentAgainstBosses: number,
+        decreasedMaxHitPercentAgainstBosses: number,
+        increasedMaxHitFlatAgainstBosses: number,
+        decreasedMaxHitFlatAgainstBosses: number,
+        increasedMinHitBasedOnMaxHitAgainstBosses: number,
+        decreasedMinHitBasedOnMaxHitAgainstBosses: number,
         increasedFlatMinHitAgainstBosses: number,
         decreasedFlatMinHitAgainstBosses: number
     }
@@ -205,6 +276,10 @@ export class CustomModifiersManager {
         this.registerSkillModifiers();
         this.registerSpawnModifiers();
         this.registerDeathMarkModifiers();
+        this.registerCombatAreaModifiers();
+        this.registerSlayerAreaModifiers();
+        this.registerDungeonModifiers();
+        this.registerSlayerTaskModifiers();
         this.registerTraitApplicationModifiers();
         this.registerHumanModifiers();
         this.registerDragonModifiers();
@@ -225,6 +300,7 @@ export class CustomModifiersManager {
         this.patchApplyOnHitEffects();
         this.patchMinHitCalculations();
         this.patchMaxHitCalculations();
+        this.patchDamageModifierCalculations();
     }
 
 
@@ -471,6 +547,306 @@ export class CustomModifiersManager {
         modifierData.decreasedDeathMarkImmunity = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedDeathMarkImmunity');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+    }
+
+    private registerCombatAreaModifiers() {
+        modifierData.increasedMaxHitPercentToCombatAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMaxHitPercentToCombatAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMaxHitPercentToCombatAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMaxHitPercentToCombatAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedMaxHitFlatToCombatAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMaxHitFlatToCombatAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMaxHitFlatToCombatAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMaxHitFlatToCombatAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedFlatMinHitToCombatAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedFlatMinHitToCombatAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedFlatMinHitToCombatAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedFlatMinHitToCombatAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedMinHitBasedOnMaxHitToCombatAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitToCombatAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMinHitBasedOnMaxHitToCombatAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToCombatAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+    }
+
+    private registerSlayerAreaModifiers() {
+        modifierData.increasedMaxHitPercentToSlayerAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMaxHitPercentToSlayerAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMaxHitPercentToSlayerAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMaxHitPercentToSlayerAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedMaxHitFlatToSlayerAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMaxHitFlatToSlayerAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMaxHitFlatToSlayerAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMaxHitFlatToSlayerAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedFlatMinHitToSlayerAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedFlatMinHitToSlayerAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedFlatMinHitToSlayerAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedFlatMinHitToSlayerAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedMinHitBasedOnMaxHitToSlayerAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitToSlayerAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+    }
+
+    private registerDungeonModifiers() {
+        modifierData.increasedMaxHitPercentToDungeonMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMaxHitPercentToDungeonMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMaxHitPercentToDungeonMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMaxHitPercentToDungeonMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedMaxHitFlatToDungeonMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMaxHitFlatToDungeonMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMaxHitFlatToDungeonMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMaxHitFlatToDungeonMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedFlatMinHitToDungeonMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedFlatMinHitToDungeonMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedFlatMinHitToDungeonMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedFlatMinHitToDungeonMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedMinHitBasedOnMaxHitToDungeonMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitToDungeonMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMinHitBasedOnMaxHitToDungeonMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToDungeonMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+    }
+
+    private registerSlayerTaskModifiers() {
+        modifierData.increasedMaxHitPercentToSlayerTasks = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMaxHitPercentToSlayerTasks');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMaxHitPercentToSlayerTasks = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMaxHitPercentToSlayerTasks');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedMaxHitFlatToSlayerTasks = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMaxHitFlatToSlayerTasks');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMaxHitFlatToSlayerTasks = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMaxHitFlatToSlayerTasks');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedFlatMinHitToSlayerTasks = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedFlatMinHitToSlayerTasks');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedFlatMinHitToSlayerTasks = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedFlatMinHitToSlayerTasks');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedMinHitBasedOnMaxHitToSlayerTasks = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitToSlayerTasks');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedMinHitBasedOnMaxHitToSlayerTasks = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToSlayerTasks');
             },
             description: '',
             isSkill: false,
@@ -899,45 +1275,51 @@ export class CustomModifiersManager {
             this.decreasedChanceToApplyPoisonOnSpawn ??= 0;
             this.increasedChanceToApplyDeadlyPoisonOnSpawn ??= 0;
             this.decreasedChanceToApplyDeadlyPoisonOnSpawn ??= 0;
+
             this.deathMark ??= 0;
             this.increasedDeathMarkOnHit ??= 0;
             this.increasedChanceToApplyStackOfDeathMark ??= 0;
             this.decreasedChanceToApplyStackOfDeathMark ??= 0;
             this.increasedDeathMarkImmunity ??= 0;
             this.decreasedDeathMarkImmunity ??= 0;
+
             this.humanTraitApplied ??= 0;
             this.dragonTraitApplied ??= 0;
             this.undeadTraitApplied ??= 0;
+
             this.increasedMaxHitPercentAgainstHumans ??= 0;
             this.decreasedMaxHitPercentAgainstHumans ??= 0;
-            this.increasedMaxHitPercentAgainstDragons ??= 0;
-            this.decreasedMaxHitPercentAgainstDragons ??= 0;
-            this.increasedMaxHitPercentAgainstUndead ??= 0;
-            this.decreasedMaxHitPercentAgainstUndead ??= 0;
-            this.increasedMaxHitPercentAgainstBosses ??= 0;
-            this.decreasedMaxHitPercentAgainstBosses ??= 0;
             this.increasedMaxHitFlatAgainstHumans ??= 0;
             this.decreasedMaxHitFlatAgainstHumans ??= 0;
-            this.increasedMaxHitFlatAgainstDragons ??= 0;
-            this.decreasedMaxHitFlatAgainstDragons ??= 0;
-            this.increasedMaxHitFlatAgainstUndead ??= 0;
-            this.decreasedMaxHitFlatAgainstUndead ??= 0;
-            this.increasedMaxHitFlatAgainstBosses ??= 0;
-            this.decreasedMaxHitFlatAgainstBosses ??= 0;
             this.increasedMinHitBasedOnMaxHitAgainstHumans ??= 0;
             this.decreasedMinHitBasedOnMaxHitAgainstHumans ??= 0;
-            this.increasedMinHitBasedOnMaxHitAgainstDragons ??= 0;
-            this.decreasedMinHitBasedOnMaxHitAgainstDragons ??= 0;
-            this.increasedMinHitBasedOnMaxHitAgainstUndead ??= 0;
-            this.decreasedMinHitBasedOnMaxHitAgainstUndead ??= 0;
-            this.increasedMinHitBasedOnMaxHitAgainstBosses ??= 0;
-            this.decreasedMinHitBasedOnMaxHitAgainstBosses ??= 0;
             this.increasedFlatMinHitAgainstHumans ??= 0;
             this.decreasedFlatMinHitAgainstHumans ??= 0;
+
+            this.increasedMaxHitPercentAgainstDragons ??= 0;
+            this.decreasedMaxHitPercentAgainstDragons ??= 0;
+            this.increasedMaxHitFlatAgainstDragons ??= 0;
+            this.decreasedMaxHitFlatAgainstDragons ??= 0;
+            this.increasedMinHitBasedOnMaxHitAgainstDragons ??= 0;
+            this.decreasedMinHitBasedOnMaxHitAgainstDragons ??= 0;
             this.increasedFlatMinHitAgainstDragons ??= 0;
             this.decreasedFlatMinHitAgainstDragons ??= 0;
+
+            this.increasedMaxHitPercentAgainstUndead ??= 0;
+            this.decreasedMaxHitPercentAgainstUndead ??= 0;
+            this.increasedMaxHitFlatAgainstUndead ??= 0;
+            this.decreasedMaxHitFlatAgainstUndead ??= 0;
+            this.increasedMinHitBasedOnMaxHitAgainstUndead ??= 0;
+            this.decreasedMinHitBasedOnMaxHitAgainstUndead ??= 0;
             this.increasedFlatMinHitAgainstUndead ??= 0;
             this.decreasedFlatMinHitAgainstUndead ??= 0;
+
+            this.increasedMaxHitPercentAgainstBosses ??= 0;
+            this.decreasedMaxHitPercentAgainstBosses ??= 0;
+            this.increasedMaxHitFlatAgainstBosses ??= 0;
+            this.decreasedMaxHitFlatAgainstBosses ??= 0;
+            this.increasedMinHitBasedOnMaxHitAgainstBosses ??= 0;
+            this.decreasedMinHitBasedOnMaxHitAgainstBosses ??= 0;
             this.increasedFlatMinHitAgainstBosses ??= 0;
             this.decreasedFlatMinHitAgainstBosses ??= 0;
         });
@@ -1026,6 +1408,28 @@ export class CustomModifiersManager {
          */
         this.context.patch(Player, "modifyMinHit").after(function (minHit: number) {
             minHit += CustomModifiersManager.customGetMinModifier(this, minHit);
+
+            switch (this.manager.areaType) {
+                case CombatAreaType.Combat:
+                    minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitToCombatAreaMonsters - this.modifiers.decreasedMinHitBasedOnMaxHitToCombatAreaMonsters)) / 100);
+                    minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitToCombatAreaMonsters - this.modifiers.decreasedFlatMinHitToCombatAreaMonsters);
+                    break;
+                case CombatAreaType.Slayer:
+                    minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitToSlayerAreaMonsters - this.modifiers.decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters)) / 100);
+                    minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitToSlayerAreaMonsters - this.modifiers.decreasedFlatMinHitToSlayerAreaMonsters);
+                    break;
+                case CombatAreaType.Dungeon:
+                    minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitToDungeonMonsters - this.modifiers.decreasedMinHitBasedOnMaxHitToDungeonMonsters)) / 100);
+                    minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitToDungeonMonsters - this.modifiers.decreasedFlatMinHitToDungeonMonsters);
+                    break;
+                default:
+            }
+
+            if (this.manager.onSlayerTask) {
+                minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitToSlayerTasks - this.modifiers.decreasedMinHitBasedOnMaxHitToSlayerTasks)) / 100);
+                minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitToSlayerTasks - this.modifiers.decreasedFlatMinHitToSlayerTasks);
+            }
+
             return clampValue(minHit, 1, this.stats.maxHit);
         });
         this.context.patch(Enemy, "modifyMinHit").after(function (minHit: number) {
@@ -1043,7 +1447,26 @@ export class CustomModifiersManager {
          * Presumably two patches, as the base class "Character" is abstract and therefore cannot be patched
          */
         this.context.patch(Player, "getMaxHitModifier").after(function (maxHitModifier: number): number {
-            return CustomModifiersManager.customGetMaxHitModifier(this, maxHitModifier);
+            maxHitModifier += CustomModifiersManager.customGetMaxHitModifier(this, maxHitModifier);
+
+            switch (this.manager.areaType) {
+                case CombatAreaType.Combat:
+                    maxHitModifier += this.modifiers.increasedMaxHitPercentToCombatAreaMonsters - this.modifiers.decreasedMaxHitPercentToCombatAreaMonsters;
+                    break;
+                case CombatAreaType.Slayer:
+                    maxHitModifier += this.modifiers.increasedMaxHitPercentToSlayerAreaMonsters - this.modifiers.decreasedMaxHitPercentToSlayerAreaMonsters;
+                    break;
+                case CombatAreaType.Dungeon:
+                    maxHitModifier += this.modifiers.increasedMaxHitPercentToDungeonMonsters - this.modifiers.decreasedMaxHitPercentToDungeonMonsters;
+                    break;
+                default:
+            }
+
+            if (this.manager.onSlayerTask) {
+                maxHitModifier += this.modifiers.increasedMaxHitPercentToSlayerTasks - this.modifiers.decreasedMaxHitPercentToSlayerTasks;
+            }
+
+            return maxHitModifier;
         });
         this.context.patch(Enemy, "getMaxHitModifier").after(function (maxHitModifier: number): number {
             return CustomModifiersManager.customGetMaxHitModifier(this, maxHitModifier);
@@ -1053,7 +1476,26 @@ export class CustomModifiersManager {
          * Patches new max hit flat increasing modifiers into base logic
          */
         this.context.patch(Player, "modifyMaxHit").after(function (maxHit) {
-            return CustomModifiersManager.customModifyMaxHit(this, maxHit);
+            maxHit += CustomModifiersManager.customModifyMaxHit(this, maxHit);
+
+            switch (this.manager.areaType) {
+                case CombatAreaType.Combat:
+                    maxHit += this.modifiers.increasedMaxHitFlatToCombatAreaMonsters - this.modifiers.decreasedMaxHitFlatToCombatAreaMonsters;
+                    break;
+                case CombatAreaType.Slayer:
+                    maxHit += this.modifiers.increasedMaxHitFlatToSlayerAreaMonsters - this.modifiers.decreasedMaxHitFlatToSlayerAreaMonsters;
+                    break;
+                case CombatAreaType.Dungeon:
+                    maxHit += this.modifiers.increasedMaxHitFlatToDungeonMonsters - this.modifiers.decreasedMaxHitFlatToDungeonMonsters;
+                    break;
+                default:
+            }
+
+            if (this.manager.onSlayerTask) {
+                maxHit += this.modifiers.increasedMaxHitFlatToSlayerTasks - this.modifiers.decreasedMaxHitFlatToSlayerTasks;
+            }
+
+            return maxHit;
         });
         this.context.patch(Enemy, "modifyMaxHit").after(function (maxHit) {
             return CustomModifiersManager.customModifyMaxHit(this, maxHit);

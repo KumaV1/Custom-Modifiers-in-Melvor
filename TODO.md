@@ -1,8 +1,4 @@
 # Soon
-* Add "slayer (area) creature" and "slayer task monster (aka +x% y to slayer tasks)" as additional conditions
-  * both conditions seem to currently have "increased/decreased % damage", but nothing else
-  * area handable through "this.manager.areaType"
-  * monster handable through "this.manager.onSlayerTask"
 * Change all "against bosses" modifiers to player modifiers, as they only make sense on a player
 # FINDINGS
 Accuracy cannot get patched (before/after anyway), because "modifier.js" doesn't have a reference to the ongoing battle (?)
