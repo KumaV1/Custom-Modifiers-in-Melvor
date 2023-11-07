@@ -1,5 +1,3 @@
-# Soon
-* Change all "against bosses" modifiers to player modifiers, as they only make sense on a player
 # FINDINGS
 Accuracy cannot get patched (before/after anyway), because "modifier.js" doesn't have a reference to the ongoing battle (?)
 and the end of "modifyAccuracy" has a "globalAccuracyHPScaling" calculation, but no way to patch inbetween... (except for a replace-patch on the whole function)

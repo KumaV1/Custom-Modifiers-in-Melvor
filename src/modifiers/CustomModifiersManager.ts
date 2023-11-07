@@ -42,6 +42,15 @@ declare global {
         increasedFlatMinHitToSlayerTasks: Standard,
         decreasedFlatMinHitToSlayerTasks: Standard,
 
+        increasedMaxHitPercentAgainstBosses: Standard,
+        decreasedMaxHitPercentAgainstBosses: Standard,
+        increasedMaxHitFlatAgainstBosses: Standard,
+        decreasedMaxHitFlatAgainstBosses: Standard,
+        increasedMinHitBasedOnMaxHitAgainstBosses: Standard,
+        decreasedMinHitBasedOnMaxHitAgainstBosses: Standard,
+        increasedFlatMinHitAgainstBosses: Standard,
+        decreasedFlatMinHitAgainstBosses: Standard
+
         /** Percentage */
         increasedGlobalSkillXPPerLevel: Standard,
         /** Percentage */
@@ -108,6 +117,15 @@ declare global {
         increasedFlatMinHitToSlayerTasks: number,
         decreasedFlatMinHitToSlayerTasks: number,
 
+        increasedMaxHitPercentAgainstBosses: number,
+        decreasedMaxHitPercentAgainstBosses: number,
+        increasedMaxHitFlatAgainstBosses: number,
+        decreasedMaxHitFlatAgainstBosses: number,
+        increasedMinHitBasedOnMaxHitAgainstBosses: number,
+        decreasedMinHitBasedOnMaxHitAgainstBosses: number,
+        increasedFlatMinHitAgainstBosses: number,
+        decreasedFlatMinHitAgainstBosses: number
+
         /** Percentage */
         increasedGlobalSkillXPPerLevel: number,
         /** Percentage */
@@ -138,7 +156,7 @@ declare global {
         increasedChanceToApplyStackOfDeathMark: Standard,
         decreasedChanceToApplyStackOfDeathMark: Standard,
         increasedDeathMarkImmunity: Standard,
-        decreasedDeathMarkImmunity: Standard,        
+        decreasedDeathMarkImmunity: Standard,
 
         humanTraitApplied: Standard,
         dragonTraitApplied: Standard,
@@ -175,16 +193,7 @@ declare global {
         increasedMinHitBasedOnMaxHitAgainstUndead: Standard,
         decreasedMinHitBasedOnMaxHitAgainstUndead: Standard,
         increasedFlatMinHitAgainstUndead: Standard,
-        decreasedFlatMinHitAgainstUndead: Standard,
-
-        increasedMaxHitPercentAgainstBosses: Standard,
-        decreasedMaxHitPercentAgainstBosses: Standard,
-        increasedMaxHitFlatAgainstBosses: Standard,
-        decreasedMaxHitFlatAgainstBosses: Standard,
-        increasedMinHitBasedOnMaxHitAgainstBosses: Standard,
-        decreasedMinHitBasedOnMaxHitAgainstBosses: Standard,
-        increasedFlatMinHitAgainstBosses: Standard,
-        decreasedFlatMinHitAgainstBosses: Standard
+        decreasedFlatMinHitAgainstUndead: Standard
     }
 
     interface CombatModifiers {
@@ -239,23 +248,13 @@ declare global {
         increasedMinHitBasedOnMaxHitAgainstUndead: number,
         decreasedMinHitBasedOnMaxHitAgainstUndead: number,
         increasedFlatMinHitAgainstUndead: number,
-        decreasedFlatMinHitAgainstUndead: number,
-
-        increasedMaxHitPercentAgainstBosses: number,
-        decreasedMaxHitPercentAgainstBosses: number,
-        increasedMaxHitFlatAgainstBosses: number,
-        decreasedMaxHitFlatAgainstBosses: number,
-        increasedMinHitBasedOnMaxHitAgainstBosses: number,
-        decreasedMinHitBasedOnMaxHitAgainstBosses: number,
-        increasedFlatMinHitAgainstBosses: number,
-        decreasedFlatMinHitAgainstBosses: number
+        decreasedFlatMinHitAgainstUndead: number
     }
 
     interface Character {
         isHuman: boolean,
         isDragon: boolean,
-        isUndead: boolean,
-        isBoss: boolean // as player doesn't have this property (understandably); just intellisense and compiler error prevention as mentioned before
+        isUndead: boolean
     }
 
     interface Game {
@@ -1287,6 +1286,8 @@ export class CustomModifiersManager {
             this.dragonTraitApplied ??= 0;
             this.undeadTraitApplied ??= 0;
 
+            this.increasedDamageToHumans ??= 0;
+            this.decreasedDamageToHumans ??= 0;
             this.increasedMaxHitPercentAgainstHumans ??= 0;
             this.decreasedMaxHitPercentAgainstHumans ??= 0;
             this.increasedMaxHitFlatAgainstHumans ??= 0;
@@ -1296,6 +1297,8 @@ export class CustomModifiersManager {
             this.increasedFlatMinHitAgainstHumans ??= 0;
             this.decreasedFlatMinHitAgainstHumans ??= 0;
 
+            this.increasedDamageToDragons ??= 0;
+            this.decreasedDamageToDragons ??= 0;
             this.increasedMaxHitPercentAgainstDragons ??= 0;
             this.decreasedMaxHitPercentAgainstDragons ??= 0;
             this.increasedMaxHitFlatAgainstDragons ??= 0;
@@ -1305,6 +1308,8 @@ export class CustomModifiersManager {
             this.increasedFlatMinHitAgainstDragons ??= 0;
             this.decreasedFlatMinHitAgainstDragons ??= 0;
 
+            this.increasedDamageToUndead ??= 0;
+            this.decreasedDamageToUndead ??= 0;
             this.increasedMaxHitPercentAgainstUndead ??= 0;
             this.decreasedMaxHitPercentAgainstUndead ??= 0;
             this.increasedMaxHitFlatAgainstUndead ??= 0;
@@ -1313,15 +1318,6 @@ export class CustomModifiersManager {
             this.decreasedMinHitBasedOnMaxHitAgainstUndead ??= 0;
             this.increasedFlatMinHitAgainstUndead ??= 0;
             this.decreasedFlatMinHitAgainstUndead ??= 0;
-
-            this.increasedMaxHitPercentAgainstBosses ??= 0;
-            this.decreasedMaxHitPercentAgainstBosses ??= 0;
-            this.increasedMaxHitFlatAgainstBosses ??= 0;
-            this.decreasedMaxHitFlatAgainstBosses ??= 0;
-            this.increasedMinHitBasedOnMaxHitAgainstBosses ??= 0;
-            this.decreasedMinHitBasedOnMaxHitAgainstBosses ??= 0;
-            this.increasedFlatMinHitAgainstBosses ??= 0;
-            this.decreasedFlatMinHitAgainstBosses ??= 0;
         });
     }
 
@@ -1407,33 +1403,40 @@ export class CustomModifiersManager {
          * instead just used after patch as usual, repeating the "clampValue" call at the end to avoid invalid values
          */
         this.context.patch(Player, "modifyMinHit").after(function (minHit: number) {
-            minHit += CustomModifiersManager.customGetMinModifier(this, minHit);
+            if (this.manager.fightInProgress) {
+                minHit = CustomModifiersManager.customGetMinModifierAgainstType(this, minHit);
 
-            switch (this.manager.areaType) {
-                case CombatAreaType.Combat:
-                    minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitToCombatAreaMonsters - this.modifiers.decreasedMinHitBasedOnMaxHitToCombatAreaMonsters)) / 100);
-                    minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitToCombatAreaMonsters - this.modifiers.decreasedFlatMinHitToCombatAreaMonsters);
-                    break;
-                case CombatAreaType.Slayer:
-                    minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitToSlayerAreaMonsters - this.modifiers.decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters)) / 100);
-                    minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitToSlayerAreaMonsters - this.modifiers.decreasedFlatMinHitToSlayerAreaMonsters);
-                    break;
-                case CombatAreaType.Dungeon:
-                    minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitToDungeonMonsters - this.modifiers.decreasedMinHitBasedOnMaxHitToDungeonMonsters)) / 100);
-                    minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitToDungeonMonsters - this.modifiers.decreasedFlatMinHitToDungeonMonsters);
-                    break;
-                default:
-            }
+                if (this.manager.enemy.isBoss) {
+                    minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitAgainstBosses - this.modifiers.decreasedMinHitBasedOnMaxHitAgainstBosses)) / 100);
+                    minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitAgainstBosses - this.modifiers.decreasedFlatMinHitAgainstBosses);
+                }
 
-            if (this.manager.onSlayerTask) {
-                minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitToSlayerTasks - this.modifiers.decreasedMinHitBasedOnMaxHitToSlayerTasks)) / 100);
-                minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitToSlayerTasks - this.modifiers.decreasedFlatMinHitToSlayerTasks);
+                switch (this.manager.areaType) {
+                    case CombatAreaType.Combat:
+                        minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitToCombatAreaMonsters - this.modifiers.decreasedMinHitBasedOnMaxHitToCombatAreaMonsters)) / 100);
+                        minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitToCombatAreaMonsters - this.modifiers.decreasedFlatMinHitToCombatAreaMonsters);
+                        break;
+                    case CombatAreaType.Slayer:
+                        minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitToSlayerAreaMonsters - this.modifiers.decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters)) / 100);
+                        minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitToSlayerAreaMonsters - this.modifiers.decreasedFlatMinHitToSlayerAreaMonsters);
+                        break;
+                    case CombatAreaType.Dungeon:
+                        minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitToDungeonMonsters - this.modifiers.decreasedMinHitBasedOnMaxHitToDungeonMonsters)) / 100);
+                        minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitToDungeonMonsters - this.modifiers.decreasedFlatMinHitToDungeonMonsters);
+                        break;
+                    default:
+                }
+
+                if (this.manager.onSlayerTask) {
+                    minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitToSlayerTasks - this.modifiers.decreasedMinHitBasedOnMaxHitToSlayerTasks)) / 100);
+                    minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitToSlayerTasks - this.modifiers.decreasedFlatMinHitToSlayerTasks);
+                }
             }
 
             return clampValue(minHit, 1, this.stats.maxHit);
         });
         this.context.patch(Enemy, "modifyMinHit").after(function (minHit: number) {
-            minHit += CustomModifiersManager.customGetMinModifier(this, minHit);
+            minHit = CustomModifiersManager.customGetMinModifierAgainstType(this, minHit);
             return clampValue(minHit, 1, this.stats.maxHit);
         });
     }
@@ -1447,58 +1450,70 @@ export class CustomModifiersManager {
          * Presumably two patches, as the base class "Character" is abstract and therefore cannot be patched
          */
         this.context.patch(Player, "getMaxHitModifier").after(function (maxHitModifier: number): number {
-            maxHitModifier += CustomModifiersManager.customGetMaxHitModifier(this, maxHitModifier);
+            if (this.manager.fightInProgress) {
+                maxHitModifier = CustomModifiersManager.customGetMaxHitModifierAgainstType(this, maxHitModifier);
 
-            switch (this.manager.areaType) {
-                case CombatAreaType.Combat:
-                    maxHitModifier += this.modifiers.increasedMaxHitPercentToCombatAreaMonsters - this.modifiers.decreasedMaxHitPercentToCombatAreaMonsters;
-                    break;
-                case CombatAreaType.Slayer:
-                    maxHitModifier += this.modifiers.increasedMaxHitPercentToSlayerAreaMonsters - this.modifiers.decreasedMaxHitPercentToSlayerAreaMonsters;
-                    break;
-                case CombatAreaType.Dungeon:
-                    maxHitModifier += this.modifiers.increasedMaxHitPercentToDungeonMonsters - this.modifiers.decreasedMaxHitPercentToDungeonMonsters;
-                    break;
-                default:
-            }
+                if (this.manager.enemy.isBoss) {
+                    maxHitModifier += this.modifiers.increasedMaxHitPercentAgainstBosses - this.modifiers.decreasedMaxHitPercentAgainstBosses;
+                }
 
-            if (this.manager.onSlayerTask) {
-                maxHitModifier += this.modifiers.increasedMaxHitPercentToSlayerTasks - this.modifiers.decreasedMaxHitPercentToSlayerTasks;
+                switch (this.manager.areaType) {
+                    case CombatAreaType.Combat:
+                        maxHitModifier += this.modifiers.increasedMaxHitPercentToCombatAreaMonsters - this.modifiers.decreasedMaxHitPercentToCombatAreaMonsters;
+                        break;
+                    case CombatAreaType.Slayer:
+                        maxHitModifier += this.modifiers.increasedMaxHitPercentToSlayerAreaMonsters - this.modifiers.decreasedMaxHitPercentToSlayerAreaMonsters;
+                        break;
+                    case CombatAreaType.Dungeon:
+                        maxHitModifier += this.modifiers.increasedMaxHitPercentToDungeonMonsters - this.modifiers.decreasedMaxHitPercentToDungeonMonsters;
+                        break;
+                    default:
+                }
+
+                if (this.manager.onSlayerTask) {
+                    maxHitModifier += this.modifiers.increasedMaxHitPercentToSlayerTasks - this.modifiers.decreasedMaxHitPercentToSlayerTasks;
+                }
             }
 
             return maxHitModifier;
         });
         this.context.patch(Enemy, "getMaxHitModifier").after(function (maxHitModifier: number): number {
-            return CustomModifiersManager.customGetMaxHitModifier(this, maxHitModifier);
+            return CustomModifiersManager.customGetMaxHitModifierAgainstType(this, maxHitModifier);
         });
 
         /**
          * Patches new max hit flat increasing modifiers into base logic
          */
         this.context.patch(Player, "modifyMaxHit").after(function (maxHit) {
-            maxHit += CustomModifiersManager.customModifyMaxHit(this, maxHit);
+            if (this.manager.fightInProgress) {
+                maxHit = CustomModifiersManager.customModifyMaxHitAgainstType(this, maxHit);
 
-            switch (this.manager.areaType) {
-                case CombatAreaType.Combat:
-                    maxHit += this.modifiers.increasedMaxHitFlatToCombatAreaMonsters - this.modifiers.decreasedMaxHitFlatToCombatAreaMonsters;
-                    break;
-                case CombatAreaType.Slayer:
-                    maxHit += this.modifiers.increasedMaxHitFlatToSlayerAreaMonsters - this.modifiers.decreasedMaxHitFlatToSlayerAreaMonsters;
-                    break;
-                case CombatAreaType.Dungeon:
-                    maxHit += this.modifiers.increasedMaxHitFlatToDungeonMonsters - this.modifiers.decreasedMaxHitFlatToDungeonMonsters;
-                    break;
-                default:
-            }
+                if (this.manager.enemy.isBoss) {
+                    maxHit += numberMultiplier * (this.modifiers.increasedMaxHitFlatAgainstBosses - this.modifiers.decreasedMaxHitFlatAgainstBosses);
+                }
 
-            if (this.manager.onSlayerTask) {
-                maxHit += this.modifiers.increasedMaxHitFlatToSlayerTasks - this.modifiers.decreasedMaxHitFlatToSlayerTasks;
+                switch (this.manager.areaType) {
+                    case CombatAreaType.Combat:
+                        maxHit += this.modifiers.increasedMaxHitFlatToCombatAreaMonsters - this.modifiers.decreasedMaxHitFlatToCombatAreaMonsters;
+                        break;
+                    case CombatAreaType.Slayer:
+                        maxHit += this.modifiers.increasedMaxHitFlatToSlayerAreaMonsters - this.modifiers.decreasedMaxHitFlatToSlayerAreaMonsters;
+                        break;
+                    case CombatAreaType.Dungeon:
+                        maxHit += this.modifiers.increasedMaxHitFlatToDungeonMonsters - this.modifiers.decreasedMaxHitFlatToDungeonMonsters;
+                        break;
+                    default:
+                }
+
+                if (this.manager.onSlayerTask) {
+                    maxHit += this.modifiers.increasedMaxHitFlatToSlayerTasks - this.modifiers.decreasedMaxHitFlatToSlayerTasks;
+                }
             }
 
             return maxHit;
         });
         this.context.patch(Enemy, "modifyMaxHit").after(function (maxHit) {
-            return CustomModifiersManager.customModifyMaxHit(this, maxHit);
+            return CustomModifiersManager.customModifyMaxHitAgainstType(this, maxHit);
         });
     }
 
@@ -1507,10 +1522,10 @@ export class CustomModifiersManager {
      */
     private patchDamageModifierCalculations() {
         this.context.patch(Player, "getDamageModifiers").after(function (totalModifier: number, target: Character) {
-            return CustomModifiersManager.customGetDamageModifiers(this, totalModifier);
+            return CustomModifiersManager.customGetDamageModifiersAgainstType(this, totalModifier);
         });
         this.context.patch(Enemy, "getDamageModifiers").after(function (totalModifier: number, target: Character) {
-            return CustomModifiersManager.customGetDamageModifiers(this, totalModifier);
+            return CustomModifiersManager.customGetDamageModifiersAgainstType(this, totalModifier);
         });
     }
 
@@ -1597,35 +1612,19 @@ export class CustomModifiersManager {
      * @param entity The player or the enemy the player is fighting
      * @param minHit Current value of the max hit modifier, before custom logic
      */
-    private static customGetMinModifier(entity: Character, minHit: number): number {
-        if (entity.manager.fightInProgress) {
-            // Percentage modifiers
-            if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-                minHit += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstHumans - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstHumans)) / 100);
-            }
-            if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
-                minHit += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstDragons - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstDragons)) / 100);
-            }
-            if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
-                minHit += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstUndead - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstUndead)) / 100);
-            }
-            if (entity.target.isBoss) {
-                minHit += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstBosses - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstBosses)) / 100);
-            }
-
-            // Flat modifiers
-            if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-                minHit += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstHumans - entity.modifiers.decreasedFlatMinHitAgainstHumans);
-            }
-            if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
-                minHit += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstDragons - entity.modifiers.decreasedFlatMinHitAgainstDragons);
-            }
-            if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
-                minHit += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstUndead - entity.modifiers.decreasedFlatMinHitAgainstUndead);
-            }
-            if (entity.target.isBoss) {
-                minHit += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstBosses - entity.modifiers.decreasedFlatMinHitAgainstBosses);
-            }
+    private static customGetMinModifierAgainstType(entity: Character, minHit: number): number {
+        // Percentage and Flat modifiers
+        if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
+            minHit += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstHumans - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstHumans)) / 100);
+            minHit += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstHumans - entity.modifiers.decreasedFlatMinHitAgainstHumans);
+        }
+        if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
+            minHit += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstDragons - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstDragons)) / 100);
+            minHit += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstDragons - entity.modifiers.decreasedFlatMinHitAgainstDragons);
+        }
+        if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
+            minHit += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstUndead - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstUndead)) / 100);
+            minHit += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstUndead - entity.modifiers.decreasedFlatMinHitAgainstUndead);
         }
 
         return minHit;
@@ -1637,20 +1636,15 @@ export class CustomModifiersManager {
      * @param maxHitModifier Current value of the max hit modifier, before custom logic
      * @returns
      */
-    private static customGetMaxHitModifier(entity: Character, maxHitModifier: number): number {
-        if (entity.manager.fightInProgress) {
-            if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-                maxHitModifier += entity.modifiers.increasedMaxHitPercentAgainstHumans - entity.modifiers.decreasedMaxHitPercentAgainstHumans;
-            }
-            if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
-                maxHitModifier += entity.modifiers.increasedMaxHitPercentAgainstDragons - entity.modifiers.decreasedMaxHitPercentAgainstDragons;
-            }
-            if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
-                maxHitModifier += entity.modifiers.increasedMaxHitPercentAgainstUndead - entity.modifiers.decreasedMaxHitPercentAgainstUndead;
-            }
-            if (entity.target.isBoss) {
-                maxHitModifier += entity.modifiers.increasedMaxHitPercentAgainstBosses - entity.modifiers.decreasedMaxHitPercentAgainstBosses;
-            }
+    private static customGetMaxHitModifierAgainstType(entity: Character, maxHitModifier: number): number {
+        if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
+            maxHitModifier += entity.modifiers.increasedMaxHitPercentAgainstHumans - entity.modifiers.decreasedMaxHitPercentAgainstHumans;
+        }
+        if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
+            maxHitModifier += entity.modifiers.increasedMaxHitPercentAgainstDragons - entity.modifiers.decreasedMaxHitPercentAgainstDragons;
+        }
+        if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
+            maxHitModifier += entity.modifiers.increasedMaxHitPercentAgainstUndead - entity.modifiers.decreasedMaxHitPercentAgainstUndead;
         }
 
         return maxHitModifier;
@@ -1661,20 +1655,15 @@ export class CustomModifiersManager {
      * @param entity
      * @param maxHit
      */
-    private static customModifyMaxHit(entity: Character, maxHit: number): number {
-        if (entity.manager.fightInProgress) {
-            if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-                maxHit += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstBosses - entity.modifiers.decreasedMaxHitFlatAgainstHumans);
-            }                                                                                                      
-            if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {                        
-                maxHit += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstBosses - entity.modifiers.decreasedMaxHitFlatAgainstDragons);
-            }                                                                                                      
-            if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {                        
-                maxHit += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstBosses - entity.modifiers.decreasedMaxHitFlatAgainstUndead);
-            }                                                                                                      
-            if (entity.target.isBoss) {                                                                            
-                maxHit += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstBosses - entity.modifiers.decreasedMaxHitFlatAgainstBosses);
-            }
+    private static customModifyMaxHitAgainstType(entity: Character, maxHit: number): number {
+        if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
+            maxHit += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstHumans - entity.modifiers.decreasedMaxHitFlatAgainstHumans);
+        }
+        if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
+            maxHit += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstDragons - entity.modifiers.decreasedMaxHitFlatAgainstDragons);
+        }
+        if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
+            maxHit += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstUndead - entity.modifiers.decreasedMaxHitFlatAgainstUndead);
         }
 
         return maxHit;
@@ -1686,17 +1675,15 @@ export class CustomModifiersManager {
      * @param maxHit
      * @returns
      */
-    private static customGetDamageModifiers(entity: Character, totalModifier: number): number {
-        if (entity.manager.fightInProgress) {
-            if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-                totalModifier += entity.modifiers.increasedDamageToHumans - entity.modifiers.decreasedDamageToHumans;
-            }
-            if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
-                totalModifier += entity.modifiers.increasedDamageToDragons - entity.modifiers.decreasedDamageToDragons;
-            }
-            if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
-                totalModifier += entity.modifiers.increasedDamageToUndead - entity.modifiers.decreasedDamageToUndead;
-            }
+    private static customGetDamageModifiersAgainstType(entity: Character, totalModifier: number): number {
+        if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
+            totalModifier += entity.modifiers.increasedDamageToHumans - entity.modifiers.decreasedDamageToHumans;
+        }
+        if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
+            totalModifier += entity.modifiers.increasedDamageToDragons - entity.modifiers.decreasedDamageToDragons;
+        }
+        if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
+            totalModifier += entity.modifiers.increasedDamageToUndead - entity.modifiers.decreasedDamageToUndead;
         }
 
         return totalModifier;
