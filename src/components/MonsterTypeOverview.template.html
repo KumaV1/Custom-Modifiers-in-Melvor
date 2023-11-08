@@ -1,50 +1,52 @@
 <template id="custom-Modifiers-in-Melvor__monster-type-overview-container-template">
-    <div class="row gutters-tiny dow-deck d-none" id="custom-Modifiers-in-Melvor__monster-type-overview-container">
-        <div class="col-12">
-            <div class="block block-rounded block-content block-content-full">
-                <div class="row no-gutters">
-                    <div class="col-12 text-warning">
-                        <lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Remarks_Prefix"></lang-string>
-                        <ul>
-                            <li><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types"></lang-string></li>
-                            <li><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Remarks_Displayed_Type_Allocation"></lang-string></li>
-                            <li><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Remarks_Type_Allocation_Inaccuracy"></lang-string></li>
-                            <li><strong><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation"></lang-string></strong></li>
-                        </ul>
-                    </div>
-                    <div class="col-12">
-                        <h2 class="font-w600 mb-2 text-primary text-center">
-                            <lang-string lang-id="customModifiersInMelvor_Monster_Type_Human_Plural">Humans</lang-string>
-                        </h2>
-                        <div class="row">
-                            <div v-for="monster in humans" class="no-bg btn-light pointer-enabled m-1 justify-vertical-center">
-                                <img class="p-2 combat-enemy-img-sm"
-                                     v-bind:title="monster.name"
-                                     v-bind:src="monster.media">
+    <div class="content" id="custom-Modifiers-in-Melvor__monster-type-overview-container">
+        <div class="row gutters-tiny dow-deck">
+            <div class="col-12">
+                <div class="block block-rounded block-content block-content-full">
+                    <div class="row no-gutters">
+                        <div class="col-12 text-warning">
+                            <lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Remarks_Prefix"></lang-string>
+                            <ul>
+                                <li><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types"></lang-string></li>
+                                <li><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Remarks_Displayed_Type_Allocation"></lang-string></li>
+                                <li><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Remarks_Type_Allocation_Inaccuracy"></lang-string></li>
+                                <li><strong><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation"></lang-string></strong></li>
+                            </ul>
+                        </div>
+                        <div class="col-12">
+                            <h2 class="font-w600 mb-2 text-primary text-center">
+                                <lang-string lang-id="customModifiersInMelvor_Monster_Type_Human_Plural">Humans</lang-string>
+                            </h2>
+                            <div class="row">
+                                <div v-for="monster in humans" class="no-bg btn-light pointer-enabled m-1 justify-vertical-center">
+                                    <img class="p-2 combat-enemy-img-sm"
+                                         v-bind:title="monster.name"
+                                         v-bind:src="monster.media">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12">
-                        <h2 class="font-w600 mb-2 text-primary text-center">
-                            <lang-string lang-id="customModifiersInMelvor_Monster_Type_Dragon_Plural">Dragons</lang-string>
-                        </h2>
-                        <div class="row">
-                            <div v-for="monster in dragons" class="no-bg btn-light pointer-enabled m-1 justify-vertical-center">
-                                <img class="p-2 combat-enemy-img-sm"
-                                     v-bind:title="monster.name"
-                                     v-bind:src="monster.media">
+                        <div class="col-12">
+                            <h2 class="font-w600 mb-2 text-primary text-center">
+                                <lang-string lang-id="customModifiersInMelvor_Monster_Type_Dragon_Plural">Dragons</lang-string>
+                            </h2>
+                            <div class="row">
+                                <div v-for="monster in dragons" class="no-bg btn-light pointer-enabled m-1 justify-vertical-center">
+                                    <img class="p-2 combat-enemy-img-sm"
+                                         v-bind:title="monster.name"
+                                         v-bind:src="monster.media">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12">
-                        <h2 class="font-w600 mb-2 text-primary text-center">
-                            <lang-string lang-id="customModifiersInMelvor_Monster_Type_Undead_Plural">Undead</lang-string>
-                        </h2>
-                        <div class="row">
-                            <div v-for="monster in undead" class="no-bg btn-light pointer-enabled m-1 justify-vertical-center">
-                                <img class="p-2 combat-enemy-img-sm"
-                                     v-bind:title="monster.name"
-                                     v-bind:src="monster.media">
+                        <div class="col-12">
+                            <h2 class="font-w600 mb-2 text-primary text-center">
+                                <lang-string lang-id="customModifiersInMelvor_Monster_Type_Undead_Plural">Undead</lang-string>
+                            </h2>
+                            <div class="row">
+                                <div v-for="monster in undead" class="no-bg btn-light pointer-enabled m-1 justify-vertical-center">
+                                    <img class="p-2 combat-enemy-img-sm"
+                                         v-bind:title="monster.name"
+                                         v-bind:src="monster.media">
+                                </div>
                             </div>
                         </div>
                     </div>

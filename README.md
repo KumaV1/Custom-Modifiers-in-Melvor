@@ -1,11 +1,16 @@
-# Introduction
-This mod implements a couple of new modifiers to melvor.
+**This mod is of no use on its own. The purpose of this mod is to add more modifiers to the game, which other mods then can take advantage of.**
 
-## Regular users
-You don't have to care about this mod, unless another mod specifically defines this mod as a dependency. In that case, please make sure that this mod is loaded before any mods that uses this mod.
+## Regular Users
+You do not have to care about this mod, unless another mod hat it set as a dependency and asking you to install it.
 
-## Developers
-Feel free to have a look at one of the files in `src/translation/languages`, which includes the effects of all modifiers
+That being said, if you **do** end up including this mod, you might end up stumbling onto type-specific modifiers (e.g. increasing damage against dragons specifically). 
+If you do, feel free to have a look at the "Monster Types" view, which is accessible through the "Modding" section in the sidebar. It will display the configured monster type allocations to you, 
+so you can always check whether a specific monster is interpreted as a specific type.\
+![Monster type overview sidebar](_modIoImages/Monster types overview - Sidebar.png)\
+![Monster type overview](_modIoImages/Monster types overview - Main overview.png)
+
+## Mod Creators
+Feel free to have a look at one of the files in `src/translation/languages`, which includes the effects of all modifiers.
 
 Of course, if you use any of these modifiers, remember to flag this mod as a dependency for your mod.
 
@@ -26,9 +31,3 @@ mod.api.customModifiersInMelvor.addUndead(["MOD_NAMESPACE:MONSTER_ID", "MOD_NAME
 ```
 
 **NOTE**: You should use the in-game "monster types" entry in the modding-section of the sidebar, to verify that your monsters have been typed correctly.
-
-#### "[...] trait applied" modifiers
-The idea for those mainly stems from temporary making type specific modifiers effect the enemy, where the enemy isn't inherently of that type.
-
-#### "From [...]" modifiers
-To throw an existing idea in here, as an equivalent to "[...] against type", one could also add the same modifiers as "[...] from type".

@@ -1,6 +1,6 @@
 {
   "namespace": "customModifiersInMelvor",
-  "icon": "assets/customModifiersInMelvor/logo.png",
+  "icon": "assets/customModifiersInMelvor/Logo.png",
   "load": [ "templates.min.html" ],
   "setup": "setup.mjs"
 }

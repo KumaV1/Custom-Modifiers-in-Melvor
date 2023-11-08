@@ -15,7 +15,7 @@ import ModData from '../data/data.json'
 
 // Images
 // #region Image imports
-import '../assets/logo.png'
+import '../assets/Logo.png'
 import '../assets/Death_Mark.png'
 import '../assets/Invoke_Death.png'
 // #endregion
