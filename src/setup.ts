@@ -6,6 +6,7 @@ import { MonsterTypeMappingManager } from './modifiers/MonsterTypeMappingManager
 import { Translation } from './translation/Translation';
 import { languages } from './translation/languages'
 import { MonsterTypeOverview } from './components/MonsterTypeOverview'
+import { TinyIconsCompatibility } from './compatibility/TinyIconsCompatibility';
 
 // Data
 // Game data for registration
@@ -16,6 +17,7 @@ import ModData from '../data/data.json'
 // #region Image imports
 import '../assets/logo.png'
 import '../assets/Death_Mark.png'
+import '../assets/Invoke_Death.png'
 // #endregion
 
 export async function setup(ctx: Modding.ModContext) {
@@ -30,6 +32,7 @@ export async function setup(ctx: Modding.ModContext) {
     initTranslation(ctx);
     initLanguage(ctx);
     initOverviewContainer(ctx);
+    initModCompatibility(ctx);
 }
 
 /**
@@ -117,4 +120,14 @@ function initOverviewContainer(ctx: Modding.ModContext) {
         // Create overview by using component and template definitions
         ui.create(MonsterTypeOverview(), contentContainerElement);
     });
+}
+
+/**
+ * Initializes certain functionality, to enable/inject specialized compatibility 
+ * based on other mods (e.g. "Tiny Icons" for the custom modifiers of this mod)
+ * @param ctx
+ */
+function initModCompatibility(ctx: Modding.ModContext) {
+    const tinyIconsCompatibility = new TinyIconsCompatibility(ctx);
+    tinyIconsCompatibility.patch();
 }
