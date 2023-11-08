@@ -73,7 +73,7 @@ export const tr = {
     MODIFIER_DATA_decreasedFlatMinHitToSlayerTasks: "-${value} Minium Hit To Slayer Tasks",
 
     // #### Trait application (aka "treated as type")
-    MODIFIER_DATA_humanTraitApplied: "Marks the affected as humans",
+    MODIFIER_DATA_humanTraitApplied: "Marks the affected as human",
     MODIFIER_DATA_dragonTraitApplied: "Marks the affected as dragon",
     MODIFIER_DATA_undeadTraitApplied: "Marks the affected as undead",
 

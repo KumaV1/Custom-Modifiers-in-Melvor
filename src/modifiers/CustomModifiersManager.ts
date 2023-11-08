@@ -339,7 +339,7 @@ export class CustomModifiersManager {
             },
             description: '',
             isSkill: true,
-            isNegative: false,
+            isNegative: true,
             tags: [],
         };
         modifierData.increasedFlatGlobalSkillXP = {
@@ -375,7 +375,7 @@ export class CustomModifiersManager {
             },
             description: '',
             isSkill: true,
-            isNegative: false,
+            isNegative: true,
             tags: [],
         };
         modifierData.increasedFlatGlobalSkillXPPerSkillLevel = {
@@ -393,7 +393,7 @@ export class CustomModifiersManager {
             },
             description: '',
             isSkill: false,
-            isNegative: false,
+            isNegative: true,
             tags: [],
         };
         modifierData.increasedFlatSkillXPPerSkillLevel = {
@@ -411,7 +411,7 @@ export class CustomModifiersManager {
             },
             description: '',
             isSkill: true,
-            isNegative: false,
+            isNegative: true,
             tags: [],
         };
     }
@@ -489,7 +489,7 @@ export class CustomModifiersManager {
             },
             description: '',
             isSkill: false,
-            isNegative: false,
+            isNegative: true,
             tags: ['combat']
         };
     }
