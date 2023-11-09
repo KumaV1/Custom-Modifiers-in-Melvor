@@ -80,8 +80,8 @@ export class TinyIconsCompatibility {
         dragonTraitApplied: ['cmim_dragon', 'combat'],
         undeadTraitApplied: ['cmim_undead', 'combat'],
 
-        increasedDamageToHumans: ['cmim_human', 'combat'],
-        decreasedDamageToHumans: ['cmim_human', 'combat'],
+        increasedDamageAgainstHumans: ['cmim_human', 'combat'],
+        decreasedDamageAgainstHumans: ['cmim_human', 'combat'],
         increasedMaxHitPercentAgainstHumans: ['cmim_human', 'ti_combat_up'],
         decreasedMaxHitPercentAgainstHumans: ['cmim_human', 'ti_combat_dn'],
         increasedMaxHitFlatAgainstHumans: ['cmim_human', 'ti_combat_up'],
@@ -91,8 +91,8 @@ export class TinyIconsCompatibility {
         increasedFlatMinHitAgainstHumans: ['cmim_human', 'ti_combat_up'],
         decreasedFlatMinHitAgainstHumans: ['cmim_human', 'ti_combat_dn'],
 
-        increasedDamageToDragons: ['cmim_dragon', 'combat'],
-        decreasedDamageToDragons: ['cmim_dragon', 'combat'],
+        increasedDamageAgainstDragons: ['cmim_dragon', 'combat'],
+        decreasedDamageAgainstDragons: ['cmim_dragon', 'combat'],
         increasedMaxHitPercentAgainstDragons: ['cmim_dragon', 'ti_combat_up'],
         decreasedMaxHitPercentAgainstDragons: ['cmim_dragon', 'ti_combat_dn'],
         increasedMaxHitFlatAgainstDragons: ['cmim_dragon', 'ti_combat_up'],
@@ -102,8 +102,8 @@ export class TinyIconsCompatibility {
         increasedFlatMinHitAgainstDragons: ['cmim_dragon', 'ti_combat_up'],
         decreasedFlatMinHitAgainstDragons: ['cmim_dragon', 'ti_combat_dn'],
 
-        increasedDamageToUndead: ['cmim_undead', 'combat'],
-        decreasedDamageToUndead: ['cmim_undead', 'combat'],
+        increasedDamageAgainstUndead: ['cmim_undead', 'combat'],
+        decreasedDamageAgainstUndead: ['cmim_undead', 'combat'],
         increasedMaxHitPercentAgainstUndead: ['cmim_undead', 'ti_combat_up'],
         decreasedMaxHitPercentAgainstUndead: ['cmim_undead', 'ti_combat_dn'],
         increasedMaxHitFlatAgainstUndead: ['cmim_undead', 'ti_combat_up'],

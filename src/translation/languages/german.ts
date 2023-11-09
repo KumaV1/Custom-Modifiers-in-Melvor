@@ -79,8 +79,8 @@
 
     // #### Type
     // ##### Humans
-    MODIFIER_DATA_increasedDamageToHumans: "+${value}% Schaden gegen Menschen",
-    MODIFIER_DATA_decreasedDamageToHumans: "-${value}% Schaden gegen Menschen",
+    MODIFIER_DATA_increasedDamageAgainstHumans: "+${value}% Schaden gegen Menschen",
+    MODIFIER_DATA_decreasedDamageAgainstHumans: "-${value}% Schaden gegen Menschen",
     MODIFIER_DATA_increasedMaxHitPercentAgainstHumans: "+${value}% Maximalschaden gegen Menschen",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstHumans: "-${value}% Maximalschaden gegen Menschen",
     MODIFIER_DATA_increasedMaxHitFlatAgainstHumans: "+${value} Maximalschaden gegen Menschen",
@@ -91,8 +91,8 @@
     MODIFIER_DATA_decreasedFlatMinHitAgainstHumans: "-${value} Minimalschaden gegen Menschen",
 
     // ##### Dragons
-    MODIFIER_DATA_increasedDamageToDragons: "+${value}% Schaden gegen Drachen",
-    MODIFIER_DATA_decreasedDamageToDragons: "-${value}% Schaden gegen Drachen",
+    MODIFIER_DATA_increasedDamageAgainstDragons: "+${value}% Schaden gegen Drachen",
+    MODIFIER_DATA_decreasedDamageAgainstDragons: "-${value}% Schaden gegen Drachen",
     MODIFIER_DATA_increasedMaxHitPercentAgainstDragons: "+${value}% Maximalschaden gegen Drachen",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstDragons: "-${value}% Maximalschaden gegen Drachen",
     MODIFIER_DATA_increasedMaxHitFlatAgainstDragons: "+${value} Maximalschaden gegen Drachen",
@@ -103,8 +103,8 @@
     MODIFIER_DATA_decreasedFlatMinHitAgainstDragons: "-${value} Minimalschaden gegen Drachen",
 
     // ##### Undead
-    MODIFIER_DATA_increasedDamageToUndead: "+${value}% Schaden gegen Untote",
-    MODIFIER_DATA_decreasedDamageToUndead: "-${value}% Schaden gegen Untote",
+    MODIFIER_DATA_increasedDamageAgainstUndead: "+${value}% Schaden gegen Untote",
+    MODIFIER_DATA_decreasedDamageAgainstUndead: "-${value}% Schaden gegen Untote",
     MODIFIER_DATA_increasedMaxHitPercentAgainstUndead: "+${value}% Maximalschaden gegen Untote",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstUndead: "-${value}% Maximalschaden gegen Untote",
     MODIFIER_DATA_increasedMaxHitFlatAgainstUndead: "+${value} Maximalschaden gegen Untote",
