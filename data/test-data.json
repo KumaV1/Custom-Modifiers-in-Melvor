@@ -71,9 +71,9 @@
         "id": "Test_Passive",
         "name": "Test Passive",
         "modifiers": {
-          "increasedDeathMarkOnHit": 1,
-          "increasedDeathMarkImmunity": 100,
-          "decreasedDeathMarkImmunity": 50
+          "humanTraitApplied": 1,
+          "dragonTraitApplied": 1,
+          "undeadTraitApplied": 1
         }
       }
     ],

@@ -162,8 +162,8 @@ declare global {
         dragonTraitApplied: Standard,
         undeadTraitApplied: Standard,
 
-        increasedDamageToHumans: Standard,
-        decreasedDamageToHumans: Standard,
+        increasedDamageAgainstHumans: Standard,
+        decreasedDamageAgainstHumans: Standard,
         increasedMaxHitPercentAgainstHumans: Standard,
         decreasedMaxHitPercentAgainstHumans: Standard,
         increasedMaxHitFlatAgainstHumans: Standard,
@@ -173,8 +173,8 @@ declare global {
         increasedFlatMinHitAgainstHumans: Standard,
         decreasedFlatMinHitAgainstHumans: Standard,
 
-        increasedDamageToDragons: Standard,
-        decreasedDamageToDragons: Standard,
+        increasedDamageAgainstDragons: Standard,
+        decreasedDamageAgainstDragons: Standard,
         increasedMaxHitPercentAgainstDragons: Standard,
         decreasedMaxHitPercentAgainstDragons: Standard,
         increasedMaxHitFlatAgainstDragons: Standard,
@@ -184,8 +184,8 @@ declare global {
         increasedFlatMinHitAgainstDragons: Standard,
         decreasedFlatMinHitAgainstDragons: Standard,
 
-        increasedDamageToUndead: Standard,
-        decreasedDamageToUndead: Standard,
+        increasedDamageAgainstUndead: Standard,
+        decreasedDamageAgainstUndead: Standard,
         increasedMaxHitPercentAgainstUndead: Standard,
         decreasedMaxHitPercentAgainstUndead: Standard,
         increasedMaxHitFlatAgainstUndead: Standard,
@@ -217,8 +217,8 @@ declare global {
         dragonTraitApplied: number,
         undeadTraitApplied: number,
 
-        increasedDamageToHumans: number,
-        decreasedDamageToHumans: number,
+        increasedDamageAgainstHumans: number,
+        decreasedDamageAgainstHumans: number,
         increasedMaxHitPercentAgainstHumans: number,
         decreasedMaxHitPercentAgainstHumans: number,
         increasedMaxHitFlatAgainstHumans: number,
@@ -228,8 +228,8 @@ declare global {
         increasedFlatMinHitAgainstHumans: number,
         decreasedFlatMinHitAgainstHumans: number,
 
-        increasedDamageToDragons: number,
-        decreasedDamageToDragons: number,
+        increasedDamageAgainstDragons: number,
+        decreasedDamageAgainstDragons: number,
         increasedMaxHitPercentAgainstDragons: number,
         decreasedMaxHitPercentAgainstDragons: number,
         increasedMaxHitFlatAgainstDragons: number,
@@ -239,8 +239,8 @@ declare global {
         increasedFlatMinHitAgainstDragons: number,
         decreasedFlatMinHitAgainstDragons: number,
 
-        increasedDamageToUndead: number,
-        decreasedDamageToUndead: number,
+        increasedDamageAgainstUndead: number,
+        decreasedDamageAgainstUndead: number,
         increasedMaxHitPercentAgainstUndead: number,
         decreasedMaxHitPercentAgainstUndead: number,
         increasedMaxHitFlatAgainstUndead: number,
@@ -288,6 +288,8 @@ export class CustomModifiersManager {
 
     /**
      * Patch pre existing logic, to also take our custom modifiers into account
+     * 
+     * FYI: All flat damage modifications use the "numberMultiplier", which is based on the game mode (numberMultiplier = this.gamemode.hitpointMultiplier)
      */
     public patchMethods() {
         this.patchSkillingActions();
@@ -577,6 +579,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMaxHitFlatToCombatAreaMonsters');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -586,6 +589,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitFlatToCombatAreaMonsters');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -595,6 +599,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedFlatMinHitToCombatAreaMonsters');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -604,6 +609,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedFlatMinHitToCombatAreaMonsters');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -652,6 +658,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMaxHitFlatToSlayerAreaMonsters');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -661,6 +668,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitFlatToSlayerAreaMonsters');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -670,6 +678,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedFlatMinHitToSlayerAreaMonsters');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -679,6 +688,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedFlatMinHitToSlayerAreaMonsters');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -727,6 +737,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMaxHitFlatToDungeonMonsters');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -736,6 +747,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitFlatToDungeonMonsters');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -745,6 +757,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedFlatMinHitToDungeonMonsters');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -754,6 +767,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedFlatMinHitToDungeonMonsters');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -802,6 +816,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMaxHitFlatToSlayerTasks');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -811,6 +826,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitFlatToSlayerTasks');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -820,6 +836,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedFlatMinHitToSlayerTasks');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -829,6 +846,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedFlatMinHitToSlayerTasks');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -891,6 +909,24 @@ export class CustomModifiersManager {
      * 
      */
     private registerHumanModifiers() {
+        modifierData.increasedDamageAgainstHumans = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageAgainstHumans');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageAgainstHumans = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageAgainstHumans');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
         modifierData.increasedMaxHitPercentAgainstHumans = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMaxHitPercentAgainstHumans');
@@ -913,6 +949,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMaxHitFlatAgainstHumans');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -922,6 +959,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitFlatAgainstHumans');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -931,6 +969,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedFlatMinHitAgainstHumans');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -940,6 +979,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedFlatMinHitAgainstHumans');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -969,6 +1009,24 @@ export class CustomModifiersManager {
      * 
      */
     private registerDragonModifiers() {
+        modifierData.increasedDamageAgainstDragons = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageAgainstDragons');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageAgainstDragons = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageAgainstDragons');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
         modifierData.increasedMaxHitPercentAgainstDragons = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMaxHitPercentAgainstDragons');
@@ -991,6 +1049,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMaxHitFlatAgainstDragons');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -1000,6 +1059,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitFlatAgainstDragons');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -1009,6 +1069,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedFlatMinHitAgainstDragons');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -1018,6 +1079,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedFlatMinHitAgainstDragons');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -1047,6 +1109,24 @@ export class CustomModifiersManager {
      * 
      */
     private registerUndeadModifiers() {
+        modifierData.increasedDamageAgainstUndead = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageAgainstUndead');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageAgainstUndead = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageAgainstUndead');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
         modifierData.increasedMaxHitPercentAgainstUndead = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMaxHitPercentAgainstUndead');
@@ -1069,6 +1149,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMaxHitFlatAgainstUndead');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -1078,6 +1159,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitFlatAgainstUndead');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -1087,6 +1169,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedFlatMinHitAgainstUndead');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -1096,6 +1179,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedFlatMinHitAgainstUndead');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -1147,6 +1231,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMaxHitFlatAgainstBosses');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -1156,6 +1241,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitFlatAgainstBosses');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -1165,6 +1251,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedFlatMinHitAgainstBosses');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -1174,6 +1261,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedFlatMinHitAgainstBosses');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -1286,8 +1374,8 @@ export class CustomModifiersManager {
             this.dragonTraitApplied ??= 0;
             this.undeadTraitApplied ??= 0;
 
-            this.increasedDamageToHumans ??= 0;
-            this.decreasedDamageToHumans ??= 0;
+            this.increasedDamageAgainstHumans ??= 0;
+            this.decreasedDamageAgainstHumans ??= 0;
             this.increasedMaxHitPercentAgainstHumans ??= 0;
             this.decreasedMaxHitPercentAgainstHumans ??= 0;
             this.increasedMaxHitFlatAgainstHumans ??= 0;
@@ -1297,8 +1385,8 @@ export class CustomModifiersManager {
             this.increasedFlatMinHitAgainstHumans ??= 0;
             this.decreasedFlatMinHitAgainstHumans ??= 0;
 
-            this.increasedDamageToDragons ??= 0;
-            this.decreasedDamageToDragons ??= 0;
+            this.increasedDamageAgainstDragons ??= 0;
+            this.decreasedDamageAgainstDragons ??= 0;
             this.increasedMaxHitPercentAgainstDragons ??= 0;
             this.decreasedMaxHitPercentAgainstDragons ??= 0;
             this.increasedMaxHitFlatAgainstDragons ??= 0;
@@ -1308,8 +1396,8 @@ export class CustomModifiersManager {
             this.increasedFlatMinHitAgainstDragons ??= 0;
             this.decreasedFlatMinHitAgainstDragons ??= 0;
 
-            this.increasedDamageToUndead ??= 0;
-            this.decreasedDamageToUndead ??= 0;
+            this.increasedDamageAgainstUndead ??= 0;
+            this.decreasedDamageAgainstUndead ??= 0;
             this.increasedMaxHitPercentAgainstUndead ??= 0;
             this.decreasedMaxHitPercentAgainstUndead ??= 0;
             this.increasedMaxHitFlatAgainstUndead ??= 0;
@@ -1379,17 +1467,17 @@ export class CustomModifiersManager {
      */
     private patchApplyOnHitEffects() {
         this.context.patch(Player, "clampDamageValue").after(function (returnedDamage) {
-            // do some custom stuff
+            // do some custom stuff inbetween
             CustomModifiersManager.customApplyOnHitEffects(this);
 
-            // run original stuff
+            // return unchanged value
             return returnedDamage;
         });
         this.context.patch(Enemy, "clampDamageValue").after(function (returnedDamage) {
-            // do some custom stuff
+            // do some custom stuff inbetween
             CustomModifiersManager.customApplyOnHitEffects(this);
 
-            // run original stuff
+            // return unchanged value
             return returnedDamage;
         });
     }
@@ -1485,6 +1573,10 @@ export class CustomModifiersManager {
          * Patches new max hit flat increasing modifiers into base logic
          */
         this.context.patch(Player, "modifyMaxHit").after(function (maxHit) {
+            if (this.usingAncient) {
+                return maxHit;
+            }
+
             if (this.manager.fightInProgress) {
                 maxHit = CustomModifiersManager.customModifyMaxHitAgainstType(this, maxHit);
 
@@ -1494,23 +1586,23 @@ export class CustomModifiersManager {
 
                 switch (this.manager.areaType) {
                     case CombatAreaType.Combat:
-                        maxHit += this.modifiers.increasedMaxHitFlatToCombatAreaMonsters - this.modifiers.decreasedMaxHitFlatToCombatAreaMonsters;
+                        maxHit += numberMultiplier * (this.modifiers.increasedMaxHitFlatToCombatAreaMonsters - this.modifiers.decreasedMaxHitFlatToCombatAreaMonsters);
                         break;
                     case CombatAreaType.Slayer:
-                        maxHit += this.modifiers.increasedMaxHitFlatToSlayerAreaMonsters - this.modifiers.decreasedMaxHitFlatToSlayerAreaMonsters;
+                        maxHit += numberMultiplier * (this.modifiers.increasedMaxHitFlatToSlayerAreaMonsters - this.modifiers.decreasedMaxHitFlatToSlayerAreaMonsters);
                         break;
                     case CombatAreaType.Dungeon:
-                        maxHit += this.modifiers.increasedMaxHitFlatToDungeonMonsters - this.modifiers.decreasedMaxHitFlatToDungeonMonsters;
+                        maxHit += numberMultiplier * (this.modifiers.increasedMaxHitFlatToDungeonMonsters - this.modifiers.decreasedMaxHitFlatToDungeonMonsters);
                         break;
                     default:
                 }
 
                 if (this.manager.onSlayerTask) {
-                    maxHit += this.modifiers.increasedMaxHitFlatToSlayerTasks - this.modifiers.decreasedMaxHitFlatToSlayerTasks;
+                    maxHit += numberMultiplier * (this.modifiers.increasedMaxHitFlatToSlayerTasks - this.modifiers.decreasedMaxHitFlatToSlayerTasks);
                 }
             }
 
-            return maxHit;
+            return Math.max(maxHit, 1);
         });
         this.context.patch(Enemy, "modifyMaxHit").after(function (maxHit) {
             return CustomModifiersManager.customModifyMaxHitAgainstType(this, maxHit);
@@ -1521,10 +1613,10 @@ export class CustomModifiersManager {
      * 
      */
     private patchDamageModifierCalculations() {
-        this.context.patch(Player, "getDamageModifiers").after(function (totalModifier: number, target: Character) {
+        this.context.patch(Player, "getDamageModifiers").after(function (totalModifier: number) {
             return CustomModifiersManager.customGetDamageModifiersAgainstType(this, totalModifier);
         });
-        this.context.patch(Enemy, "getDamageModifiers").after(function (totalModifier: number, target: Character) {
+        this.context.patch(Enemy, "getDamageModifiers").after(function (totalModifier: number) {
             return CustomModifiersManager.customGetDamageModifiersAgainstType(this, totalModifier);
         });
     }
@@ -1677,13 +1769,13 @@ export class CustomModifiersManager {
      */
     private static customGetDamageModifiersAgainstType(entity: Character, totalModifier: number): number {
         if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-            totalModifier += entity.modifiers.increasedDamageToHumans - entity.modifiers.decreasedDamageToHumans;
+            totalModifier += entity.modifiers.increasedDamageAgainstHumans - entity.modifiers.decreasedDamageAgainstHumans;
         }
         if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
-            totalModifier += entity.modifiers.increasedDamageToDragons - entity.modifiers.decreasedDamageToDragons;
+            totalModifier += entity.modifiers.increasedDamageAgainstDragons - entity.modifiers.decreasedDamageAgainstDragons;
         }
         if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
-            totalModifier += entity.modifiers.increasedDamageToUndead - entity.modifiers.decreasedDamageToUndead;
+            totalModifier += entity.modifiers.increasedDamageAgainstUndead - entity.modifiers.decreasedDamageAgainstUndead;
         }
 
         return totalModifier;

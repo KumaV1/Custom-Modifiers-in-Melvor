@@ -78,8 +78,8 @@ export const en = {
 
     // #### Type
     // ##### Humans
-    MODIFIER_DATA_increasedDamageToHumans: "+${value}% Damage To Humans",
-    MODIFIER_DATA_decreasedDamageToHumans: "-${value}% Damage To Humans",
+    MODIFIER_DATA_increasedDamageAgainstHumans: "+${value}% Damage To Humans",
+    MODIFIER_DATA_decreasedDamageAgainstHumans: "-${value}% Damage To Humans",
     MODIFIER_DATA_increasedMaxHitPercentAgainstHumans: "+${value}% Max Hit when fighting humans",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstHumans: "-${value}% Max Hit when fighting humans",
     MODIFIER_DATA_increasedMaxHitFlatAgainstHumans: "+${value} Max Hit when fighting humans",
@@ -90,8 +90,8 @@ export const en = {
     MODIFIER_DATA_decreasedFlatMinHitAgainstHumans: "-${value} Minium Hit when fighting humans",
 
     // ##### Dragons
-    MODIFIER_DATA_increasedDamageToDragons: "+${value}% Damage To Dragons",
-    MODIFIER_DATA_decreasedDamageToDragons: "-${value}% Damage To Dragons",
+    MODIFIER_DATA_increasedDamageAgainstDragons: "+${value}% Damage To Dragons",
+    MODIFIER_DATA_decreasedDamageAgainstDragons: "-${value}% Damage To Dragons",
     MODIFIER_DATA_increasedMaxHitPercentAgainstDragons: "+${value}% Max Hit when fighting dragons",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstDragons: "-${value}% Max Hit when fighting dragons",
     MODIFIER_DATA_increasedMaxHitFlatAgainstDragons: "+${value} Max Hit when fighting dragons",
@@ -102,8 +102,8 @@ export const en = {
     MODIFIER_DATA_decreasedFlatMinHitAgainstDragons: "-${value} Minium Hit when fighting dragons",
 
     // ##### Undead
-    MODIFIER_DATA_increasedDamageToUndead: "+${value}% Damage To Undead",
-    MODIFIER_DATA_decreasedDamageToUndead: "-${value}% Damage To Undead",
+    MODIFIER_DATA_increasedDamageAgainstUndead: "+${value}% Damage To Undead",
+    MODIFIER_DATA_decreasedDamageAgainstUndead: "-${value}% Damage To Undead",
     MODIFIER_DATA_increasedMaxHitPercentAgainstUndead: "+${value}% Max Hit when fighting undead",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstUndead: "-${value}% Max Hit when fighting undead",
     MODIFIER_DATA_increasedMaxHitFlatAgainstUndead: "+${value} Max Hit when fighting undead",
