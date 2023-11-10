@@ -1,7 +1,8 @@
-﻿import { MonsterTypeMappingManager } from './MonsterTypeMappingManager'
-import { MonsterType } from './MonsterType'
+﻿import { Constants } from '../Constants';
 import { Constants as ModifierConstants } from './Constants';
-import { Constants } from '../Constants'
+import { MonsterType } from './MonsterType';
+import { MonsterTypeMappingManager } from './MonsterTypeMappingManager';
+import { CustomModifiersCalculator } from './CustomModifiersCalculator'
 
 /** For typescript intellisense and not throwing errors */
 declare global {
@@ -307,11 +308,11 @@ export class CustomModifiersManager {
 
     /**
      * Patch pre existing logic, to also take our custom modifiers into account
-     * 
+     *
      * FYI: All flat damage modifications use the "numberMultiplier", which is based on the game mode (numberMultiplier = this.gamemode.hitpointMultiplier)
      */
     public patchMethods() {
-        this.patchSkillingActions();
+        this.patchSkilling();
         this.patchGame();
         this.patchAddHitpoints();
         this.patchCombatModifiersReset();
@@ -438,7 +439,7 @@ export class CustomModifiersManager {
     }
 
     /**
-     * 
+     *
      */
     private registerSpawnModifiers() {
         modifierData.increasedChanceToApplySlowOnSpawn = {
@@ -516,7 +517,7 @@ export class CustomModifiersManager {
     }
 
     /**
-     * 
+     *
      */
     private registerDeathMarkModifiers() {
         modifierData.deathMark = {
@@ -892,7 +893,7 @@ export class CustomModifiersManager {
     }
 
     /**
-     * 
+     *
      */
     private registerSpellModifiers() {
         modifierData.increasedDamageTakenFromAirSpells = {
@@ -970,7 +971,7 @@ export class CustomModifiersManager {
     }
 
     /**
-     * 
+     *
      */
     private registerTraitApplicationModifiers() {
         modifierData.humanTraitApplied = {
@@ -1003,7 +1004,7 @@ export class CustomModifiersManager {
     }
 
     /**
-     * 
+     *
      */
     private registerHumanModifiers() {
         modifierData.increasedDamageAgainstHumans = {
@@ -1103,7 +1104,7 @@ export class CustomModifiersManager {
     }
 
     /**
-     * 
+     *
      */
     private registerDragonModifiers() {
         modifierData.increasedDamageAgainstDragons = {
@@ -1203,7 +1204,7 @@ export class CustomModifiersManager {
     }
 
     /**
-     * 
+     *
      */
     private registerUndeadModifiers() {
         modifierData.increasedDamageAgainstUndead = {
@@ -1303,7 +1304,7 @@ export class CustomModifiersManager {
     }
 
     /**
-     * 
+     *
      */
     private registerBossModifiers() {
         modifierData.increasedMaxHitPercentAgainstBosses = {
@@ -1388,47 +1389,33 @@ export class CustomModifiersManager {
 
     // #region Method patching
 
-    private patchSkillingActions() {
+    /**
+     *
+     */
+    private patchSkilling() {
         /**
-         * 
+         * Add percentage-based xp modifiers
          */
         // @ts-ignore You can actually patch base classes no problem
         this.context.patch(Skill, "getXPModifier").after(function (currentAmount) {
-            currentAmount += (this.game.modifiers.increasedGlobalSkillXPPerLevel * this.level)
-                - (this.game.modifiers.decreasedGlobalSkillXPPerLevel * this.level)
-                + this.game.modifiers.getSkillModifierValue('increasedSkillXPPerSkillLevel', this)
-                - this.game.modifiers.getSkillModifierValue('decreasedSkillXPPerSkillLevel', this);
-
-            return Math.max(0, currentAmount);
+            return currentAmount += CustomModifiersCalculator.getPercentagetXpModification(this);
         });
 
         /**
-         * Patch "modifyXp" to add flat xp. 
-         * The original method already checked "halfSkillXp" for provided value, 
-         * but we have to check ourselves for our new modifiers
+         * Add flat xp modifiers
          */
         // @ts-ignore You can actually patch base classes no problem
         this.context.patch(Skill, "modifyXP").after(function (currentAmount) {
-            let flatXp = this.game.modifiers.increasedFlatGlobalSkillXP
-                - this.game.modifiers.decreasedFlatGlobalSkillXP
-                + (this.game.modifiers.increasedFlatGlobalSkillXPPerSkillLevel * this.level)
-                - (this.game.modifiers.decreasedFlatGlobalSkillXPPerSkillLevel * this.level)
-                + this.game.modifiers.getSkillModifierValue('increasedFlatSkillXP', this)
-                - this.game.modifiers.getSkillModifierValue('decreasedFlatSkillXP', this)
-                + (this.game.modifiers.getSkillModifierValue('increasedFlatSkillXPPerSkillLevel', this) * this.level)
-                - ((this.game.modifiers.getSkillModifierValue('decreasedFlatSkillXPPerSkillLevel', this) * this.level));
-
-            flatXp = Math.max(0, flatXp); // avoid skill xp actually ending up being reduced
-
-            return this.game.modifiers.halfSkillXP
-                ? currentAmount + (flatXp / 2)
-                : currentAmount + flatXp;
+            return currentAmount += CustomModifiersCalculator.getFlatXpModification(this);
         });
     }
 
+    /**
+     *
+     */
     private patchGame() {
         /**
-         * Register custom effects as properties on the Game object (akin to e.g. "unholyMarkEffect") 
+         * Register custom effects as properties on the Game object (akin to e.g. "unholyMarkEffect")
          */
         this.context.patch(Game, "postDataRegistration").after(function () {
             const effect = this.stackingEffects.getObjectByID(ModifierConstants.DEATH_MARK_EFFECT_FULL_ID);
@@ -1439,15 +1426,15 @@ export class CustomModifiersManager {
     }
 
     /**
-     * 
+     *
      */
     private patchCombatModifiersReset() {
         /**
          * This method is called during initialization of both player and enemies, as quick safety measure for a "clean state" before setting everything up. (to avoid undefined/null/nan)
          * However, as we do not actually add our properties to Melvor's definition of the class, the dynamic build up doesn't include our properties,
          * so we handle those ourselves. Should in theory take care of all instances, so including cases such as area modifiers
-         * 
-         * REMARK: We don't have to do the same for player modifiers actually, as those are either initialized as 0 by default, 
+         *
+         * REMARK: We don't have to do the same for player modifiers actually, as those are either initialized as 0 by default,
          * or "getSkillModifierValue" parses undefined to 0 anyway
          */
         this.context.patch(CombatModifiers, "reset").after(function () {
@@ -1516,36 +1503,39 @@ export class CustomModifiersManager {
     }
 
     /**
-     * 
+     * On spawn, applies booleans on entity, so we don't have to check an array every time
+     * Remark: We do not have to patch all properties onto the player, as not setting them will just trigger a "falsey" match, resulting in the same outcome
      */
     private patchMonsterTypeAllocation() {
-        /**
-         * Apply type flags to the enemy on spawn, so modifier checks don't have to check the array constantly.
-         * Remark: We do not have to patch this property onto the player, as not setting it will just trigger a "falsey" match, resulting in the same outcome
-         */
+        this.context.patch(Player, "initializeForCombat").after(function () {
+            this.isHuman = true; // Well, the player is a human, right?
+        });
+
         this.context.patch(Enemy, "setStatsFromMonster").after(function (monster: any): void {
             this.isHuman = MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Human);
             this.isDragon = MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Dragon);
             this.isUndead = MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Undead);
         });
-
-        /**
-         * Well, the player is a human, right?
-         */
-        this.context.patch(Player, "initializeForCombat").after(function () {
-            this.isHuman = true;
-        });
     }
 
     /**
-     * 
+     *
      */
     private patchApplyUniqueSpawnEffects() {
-        this.context.patch(Player, "applyUniqueSpawnEffects").after(function () {
-            CustomModifiersManager.customApplyUniqueSpawnEffects(this);
-        });
-        this.context.patch(Enemy, "applyUniqueSpawnEffects").after(function () {
-            CustomModifiersManager.customApplyUniqueSpawnEffects(this);
+        // @ts-ignore You can actually patch base classes no problem
+        this.context.patch(Character, "applyUniqueSpawnEffects").after(function () {
+            if (rollPercentage(this.modifiers.increasedChanceToApplySlowOnSpawn - this.modifiers.decreasedChanceToApplySlowOnSpawn)) {
+                this.applyModifierEffect(new SlowEffect(25, 3), this.target, this.game.normalAttack);
+            }
+            if (rollPercentage(this.modifiers.increasedChanceToApplyStunOnSpawn - this.modifiers.decreasedChanceToApplyStunOnSpawn)) {
+                this.applyStun({ chance: 100, turns: 1, type: 'Stun', flavour: 'Stun' }, this.target);
+            }
+            if (rollPercentage(this.modifiers.increasedChanceToApplyPoisonOnSpawn - this.modifiers.decreasedChanceToApplyPoisonOnSpawn)) {
+                this.applyDOT(poisonEffect, this.target, 0);
+            }
+            if (rollPercentage(this.modifiers.increasedChanceToApplyDeadlyPoisonOnSpawn - this.modifiers.decreasedChanceToApplyDeadlyPoisonOnSpawn)) {
+                this.applyDOT(deadlyPoisonEffect, this.target, 0);
+            }
         });
     }
 
@@ -1555,11 +1545,38 @@ export class CustomModifiersManager {
      * so it's pretty much perfect
      */
     private patchAddHitpoints() {
-        this.context.patch(Player, "addHitpoints").after(function () {
-            CustomModifiersManager.customPatchAddHitpoints(this);
-        });
-        this.context.patch(Enemy, "addHitpoints").after(function () {
-            CustomModifiersManager.customPatchAddHitpoints(this);
+        // @ts-ignore You can actually patch base classes no problem
+        this.context.patch(Character, "addHitpoints").after(function () {
+            // If death marks are applied and hitpoints are under certain threshold, execute character
+            if (this.modifiers.deathMark > 0 && this.hitpoints <= ModifierConstants.DEATH_MARK_MAX_FLAT_HP) {
+                const effect = this.stackingEffect.get(this.game.deathMarkEffect);
+                if (effect === undefined) {
+                    console.log("effect not found on game object");
+                }
+                else {
+                    const maxHpPercentage = (this.hitpoints / this.stats.maxHitpoints) * 100;
+                    if (maxHpPercentage < effect.stacks) {
+                        // If the one who got death mark triggered on them was the player,
+                        // then build a notification for them, so they know it was death mark that killed them
+                        if (this instanceof Player) {
+                            const notification: NotificationData = {
+                                media: Constants.ERROR_ICON_MEDIA_PATH,
+                                quantity: 1,
+                                text: getLangString(ModifierConstants.DEATH_MARK_NOTIFICATION_TEXT_LANGUAGE_ID),
+                                isImportant: true,
+                                isError: false
+                            };
+                            this.game.notifications.addNotification(
+                                new ErrorNotification(ModifierConstants.DEATH_MARK_NOTIFICATION_ID),
+                                notification
+                            );
+                        }
+
+                        // Flat out set hp to zero
+                        this.hitpoints = 0;
+                    }
+                }
+            }
         });
     }
 
@@ -1567,356 +1584,87 @@ export class CustomModifiersManager {
      * "On hit effect" means both literal "on hit modifiers" but also stuff like "roll to poison, only because you actually hit the enemy".
      * REMARK: We patch 'clampDamageValue' because it is only ever called in ONE location. We don't patch to modify its functionality,
      * we actually patch it as a means of injecting our code into the process we want to (there is no natural method to beforé/after patch).
-     * 
+     *
      * More specifically, the patched method is called only when the entity's target has been rolled to hit,
      * which is the condition for which we want to implement some more stuff
      */
     private patchApplyOnHitEffects() {
-        this.context.patch(Player, "clampDamageValue").after(function (returnedDamage) {
+        // @ts-ignore You can actually patch base classes no problem
+        this.context.patch(Character, "clampDamageValue").after(function (returnedDamage) {
             // do some custom stuff inbetween
-            CustomModifiersManager.customApplyOnHitEffects(this);
+            if (this.target.barrier <= 0 && this.game.deathMarkEffect !== undefined) {
+                if (this.modifiers.increasedDeathMarkOnHit > 0) {
+                    if (rollPercentage(100 - (this.target.modifiers.increasedDeathMarkImmunity - this.target.modifiers.decreasedDeathMarkImmunity))) {
+                        this.applyStackingEffect(this.game.deathMarkEffect, this.target, this.modifiers.increasedDeathMarkOnHit);
+                        this.target.rendersRequired.effects = true;
+                    }
+                }
 
-            // return unchanged value
-            return returnedDamage;
-        });
-        this.context.patch(Enemy, "clampDamageValue").after(function (returnedDamage) {
-            // do some custom stuff inbetween
-            CustomModifiersManager.customApplyOnHitEffects(this);
+                if (rollPercentage(this.modifiers.increasedChanceToApplyStackOfDeathMark - this.modifiers.decreasedChanceToApplyStackOfDeathMark)) {
+                    if (rollPercentage(100 - (this.target.modifiers.increasedDeathMarkImmunity - this.target.modifiers.decreasedDeathMarkImmunity))) {
+                        this.applyStackingEffect(this.game.deathMarkEffect, this.target, 1);
+                        this.target.rendersRequired.effects = true;
+                    }
+                }
+            }
 
             // return unchanged value
             return returnedDamage;
         });
     }
 
+    /**
+     * Patch new min hit changing modifiers (both percentage and flat)
+     *
+     * REMARK: I'm not sure about being able to provide result of before patch to original call, so
+     * instead just used after patch as usual, repeating the "clampValue" call at the end to avoid invalid values
+     */
     private patchMinHitCalculations() {
-        /** Patch percentage and flat modifiers
-         * Also because existing flat modifiers aren't based on enemies and 
-         * the method we could have patched is therefore part of the CombatModifiers class (which doesn't have battle context)
-         * 
-         * REMARK: I'm not sure about being able to provide result of before patch to original call, so
-         * instead just used after patch as usual, repeating the "clampValue" call at the end to avoid invalid values
-         */
         this.context.patch(Player, "modifyMinHit").after(function (minHit: number) {
-            if (this.manager.fightInProgress) {
-                minHit = CustomModifiersManager.customGetMinModifierAgainstType(this, minHit);
-
-                if (this.manager.enemy.isBoss) {
-                    minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitAgainstBosses - this.modifiers.decreasedMinHitBasedOnMaxHitAgainstBosses)) / 100);
-                    minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitAgainstBosses - this.modifiers.decreasedFlatMinHitAgainstBosses);
-                }
-
-                switch (this.manager.areaType) {
-                    case CombatAreaType.Combat:
-                        minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitToCombatAreaMonsters - this.modifiers.decreasedMinHitBasedOnMaxHitToCombatAreaMonsters)) / 100);
-                        minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitToCombatAreaMonsters - this.modifiers.decreasedFlatMinHitToCombatAreaMonsters);
-                        break;
-                    case CombatAreaType.Slayer:
-                        minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitToSlayerAreaMonsters - this.modifiers.decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters)) / 100);
-                        minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitToSlayerAreaMonsters - this.modifiers.decreasedFlatMinHitToSlayerAreaMonsters);
-                        break;
-                    case CombatAreaType.Dungeon:
-                        minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitToDungeonMonsters - this.modifiers.decreasedMinHitBasedOnMaxHitToDungeonMonsters)) / 100);
-                        minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitToDungeonMonsters - this.modifiers.decreasedFlatMinHitToDungeonMonsters);
-                        break;
-                    default:
-                }
-
-                if (this.manager.onSlayerTask) {
-                    minHit += Math.floor((this.stats.maxHit * (this.modifiers.increasedMinHitBasedOnMaxHitToSlayerTasks - this.modifiers.decreasedMinHitBasedOnMaxHitToSlayerTasks)) / 100);
-                    minHit += numberMultiplier * (this.modifiers.increasedFlatMinHitToSlayerTasks - this.modifiers.decreasedFlatMinHitToSlayerTasks);
-                }
-            }
+            minHit += CustomModifiersCalculator.getPlayerMinHitModification(this);
 
             return clampValue(minHit, 1, this.stats.maxHit);
         });
         this.context.patch(Enemy, "modifyMinHit").after(function (minHit: number) {
-            minHit = CustomModifiersManager.customGetMinModifierAgainstType(this, minHit);
+            minHit += CustomModifiersCalculator.getEnemyMinHitModification(this);
+
             return clampValue(minHit, 1, this.stats.maxHit);
         });
     }
 
     /**
-     * 
+     * Patches new max hit changing modifiers (both percentage and flat) into base logic
      */
     private patchMaxHitCalculations() {
-        /**
-         * Patches new max hit percentage increasing modifiers into base logic.
-         * Presumably two patches, as the base class "Character" is abstract and therefore cannot be patched
-         */
         this.context.patch(Player, "getMaxHitModifier").after(function (maxHitModifier: number): number {
-            if (this.manager.fightInProgress) {
-                maxHitModifier = CustomModifiersManager.customGetMaxHitModifierAgainstType(this, maxHitModifier);
-
-                if (this.manager.enemy.isBoss) {
-                    maxHitModifier += this.modifiers.increasedMaxHitPercentAgainstBosses - this.modifiers.decreasedMaxHitPercentAgainstBosses;
-                }
-
-                switch (this.manager.areaType) {
-                    case CombatAreaType.Combat:
-                        maxHitModifier += this.modifiers.increasedMaxHitPercentToCombatAreaMonsters - this.modifiers.decreasedMaxHitPercentToCombatAreaMonsters;
-                        break;
-                    case CombatAreaType.Slayer:
-                        maxHitModifier += this.modifiers.increasedMaxHitPercentToSlayerAreaMonsters - this.modifiers.decreasedMaxHitPercentToSlayerAreaMonsters;
-                        break;
-                    case CombatAreaType.Dungeon:
-                        maxHitModifier += this.modifiers.increasedMaxHitPercentToDungeonMonsters - this.modifiers.decreasedMaxHitPercentToDungeonMonsters;
-                        break;
-                    default:
-                }
-
-                if (this.manager.onSlayerTask) {
-                    maxHitModifier += this.modifiers.increasedMaxHitPercentToSlayerTasks - this.modifiers.decreasedMaxHitPercentToSlayerTasks;
-                }
-            }
-
-            return maxHitModifier;
+            return maxHitModifier += CustomModifiersCalculator.getPlayerMaxHitPercentageModification(this);
         });
         this.context.patch(Enemy, "getMaxHitModifier").after(function (maxHitModifier: number): number {
-            return CustomModifiersManager.customGetMaxHitModifierAgainstType(this, maxHitModifier);
+            return maxHitModifier += CustomModifiersCalculator.getEnemyMaxHitPercentageModification(this);
         });
 
-        /**
-         * Patches new max hit flat increasing modifiers into base logic
-         */
         this.context.patch(Player, "modifyMaxHit").after(function (maxHit) {
-            if (this.usingAncient) {
-                return maxHit;
-            }
-
-            if (this.manager.fightInProgress) {
-                maxHit = CustomModifiersManager.customModifyMaxHitAgainstType(this, maxHit);
-
-                if (this.manager.enemy.isBoss) {
-                    maxHit += numberMultiplier * (this.modifiers.increasedMaxHitFlatAgainstBosses - this.modifiers.decreasedMaxHitFlatAgainstBosses);
-                }
-
-                switch (this.manager.areaType) {
-                    case CombatAreaType.Combat:
-                        maxHit += numberMultiplier * (this.modifiers.increasedMaxHitFlatToCombatAreaMonsters - this.modifiers.decreasedMaxHitFlatToCombatAreaMonsters);
-                        break;
-                    case CombatAreaType.Slayer:
-                        maxHit += numberMultiplier * (this.modifiers.increasedMaxHitFlatToSlayerAreaMonsters - this.modifiers.decreasedMaxHitFlatToSlayerAreaMonsters);
-                        break;
-                    case CombatAreaType.Dungeon:
-                        maxHit += numberMultiplier * (this.modifiers.increasedMaxHitFlatToDungeonMonsters - this.modifiers.decreasedMaxHitFlatToDungeonMonsters);
-                        break;
-                    default:
-                }
-
-                if (this.manager.onSlayerTask) {
-                    maxHit += numberMultiplier * (this.modifiers.increasedMaxHitFlatToSlayerTasks - this.modifiers.decreasedMaxHitFlatToSlayerTasks);
-                }
-            }
+            maxHit += CustomModifiersCalculator.getPlayerMaxHitFlatModification(this);
 
             return Math.max(maxHit, 1);
         });
         this.context.patch(Enemy, "modifyMaxHit").after(function (maxHit) {
-            return CustomModifiersManager.customModifyMaxHitAgainstType(this, maxHit);
+            maxHit += CustomModifiersCalculator.getEnemyMaxHitFlatModification(this);
+
+            return Math.max(maxHit, 1);
         });
     }
 
     /**
-     * 
+     * Patches new (total) damage (percentage) changing modifiers into base logic
      */
     private patchDamageModifierCalculations() {
         this.context.patch(Player, "getDamageModifiers").after(function (totalModifier: number) {
-            totalModifier += CustomModifiersManager.customGetDamageModifiersForMonsterTypes(this);
-            totalModifier += CustomModifiersManager.customGetDamageModifiersForSpellTypes(this);
-
-            return totalModifier;
+            return totalModifier += CustomModifiersCalculator.getPlayerDamagePercentageModifiers(this);
         });
         this.context.patch(Enemy, "getDamageModifiers").after(function (totalModifier: number) {
-            totalModifier += CustomModifiersManager.customGetDamageModifiersForMonsterTypes(this);
-            return totalModifier;
+            return totalModifier += CustomModifiersCalculator.getEnemyDamagePercentageModifiers(this);
         });
-    }
-
-    /**
-     * 
-     * @param entity
-     */
-    private static customApplyUniqueSpawnEffects(entity: Character): void {
-        if (rollPercentage(entity.modifiers.increasedChanceToApplySlowOnSpawn - entity.modifiers.decreasedChanceToApplySlowOnSpawn)) {
-            entity.applyModifierEffect(new SlowEffect(25, 3), entity.target, entity.game.normalAttack);
-        }
-        if (rollPercentage(entity.modifiers.increasedChanceToApplyStunOnSpawn - entity.modifiers.decreasedChanceToApplyStunOnSpawn)) {
-            entity.applyStun({ chance: 100, turns: 1, type: 'Stun', flavour: 'Stun' }, entity.target);
-        }
-        if (rollPercentage(entity.modifiers.increasedChanceToApplyPoisonOnSpawn - entity.modifiers.decreasedChanceToApplyPoisonOnSpawn)) {
-            entity.applyDOT(poisonEffect, entity.target, 0);
-        }
-        if (rollPercentage(entity.modifiers.increasedChanceToApplyDeadlyPoisonOnSpawn - entity.modifiers.decreasedChanceToApplyDeadlyPoisonOnSpawn)) {
-            entity.applyDOT(deadlyPoisonEffect, entity.target, 0);
-        }
-    }
-
-    /**
-     * 
-     * @param entity
-     */
-    private static customPatchAddHitpoints(entity: Character) {
-        // If death marks are applied and hitpoints are under certain threshold, execute character
-        if (entity.modifiers.deathMark > 0 && entity.hitpoints <= ModifierConstants.DEATH_MARK_MAX_FLAT_HP) {
-            const effect = entity.stackingEffect.get(entity.game.deathMarkEffect);
-            if (effect === undefined) {
-                console.log("effect not found on game object");
-            }
-            else {
-                const maxHpPercentage = (entity.hitpoints / entity.stats.maxHitpoints) * 100;
-                if (maxHpPercentage < effect.stacks) {
-                    // If the one who got death mark triggered on them was the player, 
-                    // then build a notification for them, so they know it was death mark that killed them
-                    if (entity instanceof Player) {
-                        const notification: NotificationData = {
-                            media: Constants.ERROR_ICON_MEDIA_PATH,
-                            quantity: 1,
-                            text: getLangString(ModifierConstants.DEATH_MARK_NOTIFICATION_TEXT_LANGUAGE_ID),
-                            isImportant: true,
-                            isError: false
-                        };
-                        entity.game.notifications.addNotification(
-                            new ErrorNotification(ModifierConstants.DEATH_MARK_NOTIFICATION_ID),
-                            notification
-                        );
-                    }
-
-                    // Flat out set hp to zero
-                    entity.hitpoints = 0;
-                }
-            }
-        }
-    }
-
-    /**
-     * 
-     * @param entity
-     */
-    private static customApplyOnHitEffects(entity: Character): void {
-        if (entity.target.barrier <= 0 && entity.game.deathMarkEffect !== undefined) {
-            if (entity.modifiers.increasedDeathMarkOnHit > 0) {
-                if (rollPercentage(100 - (entity.target.modifiers.increasedDeathMarkImmunity - entity.target.modifiers.decreasedDeathMarkImmunity))) {
-                    entity.applyStackingEffect(entity.game.deathMarkEffect, entity.target, entity.modifiers.increasedDeathMarkOnHit);
-                    entity.target.rendersRequired.effects = true;
-                }
-            }
-
-            if (rollPercentage(entity.modifiers.increasedChanceToApplyStackOfDeathMark - entity.modifiers.decreasedChanceToApplyStackOfDeathMark)) {
-                if (rollPercentage(100 - (entity.target.modifiers.increasedDeathMarkImmunity - entity.target.modifiers.decreasedDeathMarkImmunity))) {
-                    entity.applyStackingEffect(entity.game.deathMarkEffect, entity.target, 1);
-                    entity.target.rendersRequired.effects = true;
-                }
-            }
-        }
-    }
-
-    /**
-     * 
-     * @param entity The player or the enemy the player is fighting
-     * @param minHit Current value of the max hit modifier, before custom logic
-     */
-    private static customGetMinModifierAgainstType(entity: Character, minHit: number): number {
-        // Percentage and Flat modifiers
-        if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-            minHit += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstHumans - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstHumans)) / 100);
-            minHit += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstHumans - entity.modifiers.decreasedFlatMinHitAgainstHumans);
-        }
-        if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
-            minHit += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstDragons - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstDragons)) / 100);
-            minHit += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstDragons - entity.modifiers.decreasedFlatMinHitAgainstDragons);
-        }
-        if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
-            minHit += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstUndead - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstUndead)) / 100);
-            minHit += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstUndead - entity.modifiers.decreasedFlatMinHitAgainstUndead);
-        }
-
-        return minHit;
-    }
-
-    /**
-     * Patches percentage based max hit modifiers
-     * @param entity The player or the enemy the player is fighting
-     * @param maxHitModifier Current value of the max hit modifier, before custom logic
-     * @returns
-     */
-    private static customGetMaxHitModifierAgainstType(entity: Character, maxHitModifier: number): number {
-        if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-            maxHitModifier += entity.modifiers.increasedMaxHitPercentAgainstHumans - entity.modifiers.decreasedMaxHitPercentAgainstHumans;
-        }
-        if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
-            maxHitModifier += entity.modifiers.increasedMaxHitPercentAgainstDragons - entity.modifiers.decreasedMaxHitPercentAgainstDragons;
-        }
-        if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
-            maxHitModifier += entity.modifiers.increasedMaxHitPercentAgainstUndead - entity.modifiers.decreasedMaxHitPercentAgainstUndead;
-        }
-
-        return maxHitModifier;
-    }
-
-    /**
-     * Patches flat based max hit modifiers
-     * @param entity
-     * @param maxHit
-     */
-    private static customModifyMaxHitAgainstType(entity: Character, maxHit: number): number {
-        if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-            maxHit += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstHumans - entity.modifiers.decreasedMaxHitFlatAgainstHumans);
-        }
-        if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
-            maxHit += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstDragons - entity.modifiers.decreasedMaxHitFlatAgainstDragons);
-        }
-        if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
-            maxHit += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstUndead - entity.modifiers.decreasedMaxHitFlatAgainstUndead);
-        }
-
-        return maxHit;
-    }
-
-    /**
-     * 
-     * @param entity
-     * @returns
-     */
-    private static customGetDamageModifiersForMonsterTypes(entity: Character): number {
-        let additionalModifier = 0;
-        if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-            additionalModifier += entity.modifiers.increasedDamageAgainstHumans - entity.modifiers.decreasedDamageAgainstHumans;
-        }
-        if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
-            additionalModifier += entity.modifiers.increasedDamageAgainstDragons - entity.modifiers.decreasedDamageAgainstDragons;
-        }
-        if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
-            additionalModifier += entity.modifiers.increasedDamageAgainstUndead - entity.modifiers.decreasedDamageAgainstUndead;
-        }
-
-        return additionalModifier;
-    }
-
-    /**
-     * 
-     * @param entity
-     */
-    private static customGetDamageModifiersForSpellTypes(entity: Character): number {
-        let additionalModifier = 0;
-
-        if (entity.attackType === Constants.ATTACK_TYPES_MAGIC) {
-            switch (entity.spellSelection.standard?.spellType) {
-                case SpellTypes.Air:
-                    additionalModifier += entity.target.modifiers.increasedDamageTakenFromAirSpells - entity.target.modifiers.decreasedDamageTakenFromAirSpells;
-                    break;
-                case SpellTypes.Water:
-                    additionalModifier += entity.target.modifiers.increasedDamageTakenFromWaterSpells - entity.target.modifiers.decreasedDamageTakenFromWaterSpells;
-                    break;
-                case SpellTypes.Earth:
-                    additionalModifier += entity.target.modifiers.increasedDamageTakenFromEarthSpells - entity.target.modifiers.decreasedDamageTakenFromEarthSpells;
-                    break;
-                case SpellTypes.Fire:
-                    additionalModifier += entity.target.modifiers.increasedDamageTakenFromFireSpells - entity.target.modifiers.decreasedDamageTakenFromFireSpells;
-                    break;
-                default:
-            }
-        }
-
-        return additionalModifier;
     }
 
     // #endregion

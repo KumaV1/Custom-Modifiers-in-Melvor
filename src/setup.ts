@@ -11,7 +11,7 @@ import { TinyIconsCompatibility } from './compatibility/TinyIconsCompatibility';
 // Data
 // Game data for registration
 import ModData from '../data/data.json'
-import ModTestData from '../data/test-data.json'
+//import ModTestData from '../data/test-data.json'
 
 // Images
 // #region Image imports
@@ -21,10 +21,10 @@ import '../assets/Invoke_Death.png'
 // #endregion
 
 export async function setup(ctx: Modding.ModContext) {
-    // Register our GameData    
+    // Register our GameData
     await ctx.gameData.addPackage(ModData);
     // @ts-ignore
-    await ctx.gameData.addPackage(ModTestData);
+    //await ctx.gameData.addPackage(ModTestData);
 
     // Register custom modifier logic patches and localized texts
     initApiEndpoints(ctx);
@@ -94,7 +94,7 @@ function initLanguage(ctx: Modding.ModContext) {
         'PAGE_NAME'
     ];
 
-    // Based on how translation is retrieved, 
+    // Based on how translation is retrieved,
     // we may or may not have to specify the mod namespace
     for (const [key, value] of Object.entries<string>(languages[lang])) {
         if (keysToNotPrefix.some(prefix => key.includes(prefix))) {
@@ -123,7 +123,7 @@ function initOverviewContainer(ctx: Modding.ModContext) {
 }
 
 /**
- * Initializes certain functionality, to enable/inject specialized compatibility 
+ * Initializes certain functionality, to enable/inject specialized compatibility
  * based on other mods (e.g. "Tiny Icons" for the custom modifiers of this mod)
  * @param ctx
  */

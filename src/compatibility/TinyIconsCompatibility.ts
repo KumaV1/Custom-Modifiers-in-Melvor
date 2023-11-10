@@ -46,7 +46,7 @@ export class TinyIconsCompatibility {
         decreasedMinHitBasedOnMaxHitAgainstBosses: ['dungeon', 'ti_combat_dn'],
         increasedFlatMinHitAgainstBosses: ['dungeon', 'ti_combat_up'],
         decreasedFlatMinHitAgainstBosses: ['dungeon', 'ti_combat_dn'],
-        
+
         increasedGlobalSkillXPPerLevel: ['skill'],
         decreasedGlobalSkillXPPerLevel: ['skill'],
         increasedFlatGlobalSkillXP: ['skill'],

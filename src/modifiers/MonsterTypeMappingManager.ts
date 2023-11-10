@@ -2,8 +2,9 @@ import { MonsterType } from './MonsterType'
 
 /**
  * Takes care of holding which types are allocated to which monsters,
- * including letting other mods overwrite this.
- * Keep in mind that these arrays are simple strings, 
+ * including letting other mods add additional entries.
+ *
+ * Keep in mind that these arrays are simple strings,
  * so we don't have to worry about which expansions were actually purchased
  */
 export class MonsterTypeMappingManager {
@@ -108,6 +109,10 @@ export class MonsterTypeMappingManager {
         }
 	}
 
+	/**
+	 * Return the current list of humans
+	 * @returns
+	 */
 	public static getHumans() {
 		return MonsterTypeMappingManager._humans;
 	}
@@ -126,6 +131,10 @@ export class MonsterTypeMappingManager {
 		}
 	}
 
+	/**
+	 * Return the current list of dragons
+	 * @returns
+	 */
 	public static getDragons() {
 		return MonsterTypeMappingManager._dragons;
 	}
@@ -144,6 +153,10 @@ export class MonsterTypeMappingManager {
 		}
 	}
 
+	/**
+	 * Return the current list of undead
+	 * @returns
+	 */
 	public static getUndead() {
 		return MonsterTypeMappingManager._undead;
 	}
