@@ -27,12 +27,22 @@
     // #### Death mark (not to be confused with mark of death)
     Death_Mark_Notification_Text: "Du bist durch Todesurteil hingerichtet worden",
     COMBAT_MISC_Death_Mark_Effect: "Todesurteil",
-    MODIFIER_DATA_deathMark: "Wenn Lebenspunkte unter ${value}/${stacks}/${stack}/${count}% (MAX ${maxStacks}% / 5,000) der maximalen Lebenspunkte fallen, werde sofort hingerichtet",
+    MODIFIER_DATA_deathMark: "Wenn der Prozentsatz der verbleibenden maximalen HP niedriger ist als die Anzahl der Stapel (MAX 20% / 5.000), werde sofort hingerichtet",
     MODIFIER_DATA_increasedDeathMarkOnHit: "+${value} Todesurteil-Stapel, wenn ein Angriff trifft",
     MODIFIER_DATA_increasedChanceToApplyStackOfDeathMark: "+${value}% Chance einen Stapel Todesurteil beim Gegner hinzuzufügen",
     MODIFIER_DATA_decreasedChanceToApplyStackOfDeathMark: "-${value}% Chance einen Stapel Todesurteil beim Gegner hinzuzufügen",
     MODIFIER_DATA_increasedDeathMarkImmunity: "+${value} Chance, der Anwendung von Todesurteil-Stapeln zu widerstehen",
     MODIFIER_DATA_decreasedDeathMarkImmunity: "-${value} Chance, der Anwendung von Todesurteil-Stapeln zu widerstehen",
+
+    // #### Spell type
+    MODIFIER_DATA_increasedDamageTakenFromAirSpells: "+${value}% mehr erlittener Schaden von Luftzaubern",
+    MODIFIER_DATA_decreasedDamageTakenFromAirSpells: "-${value}% mehr erlittener Schaden von Luftzaubern",
+    MODIFIER_DATA_increasedDamageTakenFromWaterSpells: "+${value}% mehr erlittener Schaden von Wasserzaubern",
+    MODIFIER_DATA_decreasedDamageTakenFromWaterSpells: "-${value}% mehr erlittener Schaden von Wasserzaubern",
+    MODIFIER_DATA_increasedDamageTakenFromEarthSpells: "+${value}% mehr erlittener Schaden von Erdzaubern",
+    MODIFIER_DATA_decreasedDamageTakenFromEarthSpells: "-${value}% mehr erlittener Schaden von Erdzaubern",
+    MODIFIER_DATA_increasedDamageTakenFromFireSpells: "+${value}% mehr erlittener Schaden von Feuerzaubern",
+    MODIFIER_DATA_decreasedDamageTakenFromFireSpells: "-${value}% mehr erlittener Schaden von Feuerzaubern",
 
     // #### Area type
     MODIFIER_DATA_increasedMaxHitPercentToCombatAreaMonsters: "+${value}% Maximalschaden gegen Kampfgebiet-Monster",

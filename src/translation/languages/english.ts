@@ -33,6 +33,16 @@ export const en = {
     MODIFIER_DATA_increasedDeathMarkImmunity: "+${value}% chance to resist application of death mark stacks",
     MODIFIER_DATA_decreasedDeathMarkImmunity: "-${value}% chance to resist application of death mark stacks",
 
+    // #### Spell type
+    MODIFIER_DATA_increasedDamageTakenFromAirSpells: "+${value}% damage taken from air spells",
+    MODIFIER_DATA_decreasedDamageTakenFromAirSpells: "-${value}% damage taken from air spells",
+    MODIFIER_DATA_increasedDamageTakenFromWaterSpells: "+${value}% damage taken from water spells",
+    MODIFIER_DATA_decreasedDamageTakenFromWaterSpells: "-${value}% damage taken from water spells",
+    MODIFIER_DATA_increasedDamageTakenFromEarthSpells: "+${value}% damage taken from earth spells",
+    MODIFIER_DATA_decreasedDamageTakenFromEarthSpells: "-${value}% damage taken from earth spells",
+    MODIFIER_DATA_increasedDamageTakenFromFireSpells: "+${value}% damage taken from fire spells",
+    MODIFIER_DATA_decreasedDamageTakenFromFireSpells: "-${value}% damage taken from fire spells",
+
     // #### Area type
     MODIFIER_DATA_increasedMaxHitPercentToCombatAreaMonsters: "+${value}% Max Hit To Combat Area Monsters",
     MODIFIER_DATA_decreasedMaxHitPercentToCombatAreaMonsters: "-${value}% Max Hit To Combat Area Monsters",

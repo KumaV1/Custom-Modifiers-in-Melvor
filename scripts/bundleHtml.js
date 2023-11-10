@@ -8,7 +8,7 @@ const { minify } = require('html-minifier-terser');
 })();
 
 /**
- * @param {string} dirPath 
+ * @param {string} dirPath
  * @param {string} outPath
  */
 async function recurseTemplates(dirPath, outPath) {
@@ -29,8 +29,8 @@ async function recurseTemplates(dirPath, outPath) {
 }
 
 /**
- * @param {string} filePath 
- * @param {string} outPath 
+ * @param {string} filePath
+ * @param {string} outPath
  */
 async function minifyAndAppend(filePath, outPath) {
     const templates = await fs.readFile(filePath, 'utf-8');
