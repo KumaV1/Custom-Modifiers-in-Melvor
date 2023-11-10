@@ -76,6 +76,15 @@ export class TinyIconsCompatibility {
         increasedDeathMarkImmunity: ['cmim_death_mark', 'combat'],
         decreasedDeathMarkImmunity: ['cmim_death_mark', 'combat'],
 
+        increasedDamageTakenFromAirSpells: ["ti_magic_dn", "air_strike"],
+        decreasedDamageTakenFromAirSpells: ["ti_magic_up", "air_strike"],
+        increasedDamageTakenFromWaterSpells: ["ti_magic_dn", "water_strike"],
+        decreasedDamageTakenFromWaterSpells: ["ti_magic_up", "water_strike"],
+        increasedDamageTakenFromEarthSpells: ["ti_magic_dn", "earth_strike"],
+        decreasedDamageTakenFromEarthSpells: ["ti_magic_up", "earth_strike"],
+        increasedDamageTakenFromFireSpells: ["ti_magic_dn", "fire_strike"],
+        decreasedDamageTakenFromFireSpells: ["ti_magic_up", "fire_strike"],
+
         humanTraitApplied: ['cmim_human', 'combat'],
         dragonTraitApplied: ['cmim_dragon', 'combat'],
         undeadTraitApplied: ['cmim_undead', 'combat'],

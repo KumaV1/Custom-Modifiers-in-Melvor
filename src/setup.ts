@@ -11,7 +11,7 @@ import { TinyIconsCompatibility } from './compatibility/TinyIconsCompatibility';
 // Data
 // Game data for registration
 import ModData from '../data/data.json'
-//import ModTestData from '../data/test-data.json'
+import ModTestData from '../data/test-data.json'
 
 // Images
 // #region Image imports
@@ -24,7 +24,7 @@ export async function setup(ctx: Modding.ModContext) {
     // Register our GameData    
     await ctx.gameData.addPackage(ModData);
     // @ts-ignore
-    //await ctx.gameData.addPackage(ModTestData);
+    await ctx.gameData.addPackage(ModTestData);
 
     // Register custom modifier logic patches and localized texts
     initApiEndpoints(ctx);

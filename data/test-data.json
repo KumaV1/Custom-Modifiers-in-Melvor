@@ -71,9 +71,14 @@
         "id": "Test_Passive",
         "name": "Test Passive",
         "modifiers": {
-          "humanTraitApplied": 1,
-          "dragonTraitApplied": 1,
-          "undeadTraitApplied": 1
+          "increasedDamageTakenFromAirSpells": 100,
+          "decreasedDamageTakenFromAirSpells": 50,
+          "increasedDamageTakenFromWaterSpells": 100,
+          "decreasedDamageTakenFromWaterSpells": 50,
+          "increasedDamageTakenFromEarthSpells": 100,
+          "decreasedDamageTakenFromEarthSpells": 50,
+          "increasedDamageTakenFromFireSpells": 100,
+          "decreasedDamageTakenFromFireSpells": 50
         }
       }
     ],

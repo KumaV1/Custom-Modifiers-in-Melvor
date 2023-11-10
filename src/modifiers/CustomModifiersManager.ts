@@ -158,6 +158,15 @@ declare global {
         increasedDeathMarkImmunity: Standard,
         decreasedDeathMarkImmunity: Standard,
 
+        increasedDamageTakenFromAirSpells: Standard,
+        decreasedDamageTakenFromAirSpells: Standard,
+        increasedDamageTakenFromWaterSpells: Standard,
+        decreasedDamageTakenFromWaterSpells: Standard,
+        increasedDamageTakenFromEarthSpells: Standard,
+        decreasedDamageTakenFromEarthSpells: Standard,
+        increasedDamageTakenFromFireSpells: Standard,
+        decreasedDamageTakenFromFireSpells: Standard,
+
         humanTraitApplied: Standard,
         dragonTraitApplied: Standard,
         undeadTraitApplied: Standard,
@@ -212,6 +221,15 @@ declare global {
         decreasedChanceToApplyStackOfDeathMark: number,
         increasedDeathMarkImmunity: number,
         decreasedDeathMarkImmunity: number,
+
+        increasedDamageTakenFromAirSpells: number,
+        decreasedDamageTakenFromAirSpells: number,
+        increasedDamageTakenFromWaterSpells: number,
+        decreasedDamageTakenFromWaterSpells: number,
+        increasedDamageTakenFromEarthSpells: number,
+        decreasedDamageTakenFromEarthSpells: number,
+        increasedDamageTakenFromFireSpells: number,
+        decreasedDamageTakenFromFireSpells: number,
 
         humanTraitApplied: number,
         dragonTraitApplied: number,
@@ -279,6 +297,7 @@ export class CustomModifiersManager {
         this.registerSlayerAreaModifiers();
         this.registerDungeonModifiers();
         this.registerSlayerTaskModifiers();
+        this.registerSpellModifiers();
         this.registerTraitApplicationModifiers();
         this.registerHumanModifiers();
         this.registerDragonModifiers();
@@ -875,6 +894,84 @@ export class CustomModifiersManager {
     /**
      * 
      */
+    private registerSpellModifiers() {
+        modifierData.increasedDamageTakenFromAirSpells = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageTakenFromAirSpells');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageTakenFromAirSpells = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageTakenFromAirSpells');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.increasedDamageTakenFromWaterSpells = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageTakenFromWaterSpells');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageTakenFromWaterSpells = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageTakenFromWaterSpells');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.increasedDamageTakenFromEarthSpells = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageTakenFromEarthSpells');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageTakenFromEarthSpells = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageTakenFromEarthSpells');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.increasedDamageTakenFromFireSpells = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageTakenFromFireSpells');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageTakenFromFireSpells = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageTakenFromFireSpells');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+    }
+
+    /**
+     * 
+     */
     private registerTraitApplicationModifiers() {
         modifierData.humanTraitApplied = {
             get langDescription() {
@@ -1370,6 +1467,15 @@ export class CustomModifiersManager {
             this.increasedDeathMarkImmunity ??= 0;
             this.decreasedDeathMarkImmunity ??= 0;
 
+            this.increasedDamageTakenFromAirSpells ??= 0;
+            this.decreasedDamageTakenFromAirSpells ??= 0;
+            this.increasedDamageTakenFromWaterSpells ??= 0;
+            this.decreasedDamageTakenFromWaterSpells ??= 0;
+            this.increasedDamageTakenFromEarthSpells ??= 0;
+            this.decreasedDamageTakenFromEarthSpells ??= 0;
+            this.increasedDamageTakenFromFireSpells ??= 0;
+            this.decreasedDamageTakenFromFireSpells ??= 0;
+
             this.humanTraitApplied ??= 0;
             this.dragonTraitApplied ??= 0;
             this.undeadTraitApplied ??= 0;
@@ -1614,10 +1720,14 @@ export class CustomModifiersManager {
      */
     private patchDamageModifierCalculations() {
         this.context.patch(Player, "getDamageModifiers").after(function (totalModifier: number) {
-            return CustomModifiersManager.customGetDamageModifiersAgainstType(this, totalModifier);
+            totalModifier += CustomModifiersManager.customGetDamageModifiersForMonsterTypes(this);
+            totalModifier += CustomModifiersManager.customGetDamageModifiersForSpellTypes(this);
+
+            return totalModifier;
         });
         this.context.patch(Enemy, "getDamageModifiers").after(function (totalModifier: number) {
-            return CustomModifiersManager.customGetDamageModifiersAgainstType(this, totalModifier);
+            totalModifier += CustomModifiersManager.customGetDamageModifiersForMonsterTypes(this);
+            return totalModifier;
         });
     }
 
@@ -1764,21 +1874,49 @@ export class CustomModifiersManager {
     /**
      * 
      * @param entity
-     * @param maxHit
      * @returns
      */
-    private static customGetDamageModifiersAgainstType(entity: Character, totalModifier: number): number {
+    private static customGetDamageModifiersForMonsterTypes(entity: Character): number {
+        let additionalModifier = 0;
         if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-            totalModifier += entity.modifiers.increasedDamageAgainstHumans - entity.modifiers.decreasedDamageAgainstHumans;
+            additionalModifier += entity.modifiers.increasedDamageAgainstHumans - entity.modifiers.decreasedDamageAgainstHumans;
         }
         if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
-            totalModifier += entity.modifiers.increasedDamageAgainstDragons - entity.modifiers.decreasedDamageAgainstDragons;
+            additionalModifier += entity.modifiers.increasedDamageAgainstDragons - entity.modifiers.decreasedDamageAgainstDragons;
         }
         if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
-            totalModifier += entity.modifiers.increasedDamageAgainstUndead - entity.modifiers.decreasedDamageAgainstUndead;
+            additionalModifier += entity.modifiers.increasedDamageAgainstUndead - entity.modifiers.decreasedDamageAgainstUndead;
         }
 
-        return totalModifier;
+        return additionalModifier;
+    }
+
+    /**
+     * 
+     * @param entity
+     */
+    private static customGetDamageModifiersForSpellTypes(entity: Character): number {
+        let additionalModifier = 0;
+
+        if (entity.attackType === Constants.ATTACK_TYPES_MAGIC) {
+            switch (entity.spellSelection.standard?.spellType) {
+                case SpellTypes.Air:
+                    additionalModifier += entity.target.modifiers.increasedDamageTakenFromAirSpells - entity.target.modifiers.decreasedDamageTakenFromAirSpells;
+                    break;
+                case SpellTypes.Water:
+                    additionalModifier += entity.target.modifiers.increasedDamageTakenFromWaterSpells - entity.target.modifiers.decreasedDamageTakenFromWaterSpells;
+                    break;
+                case SpellTypes.Earth:
+                    additionalModifier += entity.target.modifiers.increasedDamageTakenFromEarthSpells - entity.target.modifiers.decreasedDamageTakenFromEarthSpells;
+                    break;
+                case SpellTypes.Fire:
+                    additionalModifier += entity.target.modifiers.increasedDamageTakenFromFireSpells - entity.target.modifiers.decreasedDamageTakenFromFireSpells;
+                    break;
+                default:
+            }
+        }
+
+        return additionalModifier;
     }
 
     // #endregion
