@@ -39,10 +39,12 @@ export class MonsterTypeMappingManager {
 		"melvorTotH:DarkKnight",
 		"melvorAoD:BlindWarrior",
 		"melvorAoD:BlindArcher",
-		"melvorAoD:BlindMage"
+		"melvorAoD:BlindMage",
+		"melvorAoD:SoulTakerWitch"
 	];
 
 	private static _dragons: string[] = [
+		"melvorD:PratTheProtectorOfSecrets",
 		"melvorD:GreenDragon",
 		"melvorD:BlueDragon",
 		"melvorD:RedDragon",
@@ -70,7 +72,12 @@ export class MonsterTypeMappingManager {
 		"melvorTotH:Banshee",
 		"melvorTotH:Spectre",
 		"melvorTotH:CursedSkeletonWarrior",
-		"melvorTotH:Fiozor"
+		"melvorTotH:Fiozor",
+		"melvorAoD:BlindGhost",
+		"melvorAoD:Lich",
+		"melvorAoD:GhostSailor",
+		"melvorAoD:GhostMercenary",
+		"melvorAoD:CursedPirateCaptain",
 	];
 
 	/**
