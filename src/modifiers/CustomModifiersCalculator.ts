@@ -18,8 +18,8 @@ export class CustomModifiersCalculator {
     public static getPercentagetXpModification(skill: Skill<BaseSkillData>): number {
         let modifier = (skill.game.modifiers.increasedGlobalSkillXPPerLevel * skill.level)
             - (skill.game.modifiers.decreasedGlobalSkillXPPerLevel * skill.level)
-            + skill.game.modifiers.getSkillModifierValue('increasedSkillXPPerSkillLevel', skill)
-            - skill.game.modifiers.getSkillModifierValue('decreasedSkillXPPerSkillLevel', skill);
+            + (skill.game.modifiers.getSkillModifierValue('increasedSkillXPPerSkillLevel', skill) * skill.level)
+            - (skill.game.modifiers.getSkillModifierValue('decreasedSkillXPPerSkillLevel', skill) * skill.level);
 
         return Math.max(0, modifier);
     }
@@ -40,7 +40,7 @@ export class CustomModifiersCalculator {
             + skill.game.modifiers.getSkillModifierValue('increasedFlatSkillXP', skill)
             - skill.game.modifiers.getSkillModifierValue('decreasedFlatSkillXP', skill)
             + (skill.game.modifiers.getSkillModifierValue('increasedFlatSkillXPPerSkillLevel', skill) * skill.level)
-            - ((skill.game.modifiers.getSkillModifierValue('decreasedFlatSkillXPPerSkillLevel', skill) * skill.level));
+            - (skill.game.modifiers.getSkillModifierValue('decreasedFlatSkillXPPerSkillLevel', skill) * skill.level);
 
         flatXp = Math.max(0, flatXp);
 

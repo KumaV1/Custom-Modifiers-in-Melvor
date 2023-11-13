@@ -3,6 +3,7 @@
 import { Constants } from './Constants';
 import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
 import { MonsterTypeMappingManager } from './modifiers/MonsterTypeMappingManager';
+import { MonsterType } from './modifiers/MonsterType';
 import { Translation } from './translation/Translation';
 import { languages } from './translation/languages'
 import { MonsterTypeOverview } from './components/MonsterTypeOverview'
@@ -51,6 +52,14 @@ function initApiEndpoints(ctx: Modding.ModContext) {
         getHumans: () => MonsterTypeMappingManager.getHumans(),
         getDragons: () => MonsterTypeMappingManager.getDragons(),
         getUndead: () => MonsterTypeMappingManager.getUndead(),
+
+        /** The flag is specifically set on the "Enemy",
+         * therefore you might want to call this in places
+         * where you have "only" the monster object itself */
+        monsterIsOfType: (monster: Monster, monsterType: MonsterType) => MonsterTypeMappingManager.monsterIsOfType(monster, monsterType),
+        monsterIsHuman: (monster: Monster) => MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Human),
+        monsterIsDragon: (monster: Monster) => MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Dragon),
+        monsterIsUndead: (monster: Monster) => MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Undead)
     });
 }
 
@@ -59,10 +68,10 @@ function initApiEndpoints(ctx: Modding.ModContext) {
  * @param ctx
  */
 function initCustomModifiers(ctx: Modding.ModContext) {
-    const customModifiers = new CustomModifiersManager(ctx);
+    const cmm = new CustomModifiersManager(ctx);
 
-    customModifiers.registerModifiers();
-    customModifiers.patchMethods();
+    cmm.registerModifiers();
+    cmm.patchMethods();
 }
 
 /**

@@ -132,6 +132,9 @@ export class TinyIconsCompatibility {
             }
 
             const tinyIcons = mod.api.tinyIcons;
+            if (!tinyIcons) {
+                return;
+            }
 
             const cmimTagSources: Record<string, string> = {
                 cmim_death_mark: this.context.getResourceUrl('assets/customModifiersInMelvor/Invoke_Death.png'),
