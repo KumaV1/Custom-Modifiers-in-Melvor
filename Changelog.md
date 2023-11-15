@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.0
+* Added more api endpoints
+* fixed certain modifiers not actually being boosted by skill lvl
+
 ## v1.0.0
 * Added type to some monsters
 * Upped version to first official release
