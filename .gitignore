@@ -6,3 +6,4 @@ dist
 package
 build
 package-lock.json
+Notes.md
