@@ -19,19 +19,18 @@ Feel free to have a look at one of the files in `src/translation/languages`, whi
 Of course, if you use any of these modifiers, remember to flag this mod as a dependency for your mod.
 
 ### Monster type definition
-One important thing to note is that this mod adds a couple of modifiers, which affect monsters of a certain type. 
-For example, there is an `increasedMaxHitPercentAgainstDragons`, which, as the name suggests, 
-increases your max hit by a certain percentage, but only against dragons.
+Regardless of whether you want to use modifiers implemented by this mod yourself or not, 
+if you add custom monster with your mod, 
+then it would be nice to think about whether those monsters should have any form of type allocation.
 
-As Melvor doesn't come with monster types by default, an alternative way had to be taken instead.
-Basically, for each type, there is a static array of monster ids, that will be checked to see if a certain modifier should be applied against the current enemy.
-
-If you add new monsters in your mod, then you will have to specifically register the types to the monsters you implement, in order for corresponding modifiers to take effect. 
-To do so, you will have to call the following method(s) during your setup.
+For example, if you add a dragon, then by allocating that type to it (by checking whether the user has this mod installed), you 
+you can allow those players to make use of modifiers added through this mod, even if you don't make direct use of those modifiers yourself.
+To do so, just check whether the api object is defined, and call the type-registering method(s) for whatever monsters you see fit.
 ```js
-mod.api.customModifiersInMelvor.addHumans(["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
-mod.api.customModifiersInMelvor.addDragons(["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
-mod.api.customModifiersInMelvor.addUndead(["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
+if(mod.api.customModifiersInMelvor) {
+	// If you only add one monster, make sure you still provide an array and not just a string accidentally
+	mod.api.customModifiersInMelvor.addHumans(["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
+	mod.api.customModifiersInMelvor.addDragons(["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
+	mod.api.customModifiersInMelvor.addUndead(["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
+}
 ```
-
-**NOTE**: You should use the in-game "monster types" entry in the modding-section of the sidebar, to verify that your monsters have been typed correctly.
