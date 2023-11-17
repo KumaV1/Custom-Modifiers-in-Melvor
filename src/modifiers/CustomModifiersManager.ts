@@ -4,11 +4,9 @@ import { MonsterType } from './MonsterType';
 import { MonsterTypeMappingManager } from './MonsterTypeMappingManager';
 import { CustomModifiersCalculator } from './CustomModifiersCalculator'
 
-/** For typescript intellisense and not throwing errors */
-require('./definitions')
-
 /**
  * Patches different sections of the code, in order to integrate custom modifiers
+ * Check "./definitions" for typescript intellisense and not throwing errors
  */
 export class CustomModifiersManager {
     constructor(private readonly context: Modding.ModContext) { }
@@ -48,6 +46,7 @@ export class CustomModifiersManager {
         this.patchMinHitCalculations();
         this.patchMaxHitCalculations();
         this.patchDamageModifierCalculations();
+        this.patchAccuracyCalculations();
     }
 
 
@@ -379,6 +378,24 @@ export class CustomModifiersManager {
             isNegative: true,
             tags: ['combat']
         };
+        modifierData.increasedGlobalAccuracyAgainstCombatAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstCombatAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedGlobalAccuracyAgainstCombatAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstCombatAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
     }
 
     private registerSlayerAreaModifiers() {
@@ -452,6 +469,24 @@ export class CustomModifiersManager {
         modifierData.decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedGlobalAccuracyAgainstSlayerAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstSlayerAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedGlobalAccuracyAgainstSlayerAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerAreaMonsters');
             },
             description: '',
             isSkill: false,
@@ -537,6 +572,24 @@ export class CustomModifiersManager {
             isNegative: true,
             tags: ['combat']
         };
+        modifierData.increasedGlobalAccuracyAgainstDungeonMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstDungeonMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedGlobalAccuracyAgainstDungeonMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstDungeonMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
     }
 
     private registerSlayerTaskModifiers() {
@@ -610,6 +663,24 @@ export class CustomModifiersManager {
         modifierData.decreasedMinHitBasedOnMaxHitToSlayerTasks = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToSlayerTasks');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedGlobalAccuracyAgainstSlayerTasks = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstSlayerTasks');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedGlobalAccuracyAgainstSlayerTasks = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerTasks');
             },
             description: '',
             isSkill: false,
@@ -827,6 +898,24 @@ export class CustomModifiersManager {
             isNegative: true,
             tags: ['combat']
         };
+        modifierData.increasedGlobalAccuracyAgainstHumans = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstHumans');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedGlobalAccuracyAgainstHumans = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstHumans');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
     }
 
     /**
@@ -921,6 +1010,24 @@ export class CustomModifiersManager {
         modifierData.decreasedMinHitBasedOnMaxHitAgainstDragons = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstDragons');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedGlobalAccuracyAgainstDragons = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstDragons');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedGlobalAccuracyAgainstDragons = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstDragons');
             },
             description: '',
             isSkill: false,
@@ -1027,6 +1134,24 @@ export class CustomModifiersManager {
             isNegative: true,
             tags: ['combat']
         };
+        modifierData.increasedGlobalAccuracyAgainstUndead = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstUndead');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedGlobalAccuracyAgainstUndead = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstUndead');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
     }
 
     /**
@@ -1103,6 +1228,24 @@ export class CustomModifiersManager {
         modifierData.decreasedMinHitBasedOnMaxHitAgainstBosses = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstBosses');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedGlobalAccuracyAgainstBosses = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstBosses');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedGlobalAccuracyAgainstBosses = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstBosses');
             },
             description: '',
             isSkill: false,
@@ -1203,6 +1346,8 @@ export class CustomModifiersManager {
             this.decreasedMinHitBasedOnMaxHitAgainstHumans ??= 0;
             this.increasedFlatMinHitAgainstHumans ??= 0;
             this.decreasedFlatMinHitAgainstHumans ??= 0;
+            this.increasedGlobalAccuracyAgainstHumans ??= 0;
+            this.decreasedGlobalAccuracyAgainstHumans ??= 0;
 
             this.increasedDamageAgainstDragons ??= 0;
             this.decreasedDamageAgainstDragons ??= 0;
@@ -1214,6 +1359,8 @@ export class CustomModifiersManager {
             this.decreasedMinHitBasedOnMaxHitAgainstDragons ??= 0;
             this.increasedFlatMinHitAgainstDragons ??= 0;
             this.decreasedFlatMinHitAgainstDragons ??= 0;
+            this.increasedGlobalAccuracyAgainstDragons ??= 0;
+            this.decreasedGlobalAccuracyAgainstDragons ??= 0;
 
             this.increasedDamageAgainstUndead ??= 0;
             this.decreasedDamageAgainstUndead ??= 0;
@@ -1225,6 +1372,8 @@ export class CustomModifiersManager {
             this.decreasedMinHitBasedOnMaxHitAgainstUndead ??= 0;
             this.increasedFlatMinHitAgainstUndead ??= 0;
             this.decreasedFlatMinHitAgainstUndead ??= 0;
+            this.increasedGlobalAccuracyAgainstUndead ??= 0;
+            this.decreasedGlobalAccuracyAgainstUndead ??= 0;
         });
     }
 
@@ -1386,10 +1535,27 @@ export class CustomModifiersManager {
      */
     private patchDamageModifierCalculations() {
         this.context.patch(Player, "getDamageModifiers").after(function (totalModifier: number) {
-            return totalModifier += CustomModifiersCalculator.getPlayerDamagePercentageModifiers(this);
+            return totalModifier += CustomModifiersCalculator.getPlayerDamagePercentageModification(this);
         });
         this.context.patch(Enemy, "getDamageModifiers").after(function (totalModifier: number) {
-            return totalModifier += CustomModifiersCalculator.getEnemyDamagePercentageModifiers(this);
+            return totalModifier += CustomModifiersCalculator.getEnemyDamagePercentageModification(this);
+        });
+    }
+
+    /**
+     * Patches new accuracy (percentage) changing modifiers into base logic
+     */
+    private patchAccuracyCalculations() {
+        /**
+         * @param returnValue the current flat accuracy, afer 'modifyAccuracy' run (which includes several percentage based modifiers)
+         * @param accuracy the accuracy originally provided to the method, the value we use to calculate our percentage boosts with,
+         *                 as there is no flat accuracy bonus between the start of the method and the addition of percentage based boosts
+         */
+        this.context.patch(Player, "modifyAccuracy").after(function (returnValue, accuracy) {
+            return returnValue += CustomModifiersCalculator.getPlayerAccuracyFlatModification(this, accuracy);
+        });
+        this.context.patch(Enemy, "modifyAccuracy").after(function (returnValue, accuracy) {
+            return returnValue += CustomModifiersCalculator.getEnemyAccuracyFlatModification(this, accuracy);
         });
     }
 

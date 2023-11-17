@@ -40,6 +40,8 @@ declare global {
         decreasedMinHitBasedOnMaxHitAgainstHumans: Standard,
         increasedFlatMinHitAgainstHumans: Standard,
         decreasedFlatMinHitAgainstHumans: Standard,
+        increasedGlobalAccuracyAgainstHumans: Standard,
+        decreasedGlobalAccuracyAgainstHumans: Standard,
 
         increasedDamageAgainstDragons: Standard,
         decreasedDamageAgainstDragons: Standard,
@@ -51,6 +53,8 @@ declare global {
         decreasedMinHitBasedOnMaxHitAgainstDragons: Standard,
         increasedFlatMinHitAgainstDragons: Standard,
         decreasedFlatMinHitAgainstDragons: Standard,
+        increasedGlobalAccuracyAgainstDragons: Standard,
+        decreasedGlobalAccuracyAgainstDragons: Standard,
 
         increasedDamageAgainstUndead: Standard,
         decreasedDamageAgainstUndead: Standard,
@@ -61,7 +65,9 @@ declare global {
         increasedMinHitBasedOnMaxHitAgainstUndead: Standard,
         decreasedMinHitBasedOnMaxHitAgainstUndead: Standard,
         increasedFlatMinHitAgainstUndead: Standard,
-        decreasedFlatMinHitAgainstUndead: Standard
+        decreasedFlatMinHitAgainstUndead: Standard,
+        increasedGlobalAccuracyAgainstUndead: Standard,
+        decreasedGlobalAccuracyAgainstUndead: Standard,
     }
 }
 

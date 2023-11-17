@@ -8,6 +8,8 @@ declare global {
         decreasedMinHitBasedOnMaxHitToCombatAreaMonsters: Standard,
         increasedFlatMinHitToCombatAreaMonsters: Standard,
         decreasedFlatMinHitToCombatAreaMonsters: Standard,
+        increasedGlobalAccuracyAgainstCombatAreaMonsters: Standard,
+        decreasedGlobalAccuracyAgainstCombatAreaMonsters: Standard,
 
         increasedMaxHitPercentToSlayerAreaMonsters: Standard,
         decreasedMaxHitPercentToSlayerAreaMonsters: Standard,
@@ -17,6 +19,8 @@ declare global {
         decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters: Standard,
         increasedFlatMinHitToSlayerAreaMonsters: Standard,
         decreasedFlatMinHitToSlayerAreaMonsters: Standard,
+        increasedGlobalAccuracyAgainstSlayerAreaMonsters: Standard,
+        decreasedGlobalAccuracyAgainstSlayerAreaMonsters: Standard,
 
         increasedMaxHitPercentToDungeonMonsters: Standard,
         decreasedMaxHitPercentToDungeonMonsters: Standard,
@@ -26,6 +30,8 @@ declare global {
         decreasedMinHitBasedOnMaxHitToDungeonMonsters: Standard,
         increasedFlatMinHitToDungeonMonsters: Standard,
         decreasedFlatMinHitToDungeonMonsters: Standard,
+        increasedGlobalAccuracyAgainstDungeonMonsters: Standard,
+        decreasedGlobalAccuracyAgainstDungeonMonsters: Standard,
 
         increasedMaxHitPercentToSlayerTasks: Standard,
         decreasedMaxHitPercentToSlayerTasks: Standard,
@@ -35,6 +41,8 @@ declare global {
         decreasedMinHitBasedOnMaxHitToSlayerTasks: Standard,
         increasedFlatMinHitToSlayerTasks: Standard,
         decreasedFlatMinHitToSlayerTasks: Standard,
+        increasedGlobalAccuracyAgainstSlayerTasks: Standard,
+        decreasedGlobalAccuracyAgainstSlayerTasks: Standard,
 
         increasedMaxHitPercentAgainstBosses: Standard,
         decreasedMaxHitPercentAgainstBosses: Standard,
@@ -43,7 +51,9 @@ declare global {
         increasedMinHitBasedOnMaxHitAgainstBosses: Standard,
         decreasedMinHitBasedOnMaxHitAgainstBosses: Standard,
         increasedFlatMinHitAgainstBosses: Standard,
-        decreasedFlatMinHitAgainstBosses: Standard
+        decreasedFlatMinHitAgainstBosses: Standard,
+        increasedGlobalAccuracyAgainstBosses: Standard,
+        decreasedGlobalAccuracyAgainstBosses: Standard,
 
         /** Percentage */
         increasedGlobalSkillXPPerLevel: Standard,

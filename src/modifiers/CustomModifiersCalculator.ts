@@ -1,4 +1,5 @@
 import { Constants } from '../Constants';
+import { ModifierType } from './ModifierType';
 
 /**
  * While the main patching is defined by the manager,
@@ -204,8 +205,9 @@ export class CustomModifiersCalculator {
     /**
      * Calculates change to percentage-based (total) damage value
      * @param entity
+     * @returns
      */
-    public static getPlayerDamagePercentageModifiers(entity: Player): number {
+    public static getPlayerDamagePercentageModification(entity: Player): number {
         let modification = 0;
         if (entity.manager.fightInProgress) {
             modification += CustomModifiersCalculator.getCharacterDamagePercentageModifiers(entity);
@@ -217,14 +219,72 @@ export class CustomModifiersCalculator {
     /**
      * Calculates change to percentage-based (total) damage value
      * @param entity
+     * @returns
      */
-    public static getEnemyDamagePercentageModifiers(entity: Enemy): number {
+    public static getEnemyDamagePercentageModification(entity: Enemy): number {
         let modification = 0;
         if (entity.manager.fightInProgress) {
             modification += CustomModifiersCalculator.getCharacterDamagePercentageModifiers(entity);
         }
 
         return modification;
+    }
+
+    /**
+     * Calculates the change to accuracy, based on the originally provided accuracy value
+     * @param entity
+     * @param accuracy flat value, as was originally provided to the unpatched method
+     * @returns flat value
+     */
+    public static getPlayerAccuracyFlatModification(entity: Player, accuracy: number): number {
+        // Calculate percentage-based modifier
+        let accuracyModifier = 0;
+        if (entity.manager.fightInProgress) {
+            accuracyModifier += CustomModifiersCalculator.getCharacterAccuracyPercentageModifiers(entity);
+
+            if (entity.manager.enemy.isBoss) {
+                accuracyModifier += entity.modifiers.increasedGlobalAccuracyAgainstBosses - entity.modifiers.decreasedGlobalAccuracyAgainstBosses;
+            }
+
+            switch (entity.manager.areaType) {
+                case CombatAreaType.Combat:
+                    accuracyModifier += entity.modifiers.increasedGlobalAccuracyAgainstCombatAreaMonsters - entity.modifiers.decreasedGlobalAccuracyAgainstCombatAreaMonsters;
+                    break;
+                case CombatAreaType.Slayer:
+                    accuracyModifier += entity.modifiers.increasedGlobalAccuracyAgainstSlayerAreaMonsters - entity.modifiers.decreasedGlobalAccuracyAgainstSlayerAreaMonsters;
+                    break;
+                case CombatAreaType.Dungeon:
+                    accuracyModifier += entity.modifiers.increasedGlobalAccuracyAgainstDungeonMonsters - entity.modifiers.decreasedGlobalAccuracyAgainstDungeonMonsters;
+                    break;
+                default:
+            }
+
+            if (entity.manager.onSlayerTask) {
+                accuracyModifier += entity.modifiers.increasedGlobalAccuracyAgainstSlayerTasks - entity.modifiers.decreasedGlobalAccuracyAgainstSlayerTasks;
+            }
+        }
+
+        // Get flat bonus, based on original value and percentage-bonus calculated
+        let accuracyModification = applyModifier(accuracy, accuracyModifier, ModifierType.MultiplyBaseByPercentageWithFlooring);
+
+        // Just like with the base game calculation, we have to keep the "globalAccuracyHPScaling" modifier in mind
+        return CustomModifiersCalculator.applyGlobalAccuracyHpScaling(entity, accuracyModification);
+    }
+
+    /**
+     * Calculates flat change to accuracy, based on the originally provided flat accuracy value
+     * @param entity
+     * @param accuracy flat value, as was originally provided to the unpatched method
+     * @returns flat value
+     */
+    public static getEnemyAccuracyFlatModification(entity: Enemy, accuracy: number): number {
+        const accuracyModifier = CustomModifiersCalculator.getCharacterAccuracyPercentageModifiers(entity);
+
+        // Get flat bonus, based on original value and percentage-bonus calculated
+        const accuracyModification = applyModifier(accuracy, accuracyModifier, ModifierType.MultiplyBaseByPercentageWithFlooring);
+
+        // Just like with the base game calculation, we have to keep the "globalAccuracyHPScaling" modifier in mind
+        return CustomModifiersCalculator.applyGlobalAccuracyHpScaling(entity, accuracyModification);
     }
 
     /**
@@ -328,7 +388,7 @@ export class CustomModifiersCalculator {
     }
 
     /**
-     * alculates change to percentage-based (total) damage value,
+     * Calculates change to percentage-based (total) damage value,
      * specifically based on the type of target being fought
      * @param entity
      */
@@ -375,5 +435,49 @@ export class CustomModifiersCalculator {
         }
 
         return modification;
+    }
+
+    /**
+     * Calculates accuracy percentage bonus to apply (logic shared across both player and enemy)
+     * @param entity
+     */
+    private static getCharacterAccuracyPercentageModifiers(entity: Character): number {
+        return CustomModifiersCalculator.getAccuracyPercentageModificationForMonsterTypes(entity);
+    }
+
+    /**
+     * Calculates accuracy percentage bonus to apply,
+     * specifically based on the type of target being fought
+     * @param entity
+     */
+    private static getAccuracyPercentageModificationForMonsterTypes(entity: Character): number {
+        let modification = 0;
+
+        if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
+            modification += entity.modifiers.increasedGlobalAccuracyAgainstHumans - entity.modifiers.decreasedGlobalAccuracyAgainstHumans;
+        }
+        if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
+            modification += entity.modifiers.increasedGlobalAccuracyAgainstDragons - entity.modifiers.decreasedGlobalAccuracyAgainstDragons;
+        }
+        if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
+            modification += entity.modifiers.increasedGlobalAccuracyAgainstUndead - entity.modifiers.decreasedGlobalAccuracyAgainstUndead;
+        }
+
+        return modification;
+    }
+
+    /**
+     * Apply "globalAccuracyHPScaling" to our calculated accuracy,
+     * just like how the original method finishes off adjusting the final accuracy value with that modifier
+     * @param entity
+     * @param accuracy
+     */
+    private static applyGlobalAccuracyHpScaling(entity: Character, accuracy: number): number {
+        if (entity.modifiers.globalAccuracyHPScaling > 0) {
+            const modifier = (entity.modifiers.globalAccuracyHPScaling * entity.hitpointsPercent) / 100;
+            return Math.floor(accuracy * modifier);
+        } else {
+            return accuracy;
+        }
     }
 }
