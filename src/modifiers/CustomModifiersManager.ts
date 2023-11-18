@@ -1689,7 +1689,8 @@ export class CustomModifiersManager {
      */
     private patchDamageReductionCalculations() {
         // Btw, the method calling this one takes care of flooring whatever value we calculate
-        // TBD - only thing that has to be remembered is the following multiplicative changes:
+        // May as well keep the following in, which I noted down while checking how to add the custom modifiers to the calculation
+        // #region Some explanation of what the base game does
         // 1) First, a bunch of additive bonuses are added with each other
         // 2) Then, both Player and Enemy call "super.modifyDamageReduction"
         // 2.1) In there, some more additive bonus are added
@@ -1700,6 +1701,7 @@ export class CustomModifiersManager {
         // 3.1) "increasedDamageReductionWithActivePrayer" is ADDITIVELY added to DR%
         // 3.2) Then, the final DR% at that point in time is multiplied by combat triangle (which based on mode may define something like "You are only 10% as accurate against monsters strong to your attack style")
         // based on combat triangle, which has to be repeated for the overall custom DR% calculated for this case
+        // #endregion
 
         this.context.patch(Player, "modifyDamageReduction").after(function (returnValue) {
             return returnValue += CustomModifiersCalculator.getPlayerDamageReductionFlatModification(this);
