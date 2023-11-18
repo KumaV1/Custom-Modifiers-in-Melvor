@@ -47,6 +47,7 @@ export class CustomModifiersManager {
         this.patchMaxHitCalculations();
         this.patchDamageModifierCalculations();
         this.patchAccuracyCalculations();
+        this.patchDamageReductionCalculations();
     }
 
 
@@ -396,6 +397,24 @@ export class CustomModifiersManager {
             isNegative: true,
             tags: ['combat']
         };
+        modifierData.increasedDamageReductionAgainstCombatAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageReductionAgainstCombatAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageReductionAgainstCombatAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageReductionAgainstCombatAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
     }
 
     private registerSlayerAreaModifiers() {
@@ -487,6 +506,24 @@ export class CustomModifiersManager {
         modifierData.decreasedGlobalAccuracyAgainstSlayerAreaMonsters = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedDamageReductionAgainstSlayerAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageReductionAgainstSlayerAreaMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageReductionAgainstSlayerAreaMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageReductionAgainstSlayerAreaMonsters');
             },
             description: '',
             isSkill: false,
@@ -590,6 +627,25 @@ export class CustomModifiersManager {
             isNegative: true,
             tags: ['combat']
         };
+
+        modifierData.increasedDamageReductionAgainstDungeonMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageReductionAgainstDungeonMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageReductionAgainstDungeonMonsters = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageReductionAgainstDungeonMonsters');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
     }
 
     private registerSlayerTaskModifiers() {
@@ -681,6 +737,15 @@ export class CustomModifiersManager {
         modifierData.decreasedGlobalAccuracyAgainstSlayerTasks = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerTasks');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageReductionAgainstSlayerTasks = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageReductionAgainstSlayerTasks');
             },
             description: '',
             isSkill: false,
@@ -916,6 +981,24 @@ export class CustomModifiersManager {
             isNegative: true,
             tags: ['combat']
         };
+        modifierData.increasedDamageReductionAgainstHumans = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageReductionAgainstHumans');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageReductionAgainstHumans = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageReductionAgainstHumans');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
     }
 
     /**
@@ -1034,6 +1117,24 @@ export class CustomModifiersManager {
             isNegative: true,
             tags: ['combat']
         };
+        modifierData.increasedDamageReductionAgainstDragons = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageReductionAgainstDragons');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageReductionAgainstDragons = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageReductionAgainstDragons');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
     }
 
     /**
@@ -1146,6 +1247,24 @@ export class CustomModifiersManager {
         modifierData.decreasedGlobalAccuracyAgainstUndead = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstUndead');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedDamageReductionAgainstUndead = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageReductionAgainstUndead');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageReductionAgainstUndead = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageReductionAgainstUndead');
             },
             description: '',
             isSkill: false,
@@ -1348,6 +1467,8 @@ export class CustomModifiersManager {
             this.decreasedFlatMinHitAgainstHumans ??= 0;
             this.increasedGlobalAccuracyAgainstHumans ??= 0;
             this.decreasedGlobalAccuracyAgainstHumans ??= 0;
+            this.increasedDamageReductionAgainstHumans ??= 0;
+            this.decreasedDamageReductionAgainstHumans ??= 0;
 
             this.increasedDamageAgainstDragons ??= 0;
             this.decreasedDamageAgainstDragons ??= 0;
@@ -1361,6 +1482,8 @@ export class CustomModifiersManager {
             this.decreasedFlatMinHitAgainstDragons ??= 0;
             this.increasedGlobalAccuracyAgainstDragons ??= 0;
             this.decreasedGlobalAccuracyAgainstDragons ??= 0;
+            this.increasedDamageReductionAgainstDragons ??= 0;
+            this.decreasedDamageReductionAgainstDragons ??= 0;
 
             this.increasedDamageAgainstUndead ??= 0;
             this.decreasedDamageAgainstUndead ??= 0;
@@ -1374,6 +1497,8 @@ export class CustomModifiersManager {
             this.decreasedFlatMinHitAgainstUndead ??= 0;
             this.increasedGlobalAccuracyAgainstUndead ??= 0;
             this.decreasedGlobalAccuracyAgainstUndead ??= 0;
+            this.increasedDamageReductionAgainstUndead ??= 0;
+            this.decreasedDamageReductionAgainstUndead ??= 0;
         });
     }
 
@@ -1556,6 +1681,31 @@ export class CustomModifiersManager {
         });
         this.context.patch(Enemy, "modifyAccuracy").after(function (returnValue, accuracy) {
             return returnValue += CustomModifiersCalculator.getEnemyAccuracyFlatModification(this, accuracy);
+        });
+    }
+
+    /**
+     * Patches new damage reduction (flat percentage) changing modifiers into base logic
+     */
+    private patchDamageReductionCalculations() {
+        // Btw, the method calling this one takes care of flooring whatever value we calculate
+        // TBD - only thing that has to be remembered is the following multiplicative changes:
+        // 1) First, a bunch of additive bonuses are added with each other
+        // 2) Then, both Player and Enemy call "super.modifyDamageReduction"
+        // 2.1) In there, some more additive bonus are added
+        // 2.2) Then, the total flat DR% summed up at this point is multiplicated by "increasedDamageReductionPercent - decreasedDamageReductionPercent"
+        // 2.3) THEN, that result is once again multiplicated, this time by "halveDamageReduction" (if set, that is)
+        // 2.4) That is the final result for the Enemy class
+        // 3) However, with the player, the following two things happen too
+        // 3.1) "increasedDamageReductionWithActivePrayer" is ADDITIVELY added to DR%
+        // 3.2) Then, the final DR% at that point in time is multiplied by combat triangle (which based on mode may define something like "You are only 10% as accurate against monsters strong to your attack style")
+        // based on combat triangle, which has to be repeated for the overall custom DR% calculated for this case
+
+        this.context.patch(Player, "modifyDamageReduction").after(function (returnValue) {
+            return returnValue += CustomModifiersCalculator.getPlayerDamageReductionFlatModification(this);
+        });
+        this.context.patch(Enemy, "modifyDamageReduction").after(function (returnValue) {
+            return returnValue += CustomModifiersCalculator.getEnemyDamageReductionFlatModification(this);
         });
     }
 

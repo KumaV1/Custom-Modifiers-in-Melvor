@@ -22,11 +22,6 @@ import '../assets/Invoke_Death.png'
 // #endregion
 
 export async function setup(ctx: Modding.ModContext) {
-    // Register our GameData
-    await ctx.gameData.addPackage(ModData);
-    // @ts-ignore
-    //await ctx.gameData.addPackage(ModTestData);
-
     // Register custom modifier logic patches and localized texts
     initApiEndpoints(ctx);
     initCustomModifiers(ctx);
@@ -34,6 +29,11 @@ export async function setup(ctx: Modding.ModContext) {
     initLanguage(ctx);
     initOverviewContainer(ctx);
     initModCompatibility(ctx);
+
+    // Register our GameData
+    await ctx.gameData.addPackage(ModData);
+    // @ts-ignore
+    //await ctx.gameData.addPackage(ModTestData);
 }
 
 /**

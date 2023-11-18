@@ -10,6 +10,8 @@ declare global {
         decreasedFlatMinHitToCombatAreaMonsters: Standard,
         increasedGlobalAccuracyAgainstCombatAreaMonsters: Standard,
         decreasedGlobalAccuracyAgainstCombatAreaMonsters: Standard,
+        increasedDamageReductionAgainstCombatAreaMonsters: Standard,
+        decreasedDamageReductionAgainstCombatAreaMonsters: Standard,
 
         increasedMaxHitPercentToSlayerAreaMonsters: Standard,
         decreasedMaxHitPercentToSlayerAreaMonsters: Standard,
@@ -21,6 +23,8 @@ declare global {
         decreasedFlatMinHitToSlayerAreaMonsters: Standard,
         increasedGlobalAccuracyAgainstSlayerAreaMonsters: Standard,
         decreasedGlobalAccuracyAgainstSlayerAreaMonsters: Standard,
+        increasedDamageReductionAgainstSlayerAreaMonsters: Standard,
+        decreasedDamageReductionAgainstSlayerAreaMonsters: Standard,
 
         increasedMaxHitPercentToDungeonMonsters: Standard,
         decreasedMaxHitPercentToDungeonMonsters: Standard,
@@ -32,6 +36,8 @@ declare global {
         decreasedFlatMinHitToDungeonMonsters: Standard,
         increasedGlobalAccuracyAgainstDungeonMonsters: Standard,
         decreasedGlobalAccuracyAgainstDungeonMonsters: Standard,
+        increasedDamageReductionAgainstDungeonMonsters: Standard,
+        decreasedDamageReductionAgainstDungeonMonsters: Standard,
 
         increasedMaxHitPercentToSlayerTasks: Standard,
         decreasedMaxHitPercentToSlayerTasks: Standard,
@@ -43,6 +49,7 @@ declare global {
         decreasedFlatMinHitToSlayerTasks: Standard,
         increasedGlobalAccuracyAgainstSlayerTasks: Standard,
         decreasedGlobalAccuracyAgainstSlayerTasks: Standard,
+        decreasedDamageReductionAgainstSlayerTasks: Standard,
 
         increasedMaxHitPercentAgainstBosses: Standard,
         decreasedMaxHitPercentAgainstBosses: Standard,

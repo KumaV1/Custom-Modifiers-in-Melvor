@@ -1,3 +1,5 @@
+`game.bank.addItemByID("customModifiersInMelvor:Test_Item", 5, true, true, true)`
+
 # When adding a new modifier
 * `src/modifiers`
   * Update `/definitions` - usually two classes per modifier, one being the modifier class and the other the modifier object class
