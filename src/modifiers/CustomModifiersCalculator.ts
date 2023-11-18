@@ -562,27 +562,19 @@ export class CustomModifiersCalculator {
                 default:
             }
 
-            console.log(`getPlayerDamageReductionFlatModification | DR% after monster and area types: ${modification}`);
-
             if (entity.manager.onSlayerTask) {
                 // The game already comes with its own positive variant
                 modification -= entity.modifiers.decreasedDamageReductionAgainstSlayerTasks;
             }
 
-            console.log(`getPlayerDamageReductionFlatModification | DR% after monster and area types and slayer task: ${modification}`);
-
             // Then, we have to mimic multiplications based on a few conditions,
             // based on the total change we calculated up to this point
             modification = CustomModifiersCalculator.applyCharacterDamageReductionPercentModification(entity, modification);
-
-            console.log(`getPlayerDamageReductionFlatModification | DR% after monster and area types, slayer task, multiplicative bonus and halve bonus: ${modification}`);
 
             // The player specifically also has one more multiplicative calculation to do
             if (entity.manager.fightInProgress) {
                 modification *= entity.activeTriangle.reductionModifier[entity.attackType][entity.target.attackType];
             }
-
-            console.log(`getPlayerDamageReductionFlatModification | DR% after monster and area types, slayer task, multiplicative bonus, halve bonus and combat triangle: ${modification}`);
         }
 
         return modification;
@@ -627,8 +619,6 @@ export class CustomModifiersCalculator {
         if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
             modification += entity.modifiers.increasedDamageReductionAgainstUndead - entity.modifiers.decreasedDamageReductionAgainstUndead;
         }
-
-        console.log(`getDamageReductionFlatModificationForMonsterTypes | DR% by type: ${modification}`)
 
         return modification;
     }

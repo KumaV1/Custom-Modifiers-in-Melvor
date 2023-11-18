@@ -1,4 +1,3 @@
-/** CURRENTLY NO TRANSLATION AVAILABLE - FEEL FREE TO UPDATE THIS FILE */
 export const ko = {
     // ### Monster type overview
     PAGE_NAME_Monster_Types_Overview: "Monster types",
@@ -31,8 +30,8 @@ export const ko = {
     MODIFIER_DATA_increasedDeathMarkOnHit: "+${value} Death Mark stacks applied when hitting with an attack",
     MODIFIER_DATA_increasedChanceToApplyStackOfDeathMark: "+${value}% chance to apply one stack of death mark on the enemy",
     MODIFIER_DATA_decreasedChanceToApplyStackOfDeathMark: "-${value}% chance to apply one stack of death mark on the enemy",
-    MODIFIER_DATA_increasedDeathMarkImmunity: "+${value} chance to resist application of death mark stacks",
-    MODIFIER_DATA_decreasedDeathMarkImmunity: "-${value} chance to resist application of death mark stacks",
+    MODIFIER_DATA_increasedDeathMarkImmunity: "+${value}% chance to resist application of death mark stacks",
+    MODIFIER_DATA_decreasedDeathMarkImmunity: "-${value}% chance to resist application of death mark stacks",
 
     // #### Spell type
     MODIFIER_DATA_increasedDamageTakenFromAirSpells: "+${value}% damage taken from air spells",
@@ -53,6 +52,10 @@ export const ko = {
     MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToCombatAreaMonsters: "-${value}% Minium Hit To Combat Area Monsters",
     MODIFIER_DATA_increasedFlatMinHitToCombatAreaMonsters: "+${value} Minium Hit To Combat Area Monsters",
     MODIFIER_DATA_decreasedFlatMinHitToCombatAreaMonsters: "-${value} Minium Hit To Combat Area Monsters",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstCombatAreaMonsters: '+${value}% Accuracy Rating against Combat Area Monsters',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstCombatAreaMonsters: '-${value}% Accuracy Rating against Combat Area Monsters',
+    MODIFIER_DATA_increasedDamageReductionAgainstCombatAreaMonsters: '+${value}% Damage Reduction against Combat Area Monsters',
+    MODIFIER_DATA_decreasedDamageReductionAgainstCombatAreaMonsters: '-${value}% Damage Reduction against Combat Area Monsters',
 
     MODIFIER_DATA_increasedMaxHitPercentToSlayerAreaMonsters: "+${value}% Max Hit To Slayer Area Monsters",
     MODIFIER_DATA_decreasedMaxHitPercentToSlayerAreaMonsters: "-${value}% Max Hit To Slayer Area Monsters",
@@ -62,6 +65,10 @@ export const ko = {
     MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters: "-${value}% Minium Hit To Slayer Area Monsters",
     MODIFIER_DATA_increasedFlatMinHitToSlayerAreaMonsters: "+${value} Minium Hit To Slayer Area Monsters",
     MODIFIER_DATA_decreasedFlatMinHitToSlayerAreaMonsters: "-${value} Minium Hit To Slayer Area Monsters",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstSlayerAreaMonsters: '+${value}% Accuracy Rating against Slayer Area Monsters',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerAreaMonsters: '-${value}% Accuracy Rating against Slayer Area Monsters',
+    MODIFIER_DATA_increasedDamageReductionAgainstSlayerAreaMonsters: '+${value}% Damage Reduction against Slayer Area Monsters',
+    MODIFIER_DATA_decreasedDamageReductionAgainstSlayerAreaMonsters: '-${value}% Damage Reduction against Slayer Area Monsters',
 
     MODIFIER_DATA_increasedMaxHitPercentToDungeonMonsters: "+${value}% Max Hit To Dungeon Monsters",
     MODIFIER_DATA_decreasedMaxHitPercentToDungeonMonsters: "-${value}% Max Hit To Dungeon Monsters",
@@ -71,6 +78,10 @@ export const ko = {
     MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToDungeonMonsters: "-${value}% Minium Hit To Dungeon Monsters",
     MODIFIER_DATA_increasedFlatMinHitToDungeonMonsters: "+${value} Minium Hit To Dungeon Monsters",
     MODIFIER_DATA_decreasedFlatMinHitToDungeonMonsters: "-${value} Minium Hit To Dungeon Monsters",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstDungeonMonsters: '+${value}% Accuracy Rating against Dungeon Monsters',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstDungeonMonsters: '-${value}% Accuracy Rating against Dungeon Monsters',
+    MODIFIER_DATA_increasedDamageReductionAgainstDungeonMonsters: '+${value}% Damage Reduction against Dungeon Monsters',
+    MODIFIER_DATA_decreasedDamageReductionAgainstDungeonMonsters: '-${value}% Damage Reduction against Dungeon Monsters',
 
     // #### Slayer task
     MODIFIER_DATA_increasedMaxHitPercentToSlayerTasks: "+${value}% Max Hit To Slayer Tasks",
@@ -81,6 +92,9 @@ export const ko = {
     MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToSlayerTasks: "-${value}% Minium Hit To Slayer Tasks",
     MODIFIER_DATA_increasedFlatMinHitToSlayerTasks: "+${value} Minium Hit To Slayer Tasks",
     MODIFIER_DATA_decreasedFlatMinHitToSlayerTasks: "-${value} Minium Hit To Slayer Tasks",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstSlayerTasks: '+${value}% Accuracy Rating against Slayer Tasks',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerTasks: '-${value}% Accuracy Rating against Slayer Tasks',
+    MODIFIER_DATA_decreasedDamageReductionAgainstSlayerTasks: '-${value}% Damage Reduction against Slayer Tasks',
 
     // #### Trait application (aka "treated as type")
     MODIFIER_DATA_humanTraitApplied: "Marks the affected as human",
@@ -99,6 +113,10 @@ export const ko = {
     MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstHumans: "-${value}% Minium Hit when fighting humans",
     MODIFIER_DATA_increasedFlatMinHitAgainstHumans: "+${value} Minium Hit when fighting humans",
     MODIFIER_DATA_decreasedFlatMinHitAgainstHumans: "-${value} Minium Hit when fighting humans",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstHumans: '+${value}% Accuracy Rating when fighting humans',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstHumans: '-${value}% Accuracy Rating when fighting humans',
+    MODIFIER_DATA_increasedDamageReductionAgainstHumans: '+${value}% Damage Reduction when fighting humans',
+    MODIFIER_DATA_decreasedDamageReductionAgainstHumans: '-${value}% Damage Reduction when fighting humans',
 
     // ##### Dragons
     MODIFIER_DATA_increasedDamageAgainstDragons: "+${value}% Damage To Dragons",
@@ -111,6 +129,10 @@ export const ko = {
     MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstDragons: "-${value}% Minium Hit when fighting dragons",
     MODIFIER_DATA_increasedFlatMinHitAgainstDragons: "+${value} Minium Hit when fighting dragons",
     MODIFIER_DATA_decreasedFlatMinHitAgainstDragons: "-${value} Minium Hit when fighting dragons",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstDragons: '+${value}% Accuracy Rating when fighting dragons',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstDragons: '-${value}% Accuracy Rating when fighting dragons',
+    MODIFIER_DATA_increasedDamageReductionAgainstDragons: '+${value}% Damage Reduction when fighting dragons',
+    MODIFIER_DATA_decreasedDamageReductionAgainstDragons: '-${value}% Damage Reduction when fighting dragons',
 
     // ##### Undead
     MODIFIER_DATA_increasedDamageAgainstUndead: "+${value}% Damage To Undead",
@@ -123,6 +145,10 @@ export const ko = {
     MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstUndead: "-${value}% Minium Hit when fighting undead",
     MODIFIER_DATA_increasedFlatMinHitAgainstUndead: "+${value} Minium Hit when fighting undead",
     MODIFIER_DATA_decreasedFlatMinHitAgainstUndead: "-${value} Minium Hit when fighting undead",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstUndead: '+${value}% Accuracy Rating when fighting undead',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstUndead: '-${value}% Accuracy Rating when fighting undead',
+    MODIFIER_DATA_increasedDamageReductionAgainstUndead: '+${value}% Damage Reduction when fighting undead',
+    MODIFIER_DATA_decreasedDamageReductionAgainstUndead: '-${value}% Damage Reduction when fighting undead',
 
     // #### Bosses
     MODIFIER_DATA_increasedMaxHitPercentAgainstBosses: "+${value}% Max Hit when fighting bosses",
@@ -133,6 +159,8 @@ export const ko = {
     MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstBosses: "-${value}% Minium Hit when fighting bosses",
     MODIFIER_DATA_increasedFlatMinHitAgainstBosses: "+${value} Minium Hit when fighting bosses",
     MODIFIER_DATA_decreasedFlatMinHitAgainstBosses: "-${value} Minium Hit when fighting bosses",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstBosses: '+${value}% Accuracy Rating when fighting bosses',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstBosses: '-${value}% Accuracy Rating when fighting bosses',
 
     // #### Skilling
     MODIFIER_DATA_increasedGlobalSkillXPPerLevel: "+${value}% Global Skill XP per level in currently training skill",
