@@ -1,5 +1,5 @@
-import { MonsterType } from "../modifiers/MonsterType"
-import { MonsterTypeMappingManager } from "../modifiers/MonsterTypeMappingManager"
+import { MonsterType } from "../modifiers/monsterTyping/MonsterType"
+import { MonsterTypeMappingManager } from "../modifiers/monsterTyping/MonsterTypeMappingManager"
 
 interface MonsterTypeOverviewProps {
     humans: Monster[],

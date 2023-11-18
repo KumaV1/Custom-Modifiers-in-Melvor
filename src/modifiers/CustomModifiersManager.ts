@@ -1,8 +1,10 @@
 ﻿import { Constants } from '../Constants';
 import { Constants as ModifierConstants } from './Constants';
-import { MonsterType } from './MonsterType';
-import { MonsterTypeMappingManager } from './MonsterTypeMappingManager';
+import { MonsterType } from './monsterTyping/MonsterType';
+import { MonsterTypeMappingManager } from './monsterTyping/MonsterTypeMappingManager';
 import { CustomModifiersCalculator } from './CustomModifiersCalculator'
+import { MonsterTypeHelper } from './monsterTyping/MonsterTypeHelper';
+import { MonsterTypeModifierType } from './monsterTyping/MonsterTypeModifierType';
 
 /**
  * Patches different sections of the code, in order to integrate custom modifiers
@@ -24,9 +26,10 @@ export class CustomModifiersManager {
         this.registerSlayerTaskModifiers();
         this.registerSpellModifiers();
         this.registerTraitApplicationModifiers();
-        this.registerHumanModifiers();
-        this.registerDragonModifiers();
-        this.registerUndeadModifiers();
+        this.registerMonsterTypeModifiers();
+        //this.registerHumanModifiers();
+        //this.registerDragonModifiers();
+        //this.registerUndeadModifiers();
         this.registerBossModifiers();
     }
 
@@ -863,6 +866,91 @@ export class CustomModifiersManager {
             isNegative: false,
             tags: ['combat']
         };
+    }
+
+    private registerMonsterTypeModifiers() {
+        // #region add types
+        MonsterTypeMappingManager.addType(MonsterType.Human, "Humans", ["melvorD:BlackKnight",
+            "melvorD:ConfusedPirate",
+            "melvorD:FrozenArcher",
+            "melvorD:Pirate",
+            "melvorD:FirstMate",
+            "melvorD:JuniorFarmer",
+            "melvorD:AdultFarmer",
+            "melvorD:MasterFarmer",
+            "melvorD:Wizard",
+            "melvorD:SteelKnight",
+            "melvorD:MithrilKnight",
+            "melvorD:AdamantKnight",
+            "melvorD:RuneKnight",
+            "melvorD:BanditTrainee",
+            "melvorD:Bandit",
+            "melvorD:BanditLeader",
+            "melvorD:DarkWizard",
+            "melvorD:MasterWizard",
+            "melvorD:ElderWizard",
+            "melvorF:Druid",
+            "melvorF:Thief",
+            "melvorF:Shaman",
+            "melvorF:Necromancer",
+            "melvorF:Elementalist",
+            "melvorF:Paladin",
+            "melvorF:Priest",
+            "melvorF:WanderingBard",
+            "melvorTotH:DarkKnight",
+            "melvorAoD:BlindWarrior",
+            "melvorAoD:BlindArcher",
+            "melvorAoD:BlindMage",
+            "melvorAoD:SoulTakerWitch"]);
+        MonsterTypeMappingManager.addType(MonsterType.Dragon, "Dragons", ["melvorD:PratTheProtectorOfSecrets",
+            "melvorD:GreenDragon",
+            "melvorD:BlueDragon",
+            "melvorD:RedDragon",
+            "melvorD:BlackDragon",
+            "melvorF:ElderDragon",
+            "melvorF:ChaoticGreaterDragon",
+            "melvorF:HuntingGreaterDragon",
+            "melvorF:WickedGreaterDragon",
+            "melvorF:MalcsTheLeaderOfDragons",
+            "melvorF:GreaterSkeletalDragon",
+            "melvorTotH:TwinSeaDragonSerpent"]);
+        MonsterTypeMappingManager.addType(MonsterType.Undead, "Undead", ["melvorD:PirateCaptain",
+            "melvorD:ZombieHand",
+            "melvorD:Zombie",
+            "melvorD:ZombieLeader",
+            "melvorD:Ghost",
+            "melvorD:Skeleton",
+            "melvorF:UndeadWerewolf",
+            "melvorF:CursedLich",
+            "melvorF:GreaterSkeletalDragon",
+            "melvorTotH:Phantom",
+            "melvorTotH:Banshee",
+            "melvorTotH:Spectre",
+            "melvorTotH:CursedSkeletonWarrior",
+            "melvorTotH:Fiozor",
+            "melvorAoD:BlindGhost",
+            "melvorAoD:Lich",
+            "melvorAoD:GhostSailor",
+            "melvorAoD:GhostMercenary",
+            "melvorAoD:CursedPirateCaptain"]);
+        // #endregion
+
+        const types = MonsterTypeMappingManager.getTypes();
+        console.log(`Registering modifiers for following type definitions: ${types}`)
+
+        Object.entries(types).forEach(([key, value]) => {
+            console.log(`Processing property ${key}`);
+            Object.entries(value.modifierPropertyNames).forEach(([key, value]) => {
+                console.log(`Processing modifierProperty: ${key} | ${value}`);
+
+                // @ts-ignore We know the keys (property names) match the enum expected as parameter
+                const obj = MonsterTypeHelper.createModifierDataObject(key, value);
+                console.log(obj);
+                // @ts-ignore implicit 'any' type error
+                // we know though that it is an object to which we want to add a property
+                modifierData[value] = obj;
+            });
+        });
     }
 
     /**

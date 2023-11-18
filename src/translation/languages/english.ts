@@ -102,6 +102,22 @@ export const en = {
     MODIFIER_DATA_undeadTraitApplied: "Marks the affected as undead",
 
     // #### Type
+    // ##### Generic; these will be used to dynamically build the ones further down below, as those also have to be dynamically built
+    MODIFIER_DATA_increasedDamageAgainstMonsterType: "+${value}% Damage To ${monsterType}",
+    MODIFIER_DATA_decreasedDamageAgainstMonsterType: "-${value}% Damage To ${monsterType}",
+    MODIFIER_DATA_increasedMaxHitPercentAgainstMonsterType: "+${value}% Max Hit when fighting ${monsterType}",
+    MODIFIER_DATA_decreasedMaxHitPercentAgainstMonsterType: "-${value}% Max Hit when fighting ${monsterType}",
+    MODIFIER_DATA_increasedMaxHitFlatAgainstMonsterType: "+${value} Max Hit when fighting ${monsterType}",
+    MODIFIER_DATA_decreasedMaxHitFlatAgainstMonsterType: "-${value} Max Hit when fighting ${monsterType}",
+    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstMonsterType: "+${value}% Minium Hit when fighting ${monsterType}",
+    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstMonsterType: "-${value}% Minium Hit when fighting ${monsterType}",
+    MODIFIER_DATA_increasedFlatMinHitAgainstMonsterType: "+${value} Minium Hit when fighting ${monsterType}",
+    MODIFIER_DATA_decreasedFlatMinHitAgainstMonsterType: "-${value} Minium Hit when fighting ${monsterType}",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstMonsterType: '+${value}% Accuracy Rating when fighting ${monsterType}',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstMonsterType: '-${value}% Accuracy Rating when fighting ${monsterType}',
+    MODIFIER_DATA_increasedDamageReductionAgainstMonsterType: '+${value}% Damage Reduction when fighting ${monsterType}',
+    MODIFIER_DATA_decreasedDamageReductionAgainstMonsterType: '-${value}% Damage Reduction when fighting ${monsterType}',
+
     // ##### Humans
     MODIFIER_DATA_increasedDamageAgainstHumans: "+${value}% Damage To Humans",
     MODIFIER_DATA_decreasedDamageAgainstHumans: "-${value}% Damage To Humans",

@@ -1,4 +1,5 @@
 import { MonsterType } from './MonsterType'
+import { MonsterTypeDefinition } from './MonsterTypeDefinition';
 
 /**
  * Takes care of holding which types are allocated to which monsters,
@@ -8,6 +9,9 @@ import { MonsterType } from './MonsterType'
  * so we don't have to worry about which expansions were actually purchased
  */
 export class MonsterTypeMappingManager {
+	/** TODO: Some explanation */
+	private static _types: { [key: string]: MonsterTypeDefinition } = {	};
+
 	private static _humans: string[] = [
 		"melvorD:BlackKnight",
 		"melvorD:ConfusedPirate",
@@ -79,6 +83,25 @@ export class MonsterTypeMappingManager {
 		"melvorAoD:GhostMercenary",
 		"melvorAoD:CursedPirateCaptain",
 	];
+
+	/**
+	 * TODO: Explain
+	 * @param typeNameSingular
+	 * @param typeNamePlural
+	 * @param monsterIds
+	 */
+	public static addType(typeNameSingular: string, typeNamePlural: string, monsterIds: string[]) {
+		const typeDefinition = new MonsterTypeDefinition(typeNameSingular, typeNamePlural, monsterIds);
+		this._types[typeNameSingular] = typeDefinition;
+	}
+
+	/**
+	 *
+	 * @returns
+	 */
+	public static getTypes() {
+		return this._types;
+	}
 
 	/**
 	 * Checks whether the given enemy is defined to be of the given type

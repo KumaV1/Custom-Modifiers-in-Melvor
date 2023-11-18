@@ -2,8 +2,8 @@
 // You can import script modules and have full type completion
 import { Constants } from './Constants';
 import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
-import { MonsterTypeMappingManager } from './modifiers/MonsterTypeMappingManager';
-import { MonsterType } from './modifiers/MonsterType';
+import { MonsterTypeMappingManager } from './modifiers/monsterTyping/MonsterTypeMappingManager';
+import { MonsterType } from './modifiers/monsterTyping/MonsterType';
 import { Translation } from './translation/Translation';
 import { languages } from './translation/languages'
 import { MonsterTypeOverview } from './components/MonsterTypeOverview'
@@ -52,6 +52,7 @@ function initApiEndpoints(ctx: Modding.ModContext) {
         getHumans: () => MonsterTypeMappingManager.getHumans(),
         getDragons: () => MonsterTypeMappingManager.getDragons(),
         getUndead: () => MonsterTypeMappingManager.getUndead(),
+        getTypes: () => MonsterTypeMappingManager.getTypes(),
 
         /** The flag is specifically set on the "Enemy",
          * therefore you might want to call this in places
