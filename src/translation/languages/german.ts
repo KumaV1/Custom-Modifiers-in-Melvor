@@ -53,6 +53,10 @@
     MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToCombatAreaMonsters: "-${value}% Minimalschaden gegen Kampfgebiet-Monster",
     MODIFIER_DATA_increasedFlatMinHitToCombatAreaMonsters: "+${value} Minimalschaden gegen Kampfgebiet-Monster",
     MODIFIER_DATA_decreasedFlatMinHitToCombatAreaMonsters: "-${value} Minimalschaden gegen Kampfgebiet-Monster",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstCombatAreaMonsters: '+${value}% Genauigkeit gegen Kampfgebiet-Monster',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstCombatAreaMonsters: '-${value}% Genauigkeit gegen Kampfgebiet-Monster',
+    MODIFIER_DATA_increasedDamageReductionAgainstCombatAreaMonsters: '+${value}% Schadensreduzierung gegen Kampfgebiet-Monster',
+    MODIFIER_DATA_decreasedDamageReductionAgainstCombatAreaMonsters: '-${value}% Schadensreduzierung gegen Kampfgebiet-Monster',
 
     MODIFIER_DATA_increasedMaxHitPercentToSlayerAreaMonsters: "+${value}% Maximalschaden gegen Berserkergebiet-Monster",
     MODIFIER_DATA_decreasedMaxHitPercentToSlayerAreaMonsters: "-${value}% Maximalschaden gegen Berserkergebiet-Monster",
@@ -62,6 +66,10 @@
     MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters: "-${value}% Minimalschaden gegen Berserkergebiet-Monster",
     MODIFIER_DATA_increasedFlatMinHitToSlayerAreaMonsters: "+${value} Minimalschaden gegen Berserkergebiet-Monster",
     MODIFIER_DATA_decreasedFlatMinHitToSlayerAreaMonsters: "-${value} Minimalschaden gegen Berserkergebiet-Monster",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstSlayerAreaMonsters: '+${value}% Genauigkeit gegen Berserkergebiet-Monster',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerAreaMonsters: '-${value}% Genauigkeit gegen Berserkergebiet-Monster',
+    MODIFIER_DATA_increasedDamageReductionAgainstSlayerAreaMonsters: '+${value}% Schadensreduzierung gegen Berserkergebiet-Monster',
+    MODIFIER_DATA_decreasedDamageReductionAgainstSlayerAreaMonsters: '-${value}% Schadensreduzierung gegen Berserkergebiet-Monster',
 
     MODIFIER_DATA_increasedMaxHitPercentToDungeonMonsters: "+${value}% Maximalschaden gegen Verlies-Monster",
     MODIFIER_DATA_decreasedMaxHitPercentToDungeonMonsters: "-${value}% Maximalschaden gegen Verlies-Monster",
@@ -71,6 +79,10 @@
     MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToDungeonMonsters: "-${value}% Minimalschaden gegen Verlies-Monster",
     MODIFIER_DATA_increasedFlatMinHitToDungeonMonsters: "+${value} Minimalschaden gegen Verlies-Monster",
     MODIFIER_DATA_decreasedFlatMinHitToDungeonMonsters: "-${value} Minimalschaden gegen Verlies-Monster",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstDungeonMonsters: '+${value}% Genauigkeit gegen Verlies-Monster',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstDungeonMonsters: '-${value}% Genauigkeit gegen Verlies-Monster',
+    MODIFIER_DATA_increasedDamageReductionAgainstDungeonMonsters: '+${value}% Schadensreduzierung gegen Verlies-Monster',
+    MODIFIER_DATA_decreasedDamageReductionAgainstDungeonMonsters: '-${value}% Schadensreduzierung gegen Verlies-Monster',
 
     // #### Slayer task
     MODIFIER_DATA_increasedMaxHitPercentToSlayerTasks: "+${value}% Maximalschaden bei Berserker-Aufträgen",
@@ -81,6 +93,7 @@
     MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToSlayerTasks: "-${value}% Minimalschaden bei Berserker-Aufträgen",
     MODIFIER_DATA_increasedFlatMinHitToSlayerTasks: "+${value} Minimalschaden bei Berserker-Aufträgen",
     MODIFIER_DATA_decreasedFlatMinHitToSlayerTasks: "-${value} Minimalschaden bei Berserker-Aufträgen",
+    MODIFIER_DATA_decreasedDamageReductionAgainstSlayerTasks: '-${value}% Schadensreduzierung bei Berserker-Aufträgen',
 
     // #### Trait application modifiers (aka "treated as type")
     MODIFIER_DATA_humanTraitApplied: "Markiert den Betroffenen als Mensch",
@@ -99,6 +112,10 @@
     MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstHumans: "-${value}% Minimalschaden gegen Menschen",
     MODIFIER_DATA_increasedFlatMinHitAgainstHumans: "+${value} Minimalschaden gegen Menschen",
     MODIFIER_DATA_decreasedFlatMinHitAgainstHumans: "-${value} Minimalschaden gegen Menschen",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstHumans: '+${value}% Genauigkeit gegen Menschen',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstHumans: '-${value}% Genauigkeit gegen Menschen',
+    MODIFIER_DATA_increasedDamageReductionAgainstHumans: '+${value}% Schadensreduzierung gegen Menschen',
+    MODIFIER_DATA_decreasedDamageReductionAgainstHumans: '-${value}% Schadensreduzierung gegen Menschen',
 
     // ##### Dragons
     MODIFIER_DATA_increasedDamageAgainstDragons: "+${value}% Schaden gegen Drachen",
@@ -111,6 +128,10 @@
     MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstDragons: "-${value}% Minimalschaden gegen Drachen",
     MODIFIER_DATA_increasedFlatMinHitAgainstDragons: "+${value} Minimalschaden gegen Drachen",
     MODIFIER_DATA_decreasedFlatMinHitAgainstDragons: "-${value} Minimalschaden gegen Drachen",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstDragons: '+${value}% Genauigkeit gegen Drachen',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstDragons: '-${value}% Genauigkeit gegen Drachen',
+    MODIFIER_DATA_increasedDamageReductionAgainstDragons: '+${value}% Schadensreduzierung gegen Drachen',
+    MODIFIER_DATA_decreasedDamageReductionAgainstDragons: '-${value}% Schadensreduzierung gegen Drachen',
 
     // ##### Undead
     MODIFIER_DATA_increasedDamageAgainstUndead: "+${value}% Schaden gegen Untote",
@@ -123,6 +144,10 @@
     MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstUndead: "-${value}% Minimalschaden gegen Untote",
     MODIFIER_DATA_increasedFlatMinHitAgainstUndead: "+${value} Minimalschaden gegen Untote",
     MODIFIER_DATA_decreasedFlatMinHitAgainstUndead: "-${value} Minimalschaden gegen Untote",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstUndead: '+${value}% Genauigkeit gegen Untote',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstUndead: '-${value}% Genauigkeit gegen Untote',
+    MODIFIER_DATA_increasedDamageReductionAgainstUndead: '+${value}% Schadensreduzierung gegen Untote',
+    MODIFIER_DATA_decreasedDamageReductionAgainstUndead: '-${value}% Schadensreduzierung gegen Untote',
 
     // #### Bosses
     MODIFIER_DATA_increasedMaxHitPercentAgainstBosses: "+${value}% Maximalschaden gegen Bosse",
@@ -133,6 +158,8 @@
     MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstBosses: "-${value}% Minimalschaden gegen Bosse",
     MODIFIER_DATA_increasedFlatMinHitAgainstBosses: "+${value} Minimalschaden gegen Bosse",
     MODIFIER_DATA_decreasedFlatMinHitAgainstBosses: "-${value} Minimalschaden gegen Bosse",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstBosses: '+${value}% Genauigkeit gegen Bosse',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstBosses: '-${value}% Genauigkeit gegen Bosse',
 
     // #### Skilling
     MODIFIER_DATA_increasedGlobalSkillXPPerLevel: "+${value}% Fertigkeits-EP pro Level in der derzeit trainierten Fertigkeit",

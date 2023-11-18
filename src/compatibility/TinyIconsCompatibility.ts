@@ -10,6 +10,10 @@ export class TinyIconsCompatibility {
         decreasedMinHitBasedOnMaxHitToCombatAreaMonsters: ['combat', 'ti_combat_dn'],
         increasedFlatMinHitToCombatAreaMonsters: ['combat', 'ti_combat_up'],
         decreasedFlatMinHitToCombatAreaMonsters: ['combat', 'ti_combat_dn'],
+        increasedGlobalAccuracyAgainstCombatAreaMonsters: ['combat', 'ti_combat_up'],
+        decreasedGlobalAccuracyAgainstCombatAreaMonsters: ['combat', 'ti_combat_dn'],
+        increasedDamageReductionAgainstCombatAreaMonsters: ['combat', 'ti_dr_up'],
+        decreasedDamageReductionAgainstCombatAreaMonsters: ['combat', 'ti_dr_dn'],
 
         increasedMaxHitPercentToSlayerAreaMonsters: ['slayer', 'ti_combat_up'],
         decreasedMaxHitPercentToSlayerAreaMonsters: ['slayer', 'ti_combat_dn'],
@@ -19,6 +23,10 @@ export class TinyIconsCompatibility {
         decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters: ['slayer', 'ti_combat_dn'],
         increasedFlatMinHitToSlayerAreaMonsters: ['slayer', 'ti_combat_up'],
         decreasedFlatMinHitToSlayerAreaMonsters: ['slayer', 'ti_combat_dn'],
+        increasedGlobalAccuracyAgainstSlayerAreaMonsters: ['slayer', 'ti_combat_up'],
+        decreasedGlobalAccuracyAgainstSlayerAreaMonsters: ['slayer', 'ti_combat_dn'],
+        increasedDamageReductionAgainstSlayerAreaMonsters: ['slayer', 'ti_dr_up'],
+        decreasedDamageReductionAgainstSlayerAreaMonsters: ['slayer', 'ti_dr_dn'],
 
         increasedMaxHitPercentToDungeonMonsters: ['dungeon', 'ti_combat_up'],
         decreasedMaxHitPercentToDungeonMonsters: ['dungeon', 'ti_combat_dn'],
@@ -28,6 +36,10 @@ export class TinyIconsCompatibility {
         decreasedMinHitBasedOnMaxHitToDungeonMonsters: ['dungeon', 'ti_combat_dn'],
         increasedFlatMinHitToDungeonMonsters: ['dungeon', 'ti_combat_up'],
         decreasedFlatMinHitToDungeonMonsters: ['dungeon', 'ti_combat_dn'],
+        increasedGlobalAccuracyAgainstDungeonMonsters: ['dungeon', 'ti_combat_up'],
+        decreasedGlobalAccuracyAgainstDungeonMonsters: ['dungeon', 'ti_combat_dn'],
+        increasedDamageReductionAgainstDungeonMonsters: ['dungeon', 'ti_dr_up'],
+        decreasedDamageReductionAgainstDungeonMonsters: ['dungeon', 'ti_dr_dn'],
 
         increasedMaxHitPercentToSlayerTasks: ['slayer', 'ti_combat_up'],
         decreasedMaxHitPercentToSlayerTasks: ['slayer', 'ti_combat_dn'],
@@ -37,6 +49,9 @@ export class TinyIconsCompatibility {
         decreasedMinHitBasedOnMaxHitToSlayerTasks: ['slayer', 'ti_combat_dn'],
         increasedFlatMinHitToSlayerTasks: ['slayer', 'ti_combat_up'],
         decreasedFlatMinHitToSlayerTasks: ['slayer', 'ti_combat_dn'],
+        increasedGlobalAccuracyAgainstSlayerTasks: ['slayer', 'ti_combat_up'],
+        decreasedGlobalAccuracyAgainstSlayerTasks: ['slayer', 'ti_combat_dn'],
+        decreasedDamageReductionAgainstSlayerTasks: ['slayer', 'ti_dr_dn'],
 
         increasedMaxHitPercentAgainstBosses: ['dungeon', 'ti_combat_up'],
         decreasedMaxHitPercentAgainstBosses: ['dungeon', 'ti_combat_dn'],
@@ -46,6 +61,8 @@ export class TinyIconsCompatibility {
         decreasedMinHitBasedOnMaxHitAgainstBosses: ['dungeon', 'ti_combat_dn'],
         increasedFlatMinHitAgainstBosses: ['dungeon', 'ti_combat_up'],
         decreasedFlatMinHitAgainstBosses: ['dungeon', 'ti_combat_dn'],
+        increasedGlobalAccuracyAgainstBosses: ['dungeon', 'ti_combat_up'],
+        decreasedGlobalAccuracyAgainstBosses: ['dungeon', 'ti_combat_dn'],
 
         increasedGlobalSkillXPPerLevel: ['skill'],
         decreasedGlobalSkillXPPerLevel: ['skill'],
@@ -99,6 +116,10 @@ export class TinyIconsCompatibility {
         decreasedMinHitBasedOnMaxHitAgainstHumans: ['cmim_human', 'ti_combat_dn'],
         increasedFlatMinHitAgainstHumans: ['cmim_human', 'ti_combat_up'],
         decreasedFlatMinHitAgainstHumans: ['cmim_human', 'ti_combat_dn'],
+        increasedGlobalAccuracyAgainstHumans: ['cmim_human', 'ti_combat_up'],
+        decreasedGlobalAccuracyAgainstHumans: ['cmim_human', 'ti_combat_dn'],
+        increasedDamageReductionAgainstHumans: ['cmim_human', 'ti_dr_up'],
+        decreasedDamageReductionAgainstHumans: ['cmim_human', 'ti_dr_dn'],
 
         increasedDamageAgainstDragons: ['cmim_dragon', 'combat'],
         decreasedDamageAgainstDragons: ['cmim_dragon', 'combat'],
@@ -110,6 +131,10 @@ export class TinyIconsCompatibility {
         decreasedMinHitBasedOnMaxHitAgainstDragons: ['cmim_dragon', 'ti_combat_dn'],
         increasedFlatMinHitAgainstDragons: ['cmim_dragon', 'ti_combat_up'],
         decreasedFlatMinHitAgainstDragons: ['cmim_dragon', 'ti_combat_dn'],
+        increasedGlobalAccuracyAgainstDragons: ['cmim_dragon', 'ti_combat_up'],
+        decreasedGlobalAccuracyAgainstDragons: ['cmim_dragon', 'ti_combat_dn'],
+        increasedDamageReductionAgainstDragons: ['cmim_dragon', 'ti_dr_up'],
+        decreasedDamageReductionAgainstDragons: ['cmim_dragon', 'ti_dr_dn'],
 
         increasedDamageAgainstUndead: ['cmim_undead', 'combat'],
         decreasedDamageAgainstUndead: ['cmim_undead', 'combat'],
@@ -120,7 +145,11 @@ export class TinyIconsCompatibility {
         increasedMinHitBasedOnMaxHitAgainstUndead: ['cmim_undead', 'ti_combat_up'],
         decreasedMinHitBasedOnMaxHitAgainstUndead: ['cmim_undead', 'ti_combat_dn'],
         increasedFlatMinHitAgainstUndead: ['cmim_undead', 'ti_combat_up'],
-        decreasedFlatMinHitAgainstUndead: ['cmim_undead', 'ti_combat_dn']
+        decreasedFlatMinHitAgainstUndead: ['cmim_undead', 'ti_combat_dn'],
+        increasedGlobalAccuracyAgainstUndead: ['cmim_undead', 'ti_combat_up'],
+        decreasedGlobalAccuracyAgainstUndead: ['cmim_undead', 'ti_combat_dn'],
+        increasedDamageReductionAgainstUndead: ['cmim_undead', 'ti_dr_up'],
+        decreasedDamageReductionAgainstUndead: ['cmim_undead', 'ti_dr_dn']
     };
 
     constructor(private readonly context: Modding.ModContext) { }

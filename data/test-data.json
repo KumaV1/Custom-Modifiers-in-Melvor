@@ -2,6 +2,28 @@
   "$schema": "https://melvoridle.com/assets/schema/gameData.json",
   "namespace": "customModifiersInMelvor",
   "data": {
+    "items": [
+      {
+        "id": "Test_Item",
+        "name": "Test Item",
+        "category": "Test",
+        "type": "Test",
+        "media": "https://cdn.melvor.net/core/v018/assets/media/skills/summoning/summoning.svg",
+        "ignoreCompletion": true,
+        "obtainFromItemLog": true,
+        "golbinRaidExclusive": true,
+        "sellsFor": 1,
+        "tier": "none",
+        "validSlots": [ "Gem" ],
+        "occupiesSlots": [],
+        "equipRequirements": [],
+        "equipmentStats": [],
+        "modifiers": {
+
+        },
+        "itemType": "Equipment"
+      }
+    ],
     "monsters": [
       {
         "id": "Test_Monster",
@@ -71,7 +93,9 @@
         "id": "Test_Passive",
         "name": "Test Passive",
         "modifiers": {
-
+          "humanTraitApplied": 1,
+          "dragonTraitApplied": 1,
+          "undeadTraitApplied": 1
         }
       }
     ],
