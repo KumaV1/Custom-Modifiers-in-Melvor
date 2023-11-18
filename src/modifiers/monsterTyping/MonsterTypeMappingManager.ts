@@ -103,26 +103,26 @@ export class MonsterTypeMappingManager {
 		return this._types;
 	}
 
+	public static getTypesAsArray() {
+		let array: MonsterTypeDefinition[] = [];
+		Object.entries(this._types).forEach(([key, value]) => {
+			array.push(value);
+		});
+
+		return array;
+	}
+
 	/**
 	 * Checks whether the given enemy is defined to be of the given type
 	 * @param monster
 	 * @param type
 	 */
-	public static monsterIsOfType(monster: Monster | undefined, type: MonsterType): boolean {
-		if (!monster) {
+	public static monsterIsOfType(monster: Monster | undefined, type: string | MonsterType): boolean {
+		if (!monster || !type) {
 			return false;
-        }
-
-		switch (type) {
-			case MonsterType.Human:
-				return MonsterTypeMappingManager._humans.some(id => id === monster.id)
-			case MonsterType.Dragon:
-				return MonsterTypeMappingManager._dragons.some(id => id === monster.id)
-			case MonsterType.Undead:
-				return MonsterTypeMappingManager._undead.some(id => id === monster.id)
-			default:
-				return false;
 		}
+
+		return MonsterTypeMappingManager._types[type].monsters.some(mId => mId === monster.id);
 	}
 
 	/**

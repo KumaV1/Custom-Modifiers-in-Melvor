@@ -1,38 +1,51 @@
-import { MonsterType } from "../modifiers/monsterTyping/MonsterType"
+import { Constants } from "../Constants";
+import { MonsterTypeDefinition } from "../modifiers/monsterTyping/MonsterTypeDefinition";
 import { MonsterTypeMappingManager } from "../modifiers/monsterTyping/MonsterTypeMappingManager"
 
+interface MonsterTypeOverviewMonsterType {
+    name: string,
+    monsters: Monster[]
+}
+
 interface MonsterTypeOverviewProps {
-    humans: Monster[],
-    dragons: Monster[],
-    undead: Monster[],
+    types: MonsterTypeOverviewMonsterType[]
 }
 
 // @ts-ignore: 'Component' is unknown for some reason
 export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
-    let props: MonsterTypeOverviewProps = {
-        humans: [],
-        dragons: [],
-        undead: []
-    };
+    let types: MonsterTypeOverviewMonsterType[] = [];
 
+    // Prepare data for processing
+    const monsterTypes: MonsterTypeDefinition[] = MonsterTypeMappingManager.getTypesAsArray();
     const monsters = game.monsters.allObjects;
-    for (var i = 0; i < monsters.length; i++) {
-        const monster = monsters[i];
-        if (MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Human)) {
-            props.humans.push(monster);
+
+    // Process
+    monsterTypes.forEach(function (type) {
+        // Get matching monsters
+        let matchingMonsters: Monster[] = [];
+        monsters.forEach(function (monster) {
+            if (MonsterTypeMappingManager.monsterIsOfType(monster, type.singularName)) {
+                matchingMonsters.push(monster);
+            }
+        });
+
+        // Try to translate type name
+        let name = type.pluralName;
+        const translation = loadedLangJson[`${Constants.MOD_NAMESPACE}:Monster_Type_Plural_${type.singularName}`];
+        if (translation !== undefined && translation !== '') {
+            name = translation;
         }
-        if (MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Dragon)) {
-            props.dragons.push(monster);
-        }
-        if (MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Undead)) {
-            props.undead.push(monster);
-        }
-    }
+
+        // Register
+        const obj: MonsterTypeOverviewMonsterType = {
+            name: name,
+            monsters: matchingMonsters
+        };
+        types.push(obj);
+    });
 
     return {
         $template: '#custom-Modifiers-in-Melvor__monster-type-overview-container-template',
-        humans: props.humans,
-        dragons: props.dragons,
-        undead: props.undead
+        types: types
     };
 }

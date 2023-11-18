@@ -2,9 +2,9 @@ export const fr = {
     // ### Monster type overview
     PAGE_NAME_Monster_Types_Overview: "Monster types",
 
-    Monster_Type_Human_Plural: "Humans",
-    Monster_Type_Dragon_Plural: "Dragons",
-    Monster_Type_Undead_Plural: "Undead",
+    Monster_Type_Plural_Human: "Humans",
+    Monster_Type_Plural_Dragon: "Dragons",
+    Monster_Type_Plural_Undead: "Undead",
 
     Monster_Type_Overview_Remarks_Prefix: "Please be aware of the following points:",
     Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor does not inherintly include type definitions. Instead, they have been added by the 'Custom Modifiers in Melvor' mod",
