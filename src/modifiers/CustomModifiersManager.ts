@@ -1511,7 +1511,12 @@ export class CustomModifiersManager {
             this.isHuman = true; // Well, the player is a human, right?
         });
 
-        this.context.patch(Enemy, "setStatsFromMonster").after(function (monster: any): void {
+        this.context.patch(Enemy, "setStatsFromMonster").after(function (returnValue, monster: any): void {
+            // TEMP FIX until 1.3.0 is ready
+            if (monster === undefined) {
+                monster === returnValue; // just in case there is something odd going on (cause testing right now would be a little tedious)
+            }
+
             this.isHuman = MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Human);
             this.isDragon = MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Dragon);
             this.isUndead = MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Undead);
