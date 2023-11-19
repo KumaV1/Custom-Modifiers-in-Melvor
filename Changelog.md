@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.2.1
+* Quick fix regarding native typing not actually working (refactor with 1.3.0 incoming anyway)
+
 ## v1.2.0
 * Added Monster and Area Type based Accuracy % modifiers
 * Added Monster and Area Type based DR% modifiers
