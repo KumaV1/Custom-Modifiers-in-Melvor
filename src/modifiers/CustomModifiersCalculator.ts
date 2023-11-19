@@ -1,5 +1,7 @@
 import { Constants } from '../Constants';
 import { ModifierType } from './ModifierType';
+import { MonsterTypeHelper } from './monsterTyping/MonsterTypeHelper';
+import { MonsterTypeModifierGroup } from './monsterTyping/MonsterTypeModifierGroup';
 
 /**
  * While the main patching is defined by the manager,
@@ -127,32 +129,8 @@ export class CustomModifiersCalculator {
      * @returns
      */
     private static getCharacterMinHitModification(entity: Character): number {
-        return CustomModifiersCalculator.getMinHitModificationForMonsterTypes(entity);
-    }
-
-    /**
-     * Calculate change to min hit, specifically based on the type of target being fought
-     * @param entity
-     * @returns
-     */
-    private static getMinHitModificationForMonsterTypes(entity: Character): number {
-        let modification = 0;
-
-        // Percentage and Flat modifiers
-        if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-            modification += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstHumans - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstHumans)) / 100);
-            modification += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstHumans - entity.modifiers.decreasedFlatMinHitAgainstHumans);
-        }
-        if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
-            modification += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstDragons - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstDragons)) / 100);
-            modification += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstDragons - entity.modifiers.decreasedFlatMinHitAgainstDragons);
-        }
-        if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
-            modification += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstUndead - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstUndead)) / 100);
-            modification += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstUndead - entity.modifiers.decreasedFlatMinHitAgainstUndead);
-        }
-
-        return modification;
+        return CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.MinHitBasedOnMaxHit)
+            + CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.FlatMinHit);
     }
 
     // #endregion
@@ -215,27 +193,7 @@ export class CustomModifiersCalculator {
      * @param entity
      */
     private static getCharacterMaxHitPercentageModification(entity: Character): number {
-        return CustomModifiersCalculator.getMaxHitPercentageModificationForMonsterTypes(entity);
-    }
-
-    /**
-     * Calculates percentage-based change to max hit, specifically based on the type of target being fought
-     * @param entity
-     */
-    private static getMaxHitPercentageModificationForMonsterTypes(entity: Character): number {
-        let modification = 0;
-
-        if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-            modification += entity.modifiers.increasedMaxHitPercentAgainstHumans - entity.modifiers.decreasedMaxHitPercentAgainstHumans;
-        }
-        if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
-            modification += entity.modifiers.increasedMaxHitPercentAgainstDragons - entity.modifiers.decreasedMaxHitPercentAgainstDragons;
-        }
-        if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
-            modification += entity.modifiers.increasedMaxHitPercentAgainstUndead - entity.modifiers.decreasedMaxHitPercentAgainstUndead;
-        }
-
-        return modification;
+        return CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.MaxHitPercent);
     }
 
     // #endregion
@@ -300,28 +258,7 @@ export class CustomModifiersCalculator {
      * @param entity
      */
     private static getCharacterMaxHitFlatModification(entity: Character): number {
-        return CustomModifiersCalculator.getMaxHitFlatModificationForMonsterTypes(entity);
-    }
-
-    /**
-     * Calculates flat change to max hit, specifically based on the type of target being fought
-     * @param entity
-     * @returns
-     */
-    private static getMaxHitFlatModificationForMonsterTypes(entity: Character): number {
-        let modification = 0;
-
-        if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-            modification += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstHumans - entity.modifiers.decreasedMaxHitFlatAgainstHumans);
-        }
-        if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
-            modification += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstDragons - entity.modifiers.decreasedMaxHitFlatAgainstDragons);
-        }
-        if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
-            modification += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstUndead - entity.modifiers.decreasedMaxHitFlatAgainstUndead);
-        }
-
-        return modification;
+        return CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.MaxHitFlat);
     }
 
     // #endregion
@@ -330,7 +267,7 @@ export class CustomModifiersCalculator {
 
     // #region (Total) Damage
 
-    // #region Percentage - (Total) Damage
+    // #region Percentage - (Total) Damage Percent
 
     /**
      * Calculates change to percentage-based (total) damage value
@@ -365,29 +302,8 @@ export class CustomModifiersCalculator {
      * @param entity
      */
     private static getCharacterDamagePercentageModifiers(entity: Character): number {
-        return CustomModifiersCalculator.getDamagePercentageModificationForMonsterTypes(entity)
+        return CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.DamagePercent)
             + CustomModifiersCalculator.getDamagePercentageModificationForSpellTypes(entity);
-    }
-
-    /**
-     * Calculates change to percentage-based (total) damage value,
-     * specifically based on the type of target being fought
-     * @param entity
-     */
-    private static getDamagePercentageModificationForMonsterTypes(entity: Character): number {
-        let modification = 0;
-
-        if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-            modification += entity.modifiers.increasedDamageAgainstHumans - entity.modifiers.decreasedDamageAgainstHumans;
-        }
-        if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
-            modification += entity.modifiers.increasedDamageAgainstDragons - entity.modifiers.decreasedDamageAgainstDragons;
-        }
-        if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
-            modification += entity.modifiers.increasedDamageAgainstUndead - entity.modifiers.decreasedDamageAgainstUndead;
-        }
-
-        return modification;
     }
 
     /**
@@ -492,28 +408,7 @@ export class CustomModifiersCalculator {
      * @param entity
      */
     private static getCharacterAccuracyPercentageModifiers(entity: Character): number {
-        return CustomModifiersCalculator.getAccuracyPercentageModificationForMonsterTypes(entity);
-    }
-
-    /**
-     * Calculates accuracy percentage bonus to apply,
-     * specifically based on the type of target being fought
-     * @param entity
-     */
-    private static getAccuracyPercentageModificationForMonsterTypes(entity: Character): number {
-        let modification = 0;
-
-        if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-            modification += entity.modifiers.increasedGlobalAccuracyAgainstHumans - entity.modifiers.decreasedGlobalAccuracyAgainstHumans;
-        }
-        if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
-            modification += entity.modifiers.increasedGlobalAccuracyAgainstDragons - entity.modifiers.decreasedGlobalAccuracyAgainstDragons;
-        }
-        if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
-            modification += entity.modifiers.increasedGlobalAccuracyAgainstUndead - entity.modifiers.decreasedGlobalAccuracyAgainstUndead;
-        }
-
-        return modification;
+        return CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.GlobalAccuracy);
     }
 
     /**
@@ -600,27 +495,7 @@ export class CustomModifiersCalculator {
      * @param entity
      */
     private static getCharacterDamageReductionFlatModification(entity: Character): number {
-        return CustomModifiersCalculator.getDamageReductionFlatModificationForMonsterTypes(entity);
-    }
-
-    /**
-     * Calculate the flat change in DR%, specifically based on the type of target being fought
-     * @param entity
-     */
-    private static getDamageReductionFlatModificationForMonsterTypes(entity: Character): number {
-        let modification = 0;
-
-        if (entity.target.isHuman || entity.target.modifiers.humanTraitApplied > 0) {
-            modification += entity.modifiers.increasedDamageReductionAgainstHumans - entity.modifiers.decreasedDamageReductionAgainstHumans;
-        }
-        if (entity.target.isDragon || entity.target.modifiers.dragonTraitApplied > 0) {
-            modification += entity.modifiers.increasedDamageReductionAgainstDragons - entity.modifiers.decreasedDamageReductionAgainstDragons;
-        }
-        if (entity.target.isUndead || entity.target.modifiers.undeadTraitApplied > 0) {
-            modification += entity.modifiers.increasedDamageReductionAgainstUndead - entity.modifiers.decreasedDamageReductionAgainstUndead;
-        }
-
-        return modification;
+        return CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.DamageReduction);
     }
 
     /**
@@ -641,4 +516,14 @@ export class CustomModifiersCalculator {
     // #endregion
 
     // #endregion
+
+    /**
+     * TODO: Explain
+     * @param entity
+     * @param modifierGroup
+     * @returns
+     */
+    private static getModificationValueForMonsterTypes(entity: Character, modifierGroup: MonsterTypeModifierGroup) {
+        return MonsterTypeHelper.getModificationValue(entity, modifierGroup);
+    }
 }

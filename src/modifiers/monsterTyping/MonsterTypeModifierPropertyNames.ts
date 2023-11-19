@@ -3,6 +3,7 @@
  * specific for the respective monster type
  * */
 export interface MonsterTypeModifierPropertyNames {
+    traitApplied: string,
     increasedDamage: string,
     decreasedDamage: string,
     increasedMaxHitPercent: string,

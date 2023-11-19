@@ -1,3 +1,6 @@
+import { MonsterType } from './MonsterType';
+import { MonsterTypeMappingManager } from './MonsterTypeMappingManager';
+import { MonsterTypeModifierGroup } from './MonsterTypeModifierGroup';
 import { MonsterTypeModifierPropertyNames } from './MonsterTypeModifierPropertyNames'
 import { MonsterTypeModifierType } from './MonsterTypeModifierType'
 
@@ -16,8 +19,10 @@ export class MonsterTypeHelper {
      * @param typePluralName
      * @returns
      */
-    public static createModifierPropertyNames(typePluralName: string): MonsterTypeModifierPropertyNames {
+    public static createModifierPropertyNames(typeSingularName: string, typePluralName: string): MonsterTypeModifierPropertyNames {
+        typeSingularName = `${typeSingularName[0].toLowerCase()}${typeSingularName.substring(1)}`;
         return {
+            traitApplied: `${typeSingularName}TraitApplied`,
             increasedDamage: `increasedDamageAgainst${typePluralName}`,
             decreasedDamage: `decreasedDamageAgainst${typePluralName}`,
             increasedMaxHitPercent: `increasedMaxHitPercentAgainst${typePluralName}`,
@@ -80,5 +85,108 @@ export class MonsterTypeHelper {
         }
 
         return modifierObject;
+    }
+
+    /**
+     * TODO: Explain
+     * @param entity
+     * @param modifierGroup
+     * @returns
+     */
+    public static getModificationValue(entity: Character, modifierGroup: MonsterTypeModifierGroup): number {
+        if (!entity) {
+            return 0;
+        }
+
+        //console.log(`getModificationValue | modifierGroup: ${modifierGroup}`);
+        let modification = 0;
+
+        const types = MonsterTypeMappingManager.getTypesAsArray();
+        for (var i = 0; i < types.length; i++) {
+            const type = types[i];
+
+            // @ts-ignore - We know that behind this property lies a boolean. And if not, well "falsey" check work too
+            const isOfType: Boolean = entity.target[type.isTypePropertyName];
+            // @ts-ignore - We know that behind this property lies a boolean. And if not, well "falsey" check work too
+            //console.log(`getModificationValue | isOfType | propertyName: ${type.isTypePropertyName} / value: ${entity.target[type.isTypePropertyName]}, ${isOfType}`);
+            // @ts-ignore - We know that behind this property lies a boolean. And if not, well "falsey" check work too
+            const traitApplied: number = entity.target.modifiers[type.modifierPropertyNames.traitApplied];
+            // @ts-ignore - We know that behind this property lies a boolean. And if not, well "falsey" check work too
+            //console.log(`getModificationValue | isOfType | propertyName: ${type.modifierPropertyNames.traitApplied} / value: ${entity.target.modifiers[type.modifierPropertyNames.traitApplied]}, ${traitApplied}`);
+            if (!isOfType && traitApplied <= 0) {
+                continue;
+            }
+
+            switch (modifierGroup) {
+                case MonsterTypeModifierGroup.DamagePercent:
+                    //console.log(`getModificationValue | TotalDamage`);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    //console.log(entity.modifiers[type.modifierPropertyNames.increasedDamage]);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    //console.log(entity.modifiers[type.modifierPropertyNames.decreasedDamage]);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    modification += entity.modifiers[type.modifierPropertyNames.increasedDamage] - entity.modifiers[type.modifierPropertyNames.decreasedDamage];
+                    break;
+                case MonsterTypeModifierGroup.MaxHitPercent:
+                    //console.log(`getModificationValue | MaxHitPercent`);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    //console.log(entity.modifiers[type.modifierPropertyNames.increasedMaxHitPercent]);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    //console.log(entity.modifiers[type.modifierPropertyNames.decreasedMaxHitPercent]);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    modification += entity.modifiers[type.modifierPropertyNames.increasedMaxHitPercent] - entity.modifiers[type.modifierPropertyNames.decreasedMaxHitPercent];
+                    break;
+                case MonsterTypeModifierGroup.MaxHitFlat:
+                    //console.log(`getModificationValue | MaxHitFlat`);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    //console.log(entity.modifiers[type.modifierPropertyNames.increasedMaxHitFlat]);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    //console.log(entity.modifiers[type.modifierPropertyNames.decreasedMaxHitFlat]);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    modification +=  entity.modifiers[type.modifierPropertyNames.increasedMaxHitFlat] - entity.modifiers[type.modifierPropertyNames.decreasedMaxHitFlat];
+                    break;
+                case MonsterTypeModifierGroup.MinHitBasedOnMaxHit:
+                    //console.log(`getModificationValue | MinHitBasedOnMaxHit`);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    //console.log(entity.modifiers[type.modifierPropertyNames.increasedMinHitBasedOnMaxHit]);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    //console.log(entity.modifiers[type.modifierPropertyNames.decreasedMinHitBasedOnMaxHit]);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    modification += Math.floor((entity.stats.maxHit * (entity.modifiers[type.modifierPropertyNames.increasedMinHitBasedOnMaxHit] - entity.modifiers[type.modifierPropertyNames.decreasedMinHitBasedOnMaxHit])) / 100);
+                    break;
+                case MonsterTypeModifierGroup.FlatMinHit:
+                    //console.log(`getModificationValue | FlatMinHit`);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    //console.log(entity.modifiers[type.modifierPropertyNames.increasedFlatMinHit]);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    //console.log(entity.modifiers[type.modifierPropertyNames.decreasedFlatMinHit]);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    modification += numberMultiplier * (entity.modifiers[type.modifierPropertyNames.increasedFlatMinHit] - entity.modifiers[type.modifierPropertyNames.decreasedFlatMinHit]);
+                    break;
+                case MonsterTypeModifierGroup.GlobalAccuracy:
+                   // console.log(`getModificationValue | GlobalAccuracy`);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    //console.log(entity.modifiers[type.modifierPropertyNames.increasedGlobalAccuracy]);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    //console.log(entity.modifiers[type.modifierPropertyNames.decreasedGlobalAccuracy]);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    modification += entity.modifiers[type.modifierPropertyNames.increasedGlobalAccuracy] - entity.modifiers[type.modifierPropertyNames.decreasedGlobalAccuracy];
+                    break;
+                case MonsterTypeModifierGroup.DamageReduction:
+                    //console.log(`getModificationValue | DamageReduction`);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    //console.log(entity.modifiers[type.modifierPropertyNames.increasedDamageReduction]);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    //console.log(entity.modifiers[type.modifierPropertyNames.decreasedDamageReduction]);
+                    // @ts-ignore - We know these properties exist, as they were dynamically added before
+                    modification += entity.modifiers[type.modifierPropertyNames.increasedDamageReduction] - entity.modifiers[type.modifierPropertyNames.decreasedDamageReduction];
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        //console.log(`getModificationValue | final modification calculation result: ${modification}`);
+        return modification;
     }
 }

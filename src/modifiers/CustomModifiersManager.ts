@@ -27,9 +27,6 @@ export class CustomModifiersManager {
         this.registerSpellModifiers();
         this.registerTraitApplicationModifiers();
         this.registerMonsterTypeModifiers();
-        //this.registerHumanModifiers();
-        //this.registerDragonModifiers();
-        //this.registerUndeadModifiers();
         this.registerBossModifiers();
     }
 
@@ -1599,10 +1596,14 @@ export class CustomModifiersManager {
             this.isHuman = true; // Well, the player is a human, right?
         });
 
-        this.context.patch(Enemy, "setStatsFromMonster").after(function (monster: any): void {
-            this.isHuman = MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Human);
-            this.isDragon = MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Dragon);
-            this.isUndead = MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Undead);
+        this.context.patch(Enemy, "setStatsFromMonster").after(function (returnValue, monster: any): void {
+            const types = MonsterTypeMappingManager.getTypesAsArray();
+            for (var i = 0; i < types.length; i++) {
+                const type = types[i];
+                console.log(`setStatsFromMonster | Checking to see whether or not to apply ${type.modifierPropertyNames.traitApplied}`);
+                // @ts-ignore - We add is{Type} dynamically
+                this[type.modifierPropertyNames.traitApplied] = MonsterTypeMappingManager.monsterIsOfType(monster, type.singularName);
+            }
         });
     }
 

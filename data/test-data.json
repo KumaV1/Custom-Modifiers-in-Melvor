@@ -19,7 +19,9 @@
         "equipRequirements": [],
         "equipmentStats": [],
         "modifiers": {
-
+          "increasedGlobalAccuracyAgainstDragons": 25,
+          "increasedDamageAgainstDragons": 25,
+          "increasedDamageReductionAgainstDragons": 25
         },
         "itemType": "Equipment"
       }

@@ -28,7 +28,7 @@ export class MonsterTypeDefinition {
         this._monsters = monsters ??= [];
 
         this.isTypePropertyName = MonsterTypeHelper.createIsTypePropertyName(singularName);
-        this.modifierPropertyNames = MonsterTypeHelper.createModifierPropertyNames(pluralName);
+        this.modifierPropertyNames = MonsterTypeHelper.createModifierPropertyNames(singularName, pluralName);
     }
 
     /**
