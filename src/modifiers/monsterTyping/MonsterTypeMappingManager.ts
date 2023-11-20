@@ -18,9 +18,43 @@ export class MonsterTypeMappingManager {
 	 * @param typeNamePlural
 	 * @param monsterIds
 	 */
-	public static addType(typeNameSingular: string, typeNamePlural: string, monsterIds: string[]) {
+	public static registerTypeIfNotExist(typeNameSingular: string, typeNamePlural: string, monsterIds: string[]) {
 		const typeDefinition = new MonsterTypeDefinition(typeNameSingular, typeNamePlural, monsterIds);
 		this._types[typeNameSingular] = typeDefinition;
+	}
+
+	/**
+	 *
+	 * @param type - singular name of type
+	 * @param monsterId - full id, including namespace
+	 */
+	public static addMonster(type: string | MonsterType, monsterId: string) {
+		// If type doesn't already exist, skip (type has to be registered properly beforehand)
+		if (!this._types[type]) {
+			return;
+        }
+
+		// If monster is already allocated, avoid duplicate
+		if (this._types[type].monsters.some(mId => mId === monsterId)) {
+			return;
+		}
+
+		this._types[type].monsters.push(monsterId);
+	}
+
+	/**
+	 *
+	 * @param type
+	 * @param monsterIds
+	 */
+	public static addMonsters(type: string | MonsterType, monsterIds: string[]) {
+		if (!monsterIds) {
+			return;
+		}
+
+		for (var i = 0; i < length; i++) {
+			MonsterTypeMappingManager.addMonster(type, monsterIds[i]);
+        }
 	}
 
 	/**

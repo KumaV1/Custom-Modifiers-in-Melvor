@@ -4,7 +4,7 @@ import { Constants } from './Constants';
 import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
 import { MonsterTypeMappingManager } from './modifiers/monsterTyping/MonsterTypeMappingManager';
 import { MonsterType } from './modifiers/monsterTyping/MonsterType';
-import { Translation } from './translation/Translation';
+import { TranslationManager } from './translation/TranslationManager';
 import { languages } from './translation/languages'
 import { MonsterTypeOverview } from './components/MonsterTypeOverview'
 import { TinyIconsCompatibility } from './compatibility/TinyIconsCompatibility';
@@ -19,6 +19,7 @@ import ModTestData from '../data/test-data.json'
 import '../assets/Logo.png'
 import '../assets/Death_Mark.png'
 import '../assets/Invoke_Death.png'
+import { MonsterTypeDefinition } from './modifiers/monsterTyping/MonsterTypeDefinition';
 // #endregion
 
 export async function setup(ctx: Modding.ModContext) {
@@ -26,7 +27,6 @@ export async function setup(ctx: Modding.ModContext) {
     initApiEndpoints(ctx);
     initCustomModifiers(ctx);
     initTranslation(ctx);
-    initLanguage(ctx);
     initOverviewContainer(ctx);
     initModCompatibility(ctx);
 
@@ -77,42 +77,14 @@ function initCustomModifiers(ctx: Modding.ModContext) {
 
 /**
  * Patches multiple name/description getters, so they check our custom injected translations
+ * Also creates a list of translations for the current languages and registers it
  * @param ctx
  */
 function initTranslation(ctx: Modding.ModContext) {
-    const translation = new Translation(ctx);
+    const translation = new TranslationManager(ctx);
 
-    translation.init();
-}
-
-/**
- * Creates a list of translations for the current languages and registers it
- * @param ctx
- */
-function initLanguage(ctx: Modding.ModContext) {
-    let lang = setLang;
-
-    if (lang === 'lemon' || lang === 'carrot') {
-        lang = 'en';
-    }
-
-    // Melvor includes functionality to automatically retrieve translations by category (see "LanguageCategory" in the schema)
-    // and entity id - for those calls, a mod prefix isn't necessary, which is why we create this const array
-    const keysToNotPrefix: string[] = [
-        'COMBAT_MISC',
-        'MODIFIER_DATA',
-        'PAGE_NAME'
-    ];
-
-    // Based on how translation is retrieved,
-    // we may or may not have to specify the mod namespace
-    for (const [key, value] of Object.entries<string>(languages[lang])) {
-        if (keysToNotPrefix.some(prefix => key.includes(prefix))) {
-            loadedLangJson[key] = value;
-        } else {
-            loadedLangJson[`${Constants.MOD_NAMESPACE}_${key}`] = value;
-        }
-    }
+    translation.patch();
+    translation.register();
 }
 
 /**

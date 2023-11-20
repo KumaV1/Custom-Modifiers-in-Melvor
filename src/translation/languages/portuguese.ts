@@ -2,8 +2,11 @@ export const pt = {
     // ### Monster type overview
     PAGE_NAME_Monster_Types_Overview: "Monster types",
 
+    Monster_Type_Singular_Human: "Human",
     Monster_Type_Plural_Human: "Humans",
+    Monster_Type_Singular_Dragon: "Dragon",
     Monster_Type_Plural_Dragon: "Dragons",
+    Monster_Type_Singular_Undead: "Undead",
     Monster_Type_Plural_Undead: "Undead",
 
     Monster_Type_Overview_Remarks_Prefix: "Please be aware of the following points:",
@@ -96,59 +99,23 @@ export const pt = {
     MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerTasks: '-${value}% Accuracy Rating against Slayer Tasks',
     MODIFIER_DATA_decreasedDamageReductionAgainstSlayerTasks: '-${value}% Damage Reduction against Slayer Tasks',
 
-    // #### Trait application (aka "treated as type")
-    MODIFIER_DATA_humanTraitApplied: "Marks the affected as human",
-    MODIFIER_DATA_dragonTraitApplied: "Marks the affected as dragon",
-    MODIFIER_DATA_undeadTraitApplied: "Marks the affected as undead",
-
     // #### Type
-    // ##### Humans
-    MODIFIER_DATA_increasedDamageAgainstHumans: "+${value}% Damage To Humans",
-    MODIFIER_DATA_decreasedDamageAgainstHumans: "-${value}% Damage To Humans",
-    MODIFIER_DATA_increasedMaxHitPercentAgainstHumans: "+${value}% Max Hit when fighting humans",
-    MODIFIER_DATA_decreasedMaxHitPercentAgainstHumans: "-${value}% Max Hit when fighting humans",
-    MODIFIER_DATA_increasedMaxHitFlatAgainstHumans: "+${value} Max Hit when fighting humans",
-    MODIFIER_DATA_decreasedMaxHitFlatAgainstHumans: "-${value} Max Hit when fighting humans",
-    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstHumans: "+${value}% Minium Hit when fighting humans",
-    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstHumans: "-${value}% Minium Hit when fighting humans",
-    MODIFIER_DATA_increasedFlatMinHitAgainstHumans: "+${value} Minium Hit when fighting humans",
-    MODIFIER_DATA_decreasedFlatMinHitAgainstHumans: "-${value} Minium Hit when fighting humans",
-    MODIFIER_DATA_increasedGlobalAccuracyAgainstHumans: '+${value}% Accuracy Rating when fighting humans',
-    MODIFIER_DATA_decreasedGlobalAccuracyAgainstHumans: '-${value}% Accuracy Rating when fighting humans',
-    MODIFIER_DATA_increasedDamageReductionAgainstHumans: '+${value}% Damage Reduction when fighting humans',
-    MODIFIER_DATA_decreasedDamageReductionAgainstHumans: '-${value}% Damage Reduction when fighting humans',
-
-    // ##### Dragons
-    MODIFIER_DATA_increasedDamageAgainstDragons: "+${value}% Damage To Dragons",
-    MODIFIER_DATA_decreasedDamageAgainstDragons: "-${value}% Damage To Dragons",
-    MODIFIER_DATA_increasedMaxHitPercentAgainstDragons: "+${value}% Max Hit when fighting dragons",
-    MODIFIER_DATA_decreasedMaxHitPercentAgainstDragons: "-${value}% Max Hit when fighting dragons",
-    MODIFIER_DATA_increasedMaxHitFlatAgainstDragons: "+${value} Max Hit when fighting dragons",
-    MODIFIER_DATA_decreasedMaxHitFlatAgainstDragons: "-${value} Max Hit when fighting dragons",
-    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstDragons: "+${value}% Minium Hit when fighting dragons",
-    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstDragons: "-${value}% Minium Hit when fighting dragons",
-    MODIFIER_DATA_increasedFlatMinHitAgainstDragons: "+${value} Minium Hit when fighting dragons",
-    MODIFIER_DATA_decreasedFlatMinHitAgainstDragons: "-${value} Minium Hit when fighting dragons",
-    MODIFIER_DATA_increasedGlobalAccuracyAgainstDragons: '+${value}% Accuracy Rating when fighting dragons',
-    MODIFIER_DATA_decreasedGlobalAccuracyAgainstDragons: '-${value}% Accuracy Rating when fighting dragons',
-    MODIFIER_DATA_increasedDamageReductionAgainstDragons: '+${value}% Damage Reduction when fighting dragons',
-    MODIFIER_DATA_decreasedDamageReductionAgainstDragons: '-${value}% Damage Reduction when fighting dragons',
-
-    // ##### Undead
-    MODIFIER_DATA_increasedDamageAgainstUndead: "+${value}% Damage To Undead",
-    MODIFIER_DATA_decreasedDamageAgainstUndead: "-${value}% Damage To Undead",
-    MODIFIER_DATA_increasedMaxHitPercentAgainstUndead: "+${value}% Max Hit when fighting undead",
-    MODIFIER_DATA_decreasedMaxHitPercentAgainstUndead: "-${value}% Max Hit when fighting undead",
-    MODIFIER_DATA_increasedMaxHitFlatAgainstUndead: "+${value} Max Hit when fighting undead",
-    MODIFIER_DATA_decreasedMaxHitFlatAgainstUndead: "-${value} Max Hit when fighting undead",
-    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstUndead: "+${value}% Minium Hit when fighting undead",
-    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstUndead: "-${value}% Minium Hit when fighting undead",
-    MODIFIER_DATA_increasedFlatMinHitAgainstUndead: "+${value} Minium Hit when fighting undead",
-    MODIFIER_DATA_decreasedFlatMinHitAgainstUndead: "-${value} Minium Hit when fighting undead",
-    MODIFIER_DATA_increasedGlobalAccuracyAgainstUndead: '+${value}% Accuracy Rating when fighting undead',
-    MODIFIER_DATA_decreasedGlobalAccuracyAgainstUndead: '-${value}% Accuracy Rating when fighting undead',
-    MODIFIER_DATA_increasedDamageReductionAgainstUndead: '+${value}% Damage Reduction when fighting undead',
-    MODIFIER_DATA_decreasedDamageReductionAgainstUndead: '-${value}% Damage Reduction when fighting undead',
+    // ##### Generic; these will be used to dynamically build the ones further down below, as those also have to be dynamically built
+    MODIFIER_DATA_MonsterTypeTraitApplied: "Marks the affected as ${monsterType}",
+    MODIFIER_DATA_increasedDamageAgainstMonsterType: "+${value}% Damage To ${monsterType}",
+    MODIFIER_DATA_decreasedDamageAgainstMonsterType: "-${value}% Damage To ${monsterType}",
+    MODIFIER_DATA_increasedMaxHitPercentAgainstMonsterType: "+${value}% Max Hit when fighting ${monsterType}",
+    MODIFIER_DATA_decreasedMaxHitPercentAgainstMonsterType: "-${value}% Max Hit when fighting ${monsterType}",
+    MODIFIER_DATA_increasedMaxHitFlatAgainstMonsterType: "+${value} Max Hit when fighting ${monsterType}",
+    MODIFIER_DATA_decreasedMaxHitFlatAgainstMonsterType: "-${value} Max Hit when fighting ${monsterType}",
+    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstMonsterType: "+${value}% Minium Hit when fighting ${monsterType}",
+    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstMonsterType: "-${value}% Minium Hit when fighting ${monsterType}",
+    MODIFIER_DATA_increasedFlatMinHitAgainstMonsterType: "+${value} Minium Hit when fighting ${monsterType}",
+    MODIFIER_DATA_decreasedFlatMinHitAgainstMonsterType: "-${value} Minium Hit when fighting ${monsterType}",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstMonsterType: '+${value}% Accuracy Rating when fighting ${monsterType}',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstMonsterType: '-${value}% Accuracy Rating when fighting ${monsterType}',
+    MODIFIER_DATA_increasedDamageReductionAgainstMonsterType: '+${value}% Damage Reduction when fighting ${monsterType}',
+    MODIFIER_DATA_decreasedDamageReductionAgainstMonsterType: '-${value}% Damage Reduction when fighting ${monsterType}',
 
     // #### Bosses
     MODIFIER_DATA_increasedMaxHitPercentAgainstBosses: "+${value}% Max Hit when fighting bosses",

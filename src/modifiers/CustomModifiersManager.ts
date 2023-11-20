@@ -867,7 +867,7 @@ export class CustomModifiersManager {
 
     private registerMonsterTypeModifiers() {
         // #region add types
-        MonsterTypeMappingManager.addType(MonsterType.Human, "Humans", ["melvorD:BlackKnight",
+        MonsterTypeMappingManager.registerTypeIfNotExist(MonsterType.Human, "Humans", ["melvorD:BlackKnight",
             "melvorD:ConfusedPirate",
             "melvorD:FrozenArcher",
             "melvorD:Pirate",
@@ -899,7 +899,7 @@ export class CustomModifiersManager {
             "melvorAoD:BlindArcher",
             "melvorAoD:BlindMage",
             "melvorAoD:SoulTakerWitch"]);
-        MonsterTypeMappingManager.addType(MonsterType.Dragon, "Dragons", ["melvorD:PratTheProtectorOfSecrets",
+        MonsterTypeMappingManager.registerTypeIfNotExist(MonsterType.Dragon, "Dragons", ["melvorD:PratTheProtectorOfSecrets",
             "melvorD:GreenDragon",
             "melvorD:BlueDragon",
             "melvorD:RedDragon",
@@ -911,7 +911,7 @@ export class CustomModifiersManager {
             "melvorF:MalcsTheLeaderOfDragons",
             "melvorF:GreaterSkeletalDragon",
             "melvorTotH:TwinSeaDragonSerpent"]);
-        MonsterTypeMappingManager.addType(MonsterType.Undead, "Undead", ["melvorD:PirateCaptain",
+        MonsterTypeMappingManager.registerTypeIfNotExist(MonsterType.Undead, "Undead", ["melvorD:PirateCaptain",
             "melvorD:ZombieHand",
             "melvorD:Zombie",
             "melvorD:ZombieLeader",
@@ -933,16 +933,16 @@ export class CustomModifiersManager {
         // #endregion
 
         const types = MonsterTypeMappingManager.getTypes();
-        console.log(`Registering modifiers for following type definitions: ${types}`)
+        //console.log(`Registering modifiers for following type definitions: ${types}`)
 
         Object.entries(types).forEach(([key, value]) => {
             console.log(`Processing property ${key}`);
             Object.entries(value.modifierPropertyNames).forEach(([key, value]) => {
-                console.log(`Processing modifierProperty: ${key} | ${value}`);
+                //console.log(`Processing modifierProperty: ${key} | ${value}`);
 
                 // @ts-ignore We know the keys (property names) match the enum expected as parameter
                 const obj = MonsterTypeHelper.createModifierDataObject(key, value);
-                console.log(obj);
+                //console.log(obj);
                 // @ts-ignore implicit 'any' type error
                 // we know though that it is an object to which we want to add a property
                 modifierData[value] = obj;
@@ -1600,9 +1600,9 @@ export class CustomModifiersManager {
             const types = MonsterTypeMappingManager.getTypesAsArray();
             for (var i = 0; i < types.length; i++) {
                 const type = types[i];
-                console.log(`setStatsFromMonster | Checking to see whether or not to apply ${type.modifierPropertyNames.traitApplied}`);
+                // console.log(`setStatsFromMonster | Checking to see whether or not to apply ${type.modifierPropertyNames.traitApplied}: ${isOfType}`);
                 // @ts-ignore - We add is{Type} dynamically
-                this[type.modifierPropertyNames.traitApplied] = MonsterTypeMappingManager.monsterIsOfType(monster, type.singularName);
+                this[type.isTypePropertyName] = MonsterTypeMappingManager.monsterIsOfType(monster, type.singularName);
             }
         });
     }
