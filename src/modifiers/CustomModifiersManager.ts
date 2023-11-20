@@ -5,6 +5,7 @@ import { MonsterTypeMappingManager } from './monsterTyping/MonsterTypeMappingMan
 import { CustomModifiersCalculator } from './CustomModifiersCalculator'
 import { MonsterTypeHelper } from './monsterTyping/MonsterTypeHelper';
 import { MonsterTypeModifierType } from './monsterTyping/MonsterTypeModifierType';
+import { TinyIconConfiguration } from './monsterTyping/TinyIconConfiguration';
 
 /**
  * Patches different sections of the code, in order to integrate custom modifiers
@@ -898,7 +899,8 @@ export class CustomModifiersManager {
             "melvorAoD:BlindWarrior",
             "melvorAoD:BlindArcher",
             "melvorAoD:BlindMage",
-            "melvorAoD:SoulTakerWitch"]);
+            "melvorAoD:SoulTakerWitch"],
+            new TinyIconConfiguration(ModifierConstants.HUMAN_TINY_ICON_TAG_NAME, ModifierConstants.HUMAN_MODIFIER_TINY_ICON_URL));
         MonsterTypeMappingManager.registerTypeIfNotExist(MonsterType.Dragon, "Dragons", ["melvorD:PratTheProtectorOfSecrets",
             "melvorD:GreenDragon",
             "melvorD:BlueDragon",
@@ -910,7 +912,8 @@ export class CustomModifiersManager {
             "melvorF:WickedGreaterDragon",
             "melvorF:MalcsTheLeaderOfDragons",
             "melvorF:GreaterSkeletalDragon",
-            "melvorTotH:TwinSeaDragonSerpent"]);
+            "melvorTotH:TwinSeaDragonSerpent"],
+            new TinyIconConfiguration(ModifierConstants.DRAGON_TINY_ICON_TAG_NAME, ModifierConstants.DRAGON_MODIFIER_TINY_ICON_URL));
         MonsterTypeMappingManager.registerTypeIfNotExist(MonsterType.Undead, "Undead", ["melvorD:PirateCaptain",
             "melvorD:ZombieHand",
             "melvorD:Zombie",
@@ -929,7 +932,8 @@ export class CustomModifiersManager {
             "melvorAoD:Lich",
             "melvorAoD:GhostSailor",
             "melvorAoD:GhostMercenary",
-            "melvorAoD:CursedPirateCaptain"]);
+            "melvorAoD:CursedPirateCaptain"],
+            new TinyIconConfiguration(ModifierConstants.UNDEAD_TINY_ICON_TAG_NAME, ModifierConstants.UNDEAD_MODIFIER_TINY_ICON_URL));
         // #endregion
 
         const types = MonsterTypeMappingManager.getTypes();

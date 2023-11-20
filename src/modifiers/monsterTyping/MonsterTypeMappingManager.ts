@@ -1,5 +1,6 @@
 import { MonsterType } from './MonsterType'
 import { MonsterTypeDefinition } from './MonsterTypeDefinition';
+import { TinyIconConfiguration } from './TinyIconConfiguration';
 
 /**
  * Takes care of holding which types are allocated to which monsters,
@@ -17,9 +18,10 @@ export class MonsterTypeMappingManager {
 	 * @param typeNameSingular
 	 * @param typeNamePlural
 	 * @param monsterIds
+	 * @param tinyIconConfig
 	 */
-	public static registerTypeIfNotExist(typeNameSingular: string, typeNamePlural: string, monsterIds: string[]) {
-		const typeDefinition = new MonsterTypeDefinition(typeNameSingular, typeNamePlural, monsterIds);
+	public static registerTypeIfNotExist(typeNameSingular: string, typeNamePlural: string, monsterIds: string[], tinyIconConfig?: TinyIconConfiguration) {
+		const typeDefinition = new MonsterTypeDefinition(typeNameSingular, typeNamePlural, monsterIds, tinyIconConfig);
 		this._types[typeNameSingular] = typeDefinition;
 	}
 
