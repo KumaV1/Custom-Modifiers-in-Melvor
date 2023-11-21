@@ -1553,54 +1553,19 @@ export class CustomModifiersManager {
             this.increasedDamageTakenFromFireSpells ??= 0;
             this.decreasedDamageTakenFromFireSpells ??= 0;
 
-            this.humanTraitApplied ??= 0;
-            this.dragonTraitApplied ??= 0;
-            this.undeadTraitApplied ??= 0;
+            // Ensure 0 instead of undefined for type related modifiers as well
+            const types = MonsterTypeMappingManager.getTypesAsArray();
+            for (var i = 0; i < types.length; i++) {
+                const type = types[i];
+                // console.log(`setStatsFromMonster | Checking to see whether or not to apply ${type.modifierPropertyNames.traitApplied}: ${isOfType}`);
+                // @ts-ignore - We add is{Type} dynamically
+                Object.entries(type.modifierPropertyNames).forEach(([key, value]) => {
+                    //console.log(`Processing modifierProperty: ${key} | ${value}`);
 
-            this.increasedDamageAgainstHumans ??= 0;
-            this.decreasedDamageAgainstHumans ??= 0;
-            this.increasedMaxHitPercentAgainstHumans ??= 0;
-            this.decreasedMaxHitPercentAgainstHumans ??= 0;
-            this.increasedMaxHitFlatAgainstHumans ??= 0;
-            this.decreasedMaxHitFlatAgainstHumans ??= 0;
-            this.increasedMinHitBasedOnMaxHitAgainstHumans ??= 0;
-            this.decreasedMinHitBasedOnMaxHitAgainstHumans ??= 0;
-            this.increasedFlatMinHitAgainstHumans ??= 0;
-            this.decreasedFlatMinHitAgainstHumans ??= 0;
-            this.increasedGlobalAccuracyAgainstHumans ??= 0;
-            this.decreasedGlobalAccuracyAgainstHumans ??= 0;
-            this.increasedDamageReductionAgainstHumans ??= 0;
-            this.decreasedDamageReductionAgainstHumans ??= 0;
-
-            this.increasedDamageAgainstDragons ??= 0;
-            this.decreasedDamageAgainstDragons ??= 0;
-            this.increasedMaxHitPercentAgainstDragons ??= 0;
-            this.decreasedMaxHitPercentAgainstDragons ??= 0;
-            this.increasedMaxHitFlatAgainstDragons ??= 0;
-            this.decreasedMaxHitFlatAgainstDragons ??= 0;
-            this.increasedMinHitBasedOnMaxHitAgainstDragons ??= 0;
-            this.decreasedMinHitBasedOnMaxHitAgainstDragons ??= 0;
-            this.increasedFlatMinHitAgainstDragons ??= 0;
-            this.decreasedFlatMinHitAgainstDragons ??= 0;
-            this.increasedGlobalAccuracyAgainstDragons ??= 0;
-            this.decreasedGlobalAccuracyAgainstDragons ??= 0;
-            this.increasedDamageReductionAgainstDragons ??= 0;
-            this.decreasedDamageReductionAgainstDragons ??= 0;
-
-            this.increasedDamageAgainstUndead ??= 0;
-            this.decreasedDamageAgainstUndead ??= 0;
-            this.increasedMaxHitPercentAgainstUndead ??= 0;
-            this.decreasedMaxHitPercentAgainstUndead ??= 0;
-            this.increasedMaxHitFlatAgainstUndead ??= 0;
-            this.decreasedMaxHitFlatAgainstUndead ??= 0;
-            this.increasedMinHitBasedOnMaxHitAgainstUndead ??= 0;
-            this.decreasedMinHitBasedOnMaxHitAgainstUndead ??= 0;
-            this.increasedFlatMinHitAgainstUndead ??= 0;
-            this.decreasedFlatMinHitAgainstUndead ??= 0;
-            this.increasedGlobalAccuracyAgainstUndead ??= 0;
-            this.decreasedGlobalAccuracyAgainstUndead ??= 0;
-            this.increasedDamageReductionAgainstUndead ??= 0;
-            this.decreasedDamageReductionAgainstUndead ??= 0;
+                    // @ts-ignore
+                    this[value] ??= 0;
+                });
+            }
         });
     }
 
