@@ -1,14 +1,6 @@
 ﻿export const de = {
     PAGE_NAME_Monster_Types_Overview: "Monsterarten",
 
-    // ### Monster type translation for type overview page
-    MONSTER_TYPE_SINGULAR_Human: "Mensch",
-    MONSTER_TYPE_PLURAL_Human: "Menschen",
-    MONSTER_TYPE_SINGULAR_Dragon: "Drache",
-    MONSTER_TYPE_PLURAL_Dragon: "Drachen",
-    MONSTER_TYPE_SINGULAR_Undead: "Untoter",
-    MONSTER_TYPE_PLURAL_Undead: "Untote",
-
     // ### Type overview page remarks
     Monster_Type_Overview_Remarks_Prefix: "Bitte beachtet die folgenden Punkte:",
     Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor hat keine eigene Implementation für Monsterart-Zuweisung. Diese sind stattdessen durch den Mod 'Custom Modifiers in Melvor' hinzugefügt worden",
@@ -105,6 +97,13 @@
 
     // #### Type
     // ##### Generic; these will be used to dynamically build the ones further down below, as those also have to be dynamically built
+    MONSTER_TYPE_SINGULAR_Human: "Mensch",
+    MONSTER_TYPE_PLURAL_Human: "Menschen",
+    MONSTER_TYPE_SINGULAR_Dragon: "Drache",
+    MONSTER_TYPE_PLURAL_Dragon: "Drachen",
+    MONSTER_TYPE_SINGULAR_Undead: "Untoter",
+    MONSTER_TYPE_PLURAL_Undead: "Untote",
+
     MODIFIER_DATA_MonsterTypeTraitApplied: "Markiert den Betroffenen als ${monsterType}",
     MODIFIER_DATA_increasedDamageAgainstMonsterType: "+${value}% Schaden gegen ${monsterType}",
     MODIFIER_DATA_decreasedDamageAgainstMonsterType: "-${value}% Schaden gegen ${monsterType}",

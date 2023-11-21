@@ -63,11 +63,10 @@ export class TranslationManager {
      */
     public registerMonsterType(type: MonsterTypeDefinition): void {
         const typeSingularName = TranslationManager.getTranslationOrFallback(`MONSTER_TYPE_SINGULAR_${type.singularName}`, type.singularName);
-        console.log(`translationManager | registerMonsterType | key: MONSTER_TYPE_SINGULAR_${type.singularName} | value: ${typeSingularName}`);
+        //console.log(`translationManager | registerMonsterType | key: MONSTER_TYPE_SINGULAR_${type.singularName} | value: ${typeSingularName}`);
 
         const typePluralName = TranslationManager.getTranslationOrFallback(`MONSTER_TYPE_PLURAL_${type.singularName}`, type.pluralName);
-        console.log(`translationManager | registerMonsterType | key: MONSTER_TYPE_PLURAL_${type.singularName} | value: ${typePluralName}`);
-
+        //console.log(`translationManager | registerMonsterType | key: MONSTER_TYPE_PLURAL_${type.singularName} | value: ${typePluralName}`);
 
         loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.traitApplied}`] = loadedLangJson["MODIFIER_DATA_MonsterTypeTraitApplied"].replace("${monsterType}", typeSingularName);
         loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedDamage}`] = loadedLangJson["MODIFIER_DATA_increasedDamageAgainstMonsterType"].replace("${monsterType}", typePluralName);
@@ -96,7 +95,7 @@ export class TranslationManager {
      */
     public static getTranslationOrFallback(key: string, fallback: string): string {
         const translation = loadedLangJson[key];
-        console.log(`translationManager | getTranslationOrFallback | key: ${key} | fallback: ${fallback} | key result: ${translation}`);
+        //console.log(`translationManager | getTranslationOrFallback | key: ${key} | fallback: ${fallback} | key result: ${translation}`);
         return translation !== undefined && translation !== ''
             ? translation
             : fallback;

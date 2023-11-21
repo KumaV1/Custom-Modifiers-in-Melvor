@@ -2,13 +2,6 @@ export const es = {
     // ### Monster type overview
     PAGE_NAME_Monster_Types_Overview: "Monster types",
 
-    MONSTER_TYPE_SINGULAR_Human: "Human",
-    MONSTER_TYPE_PLURAL_Human: "Humans",
-    MONSTER_TYPE_SINGULAR_Dragon: "Dragon",
-    MONSTER_TYPE_PLURAL_Dragon: "Dragons",
-    MONSTER_TYPE_SINGULAR_Undead: "Undead",
-    MONSTER_TYPE_PLURAL_Undead: "Undead",
-
     Monster_Type_Overview_Remarks_Prefix: "Please be aware of the following points:",
     Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor does not inherintly include type definitions. Instead, they have been added by the 'Custom Modifiers in Melvor' mod",
     Monster_Type_Overview_Remarks_Displayed_Type_Allocation: "This display shows all defined type allocations. If a monster isn't displayed in a section, then they are not typed as such",
@@ -101,6 +94,13 @@ export const es = {
 
     // #### Type
     // ##### Generic; these will be used to dynamically build the ones further down below, as those also have to be dynamically built
+    MONSTER_TYPE_SINGULAR_Human: "Human",
+    MONSTER_TYPE_PLURAL_Human: "Humans",
+    MONSTER_TYPE_SINGULAR_Dragon: "Dragon",
+    MONSTER_TYPE_PLURAL_Dragon: "Dragons",
+    MONSTER_TYPE_SINGULAR_Undead: "Undead",
+    MONSTER_TYPE_PLURAL_Undead: "Undead",
+
     MODIFIER_DATA_MonsterTypeTraitApplied: "Marks the affected as ${monsterType}",
     MODIFIER_DATA_increasedDamageAgainstMonsterType: "+${value}% Damage To ${monsterType}",
     MODIFIER_DATA_decreasedDamageAgainstMonsterType: "-${value}% Damage To ${monsterType}",

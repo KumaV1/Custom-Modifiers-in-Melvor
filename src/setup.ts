@@ -1,13 +1,12 @@
 // Modules
 // You can import script modules and have full type completion
-import { Constants } from './Constants';
 import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
-import { MonsterTypeMappingManager } from './modifiers/monsterTyping/MonsterTypeMappingManager';
+import { ModContextMemorizer } from './ModContextMemorizer';
 import { MonsterType } from './modifiers/monsterTyping/MonsterType';
-import { TranslationManager } from './translation/TranslationManager';
-import { languages } from './translation/languages'
+import { MonsterTypeMappingManager } from './modifiers/monsterTyping/MonsterTypeMappingManager';
 import { MonsterTypeOverview } from './components/MonsterTypeOverview'
 import { TinyIconsCompatibility } from './compatibility/TinyIconsCompatibility';
+import { TranslationManager } from './translation/TranslationManager';
 
 // Data
 // Game data for registration
@@ -19,8 +18,6 @@ import ModTestData from '../data/test-data.json'
 import '../assets/Logo.png'
 import '../assets/Death_Mark.png'
 import '../assets/Invoke_Death.png'
-import { MonsterTypeDefinition } from './modifiers/monsterTyping/MonsterTypeDefinition';
-import { ModContextMemorizer } from './ModContextMemorizer';
 // #endregion
 
 export async function setup(ctx: Modding.ModContext) {
@@ -49,12 +46,8 @@ export async function setup(ctx: Modding.ModContext) {
 function initApiEndpoints(ctx: Modding.ModContext) {
     ctx.api({
         getTypes: () => MonsterTypeMappingManager.getTypes(),
-        registerTypeIfNotExist: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[]) => MonsterTypeMappingManager.registerTypeIfNotExist(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds),
+        registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[]) => MonsterTypeMappingManager.registerTypeIfNotExist(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds),
         addMonsters: (type: string | MonsterType, monsterIds: string[]) => MonsterTypeMappingManager.addMonsters(type, monsterIds),
-
-        /** The flag is specifically set on the "Enemy",
-         * therefore you might want to call this in places
-         * where you have "only" the monster object itself */
         monsterIsOfType: (monster: Monster, monsterType: string | MonsterType) => MonsterTypeMappingManager.monsterIsOfType(monster, monsterType),
 
         // DEPRACATED

@@ -1,4 +1,3 @@
-import { Constants } from "../Constants";
 import { MonsterTypeDefinition } from "../modifiers/monsterTyping/MonsterTypeDefinition";
 import { MonsterTypeMappingManager } from "../modifiers/monsterTyping/MonsterTypeMappingManager"
 import { TranslationManager } from "../translation/TranslationManager";

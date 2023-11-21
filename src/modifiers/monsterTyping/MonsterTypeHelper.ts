@@ -6,7 +6,7 @@ import { MonsterTypeModifierType } from './MonsterTypeModifierType'
 
 export class MonsterTypeHelper {
     /**
-     * TODO: Explain
+     * TODO: creates the name of the property saved on spawn, to enable bool-checks rather than array checks
      * @param typeSingularName
      * @returns
      */
@@ -15,7 +15,9 @@ export class MonsterTypeHelper {
     }
 
     /**
-     * TODO: Explain
+     * Creates an object of all modifiers added for the given type,
+     * with the names dynamically created based on the name of the type
+     * @param typeSingularName
      * @param typePluralName
      * @returns
      */
@@ -41,7 +43,7 @@ export class MonsterTypeHelper {
     }
 
     /**
-     *
+     * Creates the modifier data object, which is used to actually register a modifier to the game
      * @param modifierType
      * @param modifierName
      * @returns
@@ -88,7 +90,8 @@ export class MonsterTypeHelper {
     }
 
     /**
-     * TODO: Explain
+     * For the given entity, retrieves the overall bonus for the given type/group of modifier.
+     * Expects that the check for an ongoing fight has already been done (regarding accessing info about the target for certain modifiers)
      * @param entity
      * @param modifierGroup
      * @returns

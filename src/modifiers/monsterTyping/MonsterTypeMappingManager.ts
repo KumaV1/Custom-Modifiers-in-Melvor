@@ -1,10 +1,10 @@
-import { ModContextMemorizer } from '../../ModContextMemorizer';
-import { TinyIconsCompatibility } from '../../compatibility/TinyIconsCompatibility';
-import { TranslationManager } from '../../translation/TranslationManager';
 import { Constants as ModifierConstants } from '../Constants'
 import { CustomModifiersManager } from '../CustomModifiersManager';
+import { ModContextMemorizer } from '../../ModContextMemorizer';
 import { MonsterType } from './MonsterType'
 import { MonsterTypeDefinition } from './MonsterTypeDefinition';
+import { TinyIconsCompatibility } from '../../compatibility/TinyIconsCompatibility';
+import { TranslationManager } from '../../translation/TranslationManager';
 
 /**
  * Takes care of holding which types are allocated to which monsters,
@@ -14,7 +14,7 @@ import { MonsterTypeDefinition } from './MonsterTypeDefinition';
  * so we don't have to worry about which expansions were actually purchased
  */
 export class MonsterTypeMappingManager {
-	/** TODO: Some explanation */
+	/** The source of all type definitions */
 	private static _types: { [key: string]: MonsterTypeDefinition } = {	};
 
 	public static initNativeMonsterTypes() {
@@ -102,7 +102,8 @@ export class MonsterTypeMappingManager {
 	}
 
 	/**
-	 * TODO: Explain
+	 * Registers the given type, if a type with the same name doesn't already exist.
+	 * If a type already exists, the monsters will simply be added to the already existing definition
 	 * @param typeNameSingular
 	 * @param typeNamePlural
 	 * @param iconResourceUrl
@@ -110,11 +111,14 @@ export class MonsterTypeMappingManager {
 	 * @returns
 	 */
 	public static registerTypeIfNotExist(typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[]) {
-		// If the type already exists, also see to potentially adding additional monsters
+		// If the type already exists, see to potentially adding additional monsters
 		if (this._types[typeNameSingular]) {
 			MonsterTypeMappingManager.addMonsters(typeNameSingular, monsterIds);
 			return;
-		} else {
+		}
+
+		// Otherwise, do all the stuff necessary to register a new type
+		else {
 			// Create definition
 			const typeDefinition = new MonsterTypeDefinition(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds);
 			this._types[typeNameSingular] = typeDefinition;
@@ -133,7 +137,7 @@ export class MonsterTypeMappingManager {
 	}
 
 	/**
-	 *
+	 * Defines the given monster to be of the given type
 	 * @param type - singular name of type
 	 * @param monsterId - full id, including namespace
 	 */
@@ -152,7 +156,7 @@ export class MonsterTypeMappingManager {
 	}
 
 	/**
-	 *
+	 * Defines the given monsters to be of the given type
 	 * @param type
 	 * @param monsterIds
 	 */
@@ -167,7 +171,7 @@ export class MonsterTypeMappingManager {
 	}
 
 	/**
-	 * TODO: Explain
+	 * Get the whole type definition for the given type, if it is registered
 	 * @param type
 	 */
 	public static getType(type: string | MonsterType): MonsterTypeDefinition | undefined {
@@ -178,7 +182,7 @@ export class MonsterTypeMappingManager {
 	}
 
 	/**
-	 * TODO: Explain
+	 * Get type definitions of all registered type
 	 * @returns
 	 */
 	public static getTypes() {
@@ -186,7 +190,7 @@ export class MonsterTypeMappingManager {
 	}
 
 	/**
-	 * TODO: Explain
+	 * Get type definitions of all registered type
 	 * @returns
 	 */
 	public static getTypesAsArray() {
@@ -214,6 +218,7 @@ export class MonsterTypeMappingManager {
 	/**
 	 * Add monster to the list of humans
 	 * @param monsterIds
+	 * @deprecated - due to dynamic type definition, "addMonster()" or "addMonsters()" should be used instead
 	 */
 	public static addHumans(monsterIds: string[]): void {
 		if (!monsterIds) {
@@ -228,6 +233,7 @@ export class MonsterTypeMappingManager {
 	/**
 	 * Return the current list of humans
 	 * @returns
+	 * @deprecated - due to dynamic type definition, "getTypes()" should be used instead
 	 */
 	public static getHumans() {
 		return MonsterTypeMappingManager.getTypes()["Human"].monsters;
@@ -236,6 +242,7 @@ export class MonsterTypeMappingManager {
 	/**
 	 * Add monster to the list of dragons
 	 * @param monsterIds
+	 * @deprecated - due to dynamic type definition, "addMonster()" or "addMonsters()" should be used instead
 	 */
 	public static addDragons(monsterIds: string[]): void {
 		if (!monsterIds) {
@@ -250,6 +257,7 @@ export class MonsterTypeMappingManager {
 	/**
 	 * Return the current list of dragons
 	 * @returns
+	 * @deprecated - due to dynamic type definition, "getTypes()" should be used instead
 	 */
 	public static getDragons() {
 		return MonsterTypeMappingManager.getTypes()["Dragon"].monsters;
@@ -258,6 +266,7 @@ export class MonsterTypeMappingManager {
 	/**
 	 * Add monster to the list of undeads
 	 * @param monsterIds
+	 * @deprecated - due to dynamic type definition, "addMonster()" or "addMonsters()" should be used instead
 	 */
 	public static addUndeads(monsterIds: string[]): void {
 		if (!monsterIds) {
@@ -272,6 +281,7 @@ export class MonsterTypeMappingManager {
 	/**
 	 * Return the current list of undead
 	 * @returns
+	 * @deprecated - due to dynamic type definition, "getTypes()" should be used instead
 	 */
 	public static getUndead() {
 		return MonsterTypeMappingManager.getTypes()["Undead"].monsters;

@@ -14,8 +14,6 @@ export class MonsterTypeDefinition {
 
     /** Used for effects and tiny icon support | Should generally allow both a full url, or an "assets/" path */
     public iconResourceUrl: string
-    /** Tiny icon support (as of now, only call to "context.getResourceUrl(url)" is supported */
-    //public tinyIconConfig: TinyIconConfiguration | undefined
 
     /** Dynamically built */
     public isTypePropertyName: string

@@ -1,4 +1,3 @@
-import { Constants as ModifierConstants } from '../modifiers/Constants'
 import { MonsterTypeDefinition } from '../modifiers/monsterTyping/MonsterTypeDefinition';
 import { MonsterTypeMappingManager } from '../modifiers/monsterTyping/MonsterTypeMappingManager';
 
