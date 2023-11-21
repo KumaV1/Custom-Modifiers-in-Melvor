@@ -1,6 +1,7 @@
 import { Constants } from "../Constants";
 import { MonsterTypeDefinition } from "../modifiers/monsterTyping/MonsterTypeDefinition";
 import { MonsterTypeMappingManager } from "../modifiers/monsterTyping/MonsterTypeMappingManager"
+import { TranslationManager } from "../translation/TranslationManager";
 
 interface MonsterTypeOverviewMonsterType {
     name: string,
@@ -30,11 +31,10 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
         });
 
         // Try to translate type name
-        let name = type.pluralName;
-        const translation = loadedLangJson[`${Constants.MOD_NAMESPACE}:Monster_Type_Plural_${type.singularName}`];
-        if (translation !== undefined && translation !== '') {
-            name = translation;
-        }
+        const name = TranslationManager.getTranslationOrFallback(
+            `MONSTER_TYPE_PLURAL_${type.singularName}`,
+            type.pluralName
+        );
 
         // Register
         const obj: MonsterTypeOverviewMonsterType = {

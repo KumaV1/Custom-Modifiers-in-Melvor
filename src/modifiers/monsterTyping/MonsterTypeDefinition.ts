@@ -1,6 +1,5 @@
 import { MonsterTypeHelper } from './MonsterTypeHelper';
 import { MonsterTypeModifierPropertyNames } from './MonsterTypeModifierPropertyNames'
-import { TinyIconConfiguration } from './TinyIconConfiguration';
 
 export class MonsterTypeDefinition {
     /** Monster collection */
@@ -13,8 +12,10 @@ export class MonsterTypeDefinition {
     public singularName: string
     public pluralName: string
 
+    /** Used for effects and tiny icon support | Should generally allow both a full url, or an "assets/" path */
+    public iconResourceUrl: string
     /** Tiny icon support (as of now, only call to "context.getResourceUrl(url)" is supported */
-    public tinyIconConfig: TinyIconConfiguration | undefined
+    //public tinyIconConfig: TinyIconConfiguration | undefined
 
     /** Dynamically built */
     public isTypePropertyName: string
@@ -25,16 +26,14 @@ export class MonsterTypeDefinition {
      * Create a new instance of a monster type definition
      * @param singularName - the main name for the type
      * @param pluralName - the plural variation, used for things like modifier names
+     * @param iconResourceUrl - Url to an icon, that will be used for various things, such as effects and tiny icon mod support
      * @param monsters - optionally already provide some monsters; duplicates are NOT filtered out
-     * @param tinyIconPrimaryTagName - if provided, the name of the tag to use with the "Tiny Icons" mod
-     * @param tinyIconTagUrl - if provided (should always be provided if tag name is provided), the url to the icon to use
      */
-    constructor(singularName: string, pluralName: string, monsters?: string[], tinyIconConfig?: TinyIconConfiguration) {
+    constructor(singularName: string, pluralName: string, iconResourceUrl: string, monsters?: string[]) {
         this.singularName = singularName;
         this.pluralName = pluralName;
+        this.iconResourceUrl = iconResourceUrl;
         this._monsters = monsters ??= [];
-
-        this.tinyIconConfig = tinyIconConfig;
 
         this.isTypePropertyName = MonsterTypeHelper.createIsTypePropertyName(singularName);
         this.modifierPropertyNames = MonsterTypeHelper.createModifierPropertyNames(singularName, pluralName);

@@ -1,7 +1,9 @@
 import { Constants as ModifierConstants } from '../modifiers/Constants'
+import { MonsterTypeDefinition } from '../modifiers/monsterTyping/MonsterTypeDefinition';
 import { MonsterTypeMappingManager } from '../modifiers/monsterTyping/MonsterTypeMappingManager';
 
 export class TinyIconsCompatibility {
+    /** Non-dynamic modifiers */
     private tinyIconCustomModifierTags = {
         increasedMaxHitPercentToCombatAreaMonsters: ['combat', 'ti_combat_up'],
         decreasedMaxHitPercentToCombatAreaMonsters: ['combat', 'ti_combat_dn'],
@@ -106,7 +108,8 @@ export class TinyIconsCompatibility {
 
     constructor(private readonly context: Modding.ModContext) { }
 
-    public patch() {
+    /** Register non-dynamic custom modifiers */
+    public register(): void {
         this.context.onModsLoaded(() => {
             if (!this.isLoaded()) {
                 return;
@@ -117,7 +120,9 @@ export class TinyIconsCompatibility {
                 return;
             }
 
-            // Build up tag sources
+            // TODO: Split into two methods (native and registering monster types)
+
+            // Build up non-dynamic tag sources
             const cmimTagSources: Record<string, string> = {
                 cmim_death_mark: this.context.getResourceUrl('assets/customModifiersInMelvor/Invoke_Death.png'),
                 //cmim_human: tinyIcons.getIconResourcePath('skills', 'thieving', 'man'),
@@ -125,54 +130,76 @@ export class TinyIconsCompatibility {
                 //cmim_undead: this.context.getResourceUrl(ModifierConstants.UNDEAD_MODIFIER_TINY_ICON_URL)
             };
 
-            const types = MonsterTypeMappingManager.getTypesAsArray();
-            for (var i = 0; i < types.length; i++) {
-                const type = types[i];
-                if (type.tinyIconConfig && type.tinyIconConfig.primaryTagName && type.tinyIconConfig.resourceUrl) {
-                    // Add dynamic tag source for monster type
-                    cmimTagSources[type.tinyIconConfig.primaryTagName] = this.context.getResourceUrl(type.tinyIconConfig.resourceUrl);
-
-                    // Also add dynamic modifier entries based on tag
-                    // @ts-ignore
-                    this.tinyIconCustomModifierTags[`${type.modifierPropertyNames.traitApplied}`] = [`${type.tinyIconConfig.primaryTagName}`, 'combat'];
-                    // @ts-ignore
-                    this.tinyIconCustomModifierTags[`${type.modifierPropertyNames.increasedDamage}`] = [`${type.tinyIconConfig.primaryTagName}`, 'combat'];
-                    // @ts-ignore
-                    this.tinyIconCustomModifierTags[`${type.modifierPropertyNames.decreasedDamage}`] = [`${type.tinyIconConfig.primaryTagName}`, 'combat'];
-                    // @ts-ignore
-                    this.tinyIconCustomModifierTags[`${type.modifierPropertyNames.increasedMaxHitPercent}`] = [`${type.tinyIconConfig.primaryTagName}`, 'ti_combat_up'];
-                    // @ts-ignore
-                    this.tinyIconCustomModifierTags[`${type.modifierPropertyNames.decreasedMaxHitPercent}`] = [`${type.tinyIconConfig.primaryTagName}`, 'ti_combat_dn'];
-                    // @ts-ignore
-                    this.tinyIconCustomModifierTags[`${type.modifierPropertyNames.increasedMaxHitFlat}`] = [`${type.tinyIconConfig.primaryTagName}`, 'ti_combat_up'];
-                    // @ts-ignore
-                    this.tinyIconCustomModifierTags[`${type.modifierPropertyNames.decreasedMaxHitFlat}`] = [`${type.tinyIconConfig.primaryTagName}`, 'ti_combat_dn'];
-                    // @ts-ignore
-                    this.tinyIconCustomModifierTags[`${type.modifierPropertyNames.increasedMinHitBasedOnMaxHit}`] = [`${type.tinyIconConfig.primaryTagName}`, 'ti_combat_up'];
-                    // @ts-ignore
-                    this.tinyIconCustomModifierTags[`${type.modifierPropertyNames.decreasedMinHitBasedOnMaxHit}`] = [`${type.tinyIconConfig.primaryTagName}`, 'ti_combat_dn'];
-                    // @ts-ignore
-                    this.tinyIconCustomModifierTags[`${type.modifierPropertyNames.increasedFlatMinHit}`] = [`${type.tinyIconConfig.primaryTagName}`, 'ti_combat_up'];
-                    // @ts-ignore
-                    this.tinyIconCustomModifierTags[`${type.modifierPropertyNames.decreasedFlatMinHit}`] = [`${type.tinyIconConfig.primaryTagName}`, 'ti_combat_dn'];
-                    // @ts-ignore
-                    this.tinyIconCustomModifierTags[`${type.modifierPropertyNames.increasedGlobalAccuracy}`] = [`${type.tinyIconConfig.primaryTagName}`, 'ti_combat_up'];
-                    // @ts-ignore
-                    this.tinyIconCustomModifierTags[`${type.modifierPropertyNames.decreasedGlobalAccuracy}`] = [`${type.tinyIconConfig.primaryTagName}`, 'ti_combat_dn'];
-                    // @ts-ignore
-                    this.tinyIconCustomModifierTags[`${type.modifierPropertyNames.increasedDamageReduction}`] = [`${type.tinyIconConfig.primaryTagName}`, 'ti_dr_up'];
-                    // @ts-ignore
-                    this.tinyIconCustomModifierTags[`${type.modifierPropertyNames.decreasedDamageReduction}`] = [`${type.tinyIconConfig.primaryTagName}`, 'ti_dr_dn'];
-
-                }
-            }
-
             tinyIcons.addTagSources(cmimTagSources);
             tinyIcons.addCustomModifiers(this.tinyIconCustomModifierTags);
+
+            const types = MonsterTypeMappingManager.getTypesAsArray();
+            for (var i = 0; i < types.length; i++) {
+                this.registerMonsterType(types[i]);
+            }
         });
     }
 
-    private isLoaded() {
+    /**
+     * TODO: Explain
+     * @param type
+     */
+    public registerMonsterType(type: MonsterTypeDefinition): void {
+        if (!this.isLoaded()) {
+            return;
+        }
+
+        const tinyIcons = mod.api.tinyIcons;
+        if (!tinyIcons) {
+            return;
+        }
+
+        if (type && type.iconResourceUrl) {
+            // Add dynamic tag source for monster type
+            let cmimTagSources: Record<string, string> = {};
+            const tagName = `cmim_${type.singularName}`;
+            cmimTagSources[tagName] = this.context.getResourceUrl(type.iconResourceUrl);
+
+            let modifiers: Record<string, string> = {};
+
+            // Also add dynamic modifier entries based on tag
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.traitApplied}`] = [`${tagName}`, 'combat'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedDamage}`] = [`${tagName}`, 'combat'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedDamage}`] = [`${tagName}`, 'combat'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedMaxHitPercent}`] = [`${tagName}`, 'ti_combat_up'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedMaxHitPercent}`] = [`${tagName}`, 'ti_combat_dn'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedMaxHitFlat}`] = [`${tagName}`, 'ti_combat_up'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedMaxHitFlat}`] = [`${tagName}`, 'ti_combat_dn'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedMinHitBasedOnMaxHit}`] = [`${tagName}`, 'ti_combat_up'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedMinHitBasedOnMaxHit}`] = [`${tagName}`, 'ti_combat_dn'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedFlatMinHit}`] = [`${tagName}`, 'ti_combat_up'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedFlatMinHit}`] = [`${tagName}`, 'ti_combat_dn'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedGlobalAccuracy}`] = [`${tagName}`, 'ti_combat_up'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedGlobalAccuracy}`] = [`${tagName}`, 'ti_combat_dn'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedDamageReduction}`] = [`${tagName}`, 'ti_dr_up'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedDamageReduction}`] = [`${tagName}`, 'ti_dr_dn'];
+
+            tinyIcons.addTagSources(cmimTagSources);
+            tinyIcons.addCustomModifiers(modifiers);
+        }
+    }
+
+    private isLoaded(): Boolean {
         return mod.manager.getLoadedModList().includes('Tiny Icons');
     }
 }

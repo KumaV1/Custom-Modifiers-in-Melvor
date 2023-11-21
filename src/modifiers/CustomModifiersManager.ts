@@ -5,7 +5,7 @@ import { MonsterTypeMappingManager } from './monsterTyping/MonsterTypeMappingMan
 import { CustomModifiersCalculator } from './CustomModifiersCalculator'
 import { MonsterTypeHelper } from './monsterTyping/MonsterTypeHelper';
 import { MonsterTypeModifierType } from './monsterTyping/MonsterTypeModifierType';
-import { TinyIconConfiguration } from './monsterTyping/TinyIconConfiguration';
+import { MonsterTypeDefinition } from './monsterTyping/MonsterTypeDefinition';
 
 /**
  * Patches different sections of the code, in order to integrate custom modifiers
@@ -27,7 +27,7 @@ export class CustomModifiersManager {
         this.registerSlayerTaskModifiers();
         this.registerSpellModifiers();
         this.registerTraitApplicationModifiers();
-        this.registerMonsterTypeModifiers();
+        //this.registerNativeMonsterTypeModifiers();
         this.registerBossModifiers();
     }
 
@@ -51,6 +51,26 @@ export class CustomModifiersManager {
         this.patchDamageReductionCalculations();
     }
 
+    /**
+     * Registers modifiers for the given type
+     * @param type
+     */
+    public registerMonsterType(type: MonsterTypeDefinition | undefined): void {
+        if (!type) {
+            return;
+        }
+
+        Object.entries(type.modifierPropertyNames).forEach(([key, value]) => {
+            //console.log(`Processing modifierProperty: ${key} | ${value}`);
+
+            // @ts-ignore We know the keys (property names) match the enum expected as parameter
+            const obj = MonsterTypeHelper.createModifierDataObject(key, value);
+            //console.log(obj);
+            // @ts-ignore implicit 'any' type error
+            // we know though that it is an object to which we want to add a property
+            modifierData[value] = obj;
+        });
+    }
 
     // #region Modifier Registration
 
@@ -866,93 +886,86 @@ export class CustomModifiersManager {
         };
     }
 
-    private registerMonsterTypeModifiers() {
-        // #region add types
-        MonsterTypeMappingManager.registerTypeIfNotExist(MonsterType.Human, "Humans", ["melvorD:BlackKnight",
-            "melvorD:ConfusedPirate",
-            "melvorD:FrozenArcher",
-            "melvorD:Pirate",
-            "melvorD:FirstMate",
-            "melvorD:JuniorFarmer",
-            "melvorD:AdultFarmer",
-            "melvorD:MasterFarmer",
-            "melvorD:Wizard",
-            "melvorD:SteelKnight",
-            "melvorD:MithrilKnight",
-            "melvorD:AdamantKnight",
-            "melvorD:RuneKnight",
-            "melvorD:BanditTrainee",
-            "melvorD:Bandit",
-            "melvorD:BanditLeader",
-            "melvorD:DarkWizard",
-            "melvorD:MasterWizard",
-            "melvorD:ElderWizard",
-            "melvorF:Druid",
-            "melvorF:Thief",
-            "melvorF:Shaman",
-            "melvorF:Necromancer",
-            "melvorF:Elementalist",
-            "melvorF:Paladin",
-            "melvorF:Priest",
-            "melvorF:WanderingBard",
-            "melvorTotH:DarkKnight",
-            "melvorAoD:BlindWarrior",
-            "melvorAoD:BlindArcher",
-            "melvorAoD:BlindMage",
-            "melvorAoD:SoulTakerWitch"],
-            new TinyIconConfiguration(ModifierConstants.HUMAN_TINY_ICON_TAG_NAME, ModifierConstants.HUMAN_MODIFIER_TINY_ICON_URL));
-        MonsterTypeMappingManager.registerTypeIfNotExist(MonsterType.Dragon, "Dragons", ["melvorD:PratTheProtectorOfSecrets",
-            "melvorD:GreenDragon",
-            "melvorD:BlueDragon",
-            "melvorD:RedDragon",
-            "melvorD:BlackDragon",
-            "melvorF:ElderDragon",
-            "melvorF:ChaoticGreaterDragon",
-            "melvorF:HuntingGreaterDragon",
-            "melvorF:WickedGreaterDragon",
-            "melvorF:MalcsTheLeaderOfDragons",
-            "melvorF:GreaterSkeletalDragon",
-            "melvorTotH:TwinSeaDragonSerpent"],
-            new TinyIconConfiguration(ModifierConstants.DRAGON_TINY_ICON_TAG_NAME, ModifierConstants.DRAGON_MODIFIER_TINY_ICON_URL));
-        MonsterTypeMappingManager.registerTypeIfNotExist(MonsterType.Undead, "Undead", ["melvorD:PirateCaptain",
-            "melvorD:ZombieHand",
-            "melvorD:Zombie",
-            "melvorD:ZombieLeader",
-            "melvorD:Ghost",
-            "melvorD:Skeleton",
-            "melvorF:UndeadWerewolf",
-            "melvorF:CursedLich",
-            "melvorF:GreaterSkeletalDragon",
-            "melvorTotH:Phantom",
-            "melvorTotH:Banshee",
-            "melvorTotH:Spectre",
-            "melvorTotH:CursedSkeletonWarrior",
-            "melvorTotH:Fiozor",
-            "melvorAoD:BlindGhost",
-            "melvorAoD:Lich",
-            "melvorAoD:GhostSailor",
-            "melvorAoD:GhostMercenary",
-            "melvorAoD:CursedPirateCaptain"],
-            new TinyIconConfiguration(ModifierConstants.UNDEAD_TINY_ICON_TAG_NAME, ModifierConstants.UNDEAD_MODIFIER_TINY_ICON_URL));
-        // #endregion
+    //private registerNativeMonsterTypeModifiers() {
+    //    // #region add types
+    //    MonsterTypeMappingManager.registerTypeIfNotExist(MonsterType.Human, "Humans", ["melvorD:BlackKnight",
+    //        "melvorD:ConfusedPirate",
+    //        "melvorD:FrozenArcher",
+    //        "melvorD:Pirate",
+    //        "melvorD:FirstMate",
+    //        "melvorD:JuniorFarmer",
+    //        "melvorD:AdultFarmer",
+    //        "melvorD:MasterFarmer",
+    //        "melvorD:Wizard",
+    //        "melvorD:SteelKnight",
+    //        "melvorD:MithrilKnight",
+    //        "melvorD:AdamantKnight",
+    //        "melvorD:RuneKnight",
+    //        "melvorD:BanditTrainee",
+    //        "melvorD:Bandit",
+    //        "melvorD:BanditLeader",
+    //        "melvorD:DarkWizard",
+    //        "melvorD:MasterWizard",
+    //        "melvorD:ElderWizard",
+    //        "melvorF:Druid",
+    //        "melvorF:Thief",
+    //        "melvorF:Shaman",
+    //        "melvorF:Necromancer",
+    //        "melvorF:Elementalist",
+    //        "melvorF:Paladin",
+    //        "melvorF:Priest",
+    //        "melvorF:WanderingBard",
+    //        "melvorTotH:DarkKnight",
+    //        "melvorAoD:BlindWarrior",
+    //        "melvorAoD:BlindArcher",
+    //        "melvorAoD:BlindMage",
+    //        "melvorAoD:SoulTakerWitch"],
+    //        new TinyIconConfiguration(ModifierConstants.HUMAN_TINY_ICON_TAG_NAME, ModifierConstants.HUMAN_MODIFIER_TINY_ICON_URL));
+    //    MonsterTypeMappingManager.registerTypeIfNotExist(MonsterType.Dragon, "Dragons", ["melvorD:PratTheProtectorOfSecrets",
+    //        "melvorD:GreenDragon",
+    //        "melvorD:BlueDragon",
+    //        "melvorD:RedDragon",
+    //        "melvorD:BlackDragon",
+    //        "melvorF:ElderDragon",
+    //        "melvorF:ChaoticGreaterDragon",
+    //        "melvorF:HuntingGreaterDragon",
+    //        "melvorF:WickedGreaterDragon",
+    //        "melvorF:MalcsTheLeaderOfDragons",
+    //        "melvorF:GreaterSkeletalDragon",
+    //        "melvorTotH:TwinSeaDragonSerpent"],
+    //        new TinyIconConfiguration(ModifierConstants.DRAGON_TINY_ICON_TAG_NAME, ModifierConstants.DRAGON_MODIFIER_TINY_ICON_URL));
+    //    MonsterTypeMappingManager.registerTypeIfNotExist(MonsterType.Undead, "Undead", ["melvorD:PirateCaptain",
+    //        "melvorD:ZombieHand",
+    //        "melvorD:Zombie",
+    //        "melvorD:ZombieLeader",
+    //        "melvorD:Ghost",
+    //        "melvorD:Skeleton",
+    //        "melvorF:UndeadWerewolf",
+    //        "melvorF:CursedLich",
+    //        "melvorF:GreaterSkeletalDragon",
+    //        "melvorTotH:Phantom",
+    //        "melvorTotH:Banshee",
+    //        "melvorTotH:Spectre",
+    //        "melvorTotH:CursedSkeletonWarrior",
+    //        "melvorTotH:Fiozor",
+    //        "melvorAoD:BlindGhost",
+    //        "melvorAoD:Lich",
+    //        "melvorAoD:GhostSailor",
+    //        "melvorAoD:GhostMercenary",
+    //        "melvorAoD:CursedPirateCaptain"],
+    //        new TinyIconConfiguration(ModifierConstants.UNDEAD_TINY_ICON_TAG_NAME, ModifierConstants.UNDEAD_MODIFIER_TINY_ICON_URL));
+    //    // #endregion
 
-        const types = MonsterTypeMappingManager.getTypes();
-        //console.log(`Registering modifiers for following type definitions: ${types}`)
+    //    const types = MonsterTypeMappingManager.getTypes();
+    //    //console.log(`Registering modifiers for following type definitions: ${types}`)
 
-        Object.entries(types).forEach(([key, value]) => {
-            console.log(`Processing property ${key}`);
-            Object.entries(value.modifierPropertyNames).forEach(([key, value]) => {
-                //console.log(`Processing modifierProperty: ${key} | ${value}`);
-
-                // @ts-ignore We know the keys (property names) match the enum expected as parameter
-                const obj = MonsterTypeHelper.createModifierDataObject(key, value);
-                //console.log(obj);
-                // @ts-ignore implicit 'any' type error
-                // we know though that it is an object to which we want to add a property
-                modifierData[value] = obj;
-            });
-        });
-    }
+    //    // Get enum entries, as this method specifically registers the native types
+    //    //and should ensure no duplicate addition of entries added by other mods
+    //    const values = Object.values(MonsterType);
+    //    values.forEach((value) => {
+    //        this.registerMonsterType(MonsterTypeMappingManager.getType(value));
+    //    })
+    //}
 
     /**
      *

@@ -20,6 +20,7 @@ import '../assets/Logo.png'
 import '../assets/Death_Mark.png'
 import '../assets/Invoke_Death.png'
 import { MonsterTypeDefinition } from './modifiers/monsterTyping/MonsterTypeDefinition';
+import { ModContextMemorizer } from './ModContextMemorizer';
 // #endregion
 
 export async function setup(ctx: Modding.ModContext) {
@@ -29,11 +30,15 @@ export async function setup(ctx: Modding.ModContext) {
     initTranslation(ctx);
     initOverviewContainer(ctx);
     initModCompatibility(ctx);
+    initDynamicMonsterTypes(ctx);
 
     // Register our GameData
     await ctx.gameData.addPackage(ModData);
     // @ts-ignore
     await ctx.gameData.addPackage(ModTestData);
+
+    // Memorize context, to make it easily accessable on mod api calls by other mods
+    ModContextMemorizer.memorizeContext(ctx);
 }
 
 /**
@@ -43,21 +48,22 @@ export async function setup(ctx: Modding.ModContext) {
  */
 function initApiEndpoints(ctx: Modding.ModContext) {
     ctx.api({
-        // Add types to your own monsters
-        addHumans: (monsterIds: string[]) => MonsterTypeMappingManager.addHumans(monsterIds),
-        addDragons: (monsterIds: string[]) => MonsterTypeMappingManager.addDragons(monsterIds),
-        addUndeads: (monsterIds: string[]) => MonsterTypeMappingManager.addUndeads(monsterIds),
-
-        // Get current typing list, might be handy for debugging, although there is the type overviewe now
-        getHumans: () => MonsterTypeMappingManager.getHumans(),
-        getDragons: () => MonsterTypeMappingManager.getDragons(),
-        getUndead: () => MonsterTypeMappingManager.getUndead(),
         getTypes: () => MonsterTypeMappingManager.getTypes(),
+        registerTypeIfNotExist: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[]) => MonsterTypeMappingManager.registerTypeIfNotExist(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds),
+        addMonsters: (type: string | MonsterType, monsterIds: string[]) => MonsterTypeMappingManager.addMonsters(type, monsterIds),
 
         /** The flag is specifically set on the "Enemy",
          * therefore you might want to call this in places
          * where you have "only" the monster object itself */
-        monsterIsOfType: (monster: Monster, monsterType: MonsterType) => MonsterTypeMappingManager.monsterIsOfType(monster, monsterType),
+        monsterIsOfType: (monster: Monster, monsterType: string | MonsterType) => MonsterTypeMappingManager.monsterIsOfType(monster, monsterType),
+
+        // DEPRACATED
+        getHumans: () => MonsterTypeMappingManager.getHumans(),
+        getDragons: () => MonsterTypeMappingManager.getDragons(),
+        getUndead: () => MonsterTypeMappingManager.getUndead(),
+        addHumans: (monsterIds: string[]) => MonsterTypeMappingManager.addHumans(monsterIds),
+        addDragons: (monsterIds: string[]) => MonsterTypeMappingManager.addDragons(monsterIds),
+        addUndeads: (monsterIds: string[]) => MonsterTypeMappingManager.addUndeads(monsterIds),
         monsterIsHuman: (monster: Monster) => MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Human),
         monsterIsDragon: (monster: Monster) => MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Dragon),
         monsterIsUndead: (monster: Monster) => MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Undead)
@@ -111,5 +117,13 @@ function initOverviewContainer(ctx: Modding.ModContext) {
  */
 function initModCompatibility(ctx: Modding.ModContext) {
     const tinyIconsCompatibility = new TinyIconsCompatibility(ctx);
-    tinyIconsCompatibility.patch();
+    tinyIconsCompatibility.register();
+}
+
+/**
+ * Runs some of the previous managers again, this time specifically for the dynamic monster type definitions
+ * @param ctx
+ */
+function initDynamicMonsterTypes(ctx: Modding.ModContext) {
+    MonsterTypeMappingManager.initNativeMonsterTypes();
 }

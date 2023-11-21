@@ -2,12 +2,12 @@
     PAGE_NAME_Monster_Types_Overview: "Monsterarten",
 
     // ### Monster type translation for type overview page
-    Monster_Type_Singular_Human: "Mensch",
-    Monster_Type_Plural_Human: "Menschen",
-    Monster_Type_Singular_Dragon: "Drache",
-    Monster_Type_Plural_Dragon: "Drachen",
-    Monster_Type_Singular_Undead: "Untoter",
-    Monster_Type_Plural_Undead: "Untote",
+    MONSTER_TYPE_SINGULAR_Human: "Mensch",
+    MONSTER_TYPE_PLURAL_Human: "Menschen",
+    MONSTER_TYPE_SINGULAR_Dragon: "Drache",
+    MONSTER_TYPE_PLURAL_Dragon: "Drachen",
+    MONSTER_TYPE_SINGULAR_Undead: "Untoter",
+    MONSTER_TYPE_PLURAL_Undead: "Untote",
 
     // ### Type overview page remarks
     Monster_Type_Overview_Remarks_Prefix: "Bitte beachtet die folgenden Punkte:",
