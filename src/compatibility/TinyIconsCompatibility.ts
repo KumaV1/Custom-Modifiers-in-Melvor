@@ -119,14 +119,9 @@ export class TinyIconsCompatibility {
                 return;
             }
 
-            // TODO: Split into two methods (native and registering monster types)
-
             // Build up non-dynamic tag sources
             const cmimTagSources: Record<string, string> = {
                 cmim_death_mark: this.context.getResourceUrl('assets/customModifiersInMelvor/Invoke_Death.png'),
-                //cmim_human: tinyIcons.getIconResourcePath('skills', 'thieving', 'man'),
-                //cmim_dragon: this.context.getResourceUrl(ModifierConstants.DRAGON_MODIFIER_TINY_ICON_URL),
-                //cmim_undead: this.context.getResourceUrl(ModifierConstants.UNDEAD_MODIFIER_TINY_ICON_URL)
             };
 
             tinyIcons.addTagSources(cmimTagSources);
@@ -140,7 +135,7 @@ export class TinyIconsCompatibility {
     }
 
     /**
-     * TODO: Explain
+     * Registers primary icons for modifiers corresponding to the given type
      * @param type
      */
     public registerMonsterType(type: MonsterTypeDefinition): void {

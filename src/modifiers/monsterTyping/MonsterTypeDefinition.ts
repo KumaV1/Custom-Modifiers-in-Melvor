@@ -12,13 +12,12 @@ export class MonsterTypeDefinition {
     public singularName: string
     public pluralName: string
 
-    /** Used for effects and tiny icon support | Should generally allow both a full url, or an "assets/" path */
+    /** Used for effects and tiny icon support | As of now only supports full url */
     public iconResourceUrl: string
 
     /** Dynamically built */
     public isTypePropertyName: string
     public modifierPropertyNames: MonsterTypeModifierPropertyNames
-
 
     /**
      * Create a new instance of a monster type definition

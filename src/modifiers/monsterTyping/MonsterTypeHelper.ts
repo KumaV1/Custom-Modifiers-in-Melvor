@@ -1,4 +1,3 @@
-import { MonsterType } from './MonsterType';
 import { MonsterTypeMappingManager } from './MonsterTypeMappingManager';
 import { MonsterTypeModifierGroup } from './MonsterTypeModifierGroup';
 import { MonsterTypeModifierPropertyNames } from './MonsterTypeModifierPropertyNames'
@@ -6,7 +5,7 @@ import { MonsterTypeModifierType } from './MonsterTypeModifierType'
 
 export class MonsterTypeHelper {
     /**
-     * TODO: creates the name of the property saved on spawn, to enable bool-checks rather than array checks
+     * Creates the name of the property saved on spawn, to enable bool-checks rather than array checks
      * @param typeSingularName
      * @returns
      */

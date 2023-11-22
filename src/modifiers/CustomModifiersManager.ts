@@ -62,7 +62,7 @@ export class CustomModifiersManager {
 
             // @ts-ignore We know the keys (property names) match the enum expected as parameter
             const obj = MonsterTypeHelper.createModifierDataObject(key, value);
-            //console.log(obj);
+
             // @ts-ignore implicit 'any' type error
             // we know though that it is an object to which we want to add a property
             modifierData[value] = obj;
@@ -1065,11 +1065,7 @@ export class CustomModifiersManager {
             const types = MonsterTypeMappingManager.getTypesAsArray();
             for (var i = 0; i < types.length; i++) {
                 const type = types[i];
-                // console.log(`setStatsFromMonster | Checking to see whether or not to apply ${type.modifierPropertyNames.traitApplied}: ${isOfType}`);
-                // @ts-ignore - We add is{Type} dynamically
                 Object.entries(type.modifierPropertyNames).forEach(([key, value]) => {
-                    //console.log(`Processing modifierProperty: ${key} | ${value}`);
-
                     // @ts-ignore
                     this[value] ??= 0;
                 });

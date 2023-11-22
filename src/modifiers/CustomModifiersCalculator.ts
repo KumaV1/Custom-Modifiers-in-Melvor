@@ -518,7 +518,7 @@ export class CustomModifiersCalculator {
     // #endregion
 
     /**
-     * TODO: Explain
+     * 
      * @param entity
      * @param modifierGroup
      * @returns
