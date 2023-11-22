@@ -6,7 +6,7 @@ export const pt = {
     Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor does not inherintly include type definitions. Instead, they have been added by the 'Custom Modifiers in Melvor' mod",
     Monster_Type_Overview_Remarks_Displayed_Type_Allocation: "This display shows all defined type allocations. If a monster isn't displayed in a section, then they are not typed as such",
     Monster_Type_Overview_Remarks_Type_Allocation_Inaccuracy: "That being said, type definitions may be inaccurate. Please feel free to contact the 'Custom Modifiers in Melvor' mod creator, if you think a monster isn't typed correctly",
-    Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "For any monsters added through other mods, said mods have to set type definitions themselves for those monsters. If a mod doesn't have this mod as dependency, it generally means that none of their monsters are affected by this type definition",
+    Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "For any monsters added through other mods, said mods have to set type definitions themselves for those monsters",
 
     // ### Modifiers
     // #### Spawn (TODO: Possibly make equivalent increased/decreased chance to self-apply?)
@@ -94,10 +94,20 @@ export const pt = {
 
     // #### Type
     // ##### Generic; these will be used to dynamically build the ones further down below, as those also have to be dynamically built
-    MONSTER_TYPE_SINGULAR_Human: "Human",
-    MONSTER_TYPE_PLURAL_Human: "Humans",
+    MONSTER_TYPE_SINGULAR_Animal: "Animal",
+    MONSTER_TYPE_PLURAL_Animal: "Animals",
+    MONSTER_TYPE_SINGULAR_Demon: "Demon",
+    MONSTER_TYPE_PLURAL_Demon: "Demons",
     MONSTER_TYPE_SINGULAR_Dragon: "Dragon",
     MONSTER_TYPE_PLURAL_Dragon: "Dragons",
+    MONSTER_TYPE_SINGULAR_Elemental: "Elemental",
+    MONSTER_TYPE_PLURAL_Elemental: "Elementals",
+    MONSTER_TYPE_SINGULAR_Human: "Human",
+    MONSTER_TYPE_PLURAL_Human: "Humans",
+    MONSTER_TYPE_SINGULAR_MythicalCreature: "Mythical Creature",
+    MONSTER_TYPE_PLURAL_MythicalCreature: "Mythical Creatures",
+    MONSTER_TYPE_SINGULAR_SeaCreature: "Sea Creature",
+    MONSTER_TYPE_PLURAL_SeaCreature: "Sea Creatures",
     MONSTER_TYPE_SINGULAR_Undead: "Undead",
     MONSTER_TYPE_PLURAL_Undead: "Undead",
 

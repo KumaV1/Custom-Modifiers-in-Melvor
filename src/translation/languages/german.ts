@@ -6,7 +6,7 @@
     Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor hat keine eigene Implementation für Monsterart-Zuweisung. Diese sind stattdessen durch den Mod 'Custom Modifiers in Melvor' hinzugefügt worden",
     Monster_Type_Overview_Remarks_Displayed_Type_Allocation: "Diese Übersicht zeigt alle Monsterarten-Zuweisungen. Wenn ein Monster in einer Sektion nicht auftaucht, dann bedeutet das, dass das Monster diese Monsterart nicht zugewiesen hat",
     Monster_Type_Overview_Remarks_Type_Allocation_Inaccuracy: "Es kann natürlich sein, dass Monsterart-Zuweisungen unakkurat sind. Zögert in dem Fall bitte nicht den Ersteller des Mod 'Custom Modifiers in Melvor' zu kontaktieren und über Fehler zu informieren",
-    Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "Monster, welche durch andere Mods hinzugefügt werden, müssen von besagten Mods selbst mit der entsprechenden Monsterart-Zuweisung ausgestattet werden. Wenn ein Mod den Basis-Mod nicht als Anforderung konfiguriert hat, dann bedeutet das grundsätzlich, dass keines der Monster in irgendeinerweise von dieser Monsterart-Zuweisung beeinflusst sind",
+    Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "Monster, welche durch andere Mods hinzugefügt werden, müssen von besagten Mods selbst mit der entsprechenden Monsterart-Zuweisung ausgestattet werden",
 
     // ### Modifiers
     // #### Spawn modifiers (TODO: Possibly make equivalent increased/decreased chance to self-apply?)
@@ -97,10 +97,20 @@
 
     // #### Type
     // ##### Generic; these will be used to dynamically build the ones further down below, as those also have to be dynamically built
-    MONSTER_TYPE_SINGULAR_Human: "Mensch",
-    MONSTER_TYPE_PLURAL_Human: "Menschen",
+    MONSTER_TYPE_SINGULAR_Animal: "Tier",
+    MONSTER_TYPE_PLURAL_Animal: "Tiere",
+    MONSTER_TYPE_SINGULAR_Demon: "Dämon",
+    MONSTER_TYPE_PLURAL_Demon: "Dämonen",
     MONSTER_TYPE_SINGULAR_Dragon: "Drache",
     MONSTER_TYPE_PLURAL_Dragon: "Drachen",
+    MONSTER_TYPE_SINGULAR_Elemental: "Elementar",
+    MONSTER_TYPE_PLURAL_Elemental: "Elementare",
+    MONSTER_TYPE_SINGULAR_Human: "Mensch",
+    MONSTER_TYPE_PLURAL_Human: "Menschen",
+    MONSTER_TYPE_SINGULAR_MythicalCreature: "Fabelwesen",
+    MONSTER_TYPE_PLURAL_MythicalCreature: "Fabelwesen",
+    MONSTER_TYPE_SINGULAR_SeaCreature: "Meereslebewesen",
+    MONSTER_TYPE_PLURAL_SeaCreature: "Meereslebewesen",
     MONSTER_TYPE_SINGULAR_Undead: "Untoter",
     MONSTER_TYPE_PLURAL_Undead: "Untote",
 

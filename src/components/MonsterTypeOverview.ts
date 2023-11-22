@@ -25,6 +25,7 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
         let matchingMonsters: Monster[] = [];
         monsters.forEach(function (monster) {
             if (MonsterTypeMappingManager.monsterIsOfType(monster, type.singularName)) {
+                //console.log(`monster name: ${monster.name} | _media: ${monster._media} | media: ${monster.media}`);
                 matchingMonsters.push(monster);
             }
         });

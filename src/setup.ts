@@ -46,7 +46,7 @@ export async function setup(ctx: Modding.ModContext) {
 function initApiEndpoints(ctx: Modding.ModContext) {
     ctx.api({
         getTypes: () => MonsterTypeMappingManager.getTypes(),
-        registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[]) => MonsterTypeMappingManager.registerTypeIfNotExist(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds),
+        registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[]) => MonsterTypeMappingManager.registerOrUpdateType(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds),
         addMonsters: (type: string | MonsterType, monsterIds: string[]) => MonsterTypeMappingManager.addMonsters(type, monsterIds),
         monsterIsOfType: (monster: Monster, monsterType: string | MonsterType) => MonsterTypeMappingManager.monsterIsOfType(monster, monsterType),
 

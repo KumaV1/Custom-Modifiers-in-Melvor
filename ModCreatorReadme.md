@@ -194,3 +194,16 @@ getTypes();
 
 // Purpose: Returns an object containing all loaded type definitions. Helpful for checking whether your data has been registered successfully
 ```
+
+## Translation of new monster type
+When adding a new monster type yourself, 
+it's important that you also include the two following translation keys.
+```js
+// Structure
+MONSTER_TYPE_SINGULAR_Monster type name singular: "Monster type name singular",
+MONSTER_TYPE_PLURAL_Monster type name singular: "Monster type name plural",
+
+// Example
+MONSTER_TYPE_SINGULAR_Human: "Human",
+MONSTER_TYPE_PLURAL_Human: "Humans",
+```
