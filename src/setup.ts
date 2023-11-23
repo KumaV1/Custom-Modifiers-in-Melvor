@@ -45,8 +45,10 @@ export async function setup(ctx: Modding.ModContext) {
  */
 function initApiEndpoints(ctx: Modding.ModContext) {
     ctx.api({
-        getTypes: () => MonsterTypeMappingManager.getTypes(),
-        registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[]) => MonsterTypeMappingManager.registerOrUpdateType(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds),
+        getActiveTypes: () => MonsterTypeMappingManager.getActiveTypes(),
+        getInactiveTypes: () => MonsterTypeMappingManager.getInactiveTypes(),
+        forceBaseModTypeActive: (type: MonsterType) => MonsterTypeMappingManager.forceBaseModTypeActive(type),
+        registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean) => MonsterTypeMappingManager.registerOrUpdateType(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds, active),
         addMonsters: (type: string | MonsterType, monsterIds: string[]) => MonsterTypeMappingManager.addMonsters(type, monsterIds),
         monsterIsOfType: (monster: Monster, monsterType: string | MonsterType) => MonsterTypeMappingManager.monsterIsOfType(monster, monsterType),
 

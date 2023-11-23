@@ -127,7 +127,7 @@ export class TinyIconsCompatibility {
             tinyIcons.addTagSources(cmimTagSources);
             tinyIcons.addCustomModifiers(this.tinyIconCustomModifierTags);
 
-            const types = MonsterTypeMappingManager.getTypesAsArray();
+            const types = MonsterTypeMappingManager.getActiveTypesAsArray();
             for (var i = 0; i < types.length; i++) {
                 this.registerMonsterType(types[i]);
             }

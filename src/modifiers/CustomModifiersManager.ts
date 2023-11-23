@@ -24,7 +24,6 @@ export class CustomModifiersManager {
         this.registerDungeonModifiers();
         this.registerSlayerTaskModifiers();
         this.registerSpellModifiers();
-        this.registerTraitApplicationModifiers();
         this.registerBossModifiers();
     }
 
@@ -853,39 +852,6 @@ export class CustomModifiersManager {
     /**
      *
      */
-    private registerTraitApplicationModifiers() {
-        modifierData.humanTraitApplied = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_humanTraitApplied');
-            },
-            description: '',
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.dragonTraitApplied = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_dragonTraitApplied');
-            },
-            description: '',
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.undeadTraitApplied = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_undeadTraitApplied');
-            },
-            description: '',
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-    }
-
-    /**
-     *
-     */
     private registerBossModifiers() {
         modifierData.increasedMaxHitPercentAgainstBosses = {
             get langDescription() {
@@ -1062,7 +1028,7 @@ export class CustomModifiersManager {
             this.decreasedDamageTakenFromFireSpells ??= 0;
 
             // Ensure 0 instead of undefined for type related modifiers as well
-            const types = MonsterTypeMappingManager.getTypesAsArray();
+            const types = MonsterTypeMappingManager.getActiveTypesAsArray();
             for (var i = 0; i < types.length; i++) {
                 const type = types[i];
                 Object.entries(type.modifierPropertyNames).forEach(([key, value]) => {
@@ -1078,12 +1044,8 @@ export class CustomModifiersManager {
      * Remark: We do not have to patch all properties onto the player, as not setting them will just trigger a "falsey" match, resulting in the same outcome
      */
     private patchMonsterTypeAllocation() {
-        this.context.patch(Player, "initializeForCombat").after(function () {
-            this.isHuman = true; // Well, the player is a human, right?
-        });
-
         this.context.patch(Enemy, "setStatsFromMonster").after(function (returnValue, monster: any): void {
-            const types = MonsterTypeMappingManager.getTypesAsArray();
+            const types = MonsterTypeMappingManager.getActiveTypesAsArray();
             for (var i = 0; i < types.length; i++) {
                 const type = types[i];
                 // console.log(`setStatsFromMonster | Checking to see whether or not to apply ${type.modifierPropertyNames.traitApplied}: ${isOfType}`);

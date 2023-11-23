@@ -44,6 +44,9 @@ You can make use of the endpoint `mod.api.customModifiersInMelvor.getTypes()`, t
 The translation entries then generally follow the pattern `MODIFIER_DATA_Name of Modifier`.
 
 ## Data files
+***IMPORTANT**: Please also have a look at the "API calls" section, as you are gonna require the usage of at least one API-endpoint, 
+if you want to add monster-type based modifiers or effects to your data file(s)!*
+
 The main topic to talk about. Let's say you were to add a modifier of this mod to one of your items.
 If your mod is now loaded without this mod, the mapping/creation of the items and its data will run into an error.
 This, in turn, will effectively delete all of said item the user might have had.
@@ -152,7 +155,36 @@ Just check `initApiEndpoints` in the `setup.ts` file to see exact type definitio
 The previous section should have given you a rough idea about the modifiers you can expect and how to work with them.
 However, what if you want to add additional monster type definitions based on your mod?
 
-For that purpose, this mod provides multiple API endpoints that you can utilize.
+First things first, one important thing to note is the difference between **active** and **inactive** types. 
+Active types are those that at least one mod actually makes use of (e.g. using the `Human` type, because you want to use the `increasedDamageAgainstHumans` modifier),
+whereas inactive types are those that get defined, but actually end up not being used by any of the loaded mods.
+The reason for this difference is to avoid blurting the combat calculations with unnecessary processing.
+
+With that out of the way, this mod provides multiple API endpoints that you can utilize.
+
+```ts
+// Structure
+getActiveTypes()
+getInactiveTypes()
+
+// Example
+getActiveTypes();
+getInactiveTypes();
+
+// Purpose: Primarily meant for debugging purposes, as it returns an object of type definitions info, that may be helpful, if you run into issues
+```
+
+```ts
+// Structure
+forceBaseModTypeActive(type: MonsterType)
+
+// Example
+forceBaseModTypeActive("Dragon");
+
+// Purpose: This mod comes with a list of monster types already completely pre-configured (check "MonsterType.ts"). 
+// If you just want to make sure that one of those pre-configured types is "activated", this endpoint is the way to go.
+// However, if the type is **not** pre-configured by the base-mod, then you will have to use the "registerOrUpdateType"-endpoint instead.
+```
 
 ```ts
 // Structure
@@ -161,7 +193,29 @@ addMonsters(type: string, monsterIds: string[])
 // Example
 addMonsters("Dragon", ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"]);
 
-// Purpose: Add the list of monsters (full id, so including mod namespace) to an already existing type
+// Purpose: Add the list of monsters (full id, so including mod namespace).
+// Whether the type is active or even exists is not relevant with this endpoint.
+// Also, as you are only providing additional allocation definitions, you are NOT responsible for providing any of the other data required for proper type definition. (see "registerOrUpdateType" for more info)
+```
+
+```ts
+// Structure
+/**
+* Registers (or updates) the given type. Do note, that some parameters may be ignored, if another mod has already provided data for the exact same data
+* @param typeNameSingular - the main identifier of the type. Affects modifier name(s)
+* @param typeNamePlural - the english plural variant of the type's name. Affects modifier name(s) 
+* @param iconResourceUrl - a usable full URL to an image that will be used as icon for anything related to this type (e.g. "StackingEffects" or "Tiny Icon Mod Support")
+* @param monsterIds - a list of monster ids. If you are defining a type not covered by the base mod, you should include any Melvor monsters that may fit
+* @param active - whether the type should be set to active - as a mod consuming the api, this is basically always going to be true, but can technically be set to false as well
+* @returns void
+*/
+registerOrUpdateType(typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[])
+
+// Example
+registerOrUpdateType("Dragon", "Dragons", "https://cdn.melvor.net/core/v018/assets/media/monsters/dragon_green.png", ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"]);
+
+// Purpose: The main endpoint, if you want to ensure an active type, for which this base mod does not provide any pre-configuration.
+// If you want to support multi-language, it's also important that you load two language-entries (see "Translation of new monster type")
 ```
 
 ```ts
@@ -174,30 +228,12 @@ monsterIsOfType(monsterObject, "Dragon");
 // Purpose: Check, for a specific monster, whether they are of a certain type
 ```
 
-```ts
-// Structure
-registerOrUpdateType(typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[])
-
-// Example
-registerOrUpdateType("Dragon", "Dragons", "Both full URL and /asset path (should) work", ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"]);
-
-// Purpose: Creating an additional type. Or add the monsters to an existing type definition, if one with the same name already exists.
-// The resource url is used for compatibility with the "Tiny Icons" mod and, in the future, for "Stacking Effects", which will apply the corresponding type trait
-```
-
-```ts
-// Structure
-getTypes()
-
-// Example
-getTypes();
-
-// Purpose: Returns an object containing all loaded type definitions. Helpful for checking whether your data has been registered successfully
-```
-
 ## Translation of new monster type
 When adding a new monster type yourself, 
 it's important that you also include the two following translation keys.
+Though, if you end up forgetting, the logic of the mod will simply display the type names provided during creation, for every language.
+It won't result in an "UNDEFINED TRANSLATION" text appearing.
+
 ```js
 // Structure
 MONSTER_TYPE_SINGULAR_Monster type name singular: "Monster type name singular",

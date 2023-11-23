@@ -93,9 +93,7 @@
         "id": "Test_Passive",
         "name": "Test Passive",
         "modifiers": {
-          "humanTraitApplied": 1,
-          "dragonTraitApplied": 1,
-          "undeadTraitApplied": 1
+
         }
       }
     ],

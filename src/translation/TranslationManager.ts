@@ -52,7 +52,7 @@ export class TranslationManager {
 
         // Run special translation for monster types, where a generic pre-definition was defined in the languages object,
         // which shall now be converted into "modified copies" for each monster type
-        for (const [key, value] of Object.entries<MonsterTypeDefinition>(MonsterTypeMappingManager.getTypes())) {
+        for (const [key, value] of Object.entries<MonsterTypeDefinition>(MonsterTypeMappingManager.getActiveTypes())) {
             this.registerMonsterType(value);
         }
     }

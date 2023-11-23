@@ -103,7 +103,7 @@ export class MonsterTypeHelper {
         //console.log(`getModificationValue | modifierGroup: ${modifierGroup}`);
         let modification = 0;
 
-        const types = MonsterTypeMappingManager.getTypesAsArray();
+        const types = MonsterTypeMappingManager.getActiveTypesAsArray();
         for (var i = 0; i < types.length; i++) {
             const type = types[i];
 

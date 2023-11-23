@@ -4,25 +4,116 @@
             <div class="col-12">
                 <div class="block block-rounded block-content block-content-full">
                     <div class="row no-gutters">
-                        <div class="col-12 text-warning">
+                        <div class="col-12 mb-3 text-warning">
                             <lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Remarks_Prefix"></lang-string>
                             <ul>
                                 <li><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types"></lang-string></li>
                                 <li><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Remarks_Displayed_Type_Allocation"></lang-string></li>
-                                <li><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Remarks_Type_Allocation_Inaccuracy"></lang-string></li>
                                 <li><strong><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation"></lang-string></strong></li>
                             </ul>
                         </div>
-                        <div class="col-12" v-for="type in types">
-                            <h2 class="font-w600 mb-2 text-primary text-center">
-                                {{ type.name }}
-                                <!--<lang-string lang-id="customModifiersInMelvor_MONSTER_TYPE_PLURAL_Human">Humans</lang-string>-->
-                            </h2>
-                            <div class="row">
-                                <div v-for="monster in type.monsters" class="no-bg btn-light pointer-enabled m-1 justify-vertical-center">
-                                    <img class="p-2 combat-enemy-img-sm"
-                                         v-bind:title="monster.name"
-                                         v-bind:src="monster.media">
+                        <div class="col-12 row gutters-tiny mb-3 monster-type-overview-tab-container">
+                            <!-- 3 Tabs, that have a hover effect and onclick event, which changes to the given tab info -->
+                            <!-- Player Trait Tab -->
+                            <div class="col-12 col-sm-4 col-lg4">
+                                <a class="block block-rounded block-link-pop border-top border-combat border-4x pointer-enabled"
+                                   v-on:click="changeTab('playerTraits')">
+                                    <div class="block-content block-content-full">
+                                        <div class="media d-flex align-items-center push mb-0">
+                                            <div class="media-body">
+                                                <h4 class="font-w600 text-muted mb-0">
+                                                    <lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Player_Traits_Tab_Header"></lang-string>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Active Monster types Tab -->
+                            <div class="col-12 col-sm-4 col-lg4">
+                                <a class="block block-rounded block-link-pop border-top border-combat border-4x pointer-enabled"
+                                   v-on:click="changeTab('activeTypes')">
+                                    <div class="block-content block-content-full">
+                                        <div class="media d-flex align-items-center push mb-0">
+                                            <div class="media-body">
+                                                <h4 class="font-w600 text-muted mb-0">
+                                                    <lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Active_Types_Tab_Header"></lang-string>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Inactive Monster types Tab -->
+                            <div class="col-12 col-sm-4 col-lg4">
+                                <a class="block block-rounded block-link-pop border-top border-combat border-4x pointer-enabled"
+                                   v-on:click="changeTab('inactiveTypes')">
+                                    <div class="block-content block-content-full">
+                                        <div class="media d-flex align-items-center push mb-0">
+                                            <div class="media-body">
+                                                <h4 class="font-w600 text-muted mb-0">
+                                                    <lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Inactive_Types_Tab_Header"></lang-string>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Next, three containers of which only one is ever displayed -->
+                        <!-- Player Trait Tab -->
+                        <div id="monster-type-overview__player-traits-container"
+                             class="col-12 d-none">
+                            <div class="mb-3 text-warning"><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Player_Traits_Information"></lang-string></div>
+                            <div v-if="props.traitsOnPlayer.length === 0"><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Player_Traits_No_Entries"></lang-string></div>
+                            <ul v-if="props.traitsOnPlayer.length > 0">
+                                <li v-for="trait in props.traitsOnPlayer">{{ trait.name }} ({{ trait.value }})</li>
+                            </ul>
+                            <!-- Stuff -->
+                        </div>
+                        <!-- Active Monster types Tab -->
+                        <div id="monster-type-overview__active-types-container">
+                            <div class="mb-3 text-warning"><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Active_Types_Information"></lang-string></div>
+                            <div v-if="props.activeTypes.length === 0"><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Active_Types_No_Entries"></lang-string></div>
+                            <div v-if="props.activeTypes.length > 0">
+                                <div class="col-12 mb-3"
+                                     v-for="type in props.activeTypes">
+                                    <h2 class="font-w600 mb-2 text-primary text-center">
+                                        {{ type.name }}
+                                        <!--<lang-string lang-id="customModifiersInMelvor_MONSTER_TYPE_PLURAL_Human">Humans</lang-string>-->
+                                    </h2>
+                                    <div class="row">
+                                        <div v-for="monster in type.monsters" class="no-bg btn-light pointer-enabled m-1 justify-vertical-center">
+                                            <img class="p-2 combat-enemy-img-sm"
+                                                 v-bind:title="monster.name"
+                                                 v-bind:src="monster.media">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Inactive Monster types Tab -->
+                        <div id="monster-type-overview__inactive-types-container"
+                             class="d-none">
+                            <div class="mb-3 text-warning"><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Inactive_Types_Information"></lang-string></div>
+                            <div v-if="props.inactiveTypes.length === 0"><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Inactive_Types_No_Entries"></lang-string></div>
+                            <div v-if="props.inactiveTypes.length > 0">
+                                <div class="col-12 mb-3"
+                                     v-for="type in props.inactiveTypes">
+                                    <!-- Should be moved to a sub-template or something -->
+                                    <h2 class="font-w600 mb-2 text-primary text-center">
+                                        {{ type.name }}
+                                        <!--<lang-string lang-id="customModifiersInMelvor_MONSTER_TYPE_PLURAL_Human">Humans</lang-string>-->
+                                    </h2>
+                                    <div class="row">
+                                        <div v-for="monster in type.monsters" class="no-bg btn-light pointer-enabled m-1 justify-vertical-center">
+                                            <img class="p-2 combat-enemy-img-sm"
+                                                 v-bind:title="monster.name"
+                                                 v-bind:src="monster.media">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

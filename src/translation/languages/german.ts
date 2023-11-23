@@ -1,15 +1,25 @@
 ﻿export const de = {
+    // ### Monster type overview
     PAGE_NAME_Monster_Types_Overview: "Monsterarten",
 
-    // ### Type overview page remarks
     Monster_Type_Overview_Remarks_Prefix: "Bitte beachtet die folgenden Punkte:",
     Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor hat keine eigene Implementation für Monsterart-Zuweisung. Diese sind stattdessen durch den Mod 'Custom Modifiers in Melvor' hinzugefügt worden",
-    Monster_Type_Overview_Remarks_Displayed_Type_Allocation: "Diese Übersicht zeigt alle Monsterarten-Zuweisungen. Wenn ein Monster in einer Sektion nicht auftaucht, dann bedeutet das, dass das Monster diese Monsterart nicht zugewiesen hat",
-    Monster_Type_Overview_Remarks_Type_Allocation_Inaccuracy: "Es kann natürlich sein, dass Monsterart-Zuweisungen unakkurat sind. Zögert in dem Fall bitte nicht den Ersteller des Mod 'Custom Modifiers in Melvor' zu kontaktieren und über Fehler zu informieren",
+    Monster_Type_Overview_Remarks_Displayed_Type_Allocation: "Diese Übersicht zeigt alle Monsterarten-Zuweisungen. Wenn ein Monster in einer Sektion nicht auftaucht, dann bedeutet das, dass das Monster diese Monsterart nicht zugewiesen hat. Es kann natürlich sein, dass Monsterart-Zuweisungen unakkurat sind. Zögert bitte nicht Feedback zu allem zu geben, was eurer Meinung nach angepasst werden sollte",
     Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "Monster, welche durch andere Mods hinzugefügt werden, müssen von besagten Mods selbst mit der entsprechenden Monsterart-Zuweisung ausgestattet werden",
 
+    Monster_Type_Overview_Player_Traits_Tab_Header: "Spieler-Modifikatoren",
+    Monster_Type_Overview_Player_Traits_Information: "Neben der organischen Artenzuweisung, kann eine Art auch durch die Verwendung des jeweiligen Modifikators erzwungen werden - in der Regel durch ausgerüstete Gegenstände oder ggf. Einkäufe im Shop. Diese Übersicht zeigt alle Arten (und den Wert ihres jeweiligen Modifikators) an, welche dem Charakter derzeit beeinflussen. DIESE ANZEIGE IST STATISCH, BASIEREND AUF DEM STAND ALS DER CHARAKTER GELADEN WURDE!",
+    Monster_Type_Overview_Player_Traits_No_Entries: "Der Charakter wird derzeit nicht von Artenzuweisung beeinflusst",
+
+    Monster_Type_Overview_Active_Types_Tab_Header: "Aktive Arten",
+    Monster_Type_Overview_Active_Types_Information: "Aktive Arten sind jene, welche von mindestens einem der geladenen Mods verwendet werden.",
+    Monster_Type_Overview_Active_Types_No_Entries: "Derzeit gibt es keine aktiven Monsterarten",
+
+    Monster_Type_Overview_Inactive_Types_Tab_Header: "Inaktive Arten",
+    Monster_Type_Overview_Inactive_Types_Information: "Inaktive Arten sind jene, welche zwar definiert sind, jedoch von keinem Mod verwendet werden. Sie werden deshalb auch nicht während des Kampfes überprüft, was bedeutet, dass sie auch die Berechnungszeit nicht beeinflussen.",
+    Monster_Type_Overview_Inactive_Types_No_Entries: "Derzeit gibt es keine inaktiven Monsterarten",
+
     // ### Modifiers
-    // #### Spawn modifiers (TODO: Possibly make equivalent increased/decreased chance to self-apply?)
     MODIFIER_DATA_increasedChanceToApplySlowOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass +25% Angriffsintervall für drei Runden auf das Ziel angewendet wird",
     MODIFIER_DATA_decreasedChanceToApplySlowOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass +25% Angriffsintervall für drei Runden auf das Ziel angewendet wird",
     MODIFIER_DATA_increasedChanceToApplyStunOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass das Ziel für eine Runde betäubt wird",

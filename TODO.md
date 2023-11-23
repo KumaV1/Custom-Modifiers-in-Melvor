@@ -1,0 +1,2 @@
+* Possibly pre-add some inactive types, to take off work looking for icons from others
+* Possibly update type definition, best case being a definition to help with api usage, especially if wanting to update a pre-existing monster type

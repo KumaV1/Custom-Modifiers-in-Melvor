@@ -3,13 +3,23 @@ export const ru = {
     PAGE_NAME_Monster_Types_Overview: "Monster types",
 
     Monster_Type_Overview_Remarks_Prefix: "Please be aware of the following points:",
-    Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor does not inherintly include type definitions. Instead, they have been added by the 'Custom Modifiers in Melvor' mod",
-    Monster_Type_Overview_Remarks_Displayed_Type_Allocation: "This display shows all defined type allocations. If a monster isn't displayed in a section, then they are not typed as such",
-    Monster_Type_Overview_Remarks_Type_Allocation_Inaccuracy: "That being said, type definitions may be inaccurate. Please feel free to contact the 'Custom Modifiers in Melvor' mod creator, if you think a monster isn't typed correctly",
+    Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor does not inherintly include type definitions. Instead, the 'Custom Modifiers in Melvor' mod has layed the foundation for mods to define and allocate monster types",
+    Monster_Type_Overview_Remarks_Displayed_Type_Allocation: "This display shows all defined type allocations. If a monster isn't displayed in a section, then they are not typed as such. That being said, type definitions may be inaccurate. Feel free to give feedback on anything you think should be adjusted",
     Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "For any monsters added through other mods, said mods have to set type definitions themselves for those monsters",
 
+    Monster_Type_Overview_Player_Traits_Tab_Header: "Player traits",
+    Monster_Type_Overview_Player_Traits_Information: "Aside from organic type allocation, a type can also be forcefully applied by usage of the respective modifier, usually through equipped items or possibly shop purchase(s). This overview displays all types (and their modifier's value) currently affecting the Character. THIS DISPLAY IS STATIC, BASED ON WHEN THE CHARACTER WAS LOADED!",
+    Monster_Type_Overview_Player_Traits_No_Entries: "The character is not affected by any type allocation modifiers",
+
+    Monster_Type_Overview_Active_Types_Tab_Header: "Active types",
+    Monster_Type_Overview_Active_Types_Information: "Active types are those, which are actually being utilized by at least one of the mods loaded.",
+    Monster_Type_Overview_Active_Types_No_Entries: "There are no active types currently",
+
+    Monster_Type_Overview_Inactive_Types_Tab_Header: "Inactive types",
+    Monster_Type_Overview_Inactive_Types_Information: "Inactive types are those, that have been defined but are not actually utilized by any mod. They are therefore also not actually checked during combat, meaning they do not affect calculation time.",
+    Monster_Type_Overview_Inactive_Types_No_Entries: "There are no inactive types currently",
+
     // ### Modifiers
-    // #### Spawn (TODO: Possibly make equivalent increased/decreased chance to self-apply?)
     MODIFIER_DATA_increasedChanceToApplySlowOnSpawn: "+${value}% chance to apply 25% increased attack interval for three turns to the Target on spawn or revive",
     MODIFIER_DATA_decreasedChanceToApplySlowOnSpawn: "-${value}% chance to apply 25% increased attack interval for three turns to the Target on spawn or revive",
     MODIFIER_DATA_increasedChanceToApplyStunOnSpawn: "+${value}% chance to apply stun for one turn to the Target on spawn or revive",
