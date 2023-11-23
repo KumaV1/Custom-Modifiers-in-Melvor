@@ -26,6 +26,34 @@ export class MonsterTypeMappingManager {
 
     public static initNativeMonsterTypes() {
         MonsterTypeMappingManager.registerOrUpdateType(
+            MonsterType.Animal,
+            "Animals",
+            ModifierConstants.ANIMAL_MODIFIER_ICON_RESOURCE_URL,
+            [
+                "melvorD:Leech",
+                "melvorD:Bat",
+                "melvorD:BigBat",
+                "melvorD:ViciousSerpent",
+                "melvorD:Spider",
+                "melvorD:Seagull",
+                "melvorD:FrozenMammoth",
+                "melvorF:LegaranWurm",
+                "melvorTotH:PolarBear"
+            ],
+            false
+        );
+        MonsterTypeMappingManager.registerOrUpdateType(
+            MonsterType.Demon,
+            "Demons",
+            ModifierConstants.DEMON_MODIFIER_ICON_RESOURCE_URL,
+            [
+                "melvorF:FierceDevil",
+                "melvorTotH:MagicFireDemon",
+                "melvorTotH:GuardianoftheHerald",
+            ],
+            false
+        );
+        MonsterTypeMappingManager.registerOrUpdateType(
             MonsterType.Dragon,
             "Dragons",
             ModifierConstants.DRAGON_MODIFIER_ICON_RESOURCE_URL,
@@ -44,7 +72,22 @@ export class MonsterTypeMappingManager {
                 "melvorF:GreaterSkeletalDragon",
                 "melvorTotH:TwinSeaDragonSerpent"
             ],
-            false);
+            true
+        );
+        MonsterTypeMappingManager.registerOrUpdateType(
+            MonsterType.Elemental,
+            "Elementals",
+            ModifierConstants.ELEMENTAL_MODIFIER_ICON_RESOURCE_URL,
+            [
+                "MelvorD:FireSpirit",
+                "melvorF:WaterGuard",
+                "melvorF:WaterGolem",
+                "melvorF:Glacia",
+                "melvorTotH:InfernalGolem",
+                "melvorTotH:LightningSpirit"
+            ],
+            false
+        );
         MonsterTypeMappingManager.registerOrUpdateType(
             MonsterType.Human,
             "Humans",
@@ -83,7 +126,37 @@ export class MonsterTypeMappingManager {
                 "melvorAoD:BlindMage",
                 "melvorAoD:SoulTakerWitch"
             ],
-            false);
+            true
+        );
+        MonsterTypeMappingManager.registerOrUpdateType(
+            MonsterType.MythicalCreature,
+            "MythicalCreatures",
+            ModifierConstants.MYTHICAL_MODIFIER_ICON_RESOURCE_URL,
+            [
+                "melvorTotH:Manticore",
+                "melvorF:Phoenix",
+                "melvorF:Griffin",
+                "melvorD:ElerineMage",
+                "melvorD:ElerineArcher"
+            ],
+            false
+        );
+        MonsterTypeMappingManager.registerOrUpdateType(
+            MonsterType.SeaCreature,
+            "SeaCreatures",
+            ModifierConstants.SEA_CREATURE_MODIFIER_ICON_RESOURCE_URL,
+            [
+                "melvorD:GiantCrab",
+                "melvorD:Tentacle",
+                "melvorD:TheKraken",
+                "melvorF:Rokken",
+                "melvorF:Lissia",
+                "melvorF:Murtia",
+                "melvorF:MioliteWarden",
+                "melvorAoD:Merman"
+            ],
+            false
+        );
         MonsterTypeMappingManager.registerOrUpdateType(
             MonsterType.Undead,
             "Undead",
@@ -109,7 +182,8 @@ export class MonsterTypeMappingManager {
                 "melvorAoD:GhostMercenary",
                 "melvorAoD:CursedPirateCaptain"
             ],
-            false);
+            true
+        );
     }
 
     /**
