@@ -11,6 +11,26 @@ That's all there really is to it, you can just use them as you would any other m
 
 But should you do it the usual way?
 
+## Intellisense
+If you are planning on not just creating data packages, but also write custom code that is run based on implementations of this mod, 
+then you may benefit from the type definitions in the `_definitions` folder.
+
+Assuming you have set up your mod with typescript, 
+you can get Intellisense by copying the directory into your repository, and referencing it in your `tsconfig.json` file.
+
+It should look something like this. It's important, by the way, that the base game definitions are placed before this mod's defintions.
+Also, you may have to restart your IDE, in order for it to work properly.
+```json
+{
+  "include": [
+    "src/**/*",
+    "node_modules/melvor-types",
+    "_cmimDefinitions/**/*"
+  ]
+}
+```
+
+
 # How to use modifiers
 Let me prefice this with the statement that the following is **technically optional**. 
 You can also use the modifiers the same way you use to.
@@ -230,7 +250,9 @@ monsterIsOfType(monsterObject, "Dragon");
 
 ## Translation of new monster type
 When adding a new monster type yourself, 
-it's important that you also include the two following translation keys.
+it's important that you also include the two following translation keys. It's also important that you set those keys up to not be prefixed by your mod's name.
+Check the `TranslationManager` for more info on that.
+
 Though, if you end up forgetting, the logic of the mod will simply display the type names provided during creation, for every language.
 It won't result in an "UNDEFINED TRANSLATION" text appearing.
 
@@ -240,6 +262,6 @@ MONSTER_TYPE_SINGULAR_Monster type name singular: "Monster type name singular",
 MONSTER_TYPE_PLURAL_Monster type name singular: "Monster type name plural",
 
 // Example
-MONSTER_TYPE_SINGULAR_Human: "Human",
-MONSTER_TYPE_PLURAL_Human: "Humans",
+MONSTER_TYPE_SINGULAR_Elf: "Elf",
+MONSTER_TYPE_PLURAL_Elf: "Elves",
 ```

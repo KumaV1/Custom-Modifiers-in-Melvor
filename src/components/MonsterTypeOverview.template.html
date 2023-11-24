@@ -81,7 +81,6 @@
                                      v-for="type in props.activeTypes">
                                     <h2 class="font-w600 mb-2 text-primary text-center">
                                         {{ type.name }}
-                                        <!--<lang-string lang-id="customModifiersInMelvor_MONSTER_TYPE_PLURAL_Human">Humans</lang-string>-->
                                     </h2>
                                     <div class="row">
                                         <div v-for="monster in type.monsters" class="no-bg btn-light pointer-enabled m-1 justify-vertical-center">
@@ -105,8 +104,6 @@
                                     <!-- Should be moved to a sub-template or something -->
                                     <h2 class="font-w600 mb-2 text-primary text-center">
                                         {{ type.name }}
-                                        <!--<lang-string lang-id="customModifiersInMelvor_MONSTER_TYPE_PLURAL_Human">Humans</lang-string>-->
-                                    </h2>
                                     <div class="row">
                                         <div v-for="monster in type.monsters" class="no-bg btn-light pointer-enabled m-1 justify-vertical-center">
                                             <img class="p-2 combat-enemy-img-sm"

@@ -1092,7 +1092,7 @@ export class CustomModifiersManager {
                 }
                 else {
                     const maxHpPercentage = (this.hitpoints / this.stats.maxHitpoints) * 100;
-                    if (maxHpPercentage < effect.stacks) {
+                    if (maxHpPercentage < Math.min(ModifierConstants.DEATH_MARK_MAX_PERCENT, effect.stacks)) {
                         // If the one who got death mark triggered on them was the player,
                         // then build a notification for them, so they know it was death mark that killed them
                         if (this instanceof Player) {

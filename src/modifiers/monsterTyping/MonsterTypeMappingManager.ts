@@ -455,23 +455,11 @@ export class MonsterTypeMappingManager {
     private static addMonstersToType(type: string | MonsterType, monsterIds: string[]): void {
         //console.log(`addMonstersToType | Called with type: ${type} and monsterIds: ${monsterIds}`);
         if (this._activeTypes[type]) {
-            for (var i = 0; i < monsterIds.length; i++) {
-                if (this._activeTypes[type].monsters.some(mId => mId === monsterIds[i])) {
-                    continue;
-                }
-
-                this._activeTypes[type].monsters.push(monsterIds[i]);
-            }
+            this._activeTypes[type].addMonsters(monsterIds);
         }
 
         if (this._inactiveTypes[type]) {
-            for (var i = 0; i < monsterIds.length; i++) {
-                if (this._inactiveTypes[type].monsters.some(mId => mId === monsterIds[i])) {
-                    continue;
-                }
-
-                this._inactiveTypes[type].monsters.push(monsterIds[i]);
-            }
+            this._inactiveTypes[type].addMonsters(monsterIds);
         }
     }
 }

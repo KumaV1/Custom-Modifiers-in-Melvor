@@ -13,7 +13,7 @@ interface MonsterTypeOverviewMonsterType {
 }
 
 interface MonsterTypeOverviewProps {
-    traitsOnPlayer: MonsterTypeOverviewPlayerTraitEntry[] // string of monster names; change to also include current value of trait
+    traitsOnPlayer: MonsterTypeOverviewPlayerTraitEntry[]
     activeTypes: MonsterTypeOverviewMonsterType[],
     inactiveTypes: MonsterTypeOverviewMonsterType[]
 }
