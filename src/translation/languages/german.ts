@@ -1,20 +1,25 @@
 ﻿export const de = {
+    // ### Monster type overview
     PAGE_NAME_Monster_Types_Overview: "Monsterarten",
 
-    // ### Monster type translation for type overview page
-    Monster_Type_Human_Plural: "Menschen",
-    Monster_Type_Dragon_Plural: "Drachen",
-    Monster_Type_Undead_Plural: "Untote",
-
-    // ### Type overview page remarks
     Monster_Type_Overview_Remarks_Prefix: "Bitte beachtet die folgenden Punkte:",
     Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor hat keine eigene Implementation für Monsterart-Zuweisung. Diese sind stattdessen durch den Mod 'Custom Modifiers in Melvor' hinzugefügt worden",
-    Monster_Type_Overview_Remarks_Displayed_Type_Allocation: "Diese Übersicht zeigt alle Monsterarten-Zuweisungen. Wenn ein Monster in einer Sektion nicht auftaucht, dann bedeutet das, dass das Monster diese Monsterart nicht zugewiesen hat",
-    Monster_Type_Overview_Remarks_Type_Allocation_Inaccuracy: "Es kann natürlich sein, dass Monsterart-Zuweisungen unakkurat sind. Zögert in dem Fall bitte nicht den Ersteller des Mod 'Custom Modifiers in Melvor' zu kontaktieren und über Fehler zu informieren",
-    Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "Monster, welche durch andere Mods hinzugefügt werden, müssen von besagten Mods selbst mit der entsprechenden Monsterart-Zuweisung ausgestattet werden. Wenn ein Mod den Basis-Mod nicht als Anforderung konfiguriert hat, dann bedeutet das grundsätzlich, dass keines der Monster in irgendeinerweise von dieser Monsterart-Zuweisung beeinflusst sind",
+    Monster_Type_Overview_Remarks_Displayed_Type_Allocation: "Diese Übersicht zeigt alle Monsterarten-Zuweisungen. Wenn ein Monster in einer Sektion nicht auftaucht, dann bedeutet das, dass das Monster diese Monsterart nicht zugewiesen hat. Es kann natürlich sein, dass Monsterart-Zuweisungen unakkurat sind. Zögert bitte nicht Feedback zu allem zu geben, was eurer Meinung nach angepasst werden sollte",
+    Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "Monster, welche durch andere Mods hinzugefügt werden, müssen von besagten Mods selbst mit der entsprechenden Monsterart-Zuweisung ausgestattet werden",
+
+    Monster_Type_Overview_Player_Traits_Tab_Header: "Spieler-Modifikatoren",
+    Monster_Type_Overview_Player_Traits_Information: "Neben der organischen Artenzuweisung, kann eine Art auch durch die Verwendung des jeweiligen Modifikators erzwungen werden - in der Regel durch ausgerüstete Gegenstände oder ggf. Einkäufe im Shop. Diese Übersicht zeigt alle Arten (und den Wert ihres jeweiligen Modifikators) an, welche dem Charakter derzeit beeinflussen. DIESE ANZEIGE IST STATISCH, BASIEREND AUF DEM STAND ALS DER CHARAKTER GELADEN WURDE!",
+    Monster_Type_Overview_Player_Traits_No_Entries: "Der Charakter wird derzeit nicht von Artenzuweisung beeinflusst",
+
+    Monster_Type_Overview_Active_Types_Tab_Header: "Aktive Arten",
+    Monster_Type_Overview_Active_Types_Information: "Aktive Arten sind jene, welche von mindestens einem der geladenen Mods verwendet werden.",
+    Monster_Type_Overview_Active_Types_No_Entries: "Derzeit gibt es keine aktiven Monsterarten",
+
+    Monster_Type_Overview_Inactive_Types_Tab_Header: "Inaktive Arten",
+    Monster_Type_Overview_Inactive_Types_Information: "Inaktive Arten sind jene, welche zwar definiert sind, jedoch von keinem Mod verwendet werden. Sie werden deshalb auch nicht während des Kampfes überprüft, was bedeutet, dass sie auch die Berechnungszeit nicht beeinflussen.",
+    Monster_Type_Overview_Inactive_Types_No_Entries: "Derzeit gibt es keine inaktiven Monsterarten",
 
     // ### Modifiers
-    // #### Spawn modifiers (TODO: Possibly make equivalent increased/decreased chance to self-apply?)
     MODIFIER_DATA_increasedChanceToApplySlowOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass +25% Angriffsintervall für drei Runden auf das Ziel angewendet wird",
     MODIFIER_DATA_decreasedChanceToApplySlowOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass +25% Angriffsintervall für drei Runden auf das Ziel angewendet wird",
     MODIFIER_DATA_increasedChanceToApplyStunOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass das Ziel für eine Runde betäubt wird",
@@ -101,53 +106,39 @@
     MODIFIER_DATA_undeadTraitApplied: "Markiert den Betroffenen als Untot",
 
     // #### Type
-    // ##### Humans
-    MODIFIER_DATA_increasedDamageAgainstHumans: "+${value}% Schaden gegen Menschen",
-    MODIFIER_DATA_decreasedDamageAgainstHumans: "-${value}% Schaden gegen Menschen",
-    MODIFIER_DATA_increasedMaxHitPercentAgainstHumans: "+${value}% Maximalschaden gegen Menschen",
-    MODIFIER_DATA_decreasedMaxHitPercentAgainstHumans: "-${value}% Maximalschaden gegen Menschen",
-    MODIFIER_DATA_increasedMaxHitFlatAgainstHumans: "+${value} Maximalschaden gegen Menschen",
-    MODIFIER_DATA_decreasedMaxHitFlatAgainstHumans: "-${value} Maximalschaden gegen Menschen",
-    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstHumans: "+${value}% Minimalschaden gegen Menschen",
-    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstHumans: "-${value}% Minimalschaden gegen Menschen",
-    MODIFIER_DATA_increasedFlatMinHitAgainstHumans: "+${value} Minimalschaden gegen Menschen",
-    MODIFIER_DATA_decreasedFlatMinHitAgainstHumans: "-${value} Minimalschaden gegen Menschen",
-    MODIFIER_DATA_increasedGlobalAccuracyAgainstHumans: '+${value}% Genauigkeit gegen Menschen',
-    MODIFIER_DATA_decreasedGlobalAccuracyAgainstHumans: '-${value}% Genauigkeit gegen Menschen',
-    MODIFIER_DATA_increasedDamageReductionAgainstHumans: '+${value}% Schadensreduzierung gegen Menschen',
-    MODIFIER_DATA_decreasedDamageReductionAgainstHumans: '-${value}% Schadensreduzierung gegen Menschen',
+    // ##### Generic; these will be used to dynamically build the ones further down below, as those also have to be dynamically built
+    MONSTER_TYPE_SINGULAR_Animal: "Tier",
+    MONSTER_TYPE_PLURAL_Animal: "Tiere",
+    MONSTER_TYPE_SINGULAR_Demon: "Dämon",
+    MONSTER_TYPE_PLURAL_Demon: "Dämonen",
+    MONSTER_TYPE_SINGULAR_Dragon: "Drache",
+    MONSTER_TYPE_PLURAL_Dragon: "Drachen",
+    MONSTER_TYPE_SINGULAR_Elemental: "Elementar",
+    MONSTER_TYPE_PLURAL_Elemental: "Elementare",
+    MONSTER_TYPE_SINGULAR_Human: "Mensch",
+    MONSTER_TYPE_PLURAL_Human: "Menschen",
+    MONSTER_TYPE_SINGULAR_MythicalCreature: "Fabelwesen",
+    MONSTER_TYPE_PLURAL_MythicalCreature: "Fabelwesen",
+    MONSTER_TYPE_SINGULAR_SeaCreature: "Meereslebewesen",
+    MONSTER_TYPE_PLURAL_SeaCreature: "Meereslebewesen",
+    MONSTER_TYPE_SINGULAR_Undead: "Untoter",
+    MONSTER_TYPE_PLURAL_Undead: "Untote",
 
-    // ##### Dragons
-    MODIFIER_DATA_increasedDamageAgainstDragons: "+${value}% Schaden gegen Drachen",
-    MODIFIER_DATA_decreasedDamageAgainstDragons: "-${value}% Schaden gegen Drachen",
-    MODIFIER_DATA_increasedMaxHitPercentAgainstDragons: "+${value}% Maximalschaden gegen Drachen",
-    MODIFIER_DATA_decreasedMaxHitPercentAgainstDragons: "-${value}% Maximalschaden gegen Drachen",
-    MODIFIER_DATA_increasedMaxHitFlatAgainstDragons: "+${value} Maximalschaden gegen Drachen",
-    MODIFIER_DATA_decreasedMaxHitFlatAgainstDragons: "-${value} Maximalschaden gegen Drachen",
-    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstDragons: "+${value}% Minimalschaden gegen Drachen",
-    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstDragons: "-${value}% Minimalschaden gegen Drachen",
-    MODIFIER_DATA_increasedFlatMinHitAgainstDragons: "+${value} Minimalschaden gegen Drachen",
-    MODIFIER_DATA_decreasedFlatMinHitAgainstDragons: "-${value} Minimalschaden gegen Drachen",
-    MODIFIER_DATA_increasedGlobalAccuracyAgainstDragons: '+${value}% Genauigkeit gegen Drachen',
-    MODIFIER_DATA_decreasedGlobalAccuracyAgainstDragons: '-${value}% Genauigkeit gegen Drachen',
-    MODIFIER_DATA_increasedDamageReductionAgainstDragons: '+${value}% Schadensreduzierung gegen Drachen',
-    MODIFIER_DATA_decreasedDamageReductionAgainstDragons: '-${value}% Schadensreduzierung gegen Drachen',
-
-    // ##### Undead
-    MODIFIER_DATA_increasedDamageAgainstUndead: "+${value}% Schaden gegen Untote",
-    MODIFIER_DATA_decreasedDamageAgainstUndead: "-${value}% Schaden gegen Untote",
-    MODIFIER_DATA_increasedMaxHitPercentAgainstUndead: "+${value}% Maximalschaden gegen Untote",
-    MODIFIER_DATA_decreasedMaxHitPercentAgainstUndead: "-${value}% Maximalschaden gegen Untote",
-    MODIFIER_DATA_increasedMaxHitFlatAgainstUndead: "+${value} Maximalschaden gegen Untote",
-    MODIFIER_DATA_decreasedMaxHitFlatAgainstUndead: "-${value} Maximalschaden gegen Untote",
-    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstUndead: "+${value}% Minimalschaden gegen Untote",
-    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstUndead: "-${value}% Minimalschaden gegen Untote",
-    MODIFIER_DATA_increasedFlatMinHitAgainstUndead: "+${value} Minimalschaden gegen Untote",
-    MODIFIER_DATA_decreasedFlatMinHitAgainstUndead: "-${value} Minimalschaden gegen Untote",
-    MODIFIER_DATA_increasedGlobalAccuracyAgainstUndead: '+${value}% Genauigkeit gegen Untote',
-    MODIFIER_DATA_decreasedGlobalAccuracyAgainstUndead: '-${value}% Genauigkeit gegen Untote',
-    MODIFIER_DATA_increasedDamageReductionAgainstUndead: '+${value}% Schadensreduzierung gegen Untote',
-    MODIFIER_DATA_decreasedDamageReductionAgainstUndead: '-${value}% Schadensreduzierung gegen Untote',
+    MODIFIER_DATA_MonsterTypeTraitApplied: "Markiert den Betroffenen als ${monsterType}",
+    MODIFIER_DATA_increasedDamageAgainstMonsterType: "+${value}% Schaden gegen ${monsterType}",
+    MODIFIER_DATA_decreasedDamageAgainstMonsterType: "-${value}% Schaden gegen ${monsterType}",
+    MODIFIER_DATA_increasedMaxHitPercentAgainstMonsterType: "+${value}% Maximalschaden gegen ${monsterType}",
+    MODIFIER_DATA_decreasedMaxHitPercentAgainstMonsterType: "-${value}% Maximalschaden gegen ${monsterType}",
+    MODIFIER_DATA_increasedMaxHitFlatAgainstMonsterType: "+${value} Maximalschaden gegen ${monsterType}",
+    MODIFIER_DATA_decreasedMaxHitFlatAgainstMonsterType: "-${value} Maximalschaden gegen ${monsterType}",
+    MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstMonsterType: "+${value}% Minimalschaden gegen ${monsterType}",
+    MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstMonsterType: "-${value}% Minimalschaden gegen ${monsterType}",
+    MODIFIER_DATA_increasedFlatMinHitAgainstMonsterType: "+${value} Minimalschaden gegen ${monsterType}",
+    MODIFIER_DATA_decreasedFlatMinHitAgainstMonsterType: "-${value} Minimalschaden gegen ${monsterType}",
+    MODIFIER_DATA_increasedGlobalAccuracyAgainstMonsterType: '+${value}% Genauigkeit gegen ${monsterType}',
+    MODIFIER_DATA_decreasedGlobalAccuracyAgainstMonsterType: '-${value}% Genauigkeit gegen ${monsterType}',
+    MODIFIER_DATA_increasedDamageReductionAgainstMonsterType: '+${value}% Schadensreduzierung gegen ${monsterType}',
+    MODIFIER_DATA_decreasedDamageReductionAgainstMonsterType: '-${value}% Schadensreduzierung gegen ${monsterType}',
 
     // #### Bosses
     MODIFIER_DATA_increasedMaxHitPercentAgainstBosses: "+${value}% Maximalschaden gegen Bosse",

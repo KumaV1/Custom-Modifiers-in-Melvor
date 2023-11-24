@@ -1,13 +1,12 @@
 // Modules
 // You can import script modules and have full type completion
-import { Constants } from './Constants';
 import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
-import { MonsterTypeMappingManager } from './modifiers/MonsterTypeMappingManager';
-import { MonsterType } from './modifiers/MonsterType';
-import { Translation } from './translation/Translation';
-import { languages } from './translation/languages'
+import { ModContextMemorizer } from './ModContextMemorizer';
+import { MonsterType } from './modifiers/monsterTyping/MonsterType';
+import { MonsterTypeMappingManager } from './modifiers/monsterTyping/MonsterTypeMappingManager';
 import { MonsterTypeOverview } from './components/MonsterTypeOverview'
 import { TinyIconsCompatibility } from './compatibility/TinyIconsCompatibility';
+import { TranslationManager } from './translation/TranslationManager';
 
 // Data
 // Game data for registration
@@ -26,14 +25,17 @@ export async function setup(ctx: Modding.ModContext) {
     initApiEndpoints(ctx);
     initCustomModifiers(ctx);
     initTranslation(ctx);
-    initLanguage(ctx);
     initOverviewContainer(ctx);
     initModCompatibility(ctx);
+    initDynamicMonsterTypes(ctx);
 
     // Register our GameData
     await ctx.gameData.addPackage(ModData);
     // @ts-ignore
     //await ctx.gameData.addPackage(ModTestData);
+
+    // Memorize context, to make it easily accessable on mod api calls by other mods
+    ModContextMemorizer.memorizeContext(ctx);
 }
 
 /**
@@ -43,20 +45,20 @@ export async function setup(ctx: Modding.ModContext) {
  */
 function initApiEndpoints(ctx: Modding.ModContext) {
     ctx.api({
-        // Add types to your own monsters
-        addHumans: (monsterIds: string[]) => MonsterTypeMappingManager.addHumans(monsterIds),
-        addDragons: (monsterIds: string[]) => MonsterTypeMappingManager.addDragons(monsterIds),
-        addUndeads: (monsterIds: string[]) => MonsterTypeMappingManager.addUndeads(monsterIds),
+        addMonsters: (type: string | MonsterType, monsterIds: string[]) => MonsterTypeMappingManager.addMonsters(type, monsterIds),
+        forceBaseModTypeActive: (type: MonsterType) => MonsterTypeMappingManager.forceBaseModTypeActive(type),
+        getActiveTypes: () => MonsterTypeMappingManager.getActiveTypes(),
+        getInactiveTypes: () => MonsterTypeMappingManager.getInactiveTypes(),
+        monsterIsOfType: (monster: Monster, monsterType: string | MonsterType) => MonsterTypeMappingManager.monsterIsOfType(monster, monsterType),
+        registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean) => MonsterTypeMappingManager.registerOrUpdateType(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds, active),
 
-        // Get current typing list, might be handy for debugging, although there is the type overviewe now
+        // DEPRACATED
         getHumans: () => MonsterTypeMappingManager.getHumans(),
         getDragons: () => MonsterTypeMappingManager.getDragons(),
         getUndead: () => MonsterTypeMappingManager.getUndead(),
-
-        /** The flag is specifically set on the "Enemy",
-         * therefore you might want to call this in places
-         * where you have "only" the monster object itself */
-        monsterIsOfType: (monster: Monster, monsterType: MonsterType) => MonsterTypeMappingManager.monsterIsOfType(monster, monsterType),
+        addHumans: (monsterIds: string[]) => MonsterTypeMappingManager.addHumans(monsterIds),
+        addDragons: (monsterIds: string[]) => MonsterTypeMappingManager.addDragons(monsterIds),
+        addUndeads: (monsterIds: string[]) => MonsterTypeMappingManager.addUndeads(monsterIds),
         monsterIsHuman: (monster: Monster) => MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Human),
         monsterIsDragon: (monster: Monster) => MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Dragon),
         monsterIsUndead: (monster: Monster) => MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Undead)
@@ -76,42 +78,14 @@ function initCustomModifiers(ctx: Modding.ModContext) {
 
 /**
  * Patches multiple name/description getters, so they check our custom injected translations
+ * Also creates a list of translations for the current languages and registers it
  * @param ctx
  */
 function initTranslation(ctx: Modding.ModContext) {
-    const translation = new Translation(ctx);
+    const translation = new TranslationManager(ctx);
 
-    translation.init();
-}
-
-/**
- * Creates a list of translations for the current languages and registers it
- * @param ctx
- */
-function initLanguage(ctx: Modding.ModContext) {
-    let lang = setLang;
-
-    if (lang === 'lemon' || lang === 'carrot') {
-        lang = 'en';
-    }
-
-    // Melvor includes functionality to automatically retrieve translations by category (see "LanguageCategory" in the schema)
-    // and entity id - for those calls, a mod prefix isn't necessary, which is why we create this const array
-    const keysToNotPrefix: string[] = [
-        'COMBAT_MISC',
-        'MODIFIER_DATA',
-        'PAGE_NAME'
-    ];
-
-    // Based on how translation is retrieved,
-    // we may or may not have to specify the mod namespace
-    for (const [key, value] of Object.entries<string>(languages[lang])) {
-        if (keysToNotPrefix.some(prefix => key.includes(prefix))) {
-            loadedLangJson[key] = value;
-        } else {
-            loadedLangJson[`${Constants.MOD_NAMESPACE}_${key}`] = value;
-        }
-    }
+    translation.patch();
+    translation.register();
 }
 
 /**
@@ -138,5 +112,13 @@ function initOverviewContainer(ctx: Modding.ModContext) {
  */
 function initModCompatibility(ctx: Modding.ModContext) {
     const tinyIconsCompatibility = new TinyIconsCompatibility(ctx);
-    tinyIconsCompatibility.patch();
+    tinyIconsCompatibility.register();
+}
+
+/**
+ * Runs some of the previous managers again, this time specifically for the dynamic monster type definitions
+ * @param ctx
+ */
+function initDynamicMonsterTypes(ctx: Modding.ModContext) {
+    MonsterTypeMappingManager.initNativeMonsterTypes();
 }

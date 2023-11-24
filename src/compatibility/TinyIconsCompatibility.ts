@@ -1,7 +1,9 @@
-import { Constants as ModifierConstants } from '../modifiers/Constants'
+import { MonsterTypeDefinition } from '../modifiers/monsterTyping/MonsterTypeDefinition';
+import { MonsterTypeMappingManager } from '../modifiers/monsterTyping/MonsterTypeMappingManager';
 
 export class TinyIconsCompatibility {
-    private readonly tinyIconCustomModifierTags = {
+    /** Non-dynamic modifiers */
+    private tinyIconCustomModifierTags = {
         increasedMaxHitPercentToCombatAreaMonsters: ['combat', 'ti_combat_up'],
         decreasedMaxHitPercentToCombatAreaMonsters: ['combat', 'ti_combat_dn'],
         increasedMaxHitFlatToCombatAreaMonsters: ['combat', 'ti_combat_up'],
@@ -100,61 +102,13 @@ export class TinyIconsCompatibility {
         increasedDamageTakenFromEarthSpells: ["ti_magic_dn", "earth_strike"],
         decreasedDamageTakenFromEarthSpells: ["ti_magic_up", "earth_strike"],
         increasedDamageTakenFromFireSpells: ["ti_magic_dn", "fire_strike"],
-        decreasedDamageTakenFromFireSpells: ["ti_magic_up", "fire_strike"],
-
-        humanTraitApplied: ['cmim_human', 'combat'],
-        dragonTraitApplied: ['cmim_dragon', 'combat'],
-        undeadTraitApplied: ['cmim_undead', 'combat'],
-
-        increasedDamageAgainstHumans: ['cmim_human', 'combat'],
-        decreasedDamageAgainstHumans: ['cmim_human', 'combat'],
-        increasedMaxHitPercentAgainstHumans: ['cmim_human', 'ti_combat_up'],
-        decreasedMaxHitPercentAgainstHumans: ['cmim_human', 'ti_combat_dn'],
-        increasedMaxHitFlatAgainstHumans: ['cmim_human', 'ti_combat_up'],
-        decreasedMaxHitFlatAgainstHumans: ['cmim_human', 'ti_combat_dn'],
-        increasedMinHitBasedOnMaxHitAgainstHumans: ['cmim_human', 'ti_combat_up'],
-        decreasedMinHitBasedOnMaxHitAgainstHumans: ['cmim_human', 'ti_combat_dn'],
-        increasedFlatMinHitAgainstHumans: ['cmim_human', 'ti_combat_up'],
-        decreasedFlatMinHitAgainstHumans: ['cmim_human', 'ti_combat_dn'],
-        increasedGlobalAccuracyAgainstHumans: ['cmim_human', 'ti_combat_up'],
-        decreasedGlobalAccuracyAgainstHumans: ['cmim_human', 'ti_combat_dn'],
-        increasedDamageReductionAgainstHumans: ['cmim_human', 'ti_dr_up'],
-        decreasedDamageReductionAgainstHumans: ['cmim_human', 'ti_dr_dn'],
-
-        increasedDamageAgainstDragons: ['cmim_dragon', 'combat'],
-        decreasedDamageAgainstDragons: ['cmim_dragon', 'combat'],
-        increasedMaxHitPercentAgainstDragons: ['cmim_dragon', 'ti_combat_up'],
-        decreasedMaxHitPercentAgainstDragons: ['cmim_dragon', 'ti_combat_dn'],
-        increasedMaxHitFlatAgainstDragons: ['cmim_dragon', 'ti_combat_up'],
-        decreasedMaxHitFlatAgainstDragons: ['cmim_dragon', 'ti_combat_dn'],
-        increasedMinHitBasedOnMaxHitAgainstDragons: ['cmim_dragon', 'ti_combat_up'],
-        decreasedMinHitBasedOnMaxHitAgainstDragons: ['cmim_dragon', 'ti_combat_dn'],
-        increasedFlatMinHitAgainstDragons: ['cmim_dragon', 'ti_combat_up'],
-        decreasedFlatMinHitAgainstDragons: ['cmim_dragon', 'ti_combat_dn'],
-        increasedGlobalAccuracyAgainstDragons: ['cmim_dragon', 'ti_combat_up'],
-        decreasedGlobalAccuracyAgainstDragons: ['cmim_dragon', 'ti_combat_dn'],
-        increasedDamageReductionAgainstDragons: ['cmim_dragon', 'ti_dr_up'],
-        decreasedDamageReductionAgainstDragons: ['cmim_dragon', 'ti_dr_dn'],
-
-        increasedDamageAgainstUndead: ['cmim_undead', 'combat'],
-        decreasedDamageAgainstUndead: ['cmim_undead', 'combat'],
-        increasedMaxHitPercentAgainstUndead: ['cmim_undead', 'ti_combat_up'],
-        decreasedMaxHitPercentAgainstUndead: ['cmim_undead', 'ti_combat_dn'],
-        increasedMaxHitFlatAgainstUndead: ['cmim_undead', 'ti_combat_up'],
-        decreasedMaxHitFlatAgainstUndead: ['cmim_undead', 'ti_combat_dn'],
-        increasedMinHitBasedOnMaxHitAgainstUndead: ['cmim_undead', 'ti_combat_up'],
-        decreasedMinHitBasedOnMaxHitAgainstUndead: ['cmim_undead', 'ti_combat_dn'],
-        increasedFlatMinHitAgainstUndead: ['cmim_undead', 'ti_combat_up'],
-        decreasedFlatMinHitAgainstUndead: ['cmim_undead', 'ti_combat_dn'],
-        increasedGlobalAccuracyAgainstUndead: ['cmim_undead', 'ti_combat_up'],
-        decreasedGlobalAccuracyAgainstUndead: ['cmim_undead', 'ti_combat_dn'],
-        increasedDamageReductionAgainstUndead: ['cmim_undead', 'ti_dr_up'],
-        decreasedDamageReductionAgainstUndead: ['cmim_undead', 'ti_dr_dn']
+        decreasedDamageTakenFromFireSpells: ["ti_magic_up", "fire_strike"]
     };
 
     constructor(private readonly context: Modding.ModContext) { }
 
-    public patch() {
+    /** Register non-dynamic custom modifiers */
+    public register(): void {
         this.context.onModsLoaded(() => {
             if (!this.isLoaded()) {
                 return;
@@ -165,19 +119,81 @@ export class TinyIconsCompatibility {
                 return;
             }
 
+            // Build up non-dynamic tag sources
             const cmimTagSources: Record<string, string> = {
                 cmim_death_mark: this.context.getResourceUrl('assets/customModifiersInMelvor/Invoke_Death.png'),
-                cmim_human: tinyIcons.getIconResourcePath('skills', 'thieving', 'man'),
-                cmim_dragon: this.context.getResourceUrl(ModifierConstants.DRAGON_MODIFIER_TINY_ICON_URL),
-                cmim_undead: this.context.getResourceUrl(ModifierConstants.UNDEAD_MODIFIER_TINY_ICON_URL)
             };
 
             tinyIcons.addTagSources(cmimTagSources);
             tinyIcons.addCustomModifiers(this.tinyIconCustomModifierTags);
+
+            const types = MonsterTypeMappingManager.getActiveTypesAsArray();
+            for (var i = 0; i < types.length; i++) {
+                this.registerMonsterType(types[i]);
+            }
         });
     }
 
-    private isLoaded() {
+    /**
+     * Registers primary icons for modifiers corresponding to the given type
+     * @param type
+     */
+    public registerMonsterType(type: MonsterTypeDefinition): void {
+        if (!this.isLoaded()) {
+            return;
+        }
+
+        const tinyIcons = mod.api.tinyIcons;
+        if (!tinyIcons) {
+            return;
+        }
+
+        if (type && type.iconResourceUrl) {
+            // Add dynamic tag source for monster type
+            let cmimTagSources: Record<string, string> = {};
+            const tagName = `cmim_${type.singularName}`;
+            cmimTagSources[tagName] = this.context.getResourceUrl(type.iconResourceUrl);
+
+            let modifiers: Record<string, string> = {};
+
+            // Also add dynamic modifier entries based on tag
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.traitApplied}`] = [`${tagName}`, 'combat'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedDamage}`] = [`${tagName}`, 'combat'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedDamage}`] = [`${tagName}`, 'combat'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedMaxHitPercent}`] = [`${tagName}`, 'ti_combat_up'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedMaxHitPercent}`] = [`${tagName}`, 'ti_combat_dn'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedMaxHitFlat}`] = [`${tagName}`, 'ti_combat_up'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedMaxHitFlat}`] = [`${tagName}`, 'ti_combat_dn'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedMinHitBasedOnMaxHit}`] = [`${tagName}`, 'ti_combat_up'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedMinHitBasedOnMaxHit}`] = [`${tagName}`, 'ti_combat_dn'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedFlatMinHit}`] = [`${tagName}`, 'ti_combat_up'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedFlatMinHit}`] = [`${tagName}`, 'ti_combat_dn'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedGlobalAccuracy}`] = [`${tagName}`, 'ti_combat_up'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedGlobalAccuracy}`] = [`${tagName}`, 'ti_combat_dn'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedDamageReduction}`] = [`${tagName}`, 'ti_dr_up'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedDamageReduction}`] = [`${tagName}`, 'ti_dr_dn'];
+
+            tinyIcons.addTagSources(cmimTagSources);
+            tinyIcons.addCustomModifiers(modifiers);
+        }
+    }
+
+    private isLoaded(): Boolean {
         return mod.manager.getLoadedModList().includes('Tiny Icons');
     }
 }
