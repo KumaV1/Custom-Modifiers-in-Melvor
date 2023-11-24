@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.0
+* Completely revamped monster type system, to be completely dynamic and easy to expand by other mods, 
+while also avoiding additional calculations through unutilized types
+
 ## v1.2.1
 * Quick fix regarding native typing not actually working (refactor with 1.3.0 incoming anyway)
 
