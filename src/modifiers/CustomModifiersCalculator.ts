@@ -303,6 +303,7 @@ export class CustomModifiersCalculator {
      */
     private static getCharacterDamagePercentageModifiers(entity: Character): number {
         return CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.DamagePercent)
+            + CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.DamageTakenPercent)
             + CustomModifiersCalculator.getDamagePercentageModificationForSpellTypes(entity);
     }
 
@@ -518,7 +519,7 @@ export class CustomModifiersCalculator {
     // #endregion
 
     /**
-     * 
+     *
      * @param entity
      * @param modifierGroup
      * @returns

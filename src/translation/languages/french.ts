@@ -40,14 +40,14 @@ export const fr = {
     MODIFIER_DATA_decreasedDeathMarkImmunity: "-${value}% chance to resist application of death mark stacks",
 
     // #### Spell type
-    MODIFIER_DATA_increasedDamageTakenFromAirSpells: "+${value}% damage taken from air spells",
-    MODIFIER_DATA_decreasedDamageTakenFromAirSpells: "-${value}% damage taken from air spells",
-    MODIFIER_DATA_increasedDamageTakenFromWaterSpells: "+${value}% damage taken from water spells",
-    MODIFIER_DATA_decreasedDamageTakenFromWaterSpells: "-${value}% damage taken from water spells",
-    MODIFIER_DATA_increasedDamageTakenFromEarthSpells: "+${value}% damage taken from earth spells",
-    MODIFIER_DATA_decreasedDamageTakenFromEarthSpells: "-${value}% damage taken from earth spells",
-    MODIFIER_DATA_increasedDamageTakenFromFireSpells: "+${value}% damage taken from fire spells",
-    MODIFIER_DATA_decreasedDamageTakenFromFireSpells: "-${value}% damage taken from fire spells",
+    MODIFIER_DATA_increasedDamageTakenFromAirSpells: "+${value}% Damage taken from air spells",
+    MODIFIER_DATA_decreasedDamageTakenFromAirSpells: "-${value}% Damage taken from air spells",
+    MODIFIER_DATA_increasedDamageTakenFromWaterSpells: "+${value}% Damage taken from water spells",
+    MODIFIER_DATA_decreasedDamageTakenFromWaterSpells: "-${value}% Damage taken from water spells",
+    MODIFIER_DATA_increasedDamageTakenFromEarthSpells: "+${value}% Damage taken from earth spells",
+    MODIFIER_DATA_decreasedDamageTakenFromEarthSpells: "-${value}% Damage taken from earth spells",
+    MODIFIER_DATA_increasedDamageTakenFromFireSpells: "+${value}% Damage taken from fire spells",
+    MODIFIER_DATA_decreasedDamageTakenFromFireSpells: "-${value}% Damage taken from fire spells",
 
     // #### Area type
     MODIFIER_DATA_increasedMaxHitPercentToCombatAreaMonsters: "+${value}% Max Hit To Combat Area Monsters",
@@ -124,6 +124,8 @@ export const fr = {
     MODIFIER_DATA_MonsterTypeTraitApplied: "Marks the affected as ${monsterType}",
     MODIFIER_DATA_increasedDamageAgainstMonsterType: "+${value}% Damage To ${monsterType}",
     MODIFIER_DATA_decreasedDamageAgainstMonsterType: "-${value}% Damage To ${monsterType}",
+    MODIFIER_DATA_increasedDamageTakenFromMonsterType: "+${value}% Damage taken from ${monsterType}",
+    MODIFIER_DATA_decreasedDamageTakenFromMonsterType: "-${value}% Damage taken from ${monsterType}",
     MODIFIER_DATA_increasedMaxHitPercentAgainstMonsterType: "+${value}% Max Hit when fighting ${monsterType}",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstMonsterType: "-${value}% Max Hit when fighting ${monsterType}",
     MODIFIER_DATA_increasedMaxHitFlatAgainstMonsterType: "+${value} Max Hit when fighting ${monsterType}",

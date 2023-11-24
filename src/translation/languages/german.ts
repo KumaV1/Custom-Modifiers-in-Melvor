@@ -127,6 +127,8 @@
     MODIFIER_DATA_MonsterTypeTraitApplied: "Markiert den Betroffenen als ${monsterType}",
     MODIFIER_DATA_increasedDamageAgainstMonsterType: "+${value}% Schaden gegen ${monsterType}",
     MODIFIER_DATA_decreasedDamageAgainstMonsterType: "-${value}% Schaden gegen ${monsterType}",
+    MODIFIER_DATA_increasedDamageTakenFromMonsterType: "+${value}% mehr erlittener Schaden von ${monsterType}",
+    MODIFIER_DATA_decreasedDamageTakenFromMonsterType: "-${value}% mehr erlittener Schaden von ${monsterType}",
     MODIFIER_DATA_increasedMaxHitPercentAgainstMonsterType: "+${value}% Maximalschaden gegen ${monsterType}",
     MODIFIER_DATA_decreasedMaxHitPercentAgainstMonsterType: "-${value}% Maximalschaden gegen ${monsterType}",
     MODIFIER_DATA_increasedMaxHitFlatAgainstMonsterType: "+${value} Maximalschaden gegen ${monsterType}",

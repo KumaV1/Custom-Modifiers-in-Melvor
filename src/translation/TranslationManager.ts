@@ -72,6 +72,8 @@ export class TranslationManager {
         loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.traitApplied}`] = loadedLangJson["MODIFIER_DATA_MonsterTypeTraitApplied"].replace("${monsterType}", typeSingularName);
         loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedDamage}`] = loadedLangJson["MODIFIER_DATA_increasedDamageAgainstMonsterType"].replace("${monsterType}", typePluralName);
         loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedDamage}`] = loadedLangJson["MODIFIER_DATA_decreasedDamageAgainstMonsterType"].replace("${monsterType}", typePluralName);
+        loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedDamageTaken}`] = loadedLangJson["MODIFIER_DATA_increasedDamageTakenFromMonsterType"].replace("${monsterType}", typePluralName);
+        loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedDamageTaken}`] = loadedLangJson["MODIFIER_DATA_decreasedDamageTakenFromMonsterType"].replace("${monsterType}", typePluralName);
         loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedMaxHitPercent}`] = loadedLangJson["MODIFIER_DATA_increasedMaxHitPercentAgainstMonsterType"].replace("${monsterType}", typePluralName);
         loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedMaxHitPercent}`] = loadedLangJson["MODIFIER_DATA_decreasedMaxHitPercentAgainstMonsterType"].replace("${monsterType}", typePluralName);
         loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedMaxHitFlat}`] = loadedLangJson["MODIFIER_DATA_increasedMaxHitFlatAgainstMonsterType"].replace("${monsterType}", typePluralName);
