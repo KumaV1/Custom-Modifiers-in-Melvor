@@ -2,6 +2,8 @@
 export enum MonsterTypeModifierType {
     IncreasedDamage = "increasedDamage",
     DecreasedDamage = "decreasedDamage",
+    IncreasedDamageTaken = "increasedDamageTaken",
+    DecreasedDamageTaken = "decreasedDamageTaken",
     IncreasedMaxHitPercent = "increasedMaxHitPercent",
     DecreasedMaxHitPercent = "decreasedMaxHitPercent",
     IncreasedMaxHitFlat = "increasedMaxHitFlat",

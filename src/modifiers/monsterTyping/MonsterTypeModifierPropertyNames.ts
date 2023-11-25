@@ -6,6 +6,8 @@ export interface MonsterTypeModifierPropertyNames {
     traitApplied: string,
     increasedDamage: string,
     decreasedDamage: string,
+    increasedDamageTaken: string,
+    decreasedDamageTaken: string
     increasedMaxHitPercent: string,
     decreasedMaxHitPercent: string,
     increasedMaxHitFlat: string,

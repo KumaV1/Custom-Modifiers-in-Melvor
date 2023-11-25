@@ -164,6 +164,10 @@ export class TinyIconsCompatibility {
             // @ts-ignore
             modifiers[`${type.modifierPropertyNames.decreasedDamage}`] = [`${tagName}`, 'combat'];
             // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedDamageTaken}`] = [`${tagName}`, 'ti_combat_dn'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedDamageTaken}`] = [`${tagName}`, 'ti_combat_up'];
+            // @ts-ignore
             modifiers[`${type.modifierPropertyNames.increasedMaxHitPercent}`] = [`${tagName}`, 'ti_combat_up'];
             // @ts-ignore
             modifiers[`${type.modifierPropertyNames.decreasedMaxHitPercent}`] = [`${tagName}`, 'ti_combat_dn'];
