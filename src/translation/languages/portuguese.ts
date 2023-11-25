@@ -8,7 +8,9 @@ export const pt = {
     Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "For any monsters added through other mods, said mods have to set type definitions themselves for those monsters",
 
     Monster_Type_Overview_Player_Traits_Tab_Header: "Player traits",
-    Monster_Type_Overview_Player_Traits_Information: "Aside from organic type allocation, a type can also be forcefully applied by usage of the respective modifier, usually through equipped items or possibly shop purchase(s). This overview displays all types (and their modifier's value) currently affecting the Character. THIS DISPLAY IS STATIC, BASED ON WHEN THE CHARACTER WAS LOADED!",
+    Monster_Type_Overview_Player_Traits_Information_Type_Allocation: "Aside from organic type allocation, a type can also be forcefully applied by usage of the respective modifier, usually through equipped items or possibly shop purchase(s)",
+    Monster_Type_Overview_Player_Traits_Information_Display: "This overview displays all types (and their modifier's value) currently affecting the Character - more info may be determinable using the "Show Skill Modifiers" mod",
+    Monster_Type_Overview_Player_Traits_Information_Data_Loaded: "This display is static, based on when the character was loaded",
     Monster_Type_Overview_Player_Traits_No_Entries: "The character is not affected by any type allocation modifiers",
 
     Monster_Type_Overview_Active_Types_Tab_Header: "Active types",

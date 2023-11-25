@@ -9,6 +9,9 @@
 
     Monster_Type_Overview_Player_Traits_Tab_Header: "Spieler-Modifikatoren",
     Monster_Type_Overview_Player_Traits_Information: "Neben der organischen Artenzuweisung, kann eine Art auch durch die Verwendung des jeweiligen Modifikators erzwungen werden - in der Regel durch ausgerüstete Gegenstände, oder ggf. Einkäufe im Laden. Diese Übersicht zeigt alle Arten (und den Wert ihres jeweiligen Modifikators) an, welche den Charakter derzeit beeinflussen. DIESE ANZEIGE IST STATISCH, BASIEREND AUF DEM STAND ALS DER CHARAKTER GELADEN WURDE!",
+    Monster_Type_Overview_Player_Traits_Information_Type_Allocation: "Neben der organischen Artenzuweisung, kann eine Art auch durch die Verwendung des jeweiligen Modifikators erzwungen werden - in der Regel durch ausgerüstete Gegenstände, oder ggf. Einkäufe im Laden",
+    Monster_Type_Overview_Player_Traits_Information_Display: 'Diese Übersicht zeigt alle Arten (und den Wert ihres jeweiligen Modifikators) an, welche den Charakter derzeit beeinflussen - genauere Info ist ggf. durch den "Show Skill Modifiers" herausfindbar',
+    Monster_Type_Overview_Player_Traits_Information_Data_Loaded: "Diese Anzeige ist statisch, basierend auf dem Stand als der Charakter geladen wurde",
     Monster_Type_Overview_Player_Traits_No_Entries: "Der Charakter wird derzeit nicht von Artenzuweisung beeinflusst",
 
     Monster_Type_Overview_Active_Types_Tab_Header: "Aktive Arten",
