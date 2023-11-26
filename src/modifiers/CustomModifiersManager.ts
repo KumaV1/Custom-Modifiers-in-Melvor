@@ -13,7 +13,7 @@ export class CustomModifiersManager {
     constructor(private readonly context: Modding.ModContext) { }
 
     /**
-     * Registers all custom modifers, so they are known by the game
+     * Registers all non-dynamic custom modifers, so they are known by the game
      */
     public registerModifiers() {
         this.registerSkillModifiers();
@@ -56,6 +56,7 @@ export class CustomModifiersManager {
             return;
         }
 
+        // Create modifiers
         Object.entries(type.modifierPropertyNames).forEach(([key, value]) => {
             //console.log(`Processing modifierProperty: ${key} | ${value}`);
 
@@ -66,6 +67,9 @@ export class CustomModifiersManager {
             // we know though that it is an object to which we want to add a property
             modifierData[value] = obj;
         });
+
+        // Context game data is undefined, so we just go and call game.registerData directory
+        game.registerDataPackage(MonsterTypeHelper.createTraitStackingEffectGamePackage(type));
     }
 
     // #region Modifier Registration

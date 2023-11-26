@@ -171,7 +171,35 @@ if (mod.api.customModifiersInMelvor) {
 Just check `initApiEndpoints` in the `setup.ts` file to see exact type definition for the methods you want to call*
 
 
-# Working with monster types
+### Checking type during combat
+While we are on the topic of API calls - while documentation below will also inform you of a way to check type allocation for a monster,
+during combat there are two main checks to be aware of.
+
+Organic type allocation is applied on spawm, as easily checkable properties on the character object.
+This is qicker than always checking collections in the background.
+```js
+// Structure
+character.isTYPE
+
+// Example
+if(game.combat.player.target.isHuman) {
+  // Do stuff
+}
+```
+
+Artificial type allocation (aka "trait") is applied through modifiers, and are therefore checked as you would expect from any other modifier.
+That being said, depending on what you are implementing, artificial type allocation might not be a valid condition.
+```js
+// Structure
+character.modifiers.TYPETraitApplied
+
+// Example
+if(game.combat.player.target.modifiers.humanTraitApplied > 0) {
+  // Do stuff
+}
+```
+
+# Working with monster type definition
 The previous section should have given you a rough idea about the modifiers you can expect and how to work with them.
 However, what if you want to add additional monster type definitions based on your mod?
 
@@ -180,7 +208,8 @@ Active types are those that at least one mod actually makes use of (e.g. using t
 whereas inactive types are those that get defined, but actually end up not being used by any of the loaded mods.
 The reason for this difference is to avoid blurting the combat calculations with unnecessary processing.
 
-With that out of the way, this mod provides multiple API endpoints that you can utilize.
+With that out of the way, this mod provides multiple API endpoints that you can utilize. 
+One thing of note, you don't have to worry about expansions purchased by the user, when utilizing these endpoints.
 
 ```ts
 // Structure
@@ -229,7 +258,7 @@ addMonsters("Dragon", ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"]);
 * @param active - whether the type should be set to active - as a mod consuming the api, this is basically always going to be true, but can technically be set to false as well
 * @returns void
 */
-registerOrUpdateType(typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[])
+registerOrUpdateType(typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean)
 
 // Example
 registerOrUpdateType("Dragon", "Dragons", "https://cdn.melvor.net/core/v018/assets/media/monsters/dragon_green.png", ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"]);

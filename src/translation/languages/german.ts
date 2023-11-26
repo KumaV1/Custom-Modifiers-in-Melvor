@@ -127,6 +127,8 @@
     MONSTER_TYPE_SINGULAR_Undead: "Untoter",
     MONSTER_TYPE_PLURAL_Undead: "Untote",
 
+    COMBAT_MISC_Monster_Type_Trait_Effect: "${monsterType}-Merkmal",
+
     MODIFIER_DATA_MonsterTypeTraitApplied: "Markiert den Betroffenen als ${monsterType}",
     MODIFIER_DATA_increasedDamageAgainstMonsterType: "+${value}% Schaden gegen ${monsterType}",
     MODIFIER_DATA_decreasedDamageAgainstMonsterType: "-${value}% Schaden gegen ${monsterType}",

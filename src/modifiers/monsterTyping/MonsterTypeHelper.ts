@@ -1,8 +1,11 @@
+import { Constants } from '../../Constants';
+import { Constants as ModifierConstants } from '../Constants';
 import { MonsterTypeDefinition } from './MonsterTypeDefinition';
 import { MonsterTypeMappingManager } from './MonsterTypeMappingManager';
 import { MonsterTypeModifierGroup } from './MonsterTypeModifierGroup';
 import { MonsterTypeModifierPropertyNames } from './MonsterTypeModifierPropertyNames'
 import { MonsterTypeModifierType } from './MonsterTypeModifierType'
+import { TranslationManager } from '../../translation/TranslationManager';
 
 export class MonsterTypeHelper {
     /**
@@ -90,6 +93,48 @@ export class MonsterTypeHelper {
         }
 
         return modifierObject;
+    }
+
+    /**
+     *
+     * @param type
+     * @returns
+     */
+    public static createTraitStackingEffectGamePackage(type: MonsterTypeDefinition): GameDataPackage {
+        return {
+            "$schema": Constants.SCHEMA,
+            "namespace": Constants.MOD_NAMESPACE,
+            "data": {
+                "stackingEffects": [MonsterTypeHelper.createTraitStackingEffectDataObject(type)]
+            }
+        }
+    }
+
+    /**
+     *
+     * @param type
+     * @returns
+     */
+    private static createTraitStackingEffectDataObject(type: MonsterTypeDefinition): StackingEffectData {
+        var obj: StackingEffectData = {
+            id: `${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`,
+            stacksToAdd: 1,
+            maxStacks: 99,
+            name: `${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_NAME_SUFFIX}`,
+            langName: {
+                category: ModifierConstants.TRAIT_STACKING_EFFECT_LANGUAGE_CATEGORY,
+                id: `${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`
+            },
+            media: type.iconResourceUrl,
+            modifiers: {
+
+            }
+        };
+
+        // @ts-ignore Ignore implicit any error
+        obj.modifiers[type.modifierPropertyNames.traitApplied] = 1;
+
+        return obj;
     }
 
     /**

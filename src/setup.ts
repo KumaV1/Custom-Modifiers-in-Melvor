@@ -50,7 +50,7 @@ function initApiEndpoints(ctx: Modding.ModContext) {
         getActiveTypes: () => MonsterTypeMappingManager.getActiveTypes(),
         getInactiveTypes: () => MonsterTypeMappingManager.getInactiveTypes(),
         monsterIsOfType: (monster: Monster, monsterType: string | MonsterType) => MonsterTypeMappingManager.monsterIsOfType(monster, monsterType),
-        registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean) => MonsterTypeMappingManager.registerOrUpdateType(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds, active),
+        registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean = true) => MonsterTypeMappingManager.registerOrUpdateType(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds, active),
 
         // DEPRACATED
         getHumans: () => MonsterTypeMappingManager.getHumans(),
