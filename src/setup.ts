@@ -1,7 +1,7 @@
 // Modules
 // You can import script modules and have full type completion
 import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
-import { ModContextMemorizer } from './ModContextMemorizer';
+import { ModContextMemoizer } from './ModContextMemorizer';
 import { MonsterType } from './modifiers/monsterTyping/MonsterType';
 import { MonsterTypeMappingManager } from './modifiers/monsterTyping/MonsterTypeMappingManager';
 import { MonsterTypeOverview } from './components/MonsterTypeOverview'
@@ -37,7 +37,7 @@ export async function setup(ctx: Modding.ModContext) {
     //await ctx.gameData.addPackage(ModTestData);
 
     // Memorize context, to make it easily accessable on mod api calls by other mods
-    ModContextMemorizer.memorizeContext(ctx);
+    ModContextMemoizer.memoizeContext(ctx);
 }
 
 /**

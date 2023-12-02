@@ -27,9 +27,13 @@ declare global {
         increasedDamageTakenFromFireSpells: number,
         decreasedDamageTakenFromFireSpells: number,
 
-        // Only for monster types set to be active
-        humanTraitApplied: number,
+        // Only for monster types defined by this base mod
+        animalTraitApplied: number,
+        demonTraitApplied: number,
         dragonTraitApplied: number,
+        elementalTraitApplied: number,
+        humanTraitApplied: number,
+        seaCreatureTraitApplied: number,
         undeadTraitApplied: number
     }
 }

@@ -1,7 +1,7 @@
 import { Constants } from '../../Constants';
 import { Constants as ModifierConstants } from '../Constants'
 import { CustomModifiersManager } from '../CustomModifiersManager';
-import { ModContextMemorizer } from '../../ModContextMemorizer';
+import { ModContextMemoizer } from '../../ModContextMemorizer';
 import { MonsterType } from './MonsterType'
 import { MonsterTypeDefinition } from './MonsterTypeDefinition';
 import { TinyIconsCompatibility } from '../../compatibility/TinyIconsCompatibility';
@@ -248,13 +248,13 @@ export class MonsterTypeMappingManager {
      * @param type
      */
     public static registerData(type: MonsterTypeDefinition) {
-        const modifierManager = new CustomModifiersManager(ModContextMemorizer.ctx);
+        const modifierManager = new CustomModifiersManager(ModContextMemoizer.ctx);
         modifierManager.registerMonsterType(type);
 
-        const translationManager = new TranslationManager(ModContextMemorizer.ctx);
+        const translationManager = new TranslationManager(ModContextMemoizer.ctx);
         translationManager.registerMonsterType(type);
 
-        const tinyIconCompatibility = new TinyIconsCompatibility(ModContextMemorizer.ctx);
+        const tinyIconCompatibility = new TinyIconsCompatibility(ModContextMemoizer.ctx);
         tinyIconCompatibility.registerMonsterType(type);
     }
 
