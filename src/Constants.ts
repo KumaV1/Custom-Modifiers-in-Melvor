@@ -1,4 +1,5 @@
 export class Constants {
+    static readonly SCHEMA = "https://melvoridle.com/assets/schema/gameData.json";
     static readonly MOD_NAMESPACE = "customModifiersInMelvor";
 
     static readonly ERROR_ICON_MEDIA_PATH = "assets/media/main/error.svg";

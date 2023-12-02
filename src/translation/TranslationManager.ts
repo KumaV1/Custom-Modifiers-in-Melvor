@@ -63,11 +63,13 @@ export class TranslationManager {
      * @param type
      */
     public registerMonsterType(type: MonsterTypeDefinition): void {
-        const typeSingularName = TranslationManager.getTranslationOrFallback(`MONSTER_TYPE_SINGULAR_${type.singularName}`, type.singularName);
+        const typeSingularName = TranslationManager.getMonsterTypeSingularNameTranslation(type.singularName);
         //console.log(`translationManager | registerMonsterType | key: MONSTER_TYPE_SINGULAR_${type.singularName} | value: ${typeSingularName}`);
 
-        const typePluralName = TranslationManager.getTranslationOrFallback(`MONSTER_TYPE_PLURAL_${type.singularName}`, type.pluralName);
+        const typePluralName = TranslationManager.getMonsterTypePluralNameTranslation(type.singularName, type.pluralName);
         //console.log(`translationManager | registerMonsterType | key: MONSTER_TYPE_PLURAL_${type.singularName} | value: ${typePluralName}`);
+        loadedLangJson[`COMBAT_MISC_${type.singularName}_Trait_Modifier_Effect`] = loadedLangJson["COMBAT_MISC_Monster_Type_Trait_Modifier_Effect"].replace("${monsterType}", typeSingularName);
+        loadedLangJson[`COMBAT_MISC_${type.singularName}_Trait_Stacking_Effect`] = loadedLangJson["COMBAT_MISC_Monster_Type_Trait_Stacking_Effect"].replace("${monsterType}", typeSingularName);
 
         loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.traitApplied}`] = loadedLangJson["MODIFIER_DATA_MonsterTypeTraitApplied"].replace("${monsterType}", typeSingularName);
         loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedDamage}`] = loadedLangJson["MODIFIER_DATA_increasedDamageAgainstMonsterType"].replace("${monsterType}", typePluralName);
@@ -86,6 +88,33 @@ export class TranslationManager {
         loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedGlobalAccuracy}`] = loadedLangJson["MODIFIER_DATA_decreasedGlobalAccuracyAgainstMonsterType"].replace("${monsterType}", typePluralName);
         loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedDamageReduction}`] = loadedLangJson["MODIFIER_DATA_increasedDamageReductionAgainstMonsterType"].replace("${monsterType}", typePluralName);
         loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedDamageReduction}`] = loadedLangJson["MODIFIER_DATA_decreasedDamageReductionAgainstMonsterType"].replace("${monsterType}", typePluralName);
+
+        loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedChanceToApplyTraitInfiniteOnSpawn}`] = loadedLangJson["MODIFIER_DATA_increasedChanceToApplyMonsterTypeTraitInfiniteOnSpawn"].replace("${monsterType}", typeSingularName);
+        loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedChanceToApplyTraitInfiniteOnSpawn}`] = loadedLangJson["MODIFIER_DATA_decreasedChanceToApplyMonsterTypeTraitInfiniteOnSpawn"].replace("${monsterType}", typeSingularName);
+        loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.applyTraitTurnsOnSpawn}`] = loadedLangJson["MODIFIER_DATA_applyMonserTypeTraitTurnsOnSpawn"].replace("${monsterType}", typeSingularName);
+
+        loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedChanceToApplyTrait}`] = loadedLangJson["MODIFIER_DATA_increasedChanceToApplyMonsterTypeTrait"].replace("${monsterType}", typeSingularName);
+        loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedChanceToApplyTrait}`] = loadedLangJson["MODIFIER_DATA_decreasedChanceToApplyMonsterTypeTrait"].replace("${monsterType}", typeSingularName);
+        loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.applyTraitTurns}`] = loadedLangJson["MODIFIER_DATA_applyMonsterTypeTraitTurns"].replace("${monsterType}", typeSingularName);
+    }
+
+    /**
+     *
+     * @param typeNameSingular
+     * @returns
+     */
+    public static getMonsterTypeSingularNameTranslation(typeNameSingular: string): string {
+        return TranslationManager.getTranslationOrFallback(`MONSTER_TYPE_SINGULAR_${typeNameSingular}`, typeNameSingular);
+    }
+
+    /**
+     *
+     * @param typeNameSingular
+     * @param typeNamePlural
+     * @returns
+     */
+    public static getMonsterTypePluralNameTranslation(typeNameSingular: string, typeNamePlural: string): string {
+        return TranslationManager.getTranslationOrFallback(`MONSTER_TYPE_PLURAL_${typeNameSingular}`, typeNamePlural);
     }
 
     /**

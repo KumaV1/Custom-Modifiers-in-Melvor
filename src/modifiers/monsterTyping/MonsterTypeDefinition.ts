@@ -1,3 +1,4 @@
+import { MonsterTypeEffectObjectNames } from './MonsterTypeEffectObjectNames';
 import { MonsterTypeHelper } from './MonsterTypeHelper';
 import { MonsterTypeModifierPropertyNames } from './MonsterTypeModifierPropertyNames'
 
@@ -19,6 +20,8 @@ export class MonsterTypeDefinition {
     public isTypePropertyName: string
     public modifierPropertyNames: MonsterTypeModifierPropertyNames
 
+    public effectPropertyObjectNames: MonsterTypeEffectObjectNames
+
     /**
      * Create a new instance of a monster type definition
      * @param singularName - the main name for the type
@@ -34,6 +37,7 @@ export class MonsterTypeDefinition {
 
         this.isTypePropertyName = MonsterTypeHelper.createIsTypePropertyName(singularName);
         this.modifierPropertyNames = MonsterTypeHelper.createModifierPropertyNames(singularName, pluralName);
+        this.effectPropertyObjectNames = MonsterTypeHelper.createEffectPropertyNames(singularName);
     }
 
     /**

@@ -20,4 +20,10 @@ export interface MonsterTypeModifierPropertyNames {
     decreasedGlobalAccuracy: string,
     increasedDamageReduction: string,
     decreasedDamageReduction: string,
+    increasedChanceToApplyTraitInfiniteOnSpawn: string,
+    decreasedChanceToApplyTraitInfiniteOnSpawn: string,
+    applyTraitTurnsOnSpawn: string,
+    increasedChanceToApplyTrait: string,
+    decreasedChanceToApplyTrait: string,
+    applyTraitTurns: string
 }

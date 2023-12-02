@@ -65,7 +65,13 @@
                         <!-- Player Trait Tab -->
                         <div id="monster-type-overview__player-traits-container"
                              class="col-12 d-none">
-                            <div class="mb-3 text-warning"><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Player_Traits_Information"></lang-string></div>
+                            <div class="mb-3 text-warning">
+                                <ul>
+                                    <li><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Player_Traits_Information_Type_Allocation"></lang-string></li>
+                                    <li><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Player_Traits_Information_Display"></lang-string></li>
+                                    <li><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Player_Traits_Information_Data_Loaded"></lang-string></li>
+                                </ul>
+                            </div>
                             <div v-if="props.traitsOnPlayer.length === 0"><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Player_Traits_No_Entries"></lang-string></div>
                             <ul v-if="props.traitsOnPlayer.length > 0">
                                 <li v-for="trait in props.traitsOnPlayer">{{ trait.name }} ({{ trait.value }})</li>

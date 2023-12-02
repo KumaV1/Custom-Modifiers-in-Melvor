@@ -50,8 +50,8 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
         });
 
         // Try to translate type name
-        const name = TranslationManager.getTranslationOrFallback(
-            `MONSTER_TYPE_PLURAL_${type.singularName}`,
+        const name = TranslationManager.getMonsterTypePluralNameTranslation(
+            type.singularName,
             type.pluralName
         );
 
@@ -68,8 +68,7 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
 
         // @ts-ignore
         if (game.combat.player.modifiers[type.modifierPropertyNames.traitApplied] > 0) {
-            const name = TranslationManager.getTranslationOrFallback(
-                `MONSTER_TYPE_SINGULAR_${type.singularName}`,
+            const name = TranslationManager.getMonsterTypeSingularNameTranslation(
                 type.singularName
             );
             // @ts-ignore

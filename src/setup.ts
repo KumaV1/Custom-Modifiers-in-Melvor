@@ -1,7 +1,7 @@
 // Modules
 // You can import script modules and have full type completion
 import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
-import { ModContextMemorizer } from './ModContextMemorizer';
+import { ModContextMemoizer } from './ModContextMemorizer';
 import { MonsterType } from './modifiers/monsterTyping/MonsterType';
 import { MonsterTypeMappingManager } from './modifiers/monsterTyping/MonsterTypeMappingManager';
 import { MonsterTypeOverview } from './components/MonsterTypeOverview'
@@ -18,11 +18,13 @@ import ModData from '../data/data.json'
 import '../assets/Logo.png'
 import '../assets/Death_Mark.png'
 import '../assets/Invoke_Death.png'
+import { GameObjectDataWrapperInitializer } from './GameObjectDataWrapperInitializer';
 // #endregion
 
 export async function setup(ctx: Modding.ModContext) {
     // Register custom modifier logic patches and localized texts
     initApiEndpoints(ctx);
+    initGameObjectDataWrapper();
     initCustomModifiers(ctx);
     initTranslation(ctx);
     initOverviewContainer(ctx);
@@ -35,7 +37,7 @@ export async function setup(ctx: Modding.ModContext) {
     //await ctx.gameData.addPackage(ModTestData);
 
     // Memorize context, to make it easily accessable on mod api calls by other mods
-    ModContextMemorizer.memorizeContext(ctx);
+    ModContextMemoizer.memoizeContext(ctx);
 }
 
 /**
@@ -50,7 +52,7 @@ function initApiEndpoints(ctx: Modding.ModContext) {
         getActiveTypes: () => MonsterTypeMappingManager.getActiveTypes(),
         getInactiveTypes: () => MonsterTypeMappingManager.getInactiveTypes(),
         monsterIsOfType: (monster: Monster, monsterType: string | MonsterType) => MonsterTypeMappingManager.monsterIsOfType(monster, monsterType),
-        registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean) => MonsterTypeMappingManager.registerOrUpdateType(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds, active),
+        registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean = true) => MonsterTypeMappingManager.registerOrUpdateType(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds, active),
 
         // DEPRACATED
         getHumans: () => MonsterTypeMappingManager.getHumans(),
@@ -63,6 +65,13 @@ function initApiEndpoints(ctx: Modding.ModContext) {
         monsterIsDragon: (monster: Monster) => MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Dragon),
         monsterIsUndead: (monster: Monster) => MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Undead)
     });
+}
+
+/**
+ * As one of the first steps, initialize object structure for game-object-quick-access-data
+ */
+function initGameObjectDataWrapper() {
+    GameObjectDataWrapperInitializer.process();
 }
 
 /**

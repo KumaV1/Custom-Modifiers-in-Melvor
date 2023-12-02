@@ -29,8 +29,8 @@ To do so, just check whether the api object is defined, and call the type-regist
 ```js
 if(mod.api.customModifiersInMelvor) {
 	// If you only add one monster, make sure you still provide an array and not just a string accidentally
-	mod.api.customModifiersInMelvor.addHumans(["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
-	mod.api.customModifiersInMelvor.addDragons(["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
-	mod.api.customModifiersInMelvor.addUndead(["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
+	mod.api.customModifiersInMelvor.addMonsters("Human", ["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
+	mod.api.customModifiersInMelvor.addMonsters("Dragon", ["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
+	mod.api.customModifiersInMelvor.addMonsters("Undead", ["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
 }
 ```

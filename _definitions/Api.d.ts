@@ -53,10 +53,10 @@ declare namespace Modding {
              * @param typeNamePlural - the english plural variant of the type's name. Affects modifier name(s)
              * @param iconResourceUrl - a usable full URL to an image that will be used as icon for anything related to this type (e.g. "StackingEffects" or "Tiny Icon Mod Support")
              * @param monsterIds - a list of monster ids. If you are defining a type not covered by the base mod, you should include any Melvor monsters that may fit
-             * @param active - whether the type should be set to active - as a mod consuming the api, this is basically always going to be true, but can technically be set to false as well
+             * @param active - whether the type should be set to active (if omitted, will be set to "true") - as a mod consuming the api, this is basically always going to be true, but can technically be set to false as well
              * @returns
              */
-            registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean) => void
+            registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean = true) => void
 
             /**
              * Previously used with hard-definition of types, to retrieve info about which monsters are allocated as human
