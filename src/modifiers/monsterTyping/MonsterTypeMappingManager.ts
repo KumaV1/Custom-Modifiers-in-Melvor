@@ -72,7 +72,7 @@ export class MonsterTypeMappingManager {
                 "melvorF:GreaterSkeletalDragon",
                 "melvorTotH:TwinSeaDragonSerpent"
             ],
-            true
+            false
         );
         MonsterTypeMappingManager.registerOrUpdateType(
             MonsterType.Elemental,
@@ -126,7 +126,7 @@ export class MonsterTypeMappingManager {
                 "melvorAoD:BlindMage",
                 "melvorAoD:SoulTakerWitch"
             ],
-            true
+            false
         );
         MonsterTypeMappingManager.registerOrUpdateType(
             MonsterType.MythicalCreature,
@@ -182,7 +182,7 @@ export class MonsterTypeMappingManager {
                 "melvorAoD:GhostMercenary",
                 "melvorAoD:CursedPirateCaptain"
             ],
-            true
+            false
         );
     }
 
