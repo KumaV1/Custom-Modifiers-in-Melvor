@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.1.1
+* Removed redundant second go at adding tiny icons for monster type modifiers (technically already preventet by tiny icons mod)
+
 ## v2.1.0
 * Added "damage taken from monster type" modifiers
 * Added modifiers and effects to apply monster types ("trait") during combat
