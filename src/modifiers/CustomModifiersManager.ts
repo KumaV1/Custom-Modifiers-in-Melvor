@@ -68,14 +68,11 @@ export class CustomModifiersManager {
             modifierData[value] = obj;
         });
 
-        // Create (non-stacking) custom effect data
+        // Create and register custom effect and stacking effect data
         const customEffectData: CustomEffectData = MonsterTypeHelper.createTraitCustomEffectDataInfiniteObject(type);
 
-        // @ts-ignore implicit 'any' type error
-        // we know though that it is an object to which we want to add a property
         game.customModifiersInMelvor.customModifierEffects[type.effectPropertyObjectNames.traitApplicationCustomModifierEffect] = customEffectData;
 
-        // Context game data is undefined, so we just go and call game.registerData directory
         game.registerDataPackage(MonsterTypeHelper.createTraitStackingEffectGamePackage(type));
         game.registerDataPackage(MonsterTypeHelper.createTraitCustomModifierEffectAttackGamePackage(type, customEffectData));
     }
@@ -994,8 +991,6 @@ export class CustomModifiersManager {
          * Register custom effects and attacks as properties on the Game object (akin to e.g. "unholyMarkEffect"), for easy and quick access
          */
         this.context.patch(Game, "postDataRegistration").after(function () {
-
-            // Then cache the effects and attacks on it
             const deathMarkEffect = this.stackingEffects.getObjectByID(ModifierConstants.DEATH_MARK_EFFECT_FULL_ID);
             if (deathMarkEffect) {
                 this.customModifiersInMelvor.stackingEffects.deathMarkEffect = deathMarkEffect;
@@ -1007,13 +1002,11 @@ export class CustomModifiersManager {
 
                 const stackingEffect = this.stackingEffects.getObjectByID(`${Constants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`);
                 if (stackingEffect) {
-                    // @ts-ignore: dynamic definition
                     this.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect] = stackingEffect;
                 }
 
                 const traitApplyingAttack = this.specialAttacks.getObjectByID(`${Constants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_ATTACK_ID_SUFFIX}`);
                 if (traitApplyingAttack) {
-                    // @ts-ignore: dynamic definition
                     this.customModifiersInMelvor.specialAttacks[type.effectPropertyObjectNames.traitApplicationCustomModifierEffectAttack] = traitApplyingAttack;
                 }
             }
@@ -1114,13 +1107,10 @@ export class CustomModifiersManager {
                     - this.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTraitInfiniteOnSpawn]
                 );
                 if (applyTraitInfinite) {
-                    // @ts-ignore: dynamic game property name
-                    const effect: ModifierEffect = game.customModifiersInMelvor.customModifierEffects[type.effectPropertyObjectNames.traitApplicationCustomModifierEffect];
-                    // @ts-ignore: dynamic game property name
-                    this.applyModifierEffect(effect, this.target, game.customModifiersInMelvor.specialAttacks[type.effectPropertyObjectNames.traitApplicationCustomModifierEffectAttack]);
+                    const effectData: CustomEffectData = game.customModifiersInMelvor.customModifierEffects[type.effectPropertyObjectNames.traitApplicationCustomModifierEffect];
+                    this.applyModifierEffect(effectData, this.target, game.customModifiersInMelvor.specialAttacks[type.effectPropertyObjectNames.traitApplicationCustomModifierEffectAttack]);
                 } else {
                     if (this.modifiers[type.modifierPropertyNames.applyTraitTurnsOnSpawn] > 0) {
-                        // @ts-ignore: dynamic game property name
                         this.applyStackingEffect(this.game.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect], this.target, this.modifiers[type.modifierPropertyNames.applyTraitTurnsOnSpawn]);
                     }
                 }
@@ -1206,7 +1196,6 @@ export class CustomModifiersManager {
                     }
 
                     if (turns > 0) {
-                        // @ts-ignore: dynamic game property name
                         this.applyStackingEffect(this.game.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect], this.target, turns);
                         this.target.rendersRequired.effects = true;
                     }

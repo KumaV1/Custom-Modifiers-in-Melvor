@@ -44,12 +44,9 @@ export class MonsterTypeHelper {
             decreasedGlobalAccuracy: `decreasedGlobalAccuracyAgainst${typePluralName}`,
             increasedDamageReduction: `increasedDamageReductionAgainst${typePluralName}`,
             decreasedDamageReduction: `decreasedDamageReductionAgainst${typePluralName}`,
-
-
             increasedChanceToApplyTraitInfiniteOnSpawn: `increasedChanceToApply${typeSingularName}TraitInfiniteOnSpawn`,
             decreasedChanceToApplyTraitInfiniteOnSpawn: `decreasedChanceToApply${typeSingularName}TraitInfiniteOnSpawn`,
             applyTraitTurnsOnSpawn: `apply${typeSingularName}TraitTurnsOnSpawn`,
-
             increasedChanceToApplyTrait: `increasedChanceToApply${typeSingularName}Trait`,
             decreasedChanceToApplyTrait: `decreasedChanceToApply${typeSingularName}Trait`,
             applyTraitTurns: `apply${typeSingularName}TraitTurns`
