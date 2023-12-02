@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.1.0
+* Added "damage taken from monster type" modifiers
+* Added modifiers and effects to apply monster types ("trait") during combat
+* After some time for backwards-compatibility, all monster types are now inactive by default
+* `registerOrUpdateType` endpoint now defaults to `true` for the `active` parameter
+
 ## v2.0.0
 * Completely revamped monster type system, to be completely dynamic and easy to expand by other mods, 
 while also avoiding additional calculations through unutilized types
