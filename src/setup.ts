@@ -18,11 +18,13 @@ import ModData from '../data/data.json'
 import '../assets/Logo.png'
 import '../assets/Death_Mark.png'
 import '../assets/Invoke_Death.png'
+import { GameObjectDataWrapperInitializer } from './GameObjectDataWrapperInitializer';
 // #endregion
 
 export async function setup(ctx: Modding.ModContext) {
     // Register custom modifier logic patches and localized texts
     initApiEndpoints(ctx);
+    initGameObjectDataWrapper();
     initCustomModifiers(ctx);
     initTranslation(ctx);
     initOverviewContainer(ctx);
@@ -63,6 +65,13 @@ function initApiEndpoints(ctx: Modding.ModContext) {
         monsterIsDragon: (monster: Monster) => MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Dragon),
         monsterIsUndead: (monster: Monster) => MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Undead)
     });
+}
+
+/**
+ * As one of the first steps, initialize object structure for game-object-quick-access-data
+ */
+function initGameObjectDataWrapper() {
+    GameObjectDataWrapperInitializer.process();
 }
 
 /**

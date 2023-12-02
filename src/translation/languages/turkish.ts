@@ -123,7 +123,7 @@ export const tr = {
     MONSTER_TYPE_SINGULAR_Undead: "Undead",
     MONSTER_TYPE_PLURAL_Undead: "Undead",
 
-    COMBAT_MISC_Monster_Type_Trait_Effect: "${monsterType} Trait",
+    COMBAT_MISC_Monster_Type_Trait_Modifier_Effect: "${monsterType} Trait",
     COMBAT_MISC_Monster_Type_Trait_Stacking_Effect: "${monsterType} Trait",
 
     MODIFIER_DATA_MonsterTypeTraitApplied: "Marks the affected as ${monsterType}",
