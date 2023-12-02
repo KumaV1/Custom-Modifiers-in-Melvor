@@ -124,6 +124,7 @@ export const ru = {
     MONSTER_TYPE_PLURAL_Undead: "Undead",
 
     COMBAT_MISC_Monster_Type_Trait_Effect: "${monsterType} Trait",
+    COMBAT_MISC_Monster_Type_Trait_Stacking_Effect: "${monsterType} Trait",
 
     MODIFIER_DATA_MonsterTypeTraitApplied: "Marks the affected as ${monsterType}",
     MODIFIER_DATA_increasedDamageAgainstMonsterType: "+${value}% Damage To ${monsterType}",
@@ -142,6 +143,14 @@ export const ru = {
     MODIFIER_DATA_decreasedGlobalAccuracyAgainstMonsterType: '-${value}% Accuracy Rating when fighting ${monsterType}',
     MODIFIER_DATA_increasedDamageReductionAgainstMonsterType: '+${value}% Damage Reduction when fighting ${monsterType}',
     MODIFIER_DATA_decreasedDamageReductionAgainstMonsterType: '-${value}% Damage Reduction when fighting ${monsterType}',
+
+    MODIFIER_DATA_increasedChanceToApplyMonsterTypeTraitInfiniteOnSpawn: '+${value}% chance to apply ${monsterType} trait for the whole fight on spawn or revive',
+    MODIFIER_DATA_decreasedChanceToApplyMonsterTypeTraitInfiniteOnSpawn: '-${value}% chance to apply ${monsterType} trait for the whole fight on spawn or revive',
+    MODIFIER_DATA_applyMonserTypeTraitTurnsOnSpawn: "Apply ${monsterType} trait on enemy for ${value} of the enemies' turns on spawn or revive",
+
+    MODIFIER_DATA_increasedChanceToApplyMonsterTypeTrait: "+${value}% chance to apply ${monsterType} trait for one of the enemies' turns",
+    MODIFIER_DATA_decreasedChanceToApplyMonsterTypeTrait: "-${value}% chance to apply ${monsterType} trait for one of the enemies' turns",
+    MODIFIER_DATA_applyMonsterTypeTraitTurns: "Apply ${monsterType} trait on enemy for ${value} of the enemies' turns",
 
     // #### Bosses
     MODIFIER_DATA_increasedMaxHitPercentAgainstBosses: "+${value}% Max Hit when fighting bosses",

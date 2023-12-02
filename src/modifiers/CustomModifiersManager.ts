@@ -68,8 +68,16 @@ export class CustomModifiersManager {
             modifierData[value] = obj;
         });
 
+        // Create (non-stacking) custom effect data
+        const customEffectData: CustomEffectData = MonsterTypeHelper.createTraitCustomEffectDataInfiniteObject(type);
+
+        // @ts-ignore implicit 'any' type error
+        // we know though that it is an object to which we want to add a property
+        game[type.effectPropertyObjectNames.traitApplicationCustomModifierEffect] = customEffectData;
+
         // Context game data is undefined, so we just go and call game.registerData directory
         game.registerDataPackage(MonsterTypeHelper.createTraitStackingEffectGamePackage(type));
+        game.registerDataPackage(MonsterTypeHelper.createTraitCustomModifierEffectAttackGamePackage(type, customEffectData));
     }
 
     // #region Modifier Registration
@@ -983,12 +991,29 @@ export class CustomModifiersManager {
      */
     private patchGame() {
         /**
-         * Register custom effects as properties on the Game object (akin to e.g. "unholyMarkEffect")
+         * Register custom effects and attacks as properties on the Game object (akin to e.g. "unholyMarkEffect"), for easy and quick access
          */
         this.context.patch(Game, "postDataRegistration").after(function () {
-            const effect = this.stackingEffects.getObjectByID(ModifierConstants.DEATH_MARK_EFFECT_FULL_ID);
-            if (effect) {
-                this.deathMarkEffect = effect;
+            const deathMarkEffect = this.stackingEffects.getObjectByID(ModifierConstants.DEATH_MARK_EFFECT_FULL_ID);
+            if (deathMarkEffect) {
+                this.deathMarkEffect = deathMarkEffect;
+            }
+
+            const types = MonsterTypeMappingManager.getActiveTypesAsArray();
+            for (var i = 0; i < types.length; i++) {
+                const type = types[i];
+
+                const stackingEffect = this.stackingEffects.getObjectByID(`${Constants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`);
+                if (stackingEffect) {
+                    // @ts-ignore: dynamic definition
+                    this[type.effectPropertyObjectNames.traitApplicationStackingEffect] = stackingEffect;
+                }
+
+                const traitApplyingAttack = this.specialAttacks.getObjectByID(`${Constants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_ATTACK_ID_SUFFIX}`);
+                if (traitApplyingAttack) {
+                    // @ts-ignore: dynamic definition
+                    this[type.effectPropertyObjectNames.traitApplicationCustomModifierEffectAttack] = traitApplyingAttack;
+                }
             }
         });
     }
@@ -1077,6 +1102,27 @@ export class CustomModifiersManager {
             if (rollPercentage(this.modifiers.increasedChanceToApplyDeadlyPoisonOnSpawn - this.modifiers.decreasedChanceToApplyDeadlyPoisonOnSpawn)) {
                 this.applyDOT(deadlyPoisonEffect, this.target, 0);
             }
+
+            const types = MonsterTypeMappingManager.getActiveTypesAsArray();
+            for (var i = 0; i < types.length; i++) {
+                const type = types[i];
+
+                const applyTraitInfinite = rollPercentage(
+                    this.modifiers[type.modifierPropertyNames.increasedChanceToApplyTraitInfiniteOnSpawn]
+                    - this.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTraitInfiniteOnSpawn]
+                );
+                if (applyTraitInfinite) {
+                    // @ts-ignore: dynamic game property name
+                    const effect: ModifierEffect = game[type.effectPropertyObjectNames.traitApplicationCustomModifierEffect];
+                    // @ts-ignore: dynamic game property name
+                    this.applyModifierEffect(effect, this.target, game[type.effectPropertyObjectNames.traitApplicationCustomModifierEffectAttack]);
+                } else {
+                    if (this.modifiers[type.modifierPropertyNames.applyTraitTurnsOnSpawn] > 0) {
+                        // @ts-ignore: dynamic game property name
+                        this.applyStackingEffect(this.game[type.effectPropertyObjectNames.traitApplicationStackingEffect], this.target, this.modifiers[type.modifierPropertyNames.applyTraitTurnsOnSpawn]);
+                    }
+                }
+            }
         });
     }
 
@@ -1124,7 +1170,7 @@ export class CustomModifiersManager {
     /**
      * "On hit effect" means both literal "on hit modifiers" but also stuff like "roll to poison, only because you actually hit the enemy".
      * REMARK: We patch 'clampDamageValue' because it is only ever called in ONE location. We don't patch to modify its functionality,
-     * we actually patch it as a means of injecting our code into the process we want to (there is no natural method to beforé/after patch).
+     * we actually patch it as a means of injecting our code into the process we want to (there is no natural method to before/after patch).
      *
      * More specifically, the patched method is called only when the entity's target has been rolled to hit,
      * which is the condition for which we want to implement some more stuff
@@ -1144,6 +1190,22 @@ export class CustomModifiersManager {
                 if (rollPercentage(this.modifiers.increasedChanceToApplyStackOfDeathMark - this.modifiers.decreasedChanceToApplyStackOfDeathMark)) {
                     if (rollPercentage(100 - (this.target.modifiers.increasedDeathMarkImmunity - this.target.modifiers.decreasedDeathMarkImmunity))) {
                         this.applyStackingEffect(this.game.deathMarkEffect, this.target, 1);
+                        this.target.rendersRequired.effects = true;
+                    }
+                }
+
+                const types = MonsterTypeMappingManager.getActiveTypesAsArray();
+                for (var i = 0; i < types.length; i++) {
+                    const type = types[i];
+
+                    let turns = this.modifiers[type.modifierPropertyNames.applyTraitTurns];
+                    if (rollPercentage(this.modifiers[type.modifierPropertyNames.increasedChanceToApplyTrait] - this.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTrait])) {
+                        turns++;
+                    }
+
+                    if (turns > 0) {
+                        // @ts-ignore: dynamic game property name
+                        this.applyStackingEffect(this.game[type.effectPropertyObjectNames.traitApplicationStackingEffect], this.target, turns);
                         this.target.rendersRequired.effects = true;
                     }
                 }

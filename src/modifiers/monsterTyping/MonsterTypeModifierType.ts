@@ -16,4 +16,10 @@ export enum MonsterTypeModifierType {
     DecreasedGlobalAccuracy = "decreasedGlobalAccuracy",
     IncreasedDamageReduction = "increasedDamageReduction",
     DecreasedDamageReduction = "decreasedDamageReduction",
+    IncreasedChanceToApplyTraitInfiniteOnSpawn = "increasedChanceToApplyTraitInfiniteOnSpawn",
+    DecreasedChanceToApplyTraitInfiniteOnSpawn = "decreasedChanceToApplyTraitInfiniteOnSpawn",
+    ApplyTraitTurnsOnSpawn = "applyTraitTurnsOnSpawn",
+    IncreasedChanceToApplyTrait = "increasedChanceToApplyTrait",
+    DecreasedChanceToApplyTrait = "decreasedChanceToApplyTrait",
+    ApplyTraitTurns = "applyTraitTurns"
 }

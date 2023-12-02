@@ -191,6 +191,18 @@ export class TinyIconsCompatibility {
             modifiers[`${type.modifierPropertyNames.increasedDamageReduction}`] = [`${tagName}`, 'ti_dr_up'];
             // @ts-ignore
             modifiers[`${type.modifierPropertyNames.decreasedDamageReduction}`] = [`${tagName}`, 'ti_dr_dn'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedChanceToApplyTraitInfiniteOnSpawn}`] = [`${tagName}`, 'combat'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedChanceToApplyTraitInfiniteOnSpawn}`] = [`${tagName}`, 'combat'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.applyTraitTurnsOnSpawn}`] = [`${tagName}`, 'combat'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.increasedChanceToApplyTrait}`] = [`${tagName}`, 'combat'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.decreasedChanceToApplyTrait}`] = [`${tagName}`, 'combat'];
+            // @ts-ignore
+            modifiers[`${type.modifierPropertyNames.applyTraitTurns}`] = [`${tagName}`, 'combat'];
 
             tinyIcons.addTagSources(cmimTagSources);
             tinyIcons.addCustomModifiers(modifiers);
