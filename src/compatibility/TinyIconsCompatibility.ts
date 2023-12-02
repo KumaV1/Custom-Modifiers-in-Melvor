@@ -124,13 +124,9 @@ export class TinyIconsCompatibility {
                 cmim_death_mark: this.context.getResourceUrl('assets/customModifiersInMelvor/Invoke_Death.png'),
             };
 
+            // Add non-dynamic tag sources and modifiers
             tinyIcons.addTagSources(cmimTagSources);
             tinyIcons.addCustomModifiers(this.tinyIconCustomModifierTags);
-
-            const types = MonsterTypeMappingManager.getActiveTypesAsArray();
-            for (var i = 0; i < types.length; i++) {
-                this.registerMonsterType(types[i]);
-            }
         });
     }
 
