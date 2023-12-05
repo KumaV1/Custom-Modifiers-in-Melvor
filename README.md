@@ -28,9 +28,9 @@ you can allow those players to make use of modifiers added through this mod, eve
 To do so, just check whether the api object is defined, and call the type-registering method(s) for whatever monsters you see fit.
 ```js
 if(mod.api.customModifiersInMelvor) {
-	// If you only add one monster, make sure you still provide an array and not just a string accidentally
-	mod.api.customModifiersInMelvor.addMonsters("Human", ["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
-	mod.api.customModifiersInMelvor.addMonsters("Dragon", ["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
-	mod.api.customModifiersInMelvor.addMonsters("Undead", ["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
+  // If you only add one monster, make sure you still provide an array and not just a string accidentally
+  mod.api.customModifiersInMelvor.addMonsters("Human", ["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
+  mod.api.customModifiersInMelvor.addMonsters("Dragon", ["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
+  mod.api.customModifiersInMelvor.addMonsters("Undead", ["MOD_NAMESPACE:MONSTER_ID", "MOD_NAMESPACE:MONSTER_ID", "..."]);
 }
 ```

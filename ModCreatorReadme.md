@@ -255,7 +255,7 @@ addMonsters("Dragon", ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"]);
 * @param typeNamePlural - the english plural variant of the type's name. Affects modifier name(s) 
 * @param iconResourceUrl - a usable full URL to an image that will be used as icon for anything related to this type (e.g. "StackingEffects" or "Tiny Icon Mod Support")
 * @param monsterIds - a list of monster ids. If you are defining a type not covered by the base mod, you should include any Melvor monsters that may fit
-* @param active - whether the type should be set to active - as a mod consuming the api, this is basically always going to be true, but can technically be set to false as well
+* @param active - whether the type should be set to active (can be omittet, in which case it will default to true) - as a mod consuming the api, this is basically always going to be true, but can technically be set to false as well
 * @returns void
 */
 registerOrUpdateType(typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean)
@@ -263,7 +263,7 @@ registerOrUpdateType(typeNameSingular: string, typeNamePlural: string, iconResou
 // Example
 registerOrUpdateType("Dragon", "Dragons", "https://cdn.melvor.net/core/v018/assets/media/monsters/dragon_green.png", ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"]);
 
-// Purpose: The main endpoint, if you want to ensure an active type, for which this base mod does not provide any pre-configuration.
+// Purpose: The main endpoint, if you want to create a new type, for which this base mod does not provide any pre-configuration.
 // If you want to support multi-language, it's also important that you load two language-entries (see "Translation of new monster type")
 ```
 
