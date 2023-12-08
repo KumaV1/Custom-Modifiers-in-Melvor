@@ -135,74 +135,76 @@ export class TinyIconsCompatibility {
      * @param type
      */
     public registerMonsterType(type: MonsterTypeDefinition): void {
-        if (!this.isLoaded()) {
-            return;
-        }
+        this.context.onModsLoaded(() => {
+            if (!this.isLoaded()) {
+                return;
+            }
 
-        const tinyIcons = mod.api.tinyIcons;
-        if (!tinyIcons) {
-            return;
-        }
+            const tinyIcons = mod.api.tinyIcons;
+            if (!tinyIcons) {
+                return;
+            }
 
-        if (type && type.iconResourceUrl) {
-            // Add dynamic tag source for monster type
-            let cmimTagSources: Record<string, string> = {};
-            const tagName = `cmim_${type.singularName}`;
-            cmimTagSources[tagName] = this.context.getResourceUrl(type.iconResourceUrl);
+            if (type && type.iconResourceUrl) {
+                // Add dynamic tag source for monster type
+                let cmimTagSources: Record<string, string> = {};
+                const tagName = `cmim_${type.singularName}`;
+                cmimTagSources[tagName] = this.context.getResourceUrl(type.iconResourceUrl);
 
-            let modifiers: Record<string, string> = {};
+                let modifiers: Record<string, string> = {};
 
-            // Also add dynamic modifier entries based on tag
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.traitApplied}`] = [`${tagName}`, 'combat'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.increasedDamage}`] = [`${tagName}`, 'combat'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.decreasedDamage}`] = [`${tagName}`, 'combat'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.increasedDamageTaken}`] = [`${tagName}`, 'ti_combat_dn'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.decreasedDamageTaken}`] = [`${tagName}`, 'ti_combat_up'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.increasedMaxHitPercent}`] = [`${tagName}`, 'ti_combat_up'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.decreasedMaxHitPercent}`] = [`${tagName}`, 'ti_combat_dn'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.increasedMaxHitFlat}`] = [`${tagName}`, 'ti_combat_up'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.decreasedMaxHitFlat}`] = [`${tagName}`, 'ti_combat_dn'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.increasedMinHitBasedOnMaxHit}`] = [`${tagName}`, 'ti_combat_up'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.decreasedMinHitBasedOnMaxHit}`] = [`${tagName}`, 'ti_combat_dn'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.increasedFlatMinHit}`] = [`${tagName}`, 'ti_combat_up'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.decreasedFlatMinHit}`] = [`${tagName}`, 'ti_combat_dn'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.increasedGlobalAccuracy}`] = [`${tagName}`, 'ti_combat_up'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.decreasedGlobalAccuracy}`] = [`${tagName}`, 'ti_combat_dn'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.increasedDamageReduction}`] = [`${tagName}`, 'ti_dr_up'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.decreasedDamageReduction}`] = [`${tagName}`, 'ti_dr_dn'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.increasedChanceToApplyTraitInfiniteOnSpawn}`] = [`${tagName}`, 'combat'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.decreasedChanceToApplyTraitInfiniteOnSpawn}`] = [`${tagName}`, 'combat'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.applyTraitTurnsOnSpawn}`] = [`${tagName}`, 'combat'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.increasedChanceToApplyTrait}`] = [`${tagName}`, 'combat'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.decreasedChanceToApplyTrait}`] = [`${tagName}`, 'combat'];
-            // @ts-ignore
-            modifiers[`${type.modifierPropertyNames.applyTraitTurns}`] = [`${tagName}`, 'combat'];
+                // Also add dynamic modifier entries based on tag
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.traitApplied}`] = [`${tagName}`, 'combat'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.increasedDamage}`] = [`${tagName}`, 'combat'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.decreasedDamage}`] = [`${tagName}`, 'combat'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.increasedDamageTaken}`] = [`${tagName}`, 'ti_combat_dn'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.decreasedDamageTaken}`] = [`${tagName}`, 'ti_combat_up'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.increasedMaxHitPercent}`] = [`${tagName}`, 'ti_combat_up'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.decreasedMaxHitPercent}`] = [`${tagName}`, 'ti_combat_dn'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.increasedMaxHitFlat}`] = [`${tagName}`, 'ti_combat_up'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.decreasedMaxHitFlat}`] = [`${tagName}`, 'ti_combat_dn'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.increasedMinHitBasedOnMaxHit}`] = [`${tagName}`, 'ti_combat_up'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.decreasedMinHitBasedOnMaxHit}`] = [`${tagName}`, 'ti_combat_dn'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.increasedFlatMinHit}`] = [`${tagName}`, 'ti_combat_up'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.decreasedFlatMinHit}`] = [`${tagName}`, 'ti_combat_dn'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.increasedGlobalAccuracy}`] = [`${tagName}`, 'ti_combat_up'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.decreasedGlobalAccuracy}`] = [`${tagName}`, 'ti_combat_dn'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.increasedDamageReduction}`] = [`${tagName}`, 'ti_dr_up'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.decreasedDamageReduction}`] = [`${tagName}`, 'ti_dr_dn'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.increasedChanceToApplyTraitInfiniteOnSpawn}`] = [`${tagName}`, 'combat'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.decreasedChanceToApplyTraitInfiniteOnSpawn}`] = [`${tagName}`, 'combat'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.applyTraitTurnsOnSpawn}`] = [`${tagName}`, 'combat'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.increasedChanceToApplyTrait}`] = [`${tagName}`, 'combat'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.decreasedChanceToApplyTrait}`] = [`${tagName}`, 'combat'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.applyTraitTurns}`] = [`${tagName}`, 'combat'];
 
-            tinyIcons.addTagSources(cmimTagSources);
-            tinyIcons.addCustomModifiers(modifiers);
-        }
+                tinyIcons.addTagSources(cmimTagSources);
+                tinyIcons.addCustomModifiers(modifiers);
+            }
+        });
     }
 
     private isLoaded(): Boolean {
