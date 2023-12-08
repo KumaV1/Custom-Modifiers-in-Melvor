@@ -1,11 +1,16 @@
 # Changelog
 
+## v2.1.2
+* Fixed minor issue with [Tiny Icons mod](https://mod.io/g/melvoridle/m/tiny-icons) compatibility,
+where icons for monster type modifiers would not be registered
+for types activated before the [Tiny Icons mod](https://mod.io/g/melvoridle/m/tiny-icons) is loaded
+
 ## v2.1.1
 * Removed redundant second go at adding tiny icons for monster type modifiers (technically already preventet by tiny icons mod)
 
 ## v2.1.0
 * Added "damage taken from monster type" modifiers
-* Added modifiers and effects to apply monster types ("trait") during combat
+* Added modifiers and effects to aponInterfaceReady ply monster types ("trait") during combat
 * After some time for backwards-compatibility, all monster types are now inactive by default
 * `registerOrUpdateType` endpoint now defaults to `true` for the `active` parameter
 
