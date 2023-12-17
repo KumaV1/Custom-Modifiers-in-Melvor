@@ -1,5 +1,6 @@
 // Modules
 // You can import script modules and have full type completion
+import { CmimSettings } from './settings';
 import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
 import { ModContextMemoizer } from './ModContextMemoizer';
 import { MonsterType } from './monsterTyping/MonsterType';
@@ -22,13 +23,17 @@ import { GameObjectDataWrapperInitializer } from './GameObjectDataWrapperInitial
 // #endregion
 
 export async function setup(ctx: Modding.ModContext) {
+    // logLifecycleHookStarts(ctx);
+
     // Register custom modifier logic patches and localized texts
     initGameObjectDataWrapper();
+    initSettings(ctx);
+    initApiEndpoints(ctx);
     initCustomModifiers(ctx);
     initTranslation(ctx);
-    initOverviewContainer(ctx);
     initModCompatibility(ctx);
     initDynamicMonsterTypes(ctx);
+    initOverviewContainer(ctx);
 
     // Register our GameData
     await ctx.gameData.addPackage(ModData);
@@ -37,6 +42,36 @@ export async function setup(ctx: Modding.ModContext) {
 
     // Memorize context, to make it easily accessable on mod api calls by other mods
     ModContextMemoizer.memoizeContext(ctx);
+}
+
+function logLifecycleHookStarts(ctx: Modding.ModContext) {
+    ctx.onModsLoaded(function () {
+        console.log("===== onModsLoaded =====");
+    });
+    ctx.onCharacterSelectionLoaded(function () {
+        console.log("===== onCharacterSelectionLoaded =====");
+    });
+    ctx.onInterfaceAvailable(function () {
+        console.log("===== onInterfaceAvailable =====");
+    });
+    ctx.onCharacterLoaded(function () {
+        console.log("===== onCharacterLoaded =====");
+    });
+    ctx.onInterfaceReady(function () {
+        console.log("===== onInterfaceReady =====");
+    });
+}
+
+/**
+ * As one of the first steps, initialize object structure for game-object-quick-access-data
+ */
+function initGameObjectDataWrapper() {
+    GameObjectDataWrapperInitializer.process();
+}
+
+function initSettings(ctx: Modding.ModContext) {
+    const settings = new CmimSettings(ctx);
+    settings.init();
 }
 
 /**
@@ -64,13 +99,6 @@ function initApiEndpoints(ctx: Modding.ModContext) {
         monsterIsDragon: (monster: Monster) => MonsterTypeManager.monsterIsOfType(monster, MonsterType.Dragon),
         monsterIsUndead: (monster: Monster) => MonsterTypeManager.monsterIsOfType(monster, MonsterType.Undead)
     });
-}
-
-/**
- * As one of the first steps, initialize object structure for game-object-quick-access-data
- */
-function initGameObjectDataWrapper() {
-    GameObjectDataWrapperInitializer.process();
 }
 
 /**
@@ -129,4 +157,5 @@ function initModCompatibility(ctx: Modding.ModContext) {
  */
 function initDynamicMonsterTypes(ctx: Modding.ModContext) {
     MonsterTypeManager.initNativeMonsterTypes();
+    MonsterTypeManager.initCombatAreaMonsterTypeIndicators(ctx);
 }

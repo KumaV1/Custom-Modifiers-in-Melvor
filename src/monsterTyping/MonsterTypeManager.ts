@@ -4,6 +4,7 @@ import { CustomModifiersManager } from '../modifiers/CustomModifiersManager';
 import { ModContextMemoizer } from '../ModContextMemoizer';
 import { MonsterType } from './MonsterType'
 import { MonsterTypeDefinition } from './MonsterTypeDefinition';
+import { MonsterTypeHelper } from './MonsterTypeHelper';
 import { TinyIconsCompatibility } from '../compatibility/TinyIconsCompatibility';
 import { TranslationManager } from '../translation/TranslationManager';
 
@@ -25,10 +26,165 @@ export class MonsterTypeManager {
     private static _inactiveTypes: { [key: string]: MonsterTypeDefinition } = {};
 
     /**
-     * If configured as such, initialize that badges indicating monster types will be added to monsters/dungeons
+     * Patch creation of combat areas html, so we can hook into it and add some badges,
+     * though only if said badges have been enabled in mod settings
      */
-    public static initCombatAreaIndicators() {
+    public static initCombatAreaMonsterTypeIndicators(ctx: Modding.ModContext) {
+        ctx.onInterfaceReady(function () {
+            // If setting is disabled, then just return
+            if (false) {
+                return;
+            }
 
+            // TODO: Considering the monster type overview, I ought to cache a list of monster ids and a list of monster types allocated to them
+            const activeTypes = MonsterTypeManager.getActiveTypesAsArray();
+            const inactiveTypes = MonsterTypeManager.getInactiveTypesAsArray();
+
+            try {
+            // Add badges to combat area monsters
+                const combatAreasContainer = document.getElementById('combat-select-area-Combat');
+                if (combatAreasContainer !== undefined && combatAreasContainer !== null) {
+                    for (var i = 0; i < combatAreasContainer.children.length; i++) {
+                        const combatArea = game.combatAreaDisplayOrder[i];
+                        const monsterListElement: HTMLElement = combatAreasContainer
+                            .getElementsByTagName("monster-select-table")[i]
+                            .getElementsByTagName("tbody")[0];
+
+                        for (var j = 0; j < combatArea.monsters.length; j++) {
+                            const monster: Monster = combatArea.monsters[j];
+
+                            // Generate list
+                            let ui: HTMLElement[] = [];
+                            for (var k = 0; k < activeTypes.length; k++) {
+                                const type = activeTypes[k];
+                                if (MonsterTypeManager.monsterIsOfType(monster, type.singularName)) {
+                                    ui.push(MonsterTypeHelper.createCombatAreaIndicatorBadge(type, true, 1, false));
+                                }
+                            }
+                            for (var k = 0; k < inactiveTypes.length; k++) {
+                                const type = inactiveTypes[k];
+                                if (MonsterTypeManager.monsterIsOfType(monster, type.singularName)) {
+                                    ui.push(MonsterTypeHelper.createCombatAreaIndicatorBadge(type, false, 1, false));
+                                }
+                            }
+
+                            // If we injected at least one monster type badge, we also want to add a linebreak
+                            // Added here at the end, as injecting it at the start of an element's innerhtml doesn't work (at least not via insertBefore)
+                            if (ui.length > 0) {
+                                ui.push(document.createElement("br"));
+                            }
+
+                            // Inject badges into first td-element, placing it above the monster's name
+                            const monsterListEntryElement = monsterListElement.children[j];
+                            let monsterListEntryTdElement = monsterListEntryElement.getElementsByTagName("td")[0];
+                            for (var k = ui.length - 1; k >= 0; k--) {
+                                monsterListEntryTdElement.insertBefore(ui[k], monsterListEntryTdElement.children[0]);
+                            }
+                        }
+                    }
+                }
+
+                // Add badges to slayer monsters
+                const slayerAreasContainer = document.getElementById('combat-select-area-Slayer');
+                if (slayerAreasContainer !== undefined && slayerAreasContainer !== null) {
+                    for (var i = 0; i < slayerAreasContainer.children.length; i++) {
+                        const slayerArea = game.slayerAreaDisplayOrder[i];
+                        const monsterListElement: HTMLElement = slayerAreasContainer
+                            .getElementsByTagName("monster-select-table")[i]
+                            .getElementsByTagName("tbody")[0];
+
+                        for (var j = 0; j < slayerArea.monsters.length; j++) {
+                            const monster: Monster = slayerArea.monsters[j];
+
+                            // Generate list
+                            let ui: HTMLElement[] = [];
+                            for (var k = 0; k < activeTypes.length; k++) {
+                                const type = activeTypes[k];
+                                if (MonsterTypeManager.monsterIsOfType(monster, type.singularName)) {
+                                    ui.push(MonsterTypeHelper.createCombatAreaIndicatorBadge(type, true, 1, false));
+                                }
+                            }
+                            for (var k = 0; k < inactiveTypes.length; k++) {
+                                const type = inactiveTypes[k];
+                                if (MonsterTypeManager.monsterIsOfType(monster, type.singularName)) {
+                                    ui.push(MonsterTypeHelper.createCombatAreaIndicatorBadge(type, false, 1, false));
+                                }
+                            }
+
+                            // If we injected at least one monster type badge, we also want to add a linebreak
+                            if (ui.length > 0) {
+                                ui.push(document.createElement("br"));
+                            }
+
+                            // Inject badges into first td-element, placing it above the monster's name
+                            const monsterListEntryElement = monsterListElement.children[j];
+                            let monsterListEntryTdElement = monsterListEntryElement.getElementsByTagName("td")[0];
+                            for (var k = ui.length - 1; k >= 0; k--) {
+                                monsterListEntryTdElement.insertBefore(ui[k], monsterListEntryTdElement.children[0]);
+                            }
+                        }
+                    }
+                }
+
+                // Add badges to dungeons
+                const dungeonsContainer = document.getElementById('combat-select-area-Dungeon');
+                if (dungeonsContainer !== undefined && dungeonsContainer !== null) {
+                    for (var i = 0; i < dungeonsContainer.children.length; i++) {
+                        const dungeon = game.dungeonDisplayOrder[i];
+                        const dungeonMediaBodyElement = dungeonsContainer
+                            .getElementsByTagName("combat-area-menu")[i]
+                            .children[0]
+                            .children[3]
+                            .children[2];
+
+                        // Generate list
+                        let ui: HTMLElement[] = [];
+                        for (var j = 0; j < activeTypes.length; j++) {
+                            const type = activeTypes[j];
+                            let count: number = 0;
+
+                            dungeon.monsters.forEach(function (value: Monster) {
+                                if (MonsterTypeManager.monsterIsOfType(value, type.singularName)) {
+                                    count++;
+                                }
+                            });
+
+                            if (count > 0) {
+                                ui.push(MonsterTypeHelper.createCombatAreaIndicatorBadge(type, true, count, true));
+                            }
+                        }
+                        for (var j = 0; j < inactiveTypes.length; j++) {
+                            const type = inactiveTypes[j];
+                            let count: number = 0;
+
+                            dungeon.monsters.forEach(function (value: Monster) {
+                                if (MonsterTypeManager.monsterIsOfType(value, type.singularName)) {
+                                    count++;
+                                }
+                            });
+
+                            if (count > 0) {
+                                ui.push(MonsterTypeHelper.createCombatAreaIndicatorBadge(type, false, count, true));
+                            }
+                        }
+
+                        // Inject badges into first td-element, placing it above the monster's name
+                        if (ui.length > 0) {
+                            const dungeonMediaBodyInjectTargetElement = dungeonMediaBodyElement.children[1];
+
+                            // Start of with a line break
+                            dungeonMediaBodyInjectTargetElement.appendChild(document.createElement("br"));
+
+                            for (var k = ui.length - 1; k >= 0; k--) {
+                                dungeonMediaBodyInjectTargetElement.appendChild(ui[k]);
+                            }
+                        }
+                    }
+                }
+            } catch (e) {
+                console.log(`Couldn't generate monster type badges: Reason: ${e}'`);
+            }
+        });
     }
 
     public static initNativeMonsterTypes() {

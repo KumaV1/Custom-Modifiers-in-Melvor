@@ -1130,7 +1130,7 @@ export class CustomModifiersManager {
             if (this.modifiers.deathMark > 0 && this.hitpoints <= ModifierConstants.DEATH_MARK_MAX_FLAT_HP) {
                 const effect = this.stackingEffect.get(this.game.deathMarkEffect);
                 if (effect === undefined) {
-                    console.log("effect not found on game object");
+                    console.log("Death mark effect not found on game object");
                 }
                 else {
                     const maxHpPercentage = (this.hitpoints / this.stats.maxHitpoints) * 100;

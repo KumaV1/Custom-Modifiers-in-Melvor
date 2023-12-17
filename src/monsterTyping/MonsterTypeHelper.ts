@@ -1,5 +1,6 @@
 import { Constants } from '../Constants';
 import { Constants as ModifierConstants } from '../modifiers/Constants';
+import { TranslationManager } from '../translation/TranslationManager';
 import { MonsterTypeDefinition } from './MonsterTypeDefinition';
 import { MonsterTypeEffectObjectNames } from './MonsterTypeEffectObjectNames';
 import { MonsterTypeManager } from './MonsterTypeManager';
@@ -356,7 +357,7 @@ export class MonsterTypeHelper {
      * Calculates modification for cases that are "valid", if ONESELF is treated as the corresponding type
      *
      * NOTE: The naming can be a little hard to discern, but "damage taken" runs during the same calculation as "damage".
-     * There, whether is has an effect is actually based on what modifiers the ENEMY has, not oneself.
+     * Because of that, whether the modifiers have an effect is actually based on what modifiers the ENEMY has, not oneself.
      * Inadvertenly, who has to have their type checked is also flipped on its head
      * @param entity
      * @param modifierGroup
@@ -383,5 +384,29 @@ export class MonsterTypeHelper {
         // @ts-ignore - We know these properties exist, as they were dynamically added before
         return entity.target.modifiers[type.modifierPropertyNames.increasedDamageTaken] - entity.target.modifiers[type.modifierPropertyNames.decreasedDamageTaken];
         // ^ this is currently the only case, so we omit actually checking the provided enum value; done so for slight performance optimization
+    }
+
+    /**
+     * Create a badge html element to communicate info regarding allocation of the given monster type
+     * @param type the monster type
+     * @param typeActive whether the type is active
+     * @param count how many monsters are currently relevant for this method call
+     * @param displayCount whether the count should be included in the text returned
+     */
+    public static createCombatAreaIndicatorBadge(type: MonsterTypeDefinition, typeActive: boolean, count: number, displayCount: boolean): HTMLElement {
+        var badgeEl = document.createElement('span');
+        badgeEl.classList.add('badge');
+        badgeEl.classList.add('bage-pill');
+        badgeEl.classList.add('mr-1');
+        badgeEl.classList.add(typeActive ? 'badge-success' : 'badge-warning');
+
+        badgeEl.innerHTML = displayCount
+            ? `${count} `
+            : '';
+        badgeEl.innerHTML += count > 1
+            ? TranslationManager.getMonsterTypePluralNameTranslation(type.singularName, type.pluralName)
+            : TranslationManager.getMonsterTypeSingularNameTranslation(type.singularName);
+
+        return badgeEl;
     }
 }
