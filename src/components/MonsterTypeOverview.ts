@@ -1,5 +1,5 @@
-import { MonsterTypeDefinition } from "../modifiers/monsterTyping/MonsterTypeDefinition";
-import { MonsterTypeMappingManager } from "../modifiers/monsterTyping/MonsterTypeMappingManager"
+import { MonsterTypeDefinition } from "../monsterTyping/MonsterTypeDefinition";
+import { MonsterTypeManager } from "../monsterTyping/MonsterTypeManager"
 import { TranslationManager } from "../translation/TranslationManager";
 
 interface MonsterTypeOverviewPlayerTraitEntry {
@@ -27,8 +27,8 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
     };
 
     // Prepare data for processing
-    const activeMonsterTypes: MonsterTypeDefinition[] = MonsterTypeMappingManager.getActiveTypesAsArray();
-    const inactiveMonsterTypes: MonsterTypeDefinition[] = MonsterTypeMappingManager.getInactiveTypesAsArray();
+    const activeMonsterTypes: MonsterTypeDefinition[] = MonsterTypeManager.getActiveTypesAsArray();
+    const inactiveMonsterTypes: MonsterTypeDefinition[] = MonsterTypeManager.getInactiveTypesAsArray();
     const monsters = game.monsters.allObjects;
 
     // Process
@@ -43,7 +43,7 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
         // Get matching monsters
         let matchingMonsters: Monster[] = [];
         monsters.forEach(function (monster) {
-            if (MonsterTypeMappingManager.monsterIsOfType(monster, type.singularName)) {
+            if (MonsterTypeManager.monsterIsOfType(monster, type.singularName)) {
                 //console.log(`monster name: ${monster.name} | _media: ${monster._media} | media: ${monster.media}`);
                 matchingMonsters.push(monster);
             }

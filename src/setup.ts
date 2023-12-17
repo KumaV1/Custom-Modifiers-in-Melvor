@@ -2,8 +2,8 @@
 // You can import script modules and have full type completion
 import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
 import { ModContextMemoizer } from './ModContextMemoizer';
-import { MonsterType } from './modifiers/monsterTyping/MonsterType';
-import { MonsterTypeMappingManager } from './modifiers/monsterTyping/MonsterTypeMappingManager';
+import { MonsterType } from './monsterTyping/MonsterType';
+import { MonsterTypeManager } from './monsterTyping/MonsterTypeManager';
 import { MonsterTypeOverview } from './components/MonsterTypeOverview'
 import { TinyIconsCompatibility } from './compatibility/TinyIconsCompatibility';
 import { TranslationManager } from './translation/TranslationManager';
@@ -23,7 +23,6 @@ import { GameObjectDataWrapperInitializer } from './GameObjectDataWrapperInitial
 
 export async function setup(ctx: Modding.ModContext) {
     // Register custom modifier logic patches and localized texts
-    initApiEndpoints(ctx);
     initGameObjectDataWrapper();
     initCustomModifiers(ctx);
     initTranslation(ctx);
@@ -47,23 +46,23 @@ export async function setup(ctx: Modding.ModContext) {
  */
 function initApiEndpoints(ctx: Modding.ModContext) {
     ctx.api({
-        addMonsters: (type: string | MonsterType, monsterIds: string[]) => MonsterTypeMappingManager.addMonsters(type, monsterIds),
-        forceBaseModTypeActive: (type: MonsterType) => MonsterTypeMappingManager.forceBaseModTypeActive(type),
-        getActiveTypes: () => MonsterTypeMappingManager.getActiveTypes(),
-        getInactiveTypes: () => MonsterTypeMappingManager.getInactiveTypes(),
-        monsterIsOfType: (monster: Monster, monsterType: string | MonsterType) => MonsterTypeMappingManager.monsterIsOfType(monster, monsterType),
-        registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean = true) => MonsterTypeMappingManager.registerOrUpdateType(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds, active),
+        addMonsters: (type: string | MonsterType, monsterIds: string[]) => MonsterTypeManager.addMonsters(type, monsterIds),
+        forceBaseModTypeActive: (type: MonsterType) => MonsterTypeManager.forceBaseModTypeActive(type),
+        getActiveTypes: () => MonsterTypeManager.getActiveTypes(),
+        getInactiveTypes: () => MonsterTypeManager.getInactiveTypes(),
+        monsterIsOfType: (monster: Monster, monsterType: string | MonsterType) => MonsterTypeManager.monsterIsOfType(monster, monsterType),
+        registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean = true) => MonsterTypeManager.registerOrUpdateType(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds, active),
 
         // DEPRACATED | Throw errors from next update onwards?
-        getHumans: () => MonsterTypeMappingManager.getHumans(),
-        getDragons: () => MonsterTypeMappingManager.getDragons(),
-        getUndead: () => MonsterTypeMappingManager.getUndead(),
-        addHumans: (monsterIds: string[]) => MonsterTypeMappingManager.addHumans(monsterIds),
-        addDragons: (monsterIds: string[]) => MonsterTypeMappingManager.addDragons(monsterIds),
-        addUndeads: (monsterIds: string[]) => MonsterTypeMappingManager.addUndeads(monsterIds),
-        monsterIsHuman: (monster: Monster) => MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Human),
-        monsterIsDragon: (monster: Monster) => MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Dragon),
-        monsterIsUndead: (monster: Monster) => MonsterTypeMappingManager.monsterIsOfType(monster, MonsterType.Undead)
+        getHumans: () => MonsterTypeManager.getHumans(),
+        getDragons: () => MonsterTypeManager.getDragons(),
+        getUndead: () => MonsterTypeManager.getUndead(),
+        addHumans: (monsterIds: string[]) => MonsterTypeManager.addHumans(monsterIds),
+        addDragons: (monsterIds: string[]) => MonsterTypeManager.addDragons(monsterIds),
+        addUndeads: (monsterIds: string[]) => MonsterTypeManager.addUndeads(monsterIds),
+        monsterIsHuman: (monster: Monster) => MonsterTypeManager.monsterIsOfType(monster, MonsterType.Human),
+        monsterIsDragon: (monster: Monster) => MonsterTypeManager.monsterIsOfType(monster, MonsterType.Dragon),
+        monsterIsUndead: (monster: Monster) => MonsterTypeManager.monsterIsOfType(monster, MonsterType.Undead)
     });
 }
 
@@ -129,5 +128,5 @@ function initModCompatibility(ctx: Modding.ModContext) {
  * @param ctx
  */
 function initDynamicMonsterTypes(ctx: Modding.ModContext) {
-    MonsterTypeMappingManager.initNativeMonsterTypes();
+    MonsterTypeManager.initNativeMonsterTypes();
 }

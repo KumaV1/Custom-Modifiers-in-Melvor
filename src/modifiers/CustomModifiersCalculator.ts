@@ -1,7 +1,7 @@
 import { Constants } from '../Constants';
 import { ModifierType } from './ModifierType';
-import { MonsterTypeHelper } from './monsterTyping/MonsterTypeHelper';
-import { MonsterTypeModifierGroup } from './monsterTyping/MonsterTypeModifierGroup';
+import { MonsterTypeHelper } from '../monsterTyping/MonsterTypeHelper';
+import { MonsterTypeModifierGroup } from '../monsterTyping/MonsterTypeModifierGroup';
 
 /**
  * While the main patching is defined by the manager,

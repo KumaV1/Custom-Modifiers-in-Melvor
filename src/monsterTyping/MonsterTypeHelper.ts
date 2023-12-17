@@ -1,8 +1,8 @@
-import { Constants } from '../../Constants';
-import { Constants as ModifierConstants } from '../Constants';
+import { Constants } from '../Constants';
+import { Constants as ModifierConstants } from '../modifiers/Constants';
 import { MonsterTypeDefinition } from './MonsterTypeDefinition';
 import { MonsterTypeEffectObjectNames } from './MonsterTypeEffectObjectNames';
-import { MonsterTypeMappingManager } from './MonsterTypeMappingManager';
+import { MonsterTypeManager } from './MonsterTypeManager';
 import { MonsterTypeModifierGroup } from './MonsterTypeModifierGroup';
 import { MonsterTypeModifierPropertyNames } from './MonsterTypeModifierPropertyNames'
 import { MonsterTypeModifierType } from './MonsterTypeModifierType'
@@ -244,7 +244,7 @@ export class MonsterTypeHelper {
         //console.log(`getModificationValue | modifierGroup: ${modifierGroup}`);
         let modification = 0;
 
-        const types = MonsterTypeMappingManager.getActiveTypesAsArray();
+        const types = MonsterTypeManager.getActiveTypesAsArray();
         for (var i = 0; i < types.length; i++) {
             const type = types[i];
 
