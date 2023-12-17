@@ -60,7 +60,7 @@ becomes
 MODIFIER_DATA_humanTraitApplied: "Marks the affected as Human"
 ```
 
-You can make use of the endpoint `mod.api.customModifiersInMelvor.getTypes()`, to have a closer look at the names of the modifiers created.
+You can make use of the endpoints `mod.api.customModifiersInMelvor.getActiveTypes()`/`mod.api.customModifiersInMelvor.getInactiveTypes()`, to have a closer look at the names of the modifiers created.
 The translation entries then generally follow the pattern `MODIFIER_DATA_Name of Modifier`.
 
 ## Data files

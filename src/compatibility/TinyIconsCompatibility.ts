@@ -131,7 +131,9 @@ export class TinyIconsCompatibility {
     }
 
     /**
-     * Registers primary icons for modifiers corresponding to the given type
+     * Registers icons for modifiers specific to the given monster type,
+     * with the primary icon being dependent on said monster type,
+     * and the secondary icon always being the same across all monster types
      * @param type
      */
     public registerMonsterType(type: MonsterTypeDefinition): void {

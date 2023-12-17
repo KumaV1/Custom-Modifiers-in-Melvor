@@ -6,8 +6,6 @@ declare global {
 }
 
 declare namespace Modding {
-    type MonsterType = "Animal" | "Demon" | "Dragon" | "Elemental" | "Human" | "MythicalCreature" | "SeaCreature" | "Undead"
-
     interface ModApi {
         customModifiersInMelvor: {
             /**

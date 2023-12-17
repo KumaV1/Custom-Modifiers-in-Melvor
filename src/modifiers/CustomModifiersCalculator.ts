@@ -10,7 +10,7 @@ import { MonsterTypeModifierGroup } from './monsterTyping/MonsterTypeModifierGro
  * The implementations generally follow the practice of these methods calculating
  * THE CHANGE that should be applied to the original value, based specifically on the new custom modifiers.
  *
- * For combat related calculations, there is always two public methods per topic, one for the player and one for the enemy.
+ * For combat related calculations, there is usually two public methods for the same modifying context, one for the player and one for the enemy.
  * Both call a base method, which in turn splits its calculation into topic specific sub methods (e.g. calculations based on Monster types)
  *
  * NOTE: Rather than following the usual order of "public methods, then private methods",

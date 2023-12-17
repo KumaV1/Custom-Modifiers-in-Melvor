@@ -1,7 +1,7 @@
 import { Constants } from '../../Constants';
 import { Constants as ModifierConstants } from '../Constants'
 import { CustomModifiersManager } from '../CustomModifiersManager';
-import { ModContextMemoizer } from '../../ModContextMemorizer';
+import { ModContextMemoizer } from '../../ModContextMemoizer';
 import { MonsterType } from './MonsterType'
 import { MonsterTypeDefinition } from './MonsterTypeDefinition';
 import { TinyIconsCompatibility } from '../../compatibility/TinyIconsCompatibility';

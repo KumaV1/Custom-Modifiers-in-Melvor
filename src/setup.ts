@@ -1,7 +1,7 @@
 // Modules
 // You can import script modules and have full type completion
 import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
-import { ModContextMemoizer } from './ModContextMemorizer';
+import { ModContextMemoizer } from './ModContextMemoizer';
 import { MonsterType } from './modifiers/monsterTyping/MonsterType';
 import { MonsterTypeMappingManager } from './modifiers/monsterTyping/MonsterTypeMappingManager';
 import { MonsterTypeOverview } from './components/MonsterTypeOverview'
@@ -54,7 +54,7 @@ function initApiEndpoints(ctx: Modding.ModContext) {
         monsterIsOfType: (monster: Monster, monsterType: string | MonsterType) => MonsterTypeMappingManager.monsterIsOfType(monster, monsterType),
         registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean = true) => MonsterTypeMappingManager.registerOrUpdateType(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds, active),
 
-        // DEPRACATED
+        // DEPRACATED | Throw errors from next update onwards?
         getHumans: () => MonsterTypeMappingManager.getHumans(),
         getDragons: () => MonsterTypeMappingManager.getDragons(),
         getUndead: () => MonsterTypeMappingManager.getUndead(),
