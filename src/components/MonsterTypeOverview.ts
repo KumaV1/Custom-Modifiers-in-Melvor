@@ -1,5 +1,6 @@
 import { MonsterTypeDefinition } from "../monsterTyping/MonsterTypeDefinition";
 import { MonsterTypeManager } from "../monsterTyping/MonsterTypeManager"
+import { SettingsManager } from "../settings";
 import { TranslationManager } from "../translation/TranslationManager";
 
 interface MonsterTypeOverviewPlayerTraitEntry {
@@ -12,10 +13,14 @@ interface MonsterTypeOverviewMonsterType {
     monsters: Monster[]
 }
 
+interface MonsterTypeOverviewInactiveMonsterType extends MonsterTypeOverviewMonsterType {
+    keptInactiveByModSettings: boolean
+}
+
 interface MonsterTypeOverviewProps {
     traitsOnPlayer: MonsterTypeOverviewPlayerTraitEntry[]
     activeTypes: MonsterTypeOverviewMonsterType[],
-    inactiveTypes: MonsterTypeOverviewMonsterType[]
+    inactiveTypes: MonsterTypeOverviewInactiveMonsterType[]
 }
 
 // @ts-ignore: 'Component' is unknown for some reason
@@ -63,7 +68,10 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
         if (active) {
             props.activeTypes.push(obj);
         } else {
-            props.inactiveTypes.push(obj);
+            props.inactiveTypes.push({
+                ...obj,
+                keptInactiveByModSettings: SettingsManager.getDisableSpecificMonsterTypes.some(t => t === type.singularName)
+            });
         }
 
         // @ts-ignore

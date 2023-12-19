@@ -78,6 +78,7 @@
                             </ul>
                             <!-- Stuff -->
                         </div>
+
                         <!-- Active Monster types Tab -->
                         <div id="monster-type-overview__active-types-container">
                             <div class="mb-3 text-warning"><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Active_Types_Information"></lang-string></div>
@@ -110,7 +111,12 @@
                                     <!-- Should be moved to a sub-template or something -->
                                     <h2 class="font-w600 mb-2 text-primary text-center">
                                         {{ type.name }}
-                                    <div class="row">
+                                    </h2>
+                                    <div class="row"
+                                         v-if="type.keptInactiveByModSettings">
+                                        <span class="text-warning ml-1">Can't become active due to selection in mod settings</span>
+                                    </div>
+                                        <div class="row">
                                         <div v-for="monster in type.monsters" class="no-bg btn-light pointer-enabled m-1 justify-vertical-center">
                                             <img class="p-2 combat-enemy-img-sm"
                                                  v-bind:title="monster.name"
