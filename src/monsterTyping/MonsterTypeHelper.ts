@@ -1,12 +1,12 @@
 import { Constants } from '../Constants';
 import { Constants as ModifierConstants } from '../modifiers/Constants';
-import { TranslationManager } from '../translation/TranslationManager';
 import { MonsterTypeDefinition } from './MonsterTypeDefinition';
 import { MonsterTypeEffectObjectNames } from './MonsterTypeEffectObjectNames';
 import { MonsterTypeManager } from './MonsterTypeManager';
 import { MonsterTypeModifierGroup } from './MonsterTypeModifierGroup';
 import { MonsterTypeModifierPropertyNames } from './MonsterTypeModifierPropertyNames'
 import { MonsterTypeModifierType } from './MonsterTypeModifierType'
+import { TranslationManager } from '../translation/TranslationManager';
 
 export class MonsterTypeHelper {
     /**
@@ -394,11 +394,12 @@ export class MonsterTypeHelper {
      * @param displayCount whether the count should be included in the text returned
      */
     public static createCombatAreaIndicatorBadge(type: MonsterTypeDefinition, typeActive: boolean, count: number, displayCount: boolean): HTMLElement {
-        var badgeEl = document.createElement('span');
+        let badgeEl = document.createElement('span');
         badgeEl.classList.add('badge');
         badgeEl.classList.add('bage-pill');
         badgeEl.classList.add('mr-1');
         badgeEl.classList.add(typeActive ? 'badge-success' : 'badge-warning');
+        badgeEl.classList.add(Constants.MONSTER_TYPE_INDICATOR_BADGE_CLASS);
 
         badgeEl.innerHTML = displayCount
             ? `${count} `
@@ -408,5 +409,16 @@ export class MonsterTypeHelper {
             : TranslationManager.getMonsterTypeSingularNameTranslation(type.singularName);
 
         return badgeEl;
+    }
+
+    /**
+     * Creates a br with class(es), which are used before/after badges at times and should also be targetable through defined classes
+     * @returns
+     */
+    public static createCombatAreaIndicatorBadgeBr(): HTMLElement {
+        let br = document.createElement("br");
+        br.classList.add(Constants.MONSTER_TYPE_INDICATOR_BADGE_BR_CLASS);
+
+        return br;
     }
 }

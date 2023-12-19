@@ -1,6 +1,6 @@
 // Modules
 // You can import script modules and have full type completion
-import { CmimSettings } from './settings';
+import { SettingsManager } from './settings';
 import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
 import { ModContextMemoizer } from './ModContextMemoizer';
 import { MonsterType } from './monsterTyping/MonsterType';
@@ -70,8 +70,7 @@ function initGameObjectDataWrapper() {
 }
 
 function initSettings(ctx: Modding.ModContext) {
-    const settings = new CmimSettings(ctx);
-    settings.init();
+    SettingsManager.init(ctx);
 }
 
 /**

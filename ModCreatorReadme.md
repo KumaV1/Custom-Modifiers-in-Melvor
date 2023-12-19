@@ -211,6 +211,10 @@ The reason for this difference is to avoid blurting the combat calculations with
 With that out of the way, this mod provides multiple API endpoints that you can utilize. 
 One thing of note, you don't have to worry about expansions purchased by the user, when utilizing these endpoints.
 
+**IMPORTANT**: Please make sure, that all additions/updates to monster type definitions are made **before** `onCharacterLoaded`,
+as that's the last lifecycle hook before offline calculation is processed, but furthermore, it's when settings of this mod are evaluated,
+which are not supposed to have their changes to monster type definitions be overwritten by other mods!
+
 ```ts
 // Structure
 getActiveTypes()
