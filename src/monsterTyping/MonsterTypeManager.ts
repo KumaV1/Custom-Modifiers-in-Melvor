@@ -6,6 +6,7 @@ import { MonsterType } from './MonsterType'
 import { MonsterTypeDefinition } from './MonsterTypeDefinition';
 import { TinyIconsCompatibility } from '../compatibility/TinyIconsCompatibility';
 import { TranslationManager } from '../translation/TranslationManager';
+import { MonsterTypeHelper } from './MonsterTypeHelper';
 
 /**
  * Takes care of holding which types are allocated to which monsters,
@@ -25,163 +26,63 @@ export class MonsterTypeManager {
     private static _inactiveTypes: { [key: string]: MonsterTypeDefinition } = {};
 
     public static initNativeMonsterTypes() {
+        console.log("Called initNativeMonsterTypes");
+
+        // Register types
         MonsterTypeManager.registerOrUpdateType(
             MonsterType.Animal,
             "Animals",
             ModifierConstants.ANIMAL_MODIFIER_ICON_RESOURCE_URL,
-            [
-                "melvorD:Leech",
-                "melvorD:Bat",
-                "melvorD:BigBat",
-                "melvorD:ViciousSerpent",
-                "melvorD:Spider",
-                "melvorD:Seagull",
-                "melvorD:FrozenMammoth",
-                "melvorF:LegaranWurm",
-                "melvorTotH:PolarBear"
-            ],
+            MonsterTypeHelper.getNonModMonsterIds(MonsterType.Animal),
             false
         );
         MonsterTypeManager.registerOrUpdateType(
             MonsterType.Demon,
             "Demons",
             ModifierConstants.DEMON_MODIFIER_ICON_RESOURCE_URL,
-            [
-                "melvorF:FierceDevil",
-                "melvorTotH:MagicFireDemon",
-                "melvorTotH:GuardianoftheHerald",
-            ],
+            MonsterTypeHelper.getNonModMonsterIds(MonsterType.Demon),
             false
         );
         MonsterTypeManager.registerOrUpdateType(
             MonsterType.Dragon,
             "Dragons",
             ModifierConstants.DRAGON_MODIFIER_ICON_RESOURCE_URL,
-            [
-                "melvorD:PratTheProtectorOfSecrets",
-                "melvorD:GreenDragon",
-                "melvorD:BlueDragon",
-                "melvorD:RedDragon",
-                "melvorD:BlackDragon",
-                "melvorD:MalcsTheGuardianOfMelvor",
-                "melvorF:ElderDragon",
-                "melvorF:ChaoticGreaterDragon",
-                "melvorF:HuntingGreaterDragon",
-                "melvorF:WickedGreaterDragon",
-                "melvorF:MalcsTheLeaderOfDragons",
-                "melvorF:GreaterSkeletalDragon",
-                "melvorTotH:TwinSeaDragonSerpent"
-            ],
+            MonsterTypeHelper.getNonModMonsterIds(MonsterType.Dragon),
             false
         );
         MonsterTypeManager.registerOrUpdateType(
             MonsterType.Elemental,
             "Elementals",
             ModifierConstants.ELEMENTAL_MODIFIER_ICON_RESOURCE_URL,
-            [
-                "MelvorD:FireSpirit",
-                "melvorF:WaterGuard",
-                "melvorF:WaterGolem",
-                "melvorF:Glacia",
-                "melvorTotH:InfernalGolem",
-                "melvorTotH:LightningSpirit"
-            ],
+            MonsterTypeHelper.getNonModMonsterIds(MonsterType.Elemental),
             false
         );
         MonsterTypeManager.registerOrUpdateType(
             MonsterType.Human,
             "Humans",
             ModifierConstants.HUMAN_MODIFIER_ICON_RESOURCE_URL,
-            [
-                "melvorD:BlackKnight",
-                "melvorD:ConfusedPirate",
-                "melvorD:FrozenArcher",
-                "melvorD:Pirate",
-                "melvorD:FirstMate",
-                "melvorD:JuniorFarmer",
-                "melvorD:AdultFarmer",
-                "melvorD:MasterFarmer",
-                "melvorD:Wizard",
-                "melvorD:SteelKnight",
-                "melvorD:MithrilKnight",
-                "melvorD:AdamantKnight",
-                "melvorD:RuneKnight",
-                "melvorD:BanditTrainee",
-                "melvorD:Bandit",
-                "melvorD:BanditLeader",
-                "melvorD:DarkWizard",
-                "melvorD:MasterWizard",
-                "melvorD:ElderWizard",
-                "melvorF:Druid",
-                "melvorF:Thief",
-                "melvorF:Shaman",
-                "melvorF:Necromancer",
-                "melvorF:Elementalist",
-                "melvorF:Paladin",
-                "melvorF:Priest",
-                "melvorF:WanderingBard",
-                "melvorTotH:DarkKnight",
-                "melvorAoD:BlindWarrior",
-                "melvorAoD:BlindArcher",
-                "melvorAoD:BlindMage",
-                "melvorAoD:SoulTakerWitch"
-            ],
+            MonsterTypeHelper.getNonModMonsterIds(MonsterType.Human),
             false
         );
         MonsterTypeManager.registerOrUpdateType(
             MonsterType.MythicalCreature,
             "MythicalCreatures",
             ModifierConstants.MYTHICAL_MODIFIER_ICON_RESOURCE_URL,
-            [
-                "melvorTotH:Manticore",
-                "melvorF:Phoenix",
-                "melvorF:Griffin",
-                "melvorD:ElerineMage",
-                "melvorD:ElerineArcher"
-            ],
+            MonsterTypeHelper.getNonModMonsterIds(MonsterType.MythicalCreature),
             false
         );
         MonsterTypeManager.registerOrUpdateType(
             MonsterType.SeaCreature,
             "SeaCreatures",
             ModifierConstants.SEA_CREATURE_MODIFIER_ICON_RESOURCE_URL,
-            [
-                "melvorD:GiantCrab",
-                "melvorD:Tentacle",
-                "melvorD:TheKraken",
-                "melvorF:Rokken",
-                "melvorF:Lissia",
-                "melvorF:Murtia",
-                "melvorF:MioliteWarden",
-                "melvorAoD:Merman"
-            ],
+            MonsterTypeHelper.getNonModMonsterIds(MonsterType.SeaCreature),
             false
         );
         MonsterTypeManager.registerOrUpdateType(
             MonsterType.Undead,
             "Undead",
             ModifierConstants.UNDEAD_MODIFIER_ICON_RESOURCE_URL,
-            [
-                "melvorD:PirateCaptain",
-                "melvorD:ZombieHand",
-                "melvorD:Zombie",
-                "melvorD:ZombieLeader",
-                "melvorD:Ghost",
-                "melvorD:Skeleton",
-                "melvorF:UndeadWerewolf",
-                "melvorF:CursedLich",
-                "melvorF:GreaterSkeletalDragon",
-                "melvorTotH:Phantom",
-                "melvorTotH:Banshee",
-                "melvorTotH:Spectre",
-                "melvorTotH:CursedSkeletonWarrior",
-                "melvorTotH:Fiozor",
-                "melvorAoD:BlindGhost",
-                "melvorAoD:Lich",
-                "melvorAoD:GhostSailor",
-                "melvorAoD:GhostMercenary",
-                "melvorAoD:CursedPirateCaptain"
-            ],
+            MonsterTypeHelper.getNonModMonsterIds(MonsterType.Undead),
             false
         );
     }
