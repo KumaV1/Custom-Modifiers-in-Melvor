@@ -1,11 +1,11 @@
-import { Constants } from '../../Constants';
-import { Constants as ModifierConstants } from '../Constants'
-import { CustomModifiersManager } from '../CustomModifiersManager';
-import { ModContextMemoizer } from '../../ModContextMemoizer';
+import { Constants } from '../Constants';
+import { Constants as ModifierConstants } from '../modifiers/Constants'
+import { CustomModifiersManager } from '../modifiers/CustomModifiersManager';
+import { ModContextMemoizer } from '../ModContextMemoizer';
 import { MonsterType } from './MonsterType'
 import { MonsterTypeDefinition } from './MonsterTypeDefinition';
-import { TinyIconsCompatibility } from '../../compatibility/TinyIconsCompatibility';
-import { TranslationManager } from '../../translation/TranslationManager';
+import { TinyIconsCompatibility } from '../compatibility/TinyIconsCompatibility';
+import { TranslationManager } from '../translation/TranslationManager';
 
 /**
  * Takes care of holding which types are allocated to which monsters,
@@ -14,7 +14,7 @@ import { TranslationManager } from '../../translation/TranslationManager';
  * Keep in mind that these arrays are simple strings,
  * so we don't have to worry about which expansions were actually purchased
  */
-export class MonsterTypeMappingManager {
+export class MonsterTypeManager {
     /** Types that have been determined to be active,
      *  meaning at least one loaded mod makes use of a type specific logic, modifiers, etc. */
     private static _activeTypes: { [key: string]: MonsterTypeDefinition } = {};
@@ -25,7 +25,7 @@ export class MonsterTypeMappingManager {
     private static _inactiveTypes: { [key: string]: MonsterTypeDefinition } = {};
 
     public static initNativeMonsterTypes() {
-        MonsterTypeMappingManager.registerOrUpdateType(
+        MonsterTypeManager.registerOrUpdateType(
             MonsterType.Animal,
             "Animals",
             ModifierConstants.ANIMAL_MODIFIER_ICON_RESOURCE_URL,
@@ -42,7 +42,7 @@ export class MonsterTypeMappingManager {
             ],
             false
         );
-        MonsterTypeMappingManager.registerOrUpdateType(
+        MonsterTypeManager.registerOrUpdateType(
             MonsterType.Demon,
             "Demons",
             ModifierConstants.DEMON_MODIFIER_ICON_RESOURCE_URL,
@@ -53,7 +53,7 @@ export class MonsterTypeMappingManager {
             ],
             false
         );
-        MonsterTypeMappingManager.registerOrUpdateType(
+        MonsterTypeManager.registerOrUpdateType(
             MonsterType.Dragon,
             "Dragons",
             ModifierConstants.DRAGON_MODIFIER_ICON_RESOURCE_URL,
@@ -74,7 +74,7 @@ export class MonsterTypeMappingManager {
             ],
             false
         );
-        MonsterTypeMappingManager.registerOrUpdateType(
+        MonsterTypeManager.registerOrUpdateType(
             MonsterType.Elemental,
             "Elementals",
             ModifierConstants.ELEMENTAL_MODIFIER_ICON_RESOURCE_URL,
@@ -88,7 +88,7 @@ export class MonsterTypeMappingManager {
             ],
             false
         );
-        MonsterTypeMappingManager.registerOrUpdateType(
+        MonsterTypeManager.registerOrUpdateType(
             MonsterType.Human,
             "Humans",
             ModifierConstants.HUMAN_MODIFIER_ICON_RESOURCE_URL,
@@ -128,7 +128,7 @@ export class MonsterTypeMappingManager {
             ],
             false
         );
-        MonsterTypeMappingManager.registerOrUpdateType(
+        MonsterTypeManager.registerOrUpdateType(
             MonsterType.MythicalCreature,
             "MythicalCreatures",
             ModifierConstants.MYTHICAL_MODIFIER_ICON_RESOURCE_URL,
@@ -141,7 +141,7 @@ export class MonsterTypeMappingManager {
             ],
             false
         );
-        MonsterTypeMappingManager.registerOrUpdateType(
+        MonsterTypeManager.registerOrUpdateType(
             MonsterType.SeaCreature,
             "SeaCreatures",
             ModifierConstants.SEA_CREATURE_MODIFIER_ICON_RESOURCE_URL,
@@ -157,7 +157,7 @@ export class MonsterTypeMappingManager {
             ],
             false
         );
-        MonsterTypeMappingManager.registerOrUpdateType(
+        MonsterTypeManager.registerOrUpdateType(
             MonsterType.Undead,
             "Undead",
             ModifierConstants.UNDEAD_MODIFIER_ICON_RESOURCE_URL,
@@ -198,13 +198,13 @@ export class MonsterTypeMappingManager {
     public static registerOrUpdateType(typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean) {
         // If the given type is already active, then monster allocation is the only thing we might want to do
         if (this._activeTypes[typeNameSingular]) {
-            MonsterTypeMappingManager.addMonstersToType(typeNameSingular, monsterIds);
+            MonsterTypeManager.addMonstersToType(typeNameSingular, monsterIds);
             return;
         }
 
         // If it is not meant to become active, and inactive type already exists, we also want to just update monster allocation
         if (!active && this._inactiveTypes[typeNameSingular]) {
-            MonsterTypeMappingManager.addMonstersToType(typeNameSingular, monsterIds);
+            MonsterTypeManager.addMonstersToType(typeNameSingular, monsterIds);
             return;
         }
 
@@ -232,7 +232,7 @@ export class MonsterTypeMappingManager {
         const typeDefinition = new MonsterTypeDefinition(typeNameSingular, typeNamePlural, iconResourceUrl, concatMonsterIds);
 
         // Register dynamic data based on definition (modifiers, corresponding translations, corresponding tiny icon support)
-        MonsterTypeMappingManager.registerData(typeDefinition);
+        MonsterTypeManager.registerData(typeDefinition);
 
         //console.log(`Processed registration of type ${typeDefinition.singularName} by other managers`);
 
@@ -269,8 +269,19 @@ export class MonsterTypeMappingManager {
 
             //console.log("forceBaseModTypeActive");
             //console.log(this._activeTypes[type]);
-            MonsterTypeMappingManager.registerData(this._activeTypes[type]);
+            MonsterTypeManager.registerData(this._activeTypes[type]);
             delete this._inactiveTypes[type];
+        }
+    }
+
+    /**
+     * Sets the given type to inactive, if it can be found in the active list
+     * @param type
+     */
+    public static trySetTypeInactive(type: string | MonsterType) {
+        if (this._activeTypes[type]) {
+            this._inactiveTypes[type] = this._activeTypes[type];
+            delete this._activeTypes[type];
         }
     }
 
@@ -281,7 +292,7 @@ export class MonsterTypeMappingManager {
      * @param monsterId - full id, including namespace
      */
     public static addMonster(type: string | MonsterType, monsterId: string) {
-        MonsterTypeMappingManager.addMonsters(type, [monsterId]);
+        MonsterTypeManager.addMonsters(type, [monsterId]);
 
         // If type doesn't already exist, skip (type has to be registered properly beforehand)
         //if (!this._activeTypes[type]) {
@@ -308,10 +319,10 @@ export class MonsterTypeMappingManager {
             return;
         }
 
-        MonsterTypeMappingManager.registerOrUpdateType(type, type, Constants.MISSING_ARTWORK_URL, monsterIds, false);
+        MonsterTypeManager.registerOrUpdateType(type, type, Constants.MISSING_ARTWORK_URL, monsterIds, false);
 
         //for (var i = 0; i < monsterIds.length; i++) {
-        //    MonsterTypeMappingManager.addMonster(type, monsterIds[i]);
+        //    MonsterTypeManager.addMonster(type, monsterIds[i]);
         //}
     }
 
@@ -378,13 +389,13 @@ export class MonsterTypeMappingManager {
             return false;
         }
 
-        if (MonsterTypeMappingManager._activeTypes[type] &&
-            MonsterTypeMappingManager._activeTypes[type].monsters.some(mId => mId === monster.id)) {
+        if (MonsterTypeManager._activeTypes[type] &&
+            MonsterTypeManager._activeTypes[type].monsters.some(mId => mId === monster.id)) {
             return true;
         }
 
-        if (MonsterTypeMappingManager._inactiveTypes[type] &&
-            MonsterTypeMappingManager._inactiveTypes[type].monsters.some(mId => mId === monster.id)) {
+        if (MonsterTypeManager._inactiveTypes[type] &&
+            MonsterTypeManager._inactiveTypes[type].monsters.some(mId => mId === monster.id)) {
             return true;
         }
 
@@ -397,7 +408,7 @@ export class MonsterTypeMappingManager {
      * @deprecated - due to dynamic type definition, "addMonster()" or "addMonsters()" should be used instead
      */
     public static addHumans(monsterIds: string[]): void {
-        MonsterTypeMappingManager.addMonsters(MonsterType.Human, monsterIds);
+        MonsterTypeManager.addMonsters(MonsterType.Human, monsterIds);
     }
 
     /**
@@ -406,7 +417,7 @@ export class MonsterTypeMappingManager {
      * @deprecated - due to dynamic type definition, "getTypes()" should be used instead
      */
     public static getHumans() {
-        return MonsterTypeMappingManager.getActiveTypes()["Human"].monsters;
+        return MonsterTypeManager.getActiveTypes()["Human"].monsters;
     }
 
     /**
@@ -416,7 +427,7 @@ export class MonsterTypeMappingManager {
      */
     public static addDragons(monsterIds: string[]): void {
         //console.log(`addDragons | Called with following monster ids: ${monsterIds}`);
-        MonsterTypeMappingManager.addMonsters(MonsterType.Dragon, monsterIds);
+        MonsterTypeManager.addMonsters(MonsterType.Dragon, monsterIds);
     }
 
     /**
@@ -425,7 +436,7 @@ export class MonsterTypeMappingManager {
      * @deprecated - due to dynamic type definition, "getTypes()" should be used instead
      */
     public static getDragons() {
-        return MonsterTypeMappingManager.getActiveTypes()["Dragon"].monsters;
+        return MonsterTypeManager.getActiveTypes()["Dragon"].monsters;
     }
 
     /**
@@ -434,7 +445,7 @@ export class MonsterTypeMappingManager {
      * @deprecated - due to dynamic type definition, "addMonster()" or "addMonsters()" should be used instead
      */
     public static addUndeads(monsterIds: string[]): void {
-        MonsterTypeMappingManager.addMonsters(MonsterType.Undead, monsterIds);
+        MonsterTypeManager.addMonsters(MonsterType.Undead, monsterIds);
     }
 
     /**
@@ -443,7 +454,7 @@ export class MonsterTypeMappingManager {
      * @deprecated - due to dynamic type definition, "getTypes()" should be used instead
      */
     public static getUndead() {
-        return MonsterTypeMappingManager.getActiveTypes()["Undead"].monsters;
+        return MonsterTypeManager.getActiveTypes()["Undead"].monsters;
     }
 
     /**

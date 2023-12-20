@@ -1,6 +1,6 @@
 ﻿import { Constants } from '../Constants'
-import { MonsterTypeDefinition } from '../modifiers/monsterTyping/MonsterTypeDefinition';
-import { MonsterTypeMappingManager } from '../modifiers/monsterTyping/MonsterTypeMappingManager';
+import { MonsterTypeDefinition } from '../monsterTyping/MonsterTypeDefinition';
+import { MonsterTypeManager } from '../monsterTyping/MonsterTypeManager';
 
 import { languages } from './languages';
 
@@ -53,7 +53,7 @@ export class TranslationManager {
 
         // Run special translation for monster types, where a generic pre-definition was defined in the languages object,
         // which shall now be converted into "modified copies" for each monster type
-        for (const [key, value] of Object.entries<MonsterTypeDefinition>(MonsterTypeMappingManager.getActiveTypes())) {
+        for (const [key, value] of Object.entries<MonsterTypeDefinition>(MonsterTypeManager.getActiveTypes())) {
             this.registerMonsterType(value);
         }
     }
@@ -100,6 +100,17 @@ export class TranslationManager {
 
     /**
      *
+     * @param identifier
+     * @param includeNamespace
+     */
+    public static getLangString(identifier: string, includeNamespace: boolean = false) {
+        return includeNamespace
+            ? getLangString(`${Constants.MOD_NAMESPACE}_${identifier}`)
+            : getLangString(identifier);
+    }
+
+    /**
+     *
      * @param typeNameSingular
      * @returns
      */
@@ -125,8 +136,10 @@ export class TranslationManager {
      * @param fallback - optionally provide an alternative return value, if you don't want the key
      * @returns
      */
-    public static getTranslationOrFallback(key: string, fallback: string): string {
-        const translation = loadedLangJson[key];
+    public static getTranslationOrFallback(key: string, fallback: string, includeNamespace: boolean = false): string {
+        const translation = includeNamespace
+            ? loadedLangJson[`${Constants.MOD_NAMESPACE}_${key}`]
+            : loadedLangJson[key];
         //console.log(`translationManager | getTranslationOrFallback | key: ${key} | fallback: ${fallback} | key result: ${translation}`);
         return translation !== undefined && translation !== ''
             ? translation

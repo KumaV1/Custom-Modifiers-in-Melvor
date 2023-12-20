@@ -1,4 +1,36 @@
 ﻿export const de = {
+    Combat_Area_Boss_Indicator: 'Boss',
+
+    // ### Settings
+    // #### Combat Areas Indicators section
+    Settings_Section_Combat_Areas_Indicator: 'Indikatoren in Kampfgebieten',
+
+    // ##### Enable active monster type indicators
+    Settings_Setting_Label_Enable_Boss_Indicators: 'Indikatoren für Bosse aktivieren',
+    Settings_Setting_Hint_Enable_Boss_Indicators: "Normalerweise ist nur das letzte Monster eines Verlieses als Boss klassifiziert. Es kann jedoch Ausnahmen geben, bei welchen auch Monster im Kampf- oder Berserkergebieten als Boss klassifiziert sein können, welche durch diese Einstellung hervorgehoben werden",
+
+    // ##### Enable active monster type indicators
+    Settings_Setting_Label_Enable_Active_Monster_Type_Indicators: 'Indikatoren für aktive Monsterarten aktivieren',
+    Settings_Setting_Hint_Enable_Active_Monster_Type_Indicators: 'Fügt der Monster-/Verlies-Auswahl grüne Erkennungszeichen hinzu, welche auf die native Monsterarten-Zuweisung hinweist',
+
+    // ##### Enable inactive monster type indicators
+    Settings_Setting_Label_Enable_Inactive_Monster_Type_Indicators: 'Indikatoren für inaktive Monsterarten aktivieren',
+    Settings_Setting_Hint_Enable_Inactive_Monster_Type_Indicators: 'Fügt der Monster-/Verlies-Auswahl orange Erkennungszeichen hinzu, welche auf die native Monsterarten-Zuweisung hinweist',
+
+    // #### Disabling section
+    Settings_Section_Disabling: 'Deaktivieren',
+
+    // ##### Info label
+    Settings_Setting_Label_Disabling_Info: "Dieser Bereich dient dazu, bestimmte Funktionalitäten dieses Mods zu deaktivieren. Ein Grund dafür ist, dass man damit Inhalte absichtlich leichter/schwieriger machen kann. Ein anderer Grund ist, dass dieser Mod weitere Berechnungen erfordert, was zu einer spürbaren Erhöhung der Charakter-Ladezeit führen kann (insbesondere, wenn das Monsterarten-System auageschöpft wird). Bestimmte Berechnungen daran zu hindern überhaupt durchgeführt zu werden, kann dementsprechend zu einer bemerkbaren Verbesserung von Ladezeiten führen.",
+
+    // ##### Keep specific monster types inactive
+    Settings_Setting_Label_Keep_Specific_Monster_Types_Inactive: 'Bestimmte Monsterarten inaktiv lassen',
+    Settings_Setting_Hint_Keep_Specific_Monster_Types_Inactive: 'Erzwingt, dass die ausgewählten Monsterarten inaktiv bleiben, unabhängig davon, was andere Mods definieren. Für Monsterarten, welche von anderen Mods hinzugefügt wurden, geht die Nachhaltung des Kontroll-Kästchens verloren, wenn der Charakter ohne besagten Mod geladen wird',
+
+    // ##### Save & Reload button
+    Settings_Hint_Save_Reload_Required: 'Neu laden erforderlich',
+    Settings_Setting_Display_Save_Reload: 'Alles speichern und neu laden',
+
     // ### Monster type overview
     PAGE_NAME_Monster_Types_Overview: "Monsterarten",
 
@@ -21,6 +53,7 @@
     Monster_Type_Overview_Inactive_Types_Tab_Header: "Inaktive Arten",
     Monster_Type_Overview_Inactive_Types_Information: "Inaktive Arten sind jene, welche zwar definiert sind, jedoch von keinem Mod verwendet werden. Sie werden deshalb auch nicht während des Kampfes überprüft, was bedeutet, dass sie auch die Berechnungszeit nicht beeinflussen.",
     Monster_Type_Overview_Inactive_Types_No_Entries: "Derzeit gibt es keine inaktiven Monsterarten",
+    Monster_Type_Overview_Inactive_Types_Affected_By_Mod_Settings: "Kann aufgrund von einer Auswahl in den Mod-Einstellungen nicht aktiv werden",
 
     // ### Modifiers
     MODIFIER_DATA_increasedChanceToApplySlowOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass +25% Angriffsintervall für drei Runden auf das Ziel angewendet wird",

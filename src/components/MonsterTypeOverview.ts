@@ -1,5 +1,7 @@
-import { MonsterTypeDefinition } from "../modifiers/monsterTyping/MonsterTypeDefinition";
-import { MonsterTypeMappingManager } from "../modifiers/monsterTyping/MonsterTypeMappingManager"
+import { CmimUtils } from "../Utils";
+import { MonsterTypeDefinition } from "../monsterTyping/MonsterTypeDefinition";
+import { MonsterTypeManager } from "../monsterTyping/MonsterTypeManager"
+import { SettingsManager } from "../Settings";
 import { TranslationManager } from "../translation/TranslationManager";
 
 interface MonsterTypeOverviewPlayerTraitEntry {
@@ -12,10 +14,14 @@ interface MonsterTypeOverviewMonsterType {
     monsters: Monster[]
 }
 
+interface MonsterTypeOverviewInactiveMonsterType extends MonsterTypeOverviewMonsterType {
+    keptInactiveByModSettings: boolean
+}
+
 interface MonsterTypeOverviewProps {
     traitsOnPlayer: MonsterTypeOverviewPlayerTraitEntry[]
     activeTypes: MonsterTypeOverviewMonsterType[],
-    inactiveTypes: MonsterTypeOverviewMonsterType[]
+    inactiveTypes: MonsterTypeOverviewInactiveMonsterType[]
 }
 
 // @ts-ignore: 'Component' is unknown for some reason
@@ -27,8 +33,8 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
     };
 
     // Prepare data for processing
-    const activeMonsterTypes: MonsterTypeDefinition[] = MonsterTypeMappingManager.getActiveTypesAsArray();
-    const inactiveMonsterTypes: MonsterTypeDefinition[] = MonsterTypeMappingManager.getInactiveTypesAsArray();
+    const activeMonsterTypes: MonsterTypeDefinition[] = MonsterTypeManager.getActiveTypesAsArray();
+    const inactiveMonsterTypes: MonsterTypeDefinition[] = MonsterTypeManager.getInactiveTypesAsArray();
     const monsters = game.monsters.allObjects;
 
     // Process
@@ -43,7 +49,7 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
         // Get matching monsters
         let matchingMonsters: Monster[] = [];
         monsters.forEach(function (monster) {
-            if (MonsterTypeMappingManager.monsterIsOfType(monster, type.singularName)) {
+            if (MonsterTypeManager.monsterIsOfType(monster, type.singularName)) {
                 //console.log(`monster name: ${monster.name} | _media: ${monster._media} | media: ${monster.media}`);
                 matchingMonsters.push(monster);
             }
@@ -63,7 +69,10 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
         if (active) {
             props.activeTypes.push(obj);
         } else {
-            props.inactiveTypes.push(obj);
+            props.inactiveTypes.push({
+                ...obj,
+                keptInactiveByModSettings: SettingsManager.getDisableSpecificMonsterTypes.some(t => t === type.singularName)
+            });
         }
 
         // @ts-ignore
@@ -79,6 +88,10 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
             };
             props.traitsOnPlayer.push(obj);
         }
+
+        // Order type lists alphabetically
+        CmimUtils.orderAlphabetically(props.activeTypes, "name");
+        CmimUtils.orderAlphabetically(props.inactiveTypes, "name");
     }
 
     /**

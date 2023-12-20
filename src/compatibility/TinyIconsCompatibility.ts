@@ -1,5 +1,5 @@
-import { MonsterTypeDefinition } from '../modifiers/monsterTyping/MonsterTypeDefinition';
-import { MonsterTypeMappingManager } from '../modifiers/monsterTyping/MonsterTypeMappingManager';
+import { MonsterTypeDefinition } from '../monsterTyping/MonsterTypeDefinition';
+import { MonsterTypeManager } from '../monsterTyping/MonsterTypeManager';
 
 export class TinyIconsCompatibility {
     /** Non-dynamic modifiers */

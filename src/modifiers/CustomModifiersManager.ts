@@ -1,9 +1,9 @@
 ﻿import { Constants } from '../Constants';
 import { Constants as ModifierConstants } from './Constants';
 import { CustomModifiersCalculator } from './CustomModifiersCalculator'
-import { MonsterTypeDefinition } from './monsterTyping/MonsterTypeDefinition';
-import { MonsterTypeHelper } from './monsterTyping/MonsterTypeHelper';
-import { MonsterTypeMappingManager } from './monsterTyping/MonsterTypeMappingManager';
+import { MonsterTypeDefinition } from '../monsterTyping/MonsterTypeDefinition';
+import { MonsterTypeHelper } from '../monsterTyping/MonsterTypeHelper';
+import { MonsterTypeManager } from '../monsterTyping/MonsterTypeManager';
 
 /**
  * Patches different sections of the code, in order to integrate custom modifiers
@@ -996,7 +996,7 @@ export class CustomModifiersManager {
                 this.customModifiersInMelvor.stackingEffects.deathMarkEffect = deathMarkEffect;
             }
 
-            const types = MonsterTypeMappingManager.getActiveTypesAsArray();
+            const types = MonsterTypeManager.getActiveTypesAsArray();
             for (var i = 0; i < types.length; i++) {
                 const type = types[i];
 
@@ -1051,8 +1051,8 @@ export class CustomModifiersManager {
             this.increasedDamageTakenFromFireSpells ??= 0;
             this.decreasedDamageTakenFromFireSpells ??= 0;
 
-            // Ensure 0 instead of undefined for type related modifiers as well
-            const types = MonsterTypeMappingManager.getActiveTypesAsArray();
+            // Ensure 0 instead of undefined for monster type related modifiers as well
+            const types = MonsterTypeManager.getActiveTypesAsArray();
             for (var i = 0; i < types.length; i++) {
                 const type = types[i];
                 Object.entries(type.modifierPropertyNames).forEach(([key, value]) => {
@@ -1069,12 +1069,12 @@ export class CustomModifiersManager {
      */
     private patchMonsterTypeAllocation() {
         this.context.patch(Enemy, "setStatsFromMonster").after(function (returnValue, monster: any): void {
-            const types = MonsterTypeMappingManager.getActiveTypesAsArray();
+            const types = MonsterTypeManager.getActiveTypesAsArray();
             for (var i = 0; i < types.length; i++) {
                 const type = types[i];
                 // console.log(`setStatsFromMonster | Checking to see whether or not to apply ${type.modifierPropertyNames.traitApplied}: ${isOfType}`);
                 // @ts-ignore - We add is{Type} dynamically
-                this[type.isTypePropertyName] = MonsterTypeMappingManager.monsterIsOfType(monster, type.singularName);
+                this[type.isTypePropertyName] = MonsterTypeManager.monsterIsOfType(monster, type.singularName);
             }
         });
     }
@@ -1098,7 +1098,7 @@ export class CustomModifiersManager {
                 this.applyDOT(deadlyPoisonEffect, this.target, 0);
             }
 
-            const types = MonsterTypeMappingManager.getActiveTypesAsArray();
+            const types = MonsterTypeManager.getActiveTypesAsArray();
             for (var i = 0; i < types.length; i++) {
                 const type = types[i];
 
@@ -1130,7 +1130,7 @@ export class CustomModifiersManager {
             if (this.modifiers.deathMark > 0 && this.hitpoints <= ModifierConstants.DEATH_MARK_MAX_FLAT_HP) {
                 const effect = this.stackingEffect.get(this.game.deathMarkEffect);
                 if (effect === undefined) {
-                    console.log("effect not found on game object");
+                    console.log("Death mark effect not found on game object");
                 }
                 else {
                     const maxHpPercentage = (this.hitpoints / this.stats.maxHitpoints) * 100;
@@ -1186,7 +1186,7 @@ export class CustomModifiersManager {
                     }
                 }
 
-                const types = MonsterTypeMappingManager.getActiveTypesAsArray();
+                const types = MonsterTypeManager.getActiveTypesAsArray();
                 for (var i = 0; i < types.length; i++) {
                     const type = types[i];
 
