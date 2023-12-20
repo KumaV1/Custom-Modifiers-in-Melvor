@@ -1,3 +1,4 @@
+import { CmimUtils } from "../utils";
 import { MonsterTypeDefinition } from "../monsterTyping/MonsterTypeDefinition";
 import { MonsterTypeManager } from "../monsterTyping/MonsterTypeManager"
 import { SettingsManager } from "../settings";
@@ -87,6 +88,10 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
             };
             props.traitsOnPlayer.push(obj);
         }
+
+        // Order type lists alphabetically
+        CmimUtils.orderAlphabetically(props.activeTypes, "name");
+        CmimUtils.orderAlphabetically(props.inactiveTypes, "name");
     }
 
     /**

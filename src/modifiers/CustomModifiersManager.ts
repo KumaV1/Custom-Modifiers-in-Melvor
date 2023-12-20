@@ -1051,7 +1051,7 @@ export class CustomModifiersManager {
             this.increasedDamageTakenFromFireSpells ??= 0;
             this.decreasedDamageTakenFromFireSpells ??= 0;
 
-            // Ensure 0 instead of undefined for type related modifiers as well
+            // Ensure 0 instead of undefined for monster type related modifiers as well
             const types = MonsterTypeManager.getActiveTypesAsArray();
             for (var i = 0; i < types.length; i++) {
                 const type = types[i];

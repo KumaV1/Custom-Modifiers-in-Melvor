@@ -5,21 +5,15 @@ import { MonsterTypeManager } from "./monsterTyping/MonsterTypeManager";
 import { TranslationManager } from "./translation/TranslationManager";
 
 export class SettingsManager {
-    // TODO: Check what happens with checkboxlist-settings, if one of the entries goes missing between two saves. Considering that that will probably rarely happen, a checkboxlist would probably be more user friendly than the text input, even if that means more space and the possibility of checkboxes-set being removed because a mod wasn't loaded once, but later again
-
-    // TODO: As of now, none of the settings actually require a reload, even the combat indicators, as they only need to have the logic rerun (and use a shared class to destroy all at the beginning)
-
     public static init(ctx: Modding.ModContext) {
-        //let typeIndicatorHint = new HTMLSpanElement();
-        //typeIndicatorHint.innerHTML. = 'Monsters/Dungeons will display when inherent monster types are allocated (colored based on whether they are <span class="font-w600 text-success">active</span> or <span class="font-w600 text-warning">inactive</span>)';
-
-        ctx.settings.section("Combat Areas Indicators").add([
+        // Create static-defined settings
+        ctx.settings.section(TranslationManager.getLangString("Settings_Section_Combat_Areas_Indicator", true)).add([
             {
                 type: 'switch',
                 name: 'enable-active-monster-type-indicators',
-                label: 'Enable active monster type indicators',
-                hint: 'Adds green badges to monster/dungeon selection menus, indicating native monster type allocations',
-                default: false,
+                label: TranslationManager.getLangString("Settings_Setting_Label_Enable_Active_Monster_Type_Indicators", true),
+                hint: TranslationManager.getLangString("Settings_Setting_Hint_Enable_Active_Monster_Type_Indicators", true),
+                default: true,
                 onChange(value: boolean, previousValue: boolean): void {
                     MonsterTypeManager.rebuildCombatAreaMonsterTypeIndicators(value, SettingsManager.getEnableInactiveMonsterTypeIndicators);
                 }
@@ -27,34 +21,21 @@ export class SettingsManager {
             {
                 type: 'switch',
                 name: 'enable-inactive-monster-type-indicators',
-                label: 'Enable inactive monster type indicators',
-                hint: 'Adds orange badges to monster/dungeon selection menus, indicating native monster type allocations',
-                default: false,
+                label: TranslationManager.getLangString("Settings_Setting_Label_Enable_Inactive_Monster_Type_Indicators", true),
+                hint: TranslationManager.getLangString("Settings_Setting_Hint_Enable_Inactive_Monster_Type_Indicators", true),
+                default: true,
                 onChange(value: boolean, previousValue: boolean): void {
                     MonsterTypeManager.rebuildCombatAreaMonsterTypeIndicators(SettingsManager.getEnableActiveMonsterTypeIndicators, value);
                 }
             } as Modding.Settings.SwitchConfig,
         ]);
 
-        ctx.settings.section('Disabling').add([
+        ctx.settings.section(TranslationManager.getLangString("Settings_Section_Disabling", true)).add([
             {
                 type: 'label',
                 name: 'disabling-info',
-                label: "This section serves as a way of disabling certain parts of this mod's functionality. Aside from making content purposefully easier/harder, the other main reason you may want to do this, is because this mod might end up adding a noteworthy amount of calculation time, leading to a noticeable increase in loading time of offline gains (especially, if the monster type system is being made use of). Disabling some code from running at all may therefore result in a noteworthy performance improvement."
+                label: TranslationManager.getLangString("Settings_Setting_Label_Disabling_Info", true),
             } as Modding.Settings.SettingConfig,
-        ]);
-
-        ctx.settings.section('Save changes').add([
-            {
-                type: "button",
-                name: "save-reload",
-                display: "Save all & Reload",
-                color: "primary",
-                onClick: () => {
-                    saveData();
-                    window.location.reload();
-                }
-            } as Modding.Settings.ButtonConfig
         ]);
 
         // On lifetime hook 3 (the one before the run that will actually read settings from save), run the delayed creation of the monster type deactivation checkbox list
@@ -83,23 +64,33 @@ export class SettingsManager {
             CmimUtils.orderAlphabetically(options, "label");
 
             // Create setting
-            ctx.settings.section('Disabling').add([
+            ctx.settings.section(TranslationManager.getLangString("Settings_Section_Disabling", true)).add([
                 {
                     type: 'checkbox-group',
                     name: 'keep-specific-monster-types-inactive',
-                    label: 'Keep specific monster types inactive',
-                    hint: 'Forces the selected monster types to stay inactive, regardless of what any mod may communicate. Monster types added by other mods will lose their checkbox state, if you happen to load your save without said mod',
+                    label: TranslationManager.getLangString("Settings_Setting_Label_Keep_Specific_Monster_Types_Inactive", true),
+                    hint: TranslationManager.getLangString("Settings_Setting_Hint_Keep_Specific_Monster_Types_Inactive", true),
                     options: options,
                     onChange(value: string, previousValue: string): void {
                         SettingsManager.setButtonToReload();
 
                         const hint = document.querySelector('label[for="customModifiersInMelvor:keep-specific-monster-types-inactive"] > small');
                         if (hint) {
-                            hint.textContent = "Reload required";
+                            hint.textContent = TranslationManager.getLangString("Settings_Hint_Save_Reload_Required", true);
                             hint.classList.add("text-warning");
                         }
                     }
-                } as Modding.Settings.CheckboxGroupConfig
+                } as Modding.Settings.CheckboxGroupConfig,
+                {
+                    type: "button",
+                    name: "save-reload",
+                    display: TranslationManager.getLangString("Settings_Setting_Display_Save_Reload", true),
+                    color: "primary",
+                    onClick: () => {
+                        saveData();
+                        window.location.reload();
+                    }
+                } as Modding.Settings.ButtonConfig // added here, so it's placed after the checkbox list
             ]);
         });
 
@@ -116,7 +107,7 @@ export class SettingsManager {
      */
     public static get getEnableActiveMonsterTypeIndicators(): boolean {
         return ModContextMemoizer.ctx.settings
-            .section("Combat Areas Indicators")
+            .section(TranslationManager.getLangString("Settings_Section_Combat_Areas_Indicator", true))
             .get('enable-active-monster-type-indicators') as boolean;
     }
 
@@ -125,7 +116,7 @@ export class SettingsManager {
      */
     public static get getEnableInactiveMonsterTypeIndicators(): boolean {
         return ModContextMemoizer.ctx.settings
-            .section("Combat Areas Indicators")
+            .section(TranslationManager.getLangString("Settings_Section_Combat_Areas_Indicator", true))
             .get('enable-inactive-monster-type-indicators') as boolean;
     }
 
@@ -134,12 +125,14 @@ export class SettingsManager {
      */
     public static get getDisableSpecificMonsterTypes(): string[] {
         return ModContextMemoizer.ctx.settings
-            .section("Disabling")
+            .section(TranslationManager.getLangString("Settings_Section_Disabling", true))
             .get('keep-specific-monster-types-inactive') as string[] ?? [];
     }
 
-    /** Change color of save button from primary to danger */
-    private static setButtonToReload() {
+    /**
+     * Change color of save button from primary to danger
+     */
+    private static setButtonToReload(): void {
         const btn = document.getElementById(`${Constants.MOD_NAMESPACE}:save-reload`);
         if (btn && btn.classList.contains("btn-primary")) {
             btn.classList.replace("btn-primary", "btn-danger");

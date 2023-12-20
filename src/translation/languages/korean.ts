@@ -1,4 +1,30 @@
 export const ko = {
+    // ### Settings
+    // #### Combat Areas Indicators section
+    Settings_Section_Combat_Areas_Indicator: 'Combat Areas Indicators',
+
+    // ##### Enable active monster type indicators
+    Settings_Setting_Label_Enable_Active_Monster_Type_Indicators: 'Enable active monster type indicators',
+    Settings_Setting_Hint_Enable_Active_Monster_Type_Indicators: 'Adds green badges to monster/dungeon selection menus, indicating native monster type allocations',
+
+    // ##### Enable inactive monster type indicators
+    Settings_Setting_Label_Enable_Inactive_Monster_Type_Indicators: 'Enable inactive monster type indicators',
+    Settings_Setting_Hint_Enable_Inactive_Monster_Type_Indicators: 'Adds orange badges to monster/dungeon selection menus, indicating native monster type allocations',
+
+    // #### Disabling section
+    Settings_Section_Disabling: 'Disabling',
+
+    // ##### Info label
+    Settings_Setting_Label_Disabling_Info: "This section serves as a way of disabling certain parts of this mod's functionality. Aside from making content purposefully easier/harder, the other main reason you may want to do this, is because this mod might end up adding a noteworthy amount of calculation time, leading to a noticeable increase in loading time of offline gains (especially, if the monster type system is being made use of). Disabling some code from running at all may therefore result in a noteworthy performance improvement.",
+
+    // ##### Keep specific monster types inactive
+    Settings_Setting_Label_Keep_Specific_Monster_Types_Inactive: 'Keep specific monster types inactive',
+    Settings_Setting_Hint_Keep_Specific_Monster_Types_Inactive: 'Forces the selected monster types to stay inactive, regardless of what any mod may communicate. Monster types added by other mods will lose their checkbox state, if you happen to load your save without said mod',
+
+    // ##### Save & Reload button
+    Settings_Hint_Save_Reload_Required: 'Reload required',
+    Settings_Setting_Display_Save_Reload: 'Save all & Reload',
+
     // ### Monster type overview
     PAGE_NAME_Monster_Types_Overview: "Monster types",
 
@@ -20,6 +46,7 @@ export const ko = {
     Monster_Type_Overview_Inactive_Types_Tab_Header: "Inactive types",
     Monster_Type_Overview_Inactive_Types_Information: "Inactive types are those, that have been defined but are not actually utilized by any mod. They are therefore also not actually checked during combat, meaning they do not affect calculation time.",
     Monster_Type_Overview_Inactive_Types_No_Entries: "There are no inactive types currently",
+    Monster_Type_Overview_Inactive_Types_Affected_By_Mod_Settings: "Can't become active due to selection in mod settings",
 
     // ### Modifiers
     MODIFIER_DATA_increasedChanceToApplySlowOnSpawn: "+${value}% chance to apply 25% increased attack interval for three turns to the Target on spawn or revive",

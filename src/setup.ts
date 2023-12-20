@@ -27,10 +27,10 @@ export async function setup(ctx: Modding.ModContext) {
 
     // Register custom modifier logic patches and localized texts
     initGameObjectDataWrapper();
-    initSettings(ctx);
     initApiEndpoints(ctx);
     initCustomModifiers(ctx);
     initTranslation(ctx);
+    initSettings(ctx);
     initModCompatibility(ctx);
     initDynamicMonsterTypes(ctx);
     initOverviewContainer(ctx);
