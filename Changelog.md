@@ -1,5 +1,14 @@
 # Changelog
 
+## v2.2.0
+* Updated monster type allocations
+* Added indicator badges for bosses, as well as active and inactive monster types to combat areas
+* Added mod settings
+  * Toggle whether or not to actually render the respective badges
+  * Being able to forcefully keep desired monster types inactive - allows to improve performance, if there are many active monster types, most of which aren't relevant in your current combat situation
+* Adjusted monster-type-related calculations, to slightly improve performance in general
+* Removed the previously deprecated api methods
+
 ## v2.1.2
 * Fixed minor issue with [Tiny Icons mod](https://mod.io/g/melvoridle/m/tiny-icons) compatibility,
 where icons for monster type modifiers would not be registered
