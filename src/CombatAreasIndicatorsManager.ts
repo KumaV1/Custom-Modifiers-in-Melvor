@@ -22,6 +22,7 @@ export class CombatAreasIndicatorsManager {
     }
 
     /**
+     * @param bossEnabled whether to display boss badge (provided as parameter, in case this is called during settings change)
      * @param activeEnabled whether to display active badges (provided as parameter, in case this is called during settings change)
      * @param inactiveEnabled whether to display active badges (provided as parameter, in case this is called during settings change)
      * @returns

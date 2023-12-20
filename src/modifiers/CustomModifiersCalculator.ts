@@ -1,7 +1,7 @@
 import { Constants } from '../Constants';
 import { ModifierType } from './ModifierType';
 import { MonsterTypeHelper } from '../monsterTyping/MonsterTypeHelper';
-import { MonsterTypeModifierGroup } from '../monsterTyping/MonsterTypeModifierGroup';
+import { MonsterTypeManager } from '../monsterTyping/MonsterTypeManager';
 
 /**
  * While the main patching is defined by the manager,
@@ -129,8 +129,33 @@ export class CustomModifiersCalculator {
      * @returns
      */
     private static getCharacterMinHitModification(entity: Character): number {
-        return CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.MinHitBasedOnMaxHit)
-            + CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.FlatMinHit);
+        return CustomModifiersCalculator.getCharacterMinHitModificationForMonsterTypes(entity);
+    }
+
+    /**
+     * Calculate change to min hit, both flat and percentage, specifically based on monster type allocations (the logic shared between both player and enemy)
+     * @param entity
+     * @returns
+     */
+    private static getCharacterMinHitModificationForMonsterTypes(entity: Character): number {
+        let modification = 0;
+
+        const types = MonsterTypeManager.getActiveTypesAsArray();
+        for (var i = 0; i < types.length; i++) {
+            const type = types[i];
+
+            if (MonsterTypeHelper.entityIsTreatedAsType(entity.target, type)) {
+                // Min hit based on max hit
+                // @ts-ignore - We know these properties exist, as they were dynamically added before
+                modification += Math.floor((entity.stats.maxHit * (entity.modifiers[type.modifierPropertyNames.increasedMinHitBasedOnMaxHit] - entity.modifiers[type.modifierPropertyNames.decreasedMinHitBasedOnMaxHit])) / 100);
+
+                // Flat min hit
+                // @ts-ignore - We know these properties exist, as they were dynamically added before
+                modification += numberMultiplier * (entity.modifiers[type.modifierPropertyNames.increasedFlatMinHit] - entity.modifiers[type.modifierPropertyNames.decreasedFlatMinHit]);
+            }
+        }
+
+        return modification;
     }
 
     // #endregion
@@ -193,7 +218,27 @@ export class CustomModifiersCalculator {
      * @param entity
      */
     private static getCharacterMaxHitPercentageModification(entity: Character): number {
-        return CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.MaxHitPercent);
+        return CustomModifiersCalculator.getCharacterMaxHitPercentageModificationForMonsterTypes(entity);
+    }
+
+    /**
+     * Calculates percentage-based change to max hit, specifically based on monster type allocations (logic shared between player and enemy)
+     * @param entity
+     */
+    private static getCharacterMaxHitPercentageModificationForMonsterTypes(entity: Character): number {
+        let modification = 0;
+
+        const types = MonsterTypeManager.getActiveTypesAsArray();
+        for (var i = 0; i < types.length; i++) {
+            const type = types[i];
+
+            if (MonsterTypeHelper.entityIsTreatedAsType(entity.target, type)) {
+                // @ts-ignore - We know these properties exist, as they were dynamically added before
+                modification += entity.modifiers[type.modifierPropertyNames.increasedMaxHitPercent] - entity.modifiers[type.modifierPropertyNames.decreasedMaxHitPercent];
+            }
+        }
+
+        return modification;
     }
 
     // #endregion
@@ -258,7 +303,27 @@ export class CustomModifiersCalculator {
      * @param entity
      */
     private static getCharacterMaxHitFlatModification(entity: Character): number {
-        return CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.MaxHitFlat);
+        return CustomModifiersCalculator.getCharacterMaxHitFlatModificationForMonsterTypes(entity);
+    }
+
+    /**
+     * Calculates flat change to max hit, specifically based on monster type allocations (logic shared across both player and enemy)
+     * @param entity
+     */
+    private static getCharacterMaxHitFlatModificationForMonsterTypes(entity: Character): number {
+        let modification = 0;
+
+        const types = MonsterTypeManager.getActiveTypesAsArray();
+        for (var i = 0; i < types.length; i++) {
+            const type = types[i];
+
+            if (MonsterTypeHelper.entityIsTreatedAsType(entity.target, type)) {
+                // @ts-ignore - We know these properties exist, as they were dynamically added before
+                modification += entity.modifiers[type.modifierPropertyNames.increasedMaxHitFlat] - entity.modifiers[type.modifierPropertyNames.decreasedMaxHitFlat];
+            }
+        }
+
+        return modification;
     }
 
     // #endregion
@@ -299,11 +364,14 @@ export class CustomModifiersCalculator {
 
     /**
      * Calculates change to percentage-based (total) damage value (logic shared across both player and enemy)
+     *
+     * REMARK: "damage" and "damage taken" run during the same calculation. Therefore:
+     * * increasedDamage -> Based on what THE ENTITY's target is/uses and whether the THE ENTITY has the corresponding modifiers
+     * * increasedDamageTaken -> Based on what THE ENTITY is/uses and whether the THE ENTITY's ENEMY has the corresponding modifiers
      * @param entity
      */
     private static getCharacterDamagePercentageModifiers(entity: Character): number {
-        return CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.DamagePercent)
-            + CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.DamageTakenPercent)
+        return CustomModifiersCalculator.getDamagePercentageModificationForMonsterTypes(entity)
             + CustomModifiersCalculator.getDamagePercentageModificationForSpellTypes(entity);
     }
 
@@ -330,6 +398,33 @@ export class CustomModifiersCalculator {
                     modification += entity.target.modifiers.increasedDamageTakenFromFireSpells - entity.target.modifiers.decreasedDamageTakenFromFireSpells;
                     break;
                 default:
+            }
+        }
+
+        return modification;
+    }
+
+    /**
+     * Calculates change to percentage-based (total) damage value (logic shared across both player and enemy)
+     * @param entity
+     */
+    private static getDamagePercentageModificationForMonsterTypes(entity: Character): number {
+        let modification = 0;
+
+        const types = MonsterTypeManager.getActiveTypesAsArray();
+        for (var i = 0; i < types.length; i++) {
+            const type = types[i];
+
+            if (MonsterTypeHelper.entityIsTreatedAsType(entity.target, type)) {
+                // Damage Percent
+                // @ts-ignore - We know these properties exist, as they were dynamically added before
+                modification += entity.modifiers[type.modifierPropertyNames.increasedDamage] - entity.modifiers[type.modifierPropertyNames.decreasedDamage];
+            }
+
+            if (MonsterTypeHelper.entityIsTreatedAsType(entity, type)) {
+                // Damage Percent
+                // @ts-ignore - We know these properties exist, as they were dynamically added before
+                modification += entity.target.modifiers[type.modifierPropertyNames.increasedDamageTaken] - entity.target.modifiers[type.modifierPropertyNames.decreasedDamageTaken];
             }
         }
 
@@ -409,7 +504,27 @@ export class CustomModifiersCalculator {
      * @param entity
      */
     private static getCharacterAccuracyPercentageModifiers(entity: Character): number {
-        return CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.GlobalAccuracy);
+        return CustomModifiersCalculator.getCharacterAccuracyPercentageModifiersForMonsterTypes(entity);
+    }
+
+    /**
+     * Calculates accuracy percentage bonus to apply, specifically based on monster type allocations (logic shared across both player and enemy)
+     * @param entity
+     */
+    private static getCharacterAccuracyPercentageModifiersForMonsterTypes(entity: Character): number {
+        let modification = 0;
+
+        const types = MonsterTypeManager.getActiveTypesAsArray();
+        for (var i = 0; i < types.length; i++) {
+            const type = types[i];
+
+            if (MonsterTypeHelper.entityIsTreatedAsType(entity.target, type)) {
+                // @ts-ignore - We know these properties exist, as they were dynamically added before
+                modification += entity.modifiers[type.modifierPropertyNames.increasedGlobalAccuracy] - entity.modifiers[type.modifierPropertyNames.decreasedGlobalAccuracy];
+            }
+        }
+
+        return modification;
     }
 
     /**
@@ -496,7 +611,27 @@ export class CustomModifiersCalculator {
      * @param entity
      */
     private static getCharacterDamageReductionFlatModification(entity: Character): number {
-        return CustomModifiersCalculator.getModificationValueForMonsterTypes(entity, MonsterTypeModifierGroup.DamageReduction);
+        return CustomModifiersCalculator.getCharacterDamageReductionFlatModificationForMonsterTypes(entity);
+    }
+
+    /**
+     * Calculate the flat change in DR%, specifically based on monster type allocations
+     * @param entity
+     */
+    private static getCharacterDamageReductionFlatModificationForMonsterTypes(entity: Character): number {
+        let modification = 0;
+
+        const types = MonsterTypeManager.getActiveTypesAsArray();
+        for (var i = 0; i < types.length; i++) {
+            const type = types[i];
+
+            if (MonsterTypeHelper.entityIsTreatedAsType(entity.target, type)) {
+                // @ts-ignore - We know these properties exist, as they were dynamically added before
+                modification += entity.modifiers[type.modifierPropertyNames.increasedDamageReduction] - entity.modifiers[type.modifierPropertyNames.decreasedDamageReduction];
+            }
+        }
+
+        return modification;
     }
 
     /**
@@ -517,14 +652,4 @@ export class CustomModifiersCalculator {
     // #endregion
 
     // #endregion
-
-    /**
-     *
-     * @param entity
-     * @param modifierGroup
-     * @returns
-     */
-    private static getModificationValueForMonsterTypes(entity: Character, modifierGroup: MonsterTypeModifierGroup) {
-        return MonsterTypeHelper.getModificationValue(entity, modifierGroup);
-    }
 }
