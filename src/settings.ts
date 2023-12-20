@@ -1,4 +1,5 @@
-import { CmimUtils } from "./utils";
+import { CmimUtils } from "./Utils";
+import { CombatAreasIndicatorsManager } from "./CombatAreasIndicatorsManager";
 import { Constants } from "./Constants";
 import { ModContextMemoizer } from "./ModContextMemoizer";
 import { MonsterTypeManager } from "./monsterTyping/MonsterTypeManager";
@@ -10,12 +11,30 @@ export class SettingsManager {
         ctx.settings.section(TranslationManager.getLangString("Settings_Section_Combat_Areas_Indicator", true)).add([
             {
                 type: 'switch',
+                name: 'enable-boss-indicators',
+                label: TranslationManager.getLangString("Settings_Setting_Label_Enable_Boss_Indicators", true),
+                hint: TranslationManager.getLangString("Settings_Setting_Hint_Enable_Boss_Indicators", true),
+                default: true,
+                onChange(value: boolean, previousValue: boolean): void {
+                    CombatAreasIndicatorsManager.rebuildCombatAreaMonsterTypeIndicators(
+                        value,
+                        SettingsManager.getEnableActiveMonsterTypeIndicators,
+                        SettingsManager.getEnableInactiveMonsterTypeIndicators
+                    );
+                }
+            } as Modding.Settings.SwitchConfig,
+            {
+                type: 'switch',
                 name: 'enable-active-monster-type-indicators',
                 label: TranslationManager.getLangString("Settings_Setting_Label_Enable_Active_Monster_Type_Indicators", true),
                 hint: TranslationManager.getLangString("Settings_Setting_Hint_Enable_Active_Monster_Type_Indicators", true),
                 default: true,
                 onChange(value: boolean, previousValue: boolean): void {
-                    MonsterTypeManager.rebuildCombatAreaMonsterTypeIndicators(value, SettingsManager.getEnableInactiveMonsterTypeIndicators);
+                    CombatAreasIndicatorsManager.rebuildCombatAreaMonsterTypeIndicators(
+                        SettingsManager.getEnableBossIndicators,
+                        value,
+                        SettingsManager.getEnableInactiveMonsterTypeIndicators
+                    );
                 }
             } as Modding.Settings.SwitchConfig,
             {
@@ -25,7 +44,11 @@ export class SettingsManager {
                 hint: TranslationManager.getLangString("Settings_Setting_Hint_Enable_Inactive_Monster_Type_Indicators", true),
                 default: true,
                 onChange(value: boolean, previousValue: boolean): void {
-                    MonsterTypeManager.rebuildCombatAreaMonsterTypeIndicators(SettingsManager.getEnableActiveMonsterTypeIndicators, value);
+                    CombatAreasIndicatorsManager.rebuildCombatAreaMonsterTypeIndicators(
+                        SettingsManager.getEnableBossIndicators,
+                        SettingsManager.getEnableActiveMonsterTypeIndicators,
+                        value
+                    );
                 }
             } as Modding.Settings.SwitchConfig,
         ]);
@@ -100,6 +123,15 @@ export class SettingsManager {
                 MonsterTypeManager.trySetTypeInactive(value);
             });
         });
+    }
+
+    /**
+     *
+     */
+    public static get getEnableBossIndicators(): boolean {
+        return ModContextMemoizer.ctx.settings
+            .section(TranslationManager.getLangString("Settings_Section_Combat_Areas_Indicator", true))
+            .get('enable-boss-indicators') as boolean;
     }
 
     /**

@@ -1,7 +1,13 @@
 export const zhTW = {
+    Combat_Area_Boss_Indicator: 'Boss',
+
     // ### Settings
     // #### Combat Areas Indicators section
     Settings_Section_Combat_Areas_Indicator: 'Combat Areas Indicators',
+
+    // ##### Enable active monster type indicators
+    Settings_Setting_Label_Enable_Boss_Indicators: 'Enable boss indicators',
+    Settings_Setting_Hint_Enable_Boss_Indicators: "Usually, only the final monster of a dungeon is classified as a boss. There may be exceptions to this rule, though, where monsters in Combat- or Slayer Areas may also be classified as a boss, which this setting will highlight",
 
     // ##### Enable active monster type indicators
     Settings_Setting_Label_Enable_Active_Monster_Type_Indicators: 'Enable active monster type indicators',

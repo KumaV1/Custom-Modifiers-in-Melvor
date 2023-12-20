@@ -399,7 +399,7 @@ export class MonsterTypeHelper {
         badgeEl.classList.add('bage-pill');
         badgeEl.classList.add('mr-1');
         badgeEl.classList.add(typeActive ? 'badge-success' : 'badge-warning');
-        badgeEl.classList.add(Constants.MONSTER_TYPE_INDICATOR_BADGE_CLASS);
+        badgeEl.classList.add(Constants.COMBAT_AREAS_INDICATOR_BADGE_CLASS);
 
         badgeEl.innerHTML = displayCount
             ? `${count} `
@@ -409,16 +409,5 @@ export class MonsterTypeHelper {
             : TranslationManager.getMonsterTypeSingularNameTranslation(type.singularName);
 
         return badgeEl;
-    }
-
-    /**
-     * Creates a br with class(es), which are used before/after badges at times and should also be targetable through defined classes
-     * @returns
-     */
-    public static createCombatAreaIndicatorBadgeBr(): HTMLElement {
-        let br = document.createElement("br");
-        br.classList.add(Constants.MONSTER_TYPE_INDICATOR_BADGE_BR_CLASS);
-
-        return br;
     }
 }

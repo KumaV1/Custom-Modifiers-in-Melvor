@@ -1,11 +1,13 @@
 // Modules
 // You can import script modules and have full type completion
-import { SettingsManager } from './settings';
+import { CombatAreasIndicatorsManager } from './CombatAreasIndicatorsManager';
 import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
+import { GameObjectDataWrapperInitializer } from './GameObjectDataWrapperInitializer';
 import { ModContextMemoizer } from './ModContextMemoizer';
 import { MonsterType } from './monsterTyping/MonsterType';
 import { MonsterTypeManager } from './monsterTyping/MonsterTypeManager';
 import { MonsterTypeOverview } from './components/MonsterTypeOverview'
+import { SettingsManager } from './Settings';
 import { TinyIconsCompatibility } from './compatibility/TinyIconsCompatibility';
 import { TranslationManager } from './translation/TranslationManager';
 
@@ -19,7 +21,6 @@ import ModData from '../data/data.json'
 import '../assets/Logo.png'
 import '../assets/Death_Mark.png'
 import '../assets/Invoke_Death.png'
-import { GameObjectDataWrapperInitializer } from './GameObjectDataWrapperInitializer';
 // #endregion
 
 export async function setup(ctx: Modding.ModContext) {
@@ -33,6 +34,7 @@ export async function setup(ctx: Modding.ModContext) {
     initSettings(ctx);
     initModCompatibility(ctx);
     initDynamicMonsterTypes(ctx);
+    initCombatAreasIndicators(ctx);
     initOverviewContainer(ctx);
 
     // Register our GameData
@@ -156,5 +158,8 @@ function initModCompatibility(ctx: Modding.ModContext) {
  */
 function initDynamicMonsterTypes(ctx: Modding.ModContext) {
     MonsterTypeManager.initNativeMonsterTypes();
-    MonsterTypeManager.initCombatAreaMonsterTypeIndicators(ctx);
+}
+
+function initCombatAreasIndicators(ctx: Modding.ModContext) {
+    CombatAreasIndicatorsManager.initCombatAreasIndicators(ctx);
 }

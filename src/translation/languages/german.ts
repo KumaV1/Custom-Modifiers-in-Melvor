@@ -1,7 +1,13 @@
 ﻿export const de = {
+    Combat_Area_Boss_Indicator: 'Boss',
+
     // ### Settings
     // #### Combat Areas Indicators section
     Settings_Section_Combat_Areas_Indicator: 'Indikatoren in Kampfgebieten',
+
+    // ##### Enable active monster type indicators
+    Settings_Setting_Label_Enable_Boss_Indicators: 'Indikatoren für Bosse aktivieren',
+    Settings_Setting_Hint_Enable_Boss_Indicators: "Normalerweise ist nur das letzte Monster eines Verlieses als Boss klassifiziert. Es kann jedoch Ausnahmen geben, bei welchen auch Monster im Kampf- oder Berserkergebieten als Boss klassifiziert sein können, welche durch diese Einstellung hervorgehoben werden",
 
     // ##### Enable active monster type indicators
     Settings_Setting_Label_Enable_Active_Monster_Type_Indicators: 'Indikatoren für aktive Monsterarten aktivieren',

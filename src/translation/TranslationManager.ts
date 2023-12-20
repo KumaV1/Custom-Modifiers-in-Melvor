@@ -100,6 +100,17 @@ export class TranslationManager {
 
     /**
      *
+     * @param identifier
+     * @param includeNamespace
+     */
+    public static getLangString(identifier: string, includeNamespace: boolean = false) {
+        return includeNamespace
+            ? getLangString(`${Constants.MOD_NAMESPACE}_${identifier}`)
+            : getLangString(identifier);
+    }
+
+    /**
+     *
      * @param typeNameSingular
      * @returns
      */
@@ -125,8 +136,10 @@ export class TranslationManager {
      * @param fallback - optionally provide an alternative return value, if you don't want the key
      * @returns
      */
-    public static getTranslationOrFallback(key: string, fallback: string): string {
-        const translation = loadedLangJson[key];
+    public static getTranslationOrFallback(key: string, fallback: string, includeNamespace: boolean = false): string {
+        const translation = includeNamespace
+            ? loadedLangJson[`${Constants.MOD_NAMESPACE}_${key}`]
+            : loadedLangJson[key];
         //console.log(`translationManager | getTranslationOrFallback | key: ${key} | fallback: ${fallback} | key result: ${translation}`);
         return translation !== undefined && translation !== ''
             ? translation
