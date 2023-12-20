@@ -25,10 +25,10 @@ export class MonsterTypeManager {
      */
     private static _inactiveTypes: { [key: string]: MonsterTypeDefinition } = {};
 
-    public static initNativeMonsterTypes() {
-        console.log("Called initNativeMonsterTypes");
-
-        // Register types
+    /**
+     * Register mod types for which this mod already provides all configuration and translation
+     */
+    public static initNativeMonsterTypes(): void {
         MonsterTypeManager.registerOrUpdateType(
             MonsterType.Animal,
             "Animals",
@@ -96,7 +96,7 @@ export class MonsterTypeManager {
      * @param active
      * @returns
      */
-    public static registerOrUpdateType(typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean) {
+    public static registerOrUpdateType(typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean): void {
         // If the given type is already active, then monster allocation is the only thing we might want to do
         if (this._activeTypes[typeNameSingular]) {
             MonsterTypeManager.addMonstersToType(typeNameSingular, monsterIds);
@@ -148,7 +148,7 @@ export class MonsterTypeManager {
      * Runs the data registration processes for the given type
      * @param type
      */
-    public static registerData(type: MonsterTypeDefinition) {
+    public static registerData(type: MonsterTypeDefinition): void {
         const modifierManager = new CustomModifiersManager(ModContextMemoizer.ctx);
         modifierManager.registerMonsterType(type);
 
@@ -164,7 +164,7 @@ export class MonsterTypeManager {
      * @param type
      * @param iconResourceUrl - can be omitted, if it's a type created by this base mod, as that one generally defines a proper url for any types registered by it
      */
-    public static forceBaseModTypeActive(type: MonsterType) {
+    public static forceBaseModTypeActive(type: MonsterType): void {
         if (this._inactiveTypes[type]) {
             this._activeTypes[type] = this._inactiveTypes[type];
 
@@ -179,7 +179,7 @@ export class MonsterTypeManager {
      * Sets the given type to inactive, if it can be found in the active list
      * @param type
      */
-    public static trySetTypeInactive(type: string | MonsterType) {
+    public static trySetTypeInactive(type: string | MonsterType): void {
         if (this._activeTypes[type]) {
             this._inactiveTypes[type] = this._activeTypes[type];
             delete this._activeTypes[type];
@@ -192,20 +192,8 @@ export class MonsterTypeManager {
      * @param type - singular name of type
      * @param monsterId - full id, including namespace
      */
-    public static addMonster(type: string | MonsterType, monsterId: string) {
+    public static addMonster(type: string | MonsterType, monsterId: string): void {
         MonsterTypeManager.addMonsters(type, [monsterId]);
-
-        // If type doesn't already exist, skip (type has to be registered properly beforehand)
-        //if (!this._activeTypes[type]) {
-        //    return;
-        //}
-
-        //// If monster is already allocated, avoid duplicate
-        //if (this._activeTypes[type].monsters.some(mId => mId === monsterId)) {
-        //    return;
-        //}
-
-        //this._activeTypes[type].monsters.push(monsterId);
     }
 
     /**
@@ -221,10 +209,6 @@ export class MonsterTypeManager {
         }
 
         MonsterTypeManager.registerOrUpdateType(type, type, Constants.MISSING_ARTWORK_URL, monsterIds, false);
-
-        //for (var i = 0; i < monsterIds.length; i++) {
-        //    MonsterTypeManager.addMonster(type, monsterIds[i]);
-        //}
     }
 
     /**
@@ -235,6 +219,7 @@ export class MonsterTypeManager {
         if (!type) {
             return undefined;
         }
+
         return this._activeTypes[type];
     }
 
@@ -242,7 +227,7 @@ export class MonsterTypeManager {
      * Get active type definitions of all registered types
      * @returns
      */
-    public static getActiveTypes() {
+    public static getActiveTypes(): { [key: string]: MonsterTypeDefinition } {
         return this._activeTypes;
     }
 
@@ -250,7 +235,7 @@ export class MonsterTypeManager {
      * Get inactive type definitions of all registered types
      * @returns
      */
-    public static getInactiveTypes() {
+    public static getInactiveTypes(): { [key: string]: MonsterTypeDefinition } {
         return this._inactiveTypes;
     }
 
@@ -258,7 +243,7 @@ export class MonsterTypeManager {
      * Get type definitions of all registered type
      * @returns
      */
-    public static getActiveTypesAsArray() {
+    public static getActiveTypesAsArray(): MonsterTypeDefinition[] {
         let array: MonsterTypeDefinition[] = [];
         Object.entries(this._activeTypes).forEach(([key, value]) => {
             array.push(value);
@@ -271,7 +256,7 @@ export class MonsterTypeManager {
      * Get type definitions of all registered type
      * @returns
      */
-    public static getInactiveTypesAsArray() {
+    public static getInactiveTypesAsArray(): MonsterTypeDefinition[] {
         let array: MonsterTypeDefinition[] = [];
         Object.entries(this._inactiveTypes).forEach(([key, value]) => {
             array.push(value);
@@ -301,61 +286,6 @@ export class MonsterTypeManager {
         }
 
         return false;
-    }
-
-    /**
-     * Add monster to the list of humans
-     * @param monsterIds
-     * @deprecated - due to dynamic type definition, "addMonster()" or "addMonsters()" should be used instead
-     */
-    public static addHumans(monsterIds: string[]): void {
-        MonsterTypeManager.addMonsters(MonsterType.Human, monsterIds);
-    }
-
-    /**
-     * Return the current list of humans
-     * @returns
-     * @deprecated - due to dynamic type definition, "getTypes()" should be used instead
-     */
-    public static getHumans() {
-        return MonsterTypeManager.getActiveTypes()["Human"].monsters;
-    }
-
-    /**
-     * Add monster to the list of dragons
-     * @param monsterIds
-     * @deprecated - due to dynamic type definition, "addMonster()" or "addMonsters()" should be used instead
-     */
-    public static addDragons(monsterIds: string[]): void {
-        //console.log(`addDragons | Called with following monster ids: ${monsterIds}`);
-        MonsterTypeManager.addMonsters(MonsterType.Dragon, monsterIds);
-    }
-
-    /**
-     * Return the current list of dragons
-     * @returns
-     * @deprecated - due to dynamic type definition, "getTypes()" should be used instead
-     */
-    public static getDragons() {
-        return MonsterTypeManager.getActiveTypes()["Dragon"].monsters;
-    }
-
-    /**
-     * Add monster to the list of undeads
-     * @param monsterIds
-     * @deprecated - due to dynamic type definition, "addMonster()" or "addMonsters()" should be used instead
-     */
-    public static addUndeads(monsterIds: string[]): void {
-        MonsterTypeManager.addMonsters(MonsterType.Undead, monsterIds);
-    }
-
-    /**
-     * Return the current list of undead
-     * @returns
-     * @deprecated - due to dynamic type definition, "getTypes()" should be used instead
-     */
-    public static getUndead() {
-        return MonsterTypeManager.getActiveTypes()["Undead"].monsters;
     }
 
     /**
