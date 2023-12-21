@@ -55,6 +55,82 @@ declare namespace Modding {
              * @returns
              */
             registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean = true) => void
+
+            /**
+             * Get list of monster ids which are allocated to the given type, regardless of whether they are found to be active or inactive
+             * If no monsters were found, an empty array is returned
+             * @returns
+             */
+            getMonstersOfType: (type: string | MonsterType) => string[]
+
+            /**
+             * Previously used with hard-definition of types, to retrieve info about which monsters are allocated as human
+             * @returns
+             * @deprecated
+             */
+            getHumans: () => string[]
+
+            /**
+              Previously used with hard-definition of types, to retrieve info about which monsters are allocated as dragon
+             * @returns
+             * @deprecated
+             */
+            getDragons: () => string[]
+
+            /**
+             * Previously used with hard-definition of types, to retrieve info about which monsters are allocated as undead
+             * @returns
+             * @deprecated
+             */
+            getUndead: () => string[]
+
+            /**
+             * Previously used with hard-definition of types, to allocate the human type to the provided monsters
+             * @param monsterIds
+             * @returns
+             * @deprecated
+             */
+            addHumans: (monsterIds: string[]) => void
+
+            /**
+             * Previously used with hard-definition of types, to allocate the dragon type to the provided monsters
+             * @param monsterIds
+             * @returns
+             * @deprecated
+             */
+            addDragons: (monsterIds: string[]) => void
+
+            /**
+             * Previously used with hard-definition of types, to allocate the undead type to the provided monsters
+             * @param monsterIds
+             * @returns
+             * @deprecated
+             */
+            addUndead: (monsterIds: string[]) => void
+
+            /**
+             * Previously used with hard-definition of types, to check a certain monster for whether they are allocated to the human type
+             * @param monster
+             * @returns
+             * @deprecated
+             */
+            monsterIsHuman: (monster: Monster) => Boolean
+
+            /**
+             * Previously used with hard-definition of types, to check a certain monster for whether they are allocated to the dragon type
+             * @param monster
+             * @returns
+             * @deprecated
+             */
+            monsterIsDragon: (monster: Monster) => Boolean
+
+            /**
+             * Previously used with hard-definition of types, to check a certain monster for whether they are allocated to the undead type
+             * @param monster
+             * @returns
+             * @deprecated
+             */
+            monsterIsUndead: (monster: Monster) => Boolean
         }
     }
 }

@@ -275,17 +275,30 @@ export class MonsterTypeManager {
             return false;
         }
 
-        if (MonsterTypeManager._activeTypes[type] &&
-            MonsterTypeManager._activeTypes[type].monsters.some(mId => mId === monster.id)) {
-            return true;
+        const monsters = MonsterTypeManager.getMonstersOfType(type);
+
+        return monsters.some(mId => mId === monster.id);
+    }
+
+    /**
+     * Get list of monster ids which are allocated to the given type, regardless of whether they are found to be active or inactive
+     * If no monsters were found, an empty array is returned
+     * @param type
+     */
+    public static getMonstersOfType(type: string | MonsterType): string[] {
+        if (!type) {
+            return [];
         }
 
-        if (MonsterTypeManager._inactiveTypes[type] &&
-            MonsterTypeManager._inactiveTypes[type].monsters.some(mId => mId === monster.id)) {
-            return true;
+        if (MonsterTypeManager._activeTypes[type]) {
+            return MonsterTypeManager._activeTypes[type].monsters;
         }
 
-        return false;
+        if (MonsterTypeManager._inactiveTypes[type]) {
+            return MonsterTypeManager._inactiveTypes[type].monsters;
+        }
+
+        return [];
     }
 
     /**
@@ -304,4 +317,93 @@ export class MonsterTypeManager {
             this._inactiveTypes[type].addMonsters(monsterIds);
         }
     }
+
+    // #region Deprecated
+
+    /**
+    * Add monster to the list of humans
+    * @param monsterIds
+    * @deprecated - due to dynamic type definition, "addMonster()" or "addMonsters()" should be used instead
+    */
+    public static addHumans(monsterIds: string[]): void {
+        MonsterTypeManager.addMonsters(MonsterType.Human, monsterIds);
+    }
+
+    /**
+     * Return the current list of humans
+     * @returns
+     * @deprecated - due to dynamic type definition, "getTypes()" should be used instead
+     */
+    public static getHumans() {
+        return MonsterTypeManager.getActiveTypes()["Human"].monsters;
+    }
+
+    /**
+     * Add monster to the list of dragons
+     * @param monsterIds
+     * @deprecated - due to dynamic type definition, "addMonster()" or "addMonsters()" should be used instead
+     */
+    public static addDragons(monsterIds: string[]): void {
+        //console.log(`addDragons | Called with following monster ids: ${monsterIds}`);
+        MonsterTypeManager.addMonsters(MonsterType.Dragon, monsterIds);
+    }
+
+    /**
+     * Return the current list of dragons
+     * @returns
+     * @deprecated - due to dynamic type definition, "getTypes()" should be used instead
+     */
+    public static getDragons() {
+        return MonsterTypeManager.getActiveTypes()["Dragon"].monsters;
+    }
+
+    /**
+     * Add monster to the list of undeads
+     * @param monsterIds
+     * @deprecated - due to dynamic type definition, "addMonster()" or "addMonsters()" should be used instead
+     */
+    public static addUndeads(monsterIds: string[]): void {
+        MonsterTypeManager.addMonsters(MonsterType.Undead, monsterIds);
+    }
+
+    /**
+     * Return the current list of undead
+     * @returns
+     * @deprecated - due to dynamic type definition, "getTypes()" should be used instead
+     */
+    public static getUndead() {
+        return MonsterTypeManager.getActiveTypes()["Undead"].monsters;
+    }
+
+    /**
+    * Previously used with hard-definition of types, to check a certain monster for whether they are allocated to the human type
+    * @param monster
+    * @returns
+    * @deprecated
+    */
+    public static monsterIsHuman(monster: Monster): boolean {
+        return MonsterTypeManager.monsterIsOfType(monster, MonsterType.Human);
+    }
+
+    /**
+     * Previously used with hard-definition of types, to check a certain monster for whether they are allocated to the dragon type
+     * @param monster
+     * @returns
+     * @deprecated
+     */
+    public static monsterIsDragon(monster: Monster): boolean {
+        return MonsterTypeManager.monsterIsOfType(monster, MonsterType.Dragon);
+    }
+
+    /**
+     * Previously used with hard-definition of types, to check a certain monster for whether they are allocated to the undead type
+     * @param monster
+     * @returns
+     * @deprecated
+     */
+    public static monsterIsUndead(monster: Monster): boolean {
+        return MonsterTypeManager.monsterIsOfType(monster, MonsterType.Undead);
+    }
+
+    // #endregion
 }
