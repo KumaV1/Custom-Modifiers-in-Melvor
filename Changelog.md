@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.2.2
+* Re-added/Newly-added api-methods are now actually added/accessible (rather than just the logic behind them...)
+
 ## v2.2.1
 * Readded deprecated monster-type-related api methods
 * Added a new monster-type-related api method, as some of the api methods previously removed didn't have a "parameterized version" yet
