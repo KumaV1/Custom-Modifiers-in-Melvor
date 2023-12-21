@@ -7,11 +7,15 @@ The impact shouldn't be noteworthy, though.**
 **You do not have to care about this mod, unless another mod has it set as a dependency and asking you to add it!**
 
 That being said, if you **do** end up including this mod, you might end up stumbling onto type-specific modifiers (e.g. increasing damage against dragons specifically). 
-If you do, feel free to have a look at the "Monster Types" view, which is accessible through the "Modding" section in the sidebar. It will display the configured monster type allocations to you, 
-so you can always check whether a specific monster is interpreted as a specific type.\
+If you do, you can find out which types a monster is allocated to by
+* Having a look at the "Monster Types" view, which is accessible through the "Modding" section in the sidebar
+* Have the mod setting enabled, which will add badges for types to the monsters in the combat area selection screen
+
 ![Sidebar](metaMedia/1.png)\
 _The overview will only display monsters loaded - monsters specific to expansions and mods you do not have, will not be displayed._\
-![Overview](metaMedia/2.png)
+![Overview](metaMedia/2.png)\
+![Overview](metaMedia/4.png)\
+![Overview](metaMedia/5.png)
 
 ## Mod Creators
 Feel free to have a look at one of the files in `src/translation/languages`, which includes the effects of all modifiers.
@@ -19,6 +23,8 @@ Feel free to have a look at one of the files in `src/translation/languages`, whi
 Of course, if you use any of these modifiers, remember to flag this mod as a dependency for your mod.
 
 ### Monster type definition
+_You can check the [Mod Creator Readme](ModCreatorReadme.md) for more info._
+
 Regardless of whether you want to use modifiers implemented by this mod yourself or not, 
 if you add custom monster with your mod, 
 then it would be nice to think about whether those monsters should have any form of type allocation.
