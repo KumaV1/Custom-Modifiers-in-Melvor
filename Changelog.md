@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.2.1
+* Readded deprecated monster-type-related api methods
+* Added a new monster-type-related api method, as some of the api methods previously removed didn't have a "parameterized version" yet
+
 ## v2.2.0
 * Updated monster type allocations
 * Added indicator badges for bosses, as well as active and inactive monster types to combat areas
