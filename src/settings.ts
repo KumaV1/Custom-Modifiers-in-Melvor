@@ -61,6 +61,27 @@ export class SettingsManager {
             } as Modding.Settings.SettingConfig,
         ]);
 
+        ctx.settings.section(TranslationManager.getLangString("Settings_Section_Enabling", true)).add([
+            {
+                type: 'label',
+                name: 'enabling-info',
+                label: TranslationManager.getLangString("Settings_Setting_Label_Enabling_Info", true),
+            } as Modding.Settings.SettingConfig,
+        ]);
+
+        ctx.settings.section(TranslationManager.getLangString("Settings_Section_Save_And_Reload", true)).add([
+            {
+                type: "button",
+                name: "save-reload",
+                display: TranslationManager.getLangString("Settings_Setting_Display_Save_Reload", true),
+                color: "primary",
+                onClick: () => {
+                    saveData();
+                    window.location.reload();
+                }
+            } as Modding.Settings.ButtonConfig
+        ]);
+
         // On lifetime hook 3 (the one before the run that will actually read settings from save), run the delayed creation of the monster type (de-)activation checkbox lists
         ctx.onInterfaceAvailable(function () {
             // Create options
@@ -103,7 +124,10 @@ export class SettingsManager {
                             hint.classList.add("text-warning");
                         }
                     }
-                } as Modding.Settings.CheckboxGroupConfig,
+                } as Modding.Settings.CheckboxGroupConfig
+            ]);
+
+            ctx.settings.section(TranslationManager.getLangString("Settings_Section_Enabling", true)).add([
                 {
                     type: 'checkbox-group',
                     name: 'force-specific-monster-types-active',
@@ -119,17 +143,7 @@ export class SettingsManager {
                             hint.classList.add("text-warning");
                         }
                     }
-                } as Modding.Settings.CheckboxGroupConfig,
-                {
-                    type: "button",
-                    name: "save-reload",
-                    display: TranslationManager.getLangString("Settings_Setting_Display_Save_Reload", true),
-                    color: "primary",
-                    onClick: () => {
-                        saveData();
-                        window.location.reload();
-                    }
-                } as Modding.Settings.ButtonConfig // added here, so it's placed after the checkbox list
+                } as Modding.Settings.CheckboxGroupConfig
             ]);
         });
 
@@ -186,7 +200,7 @@ export class SettingsManager {
      */
     public static get getEnableSpecificMonsterTypes(): string[] {
         return ModContextMemoizer.ctx.settings
-            .section(TranslationManager.getLangString("Settings_Section_Disabling", true))
+            .section(TranslationManager.getLangString("Settings_Section_Enabling", true))
             .get('force-specific-monster-types-active') as string[] ?? [];
     }
 

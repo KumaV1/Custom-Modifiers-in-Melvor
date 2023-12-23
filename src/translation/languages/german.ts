@@ -27,9 +27,18 @@
     Settings_Setting_Label_Keep_Specific_Monster_Types_Inactive: 'Bestimmte Monsterarten inaktiv lassen',
     Settings_Setting_Hint_Keep_Specific_Monster_Types_Inactive: 'Erzwingt, dass die ausgewählten Monsterarten inaktiv bleiben, unabhängig davon, was andere Mods definieren. Für Monsterarten, welche von anderen Mods hinzugefügt wurden, geht die Nachhaltung des Kontroll-Kästchens verloren, wenn der Charakter ohne besagten Mod geladen wird',
 
+    // #### Enabling section
+    Settings_Section_Enabling: 'Aktivieren',
+
+    // ##### Info label
+    Settings_Setting_Label_Enabling_Info: "Dieser Bereich ist wahrscheinlich irrelevant als Benutzer. Je nach Mods könnte jedoch die Situation auftreten, dass bestimmte Funktionalitäten dieses Mod noch aktiviert werden müssen, da kein Mod diesen Wunsch kommuniziert hat. In dem Fall erlaubt diese Sektion sich selbst um die Aktivierung zu kümmern.",
+
     // ##### Force specific monster types active
     Settings_Setting_Label_Force_Specific_Monster_Types_Active: 'Erzwingen, dass bestimmte Monsterarten aktiv sind',
-    Settings_Setting_Hint_Force_Specific_Monster_Types_Active: 'Erzwingt, dass die ausgewählten Monsterarten aktiv sind, unabhängig davon, was andere Mods definieren. Für Monsterarten, welche von anderen Mods hinzugefügt wurden, geht die Nachhaltung des Kontroll-Kästchens verloren, wenn der Charakter ohne besagten Mod geladen wird',
+    Settings_Setting_Hint_Force_Specific_Monster_Types_Active: 'Erzwingt, dass die ausgewählten Monsterarten aktiv sind (wird nach Inaktivitäts-Einstellung evaluiert), unabhängig davon, was andere Mods definieren. Für Monsterarten, welche von anderen Mods hinzugefügt wurden, geht die Nachhaltung des Kontroll-Kästchens verloren, wenn der Charakter ohne besagten Mod geladen wird',
+
+    // #### Save & Reload section
+    Settings_Section_Save_And_Reload: 'Speichern und neu laden',
 
     // ##### Save & Reload button
     Settings_Hint_Save_Reload_Required: 'Neu laden erforderlich',
