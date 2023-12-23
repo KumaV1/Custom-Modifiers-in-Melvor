@@ -61,7 +61,7 @@ export class SettingsManager {
             } as Modding.Settings.SettingConfig,
         ]);
 
-        // On lifetime hook 3 (the one before the run that will actually read settings from save), run the delayed creation of the monster type deactivation checkbox list
+        // On lifetime hook 3 (the one before the run that will actually read settings from save), run the delayed creation of the monster type (de-)activation checkbox lists
         ctx.onInterfaceAvailable(function () {
             // Create options
             const activeTypes = MonsterTypeManager.getActiveTypesAsArray();
@@ -105,6 +105,22 @@ export class SettingsManager {
                     }
                 } as Modding.Settings.CheckboxGroupConfig,
                 {
+                    type: 'checkbox-group',
+                    name: 'force-specific-monster-types-active',
+                    label: TranslationManager.getLangString("Settings_Setting_Label_Force_Specific_Monster_Types_Active", true),
+                    hint: TranslationManager.getLangString("Settings_Setting_Hint_Force_Specific_Monster_Types_Active", true),
+                    options: options,
+                    onChange(value: string, previousValue: string): void {
+                        SettingsManager.setButtonToReload();
+
+                        const hint = document.querySelector('label[for="customModifiersInMelvor:force-specific-monster-types-active"] > small');
+                        if (hint) {
+                            hint.textContent = TranslationManager.getLangString("Settings_Hint_Save_Reload_Required", true);
+                            hint.classList.add("text-warning");
+                        }
+                    }
+                } as Modding.Settings.CheckboxGroupConfig,
+                {
                     type: "button",
                     name: "save-reload",
                     display: TranslationManager.getLangString("Settings_Setting_Display_Save_Reload", true),
@@ -117,10 +133,14 @@ export class SettingsManager {
             ]);
         });
 
-        // On character load, use settings to potentially disable certain types that would otherwise be active
+        // On character load, use settings to potentially disable/enable certain types that would otherwise be active
         ctx.onCharacterLoaded(function () {
             SettingsManager.getDisableSpecificMonsterTypes.forEach(function (value: string) {
                 MonsterTypeManager.trySetTypeInactive(value);
+            });
+
+            SettingsManager.getEnableSpecificMonsterTypes.forEach(function (value: string) {
+                MonsterTypeManager.trySetTypeActive(value);
             });
         });
     }
@@ -159,6 +179,15 @@ export class SettingsManager {
         return ModContextMemoizer.ctx.settings
             .section(TranslationManager.getLangString("Settings_Section_Disabling", true))
             .get('keep-specific-monster-types-inactive') as string[] ?? [];
+    }
+
+    /**
+     *
+     */
+    public static get getEnableSpecificMonsterTypes(): string[] {
+        return ModContextMemoizer.ctx.settings
+            .section(TranslationManager.getLangString("Settings_Section_Disabling", true))
+            .get('force-specific-monster-types-active') as string[] ?? [];
     }
 
     /**

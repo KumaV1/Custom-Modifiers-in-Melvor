@@ -54,7 +54,6 @@ export class CustomModifiersManager {
     public registerMonsterTypes(types: MonsterTypeDefinition[]): void {
         for (var i = 0; i < types.length; i++) {
             const type = types[i];
-            console.log(type);
 
             // Create modifiers
             this.registerMonsterTypeModifierData(type);

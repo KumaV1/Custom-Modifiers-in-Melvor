@@ -27,6 +27,10 @@ export const zhCN = {
     Settings_Setting_Label_Keep_Specific_Monster_Types_Inactive: 'Keep specific monster types inactive',
     Settings_Setting_Hint_Keep_Specific_Monster_Types_Inactive: 'Forces the selected monster types to stay inactive, regardless of what any mod may communicate. Monster types added by other mods will lose their checkbox state, if you happen to load your save without said mod',
 
+    // ##### Force specific monster types active
+    Settings_Setting_Label_Force_Specific_Monster_Types_Active: 'Force specific monster types active',
+    Settings_Setting_Hint_Force_Specific_Monster_Types_Active: 'Forces the selected monster types to be active, regardless of what any mod may communicate. Monster types added by other mods will lose their checkbox state, if you happen to load your save without said mod',
+
     // ##### Save & Reload button
     Settings_Hint_Save_Reload_Required: 'Reload required',
     Settings_Setting_Display_Save_Reload: 'Save all & Reload',

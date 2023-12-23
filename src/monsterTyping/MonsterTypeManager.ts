@@ -206,6 +206,17 @@ export class MonsterTypeManager {
     }
 
     /**
+     * Sets the given type to inactive, if it can be found in the active list
+     * @param type
+     */
+    public static trySetTypeActive(type: string | MonsterType): void {
+        if (this._inactiveTypes[type]) {
+            this._activeTypes[type] = this._inactiveTypes[type];
+            delete this._inactiveTypes[type];
+        }
+    }
+
+    /**
      * Defines the given monster to be of the given type.
      * Will not create a new active type, though it may update a pre-existing one
      * @param type - singular name of type
