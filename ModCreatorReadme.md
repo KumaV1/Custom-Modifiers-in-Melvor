@@ -217,8 +217,8 @@ which are not supposed to have their changes to monster type definitions be over
 
 ```ts
 // Structure
-getActiveTypes()
-getInactiveTypes()
+getActiveTypes() => MonsterTypeDefinitions[]
+getInactiveTypes() => MonsterTypeDefinitions[]
 
 // Example
 getActiveTypes();
@@ -229,9 +229,10 @@ getInactiveTypes();
 
 ```ts
 // Structure
-forceBaseModTypeActive(type: MonsterType)
+forceBaseModTypeActive(type: MonsterType) => void
 
 // Example
+forceBaseModTypeActive(MonsterType.Dragon); // if you have the type-definition classes, see "Intellisense" section
 forceBaseModTypeActive("Dragon");
 
 // Purpose: This mod comes with a list of monster types already completely pre-configured (check "MonsterType.ts"). 
@@ -241,9 +242,10 @@ forceBaseModTypeActive("Dragon");
 
 ```ts
 // Structure
-addMonsters(type: string, monsterIds: string[])
+addMonsters(type: string, monsterIds: string[]) => void
 
 // Example
+addMonsters(MonsterType.Dragon, ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"]); // if you have the type-definition classes, see "Intellisense" section
 addMonsters("Dragon", ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"]);
 
 // Purpose: Add the list of monsters (full id, so including mod namespace).
@@ -267,18 +269,30 @@ registerOrUpdateType(typeNameSingular: string, typeNamePlural: string, iconResou
 // Example
 registerOrUpdateType("Dragon", "Dragons", "https://cdn.melvor.net/core/v018/assets/media/monsters/dragon_green.png", ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"]);
 
-// Purpose: The main endpoint, if you want to create a new type, for which this base mod does not provide any pre-configuration.
+// Purpose: The main endpoint, if you want to create a new type, for which this base mod does not provide any pre-configuration. (for such types, use "addMonsters" and "forceBaseModTypeActive" instead)
 // If you want to support multi-language, it's also important that you load two language-entries (see "Translation of new monster type")
 ```
 
 ```ts
 // Structure
-monsterIsOfType: (monster: Monster, monsterType: string | MonsterType)
+monsterIsOfType: (monster: Monster, monsterType: string | MonsterType) => boolean
 
 // Example
 monsterIsOfType(monsterObject, "Dragon");
 
 // Purpose: Check, for a specific monster, whether they are of a certain type
+```
+
+```ts
+// Structure
+getMonstersOfType: (type: string | MonsterType) => string[]
+
+// Example
+getMonstersOfType(MonsterType.Dragon); // if you have the type-definition classes, see "Intellisense" section
+getMonstersOfType("Dragon");
+
+// Purpose: If you want to run certain functionality for all monsters of a given type (lets say, disable all dragons to not be viable slayer tasks anymore),
+// then this method is your go-to in order to get a list of relevant monster ids, so you don't have to tediously check via "getActiveTypes()" and "getInactiveTypes()" yourself
 ```
 
 ## Translation of new monster type

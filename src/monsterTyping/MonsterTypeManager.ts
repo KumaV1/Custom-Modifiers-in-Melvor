@@ -3,10 +3,10 @@ import { Constants as ModifierConstants } from '../modifiers/Constants'
 import { CustomModifiersManager } from '../modifiers/CustomModifiersManager';
 import { ModContextMemoizer } from '../ModContextMemoizer';
 import { MonsterType } from './MonsterType'
+import { MonsterTypeHelper } from './MonsterTypeHelper';
 import { MonsterTypeDefinition } from './MonsterTypeDefinition';
 import { TinyIconsCompatibility } from '../compatibility/TinyIconsCompatibility';
 import { TranslationManager } from '../translation/TranslationManager';
-import { MonsterTypeHelper } from './MonsterTypeHelper';
 
 /**
  * Takes care of holding which types are allocated to which monsters,

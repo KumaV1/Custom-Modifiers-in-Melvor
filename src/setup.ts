@@ -26,7 +26,6 @@ import '../assets/Invoke_Death.png'
 export async function setup(ctx: Modding.ModContext) {
     // logLifecycleHookStarts(ctx);
 
-    // Register custom modifier logic patches and localized texts
     initGameObjectDataWrapper();
     initApiEndpoints(ctx);
     initCustomModifiers(ctx);
@@ -71,6 +70,10 @@ function initGameObjectDataWrapper() {
     GameObjectDataWrapperInitializer.process();
 }
 
+/**
+ *
+ * @param ctx
+ */
 function initSettings(ctx: Modding.ModContext) {
     SettingsManager.init(ctx);
 }
