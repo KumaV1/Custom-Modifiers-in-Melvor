@@ -48,15 +48,31 @@ export class CustomModifiersManager {
     }
 
     /**
-     * Registers modifiers for the given type
+     * Registers modifiers for the given types
      * @param type
      */
-    public registerMonsterType(type: MonsterTypeDefinition | undefined): void {
-        if (!type) {
-            return;
-        }
+    public registerMonsterTypes(types: MonsterTypeDefinition[]): void {
+        for (var i = 0; i < types.length; i++) {
+            const type = types[i];
 
-        // Create modifiers
+            // Create modifiers
+            this.registerMonsterTypeModifierData(type);
+
+            // Create and register custom effect and stacking effect data
+            const customEffectData: CustomEffectData = MonsterTypeHelper.createTraitCustomEffectDataInfiniteObject(type);
+
+            game.customModifiersInMelvor.customModifierEffects[type.effectPropertyObjectNames.traitApplicationCustomModifierEffect] = customEffectData;
+
+            game.registerDataPackage(MonsterTypeHelper.createTraitStackingEffectGamePackage(type));
+            game.registerDataPackage(MonsterTypeHelper.createTraitCustomModifierEffectAttackGamePackage(type, customEffectData));
+        }
+    }
+
+    /**
+     * Registers entries in the global modifierData object
+     * @param type
+     */
+    public registerMonsterTypeModifierData(type: MonsterTypeDefinition): void {
         Object.entries(type.modifierPropertyNames).forEach(([key, value]) => {
             //console.log(`Processing modifierProperty: ${key} | ${value}`);
 
@@ -67,14 +83,6 @@ export class CustomModifiersManager {
             // we know though that it is an object to which we want to add a property
             modifierData[value] = obj;
         });
-
-        // Create and register custom effect and stacking effect data
-        const customEffectData: CustomEffectData = MonsterTypeHelper.createTraitCustomEffectDataInfiniteObject(type);
-
-        game.customModifiersInMelvor.customModifierEffects[type.effectPropertyObjectNames.traitApplicationCustomModifierEffect] = customEffectData;
-
-        game.registerDataPackage(MonsterTypeHelper.createTraitStackingEffectGamePackage(type));
-        game.registerDataPackage(MonsterTypeHelper.createTraitCustomModifierEffectAttackGamePackage(type, customEffectData));
     }
 
     // #region Modifier Registration

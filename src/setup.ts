@@ -21,12 +21,12 @@ import ModData from '../data/data.json'
 import '../assets/Logo.png'
 import '../assets/Death_Mark.png'
 import '../assets/Invoke_Death.png'
+import '../assets/Generic_Monster_Type_Icon.png'
 // #endregion
 
 export async function setup(ctx: Modding.ModContext) {
     // logLifecycleHookStarts(ctx);
 
-    // Register custom modifier logic patches and localized texts
     initGameObjectDataWrapper();
     initApiEndpoints(ctx);
     initCustomModifiers(ctx);
@@ -71,6 +71,10 @@ function initGameObjectDataWrapper() {
     GameObjectDataWrapperInitializer.process();
 }
 
+/**
+ *
+ * @param ctx
+ */
 function initSettings(ctx: Modding.ModContext) {
     SettingsManager.init(ctx);
 }
@@ -159,6 +163,7 @@ function initModCompatibility(ctx: Modding.ModContext) {
  */
 function initDynamicMonsterTypes(ctx: Modding.ModContext) {
     MonsterTypeManager.initNativeMonsterTypes();
+    MonsterTypeManager.registerMonsterTypeData(ctx);
 }
 
 function initCombatAreasIndicators(ctx: Modding.ModContext) {

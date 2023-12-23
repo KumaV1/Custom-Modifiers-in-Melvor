@@ -3,10 +3,10 @@ import { Constants as ModifierConstants } from '../modifiers/Constants'
 import { CustomModifiersManager } from '../modifiers/CustomModifiersManager';
 import { ModContextMemoizer } from '../ModContextMemoizer';
 import { MonsterType } from './MonsterType'
+import { MonsterTypeHelper } from './MonsterTypeHelper';
 import { MonsterTypeDefinition } from './MonsterTypeDefinition';
 import { TinyIconsCompatibility } from '../compatibility/TinyIconsCompatibility';
 import { TranslationManager } from '../translation/TranslationManager';
-import { MonsterTypeHelper } from './MonsterTypeHelper';
 
 /**
  * Takes care of holding which types are allocated to which monsters,
@@ -89,6 +89,7 @@ export class MonsterTypeManager {
 
     /**
      * Registers (or updates) the given type. Do note, that some parameters may be ignored, if another mod has already provided data for the exact same data
+     * REMARK: Data registration (such as modifiers) are handled later through a lifecycle hook
      * @param typeNameSingular
      * @param typeNamePlural
      * @param iconResourceUrl
@@ -113,6 +114,9 @@ export class MonsterTypeManager {
         if (!active && !this._inactiveTypes[typeNameSingular]) {
             const typeDefinition = new MonsterTypeDefinition(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds);
             this._inactiveTypes[typeNameSingular] = typeDefinition;
+
+            MonsterTypeManager.ensureEarlyTempMonsterTypeModifierData(typeDefinition);
+
             return;
         }
 
@@ -131,9 +135,7 @@ export class MonsterTypeManager {
             }
         }
         const typeDefinition = new MonsterTypeDefinition(typeNameSingular, typeNamePlural, iconResourceUrl, concatMonsterIds);
-
-        // Register dynamic data based on definition (modifiers, corresponding translations, corresponding tiny icon support)
-        MonsterTypeManager.registerData(typeDefinition);
+        MonsterTypeManager.ensureEarlyTempMonsterTypeModifierData(typeDefinition);
 
         //console.log(`Processed registration of type ${typeDefinition.singularName} by other managers`);
 
@@ -145,18 +147,36 @@ export class MonsterTypeManager {
     }
 
     /**
-     * Runs the data registration processes for the given type
+     * Registers an unfinished list of modifier objects, so data-packages can already load no problem.
+     * The entries are then later overwritten with a proper finalized object, see "registerMonsterTypeData"
      * @param type
      */
-    public static registerData(type: MonsterTypeDefinition): void {
+    public static ensureEarlyTempMonsterTypeModifierData(type: MonsterTypeDefinition) {
         const modifierManager = new CustomModifiersManager(ModContextMemoizer.ctx);
-        modifierManager.registerMonsterType(type);
+        modifierManager.registerMonsterTypeModifierData(type);
+    }
 
-        const translationManager = new TranslationManager(ModContextMemoizer.ctx);
-        translationManager.registerMonsterType(type);
+    /**
+     * Once the interface is available (3rd of 5 lifecycle hooks),
+     * we expect all monster type definitions (not affected by mod settings)
+     * to have been finished setting up and therefore now register the data needed (such as modifiers for example)
+     * @param type
+     */
+    public static registerMonsterTypeData(ctx: Modding.ModContext): void {
+        ctx.onInterfaceAvailable(() => {
+            const types: MonsterTypeDefinition[] =
+                MonsterTypeManager.getActiveTypesAsArray()
+                    .concat(MonsterTypeManager.getInactiveTypesAsArray());
 
-        const tinyIconCompatibility = new TinyIconsCompatibility(ModContextMemoizer.ctx);
-        tinyIconCompatibility.registerMonsterType(type);
+            const translationManager = new TranslationManager(ctx);
+            translationManager.registerMonsterTypes(types);
+
+            const modifierManager = new CustomModifiersManager(ctx);
+            modifierManager.registerMonsterTypes(types);
+
+            const tinyIconsCompatibility = new TinyIconsCompatibility(ctx);
+            tinyIconsCompatibility.registerMonsterTypes(types);
+        });
     }
 
     /**
@@ -170,7 +190,6 @@ export class MonsterTypeManager {
 
             //console.log("forceBaseModTypeActive");
             //console.log(this._activeTypes[type]);
-            MonsterTypeManager.registerData(this._activeTypes[type]);
             delete this._inactiveTypes[type];
         }
     }
@@ -183,6 +202,17 @@ export class MonsterTypeManager {
         if (this._activeTypes[type]) {
             this._inactiveTypes[type] = this._activeTypes[type];
             delete this._activeTypes[type];
+        }
+    }
+
+    /**
+     * Sets the given type to inactive, if it can be found in the active list
+     * @param type
+     */
+    public static trySetTypeActive(type: string | MonsterType): void {
+        if (this._inactiveTypes[type]) {
+            this._activeTypes[type] = this._inactiveTypes[type];
+            delete this._inactiveTypes[type];
         }
     }
 
@@ -208,7 +238,7 @@ export class MonsterTypeManager {
             return;
         }
 
-        MonsterTypeManager.registerOrUpdateType(type, type, Constants.MISSING_ARTWORK_URL, monsterIds, false);
+        MonsterTypeManager.registerOrUpdateType(type, type, ModifierConstants.GENERIC_MODIFIER_ICON_RESOURCE_PATH, monsterIds, false);
     }
 
     /**

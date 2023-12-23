@@ -1,4 +1,4 @@
-export const en = {
+﻿export const en = {
     Combat_Area_Boss_Indicator: 'Boss',
 
     // ### Settings
@@ -26,6 +26,19 @@ export const en = {
     // ##### Keep specific monster types inactive
     Settings_Setting_Label_Keep_Specific_Monster_Types_Inactive: 'Keep specific monster types inactive',
     Settings_Setting_Hint_Keep_Specific_Monster_Types_Inactive: 'Forces the selected monster types to stay inactive, regardless of what any mod may communicate. Monster types added by other mods will lose their checkbox state, if you happen to load your save without said mod',
+
+    // #### Enabling section
+    Settings_Section_Enabling: 'Enabling',
+
+    // ##### Info label
+    Settings_Setting_Label_Enabling_Info: 'This section is most likely irrelevant as a user. However, depending on the mods used, you may run into the situation of having to activate certain functionality yourself, because no mod communicated the necessity for it, despite being utilized. In that case, this section allows you to take care of the activation yourself.',
+
+    // ##### Force specific monster types active
+    Settings_Setting_Label_Force_Specific_Monster_Types_Active: 'Force specific monster types active',
+    Settings_Setting_Hint_Force_Specific_Monster_Types_Active: 'Forces the selected monster types to be active (evaluated after the inactivity setting), regardless of what any mod may communicate. Monster types added by other mods will lose their checkbox state, if you happen to load your save without said mod',
+
+    // #### Save & Reload section
+    Settings_Section_Save_And_Reload: 'Save all & Reload',
 
     // ##### Save & Reload button
     Settings_Hint_Save_Reload_Required: 'Reload required',

@@ -4,8 +4,6 @@ export class Constants {
 
     static readonly ERROR_ICON_MEDIA_PATH = "assets/media/main/error.svg";
 
-    static readonly MISSING_ARTWORK_URL = "https://cdn.melvor.net/core/v018/assets/media/main/missing_artwork.png";
-
     static readonly COMBAT_AREAS_INDICATOR_BADGE_CLASS = "customModifiersInMelvor__combat-areas-indicator-badge";
     static readonly COMBAT_AREAS_INDICATOR_BADGE_BR_CLASS = "customModifiersInMelvor__combat-areas-indicator-badge-br";
 
