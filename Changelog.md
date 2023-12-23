@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.3.0
+* Game data is now always loaded for all monster types
+* Added mod setting to forcefully set monster types active
+
+
 ## v2.2.2
 * Re-added/Newly-added api-methods are now actually added/accessible (rather than just the logic behind them...)
 
