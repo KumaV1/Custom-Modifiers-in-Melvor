@@ -13,6 +13,9 @@ export class Constants {
     static readonly TRAIT_CUSTOM_EFFECT_LANGUAGE_CATEGORY = "COMBAT_MISC";
     static readonly TRAIT_CUSTOM_EFFECT_ATTACK_ID_SUFFIX = "_Trait_Application_Attack";
 
+    // Path instead of URL as the image is specific to this mod and can therefore be retrieced by "modContext.getResourceUrl"
+    static readonly GENERIC_MODIFIER_ICON_RESOURCE_PATH = "assets/customModifiersInMelvor/Generic_Monster_Type_Icon.png";
+
     static readonly ANIMAL_MODIFIER_ICON_RESOURCE_URL = "https://cdn.melvor.net/core/v018/assets/media/monsters/frozen_mammoth.png";
     static readonly DEMON_MODIFIER_ICON_RESOURCE_URL = "https://cdn.melvor.net/core/v018/assets/media/monsters/fierce_devil.png";
     static readonly DRAGON_MODIFIER_ICON_RESOURCE_URL = "https://cdn.melvor.net/core/v018/assets/media/monsters/dragon_green.png";

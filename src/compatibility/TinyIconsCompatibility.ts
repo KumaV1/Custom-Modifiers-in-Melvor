@@ -1,5 +1,4 @@
 import { MonsterTypeDefinition } from '../monsterTyping/MonsterTypeDefinition';
-import { MonsterTypeManager } from '../monsterTyping/MonsterTypeManager';
 
 export class TinyIconsCompatibility {
     /** Non-dynamic modifiers */
@@ -131,22 +130,23 @@ export class TinyIconsCompatibility {
     }
 
     /**
-     * Registers icons for modifiers specific to the given monster type,
-     * with the primary icon being dependent on said monster type,
-     * and the secondary icon always being the same across all monster types
-     * @param type
+     * Registers tiny icons for the given types
+     * @param types
      */
-    public registerMonsterType(type: MonsterTypeDefinition): void {
-        this.context.onModsLoaded(() => {
-            if (!this.isLoaded()) {
-                return;
-            }
+    public registerMonsterTypes(types: MonsterTypeDefinition[]): void {
+        // Once every mod has been loaded and the monster type definitions will not be modified anymore,
+        // create tiny icons for them
+        if (!this.isLoaded()) {
+            return;
+        }
 
-            const tinyIcons = mod.api.tinyIcons;
-            if (!tinyIcons) {
-                return;
-            }
+        const tinyIcons = mod.api.tinyIcons;
+        if (!tinyIcons) {
+            return;
+        }
 
+        for (var i = 0; i < types.length; i++) {
+            const type = types[i];
             if (type && type.iconResourceUrl) {
                 // Add dynamic tag source for monster type
                 let cmimTagSources: Record<string, string> = {};
@@ -206,7 +206,7 @@ export class TinyIconsCompatibility {
                 tinyIcons.addTagSources(cmimTagSources);
                 tinyIcons.addCustomModifiers(modifiers);
             }
-        });
+        }
     }
 
     private isLoaded(): Boolean {

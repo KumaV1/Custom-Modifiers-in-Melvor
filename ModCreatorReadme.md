@@ -162,14 +162,15 @@ if (cmimLoaded) {
 Aside from data registration, you might also want to make use of API calls.
 To avoid errors here, you should always check the api object, 
 before actually trying to call the methods.
+
+***Important**: All api calls related to monster type allocation should be made done by the time the **onMoadsLoaded** lifecycle hook is finished!*
+
 ```js
 if (mod.api.customModifiersInMelvor) {
-  mod.api.customModifiersInMelvor.addMonsters("Dragon", ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"])
+  mod.api.customModifiersInMelvor.addMonsters(MonsterType.Dragon, ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"]); // if you have the type-definition classes, see "Intellisense" section
+  mod.api.customModifiersInMelvor.addMonsters("Dragon", ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"]);
 }
 ```
-*Note: There is currently no type support for API calls. 
-Just check `initApiEndpoints` in the `setup.ts` file to see exact type definition for the methods you want to call*
-
 
 ### Checking type during combat
 While we are on the topic of API calls - while documentation below will also inform you of a way to check type allocation for a monster,
