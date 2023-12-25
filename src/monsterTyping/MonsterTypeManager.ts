@@ -129,7 +129,7 @@ export class MonsterTypeManager {
         if (this._inactiveTypes[typeNameSingular]) {
             for (var i = 0; i < this._inactiveTypes[typeNameSingular].monsters.length; i++) {
                 const mId = this._inactiveTypes[typeNameSingular].monsters[i];
-                if (concatMonsterIds.indexOf(mId) !== -1) {
+                if (concatMonsterIds.indexOf(mId) === -1) {
                     concatMonsterIds.push(mId);
                 }
             }
@@ -293,6 +293,15 @@ export class MonsterTypeManager {
         });
 
         return array;
+    }
+
+    /**
+     * Get both active and inactive type definitions
+     * @returns
+     */
+    public static getAllTypesAsArray(): MonsterTypeDefinition[] {
+        return MonsterTypeManager.getActiveTypesAsArray()
+            .concat(MonsterTypeManager.getInactiveTypesAsArray());
     }
 
     /**
