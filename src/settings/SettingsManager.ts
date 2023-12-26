@@ -1,9 +1,9 @@
-import { CmimUtils } from "./Utils";
-import { CombatAreasIndicatorsManager } from "./CombatAreasIndicatorsManager";
-import { Constants } from "./Constants";
-import { ModContextMemoizer } from "./ModContextMemoizer";
-import { MonsterTypeManager } from "./monsterTyping/MonsterTypeManager";
-import { TranslationManager } from "./translation/TranslationManager";
+import { Constants } from "../Constants";
+import { CombatAreasIndicatorsManager } from "../CombatAreasIndicatorsManager";
+import { ModContextMemoizer } from "../ModContextMemoizer";
+import { MonsterTypeListConfigFunctions } from "./MonsterTypeListConfigFunctions";
+import { MonsterTypeManager } from "../monsterTyping/MonsterTypeManager";
+import { TranslationManager } from "../translation/TranslationManager";
 
 export class SettingsManager {
     public static init(ctx: Modding.ModContext) {
@@ -84,65 +84,30 @@ export class SettingsManager {
 
         // On lifetime hook 3 (the one before the run that will actually read settings from save), run the delayed creation of the monster type (de-)activation checkbox lists
         ctx.onInterfaceAvailable(function () {
-            // Create options
-            const activeTypes = MonsterTypeManager.getActiveTypesAsArray();
-            const inactiveTypes = MonsterTypeManager.getInactiveTypesAsArray();
-
-            let options: Modding.Settings.CheckboxOption[] = [];
-            for (var i = 0; i < activeTypes.length; i++) {
-                const type = activeTypes[i];
-                options.push({
-                    value: type.singularName,
-                    label: TranslationManager.getMonsterTypeSingularNameTranslation(type.singularName)
-                } as Modding.Settings.CheckboxOption);
-            }
-            for (var i = 0; i < inactiveTypes.length; i++) {
-                const type = inactiveTypes[i];
-                options.push({
-                    value: type.singularName,
-                    label: TranslationManager.getMonsterTypeSingularNameTranslation(type.singularName)
-                } as Modding.Settings.CheckboxOption);
-            }
-
-            // Order options alphabetically
-            CmimUtils.orderAlphabetically(options, "label");
-
             // Create setting
             ctx.settings.section(TranslationManager.getLangString("Settings_Section_Disabling", true)).add([
                 {
-                    type: 'checkbox-group',
+                    type: 'custom',
                     name: 'keep-specific-monster-types-inactive',
                     label: TranslationManager.getLangString("Settings_Setting_Label_Keep_Specific_Monster_Types_Inactive", true),
                     hint: TranslationManager.getLangString("Settings_Setting_Hint_Keep_Specific_Monster_Types_Inactive", true),
-                    options: options,
-                    onChange(value: string, previousValue: string): void {
-                        SettingsManager.setButtonToReload();
-
-                        const hint = document.querySelector('label[for="customModifiersInMelvor:keep-specific-monster-types-inactive"] > small');
-                        if (hint) {
-                            hint.textContent = TranslationManager.getLangString("Settings_Hint_Save_Reload_Required", true);
-                            hint.classList.add("text-warning");
-                        }
-                    }
+                    render: MonsterTypeListConfigFunctions.render,
+                    onChange: MonsterTypeListConfigFunctions.onChange,
+                    get: MonsterTypeListConfigFunctions.get,
+                    set: MonsterTypeListConfigFunctions.set
                 } as Modding.Settings.CheckboxGroupConfig
             ]);
 
             ctx.settings.section(TranslationManager.getLangString("Settings_Section_Enabling", true)).add([
                 {
-                    type: 'checkbox-group',
+                    type: 'custom',
                     name: 'force-specific-monster-types-active',
                     label: TranslationManager.getLangString("Settings_Setting_Label_Force_Specific_Monster_Types_Active", true),
                     hint: TranslationManager.getLangString("Settings_Setting_Hint_Force_Specific_Monster_Types_Active", true),
-                    options: options,
-                    onChange(value: string, previousValue: string): void {
-                        SettingsManager.setButtonToReload();
-
-                        const hint = document.querySelector('label[for="customModifiersInMelvor:force-specific-monster-types-active"] > small');
-                        if (hint) {
-                            hint.textContent = TranslationManager.getLangString("Settings_Hint_Save_Reload_Required", true);
-                            hint.classList.add("text-warning");
-                        }
-                    }
+                    render: MonsterTypeListConfigFunctions.render,
+                    onChange: MonsterTypeListConfigFunctions.onChange,
+                    get: MonsterTypeListConfigFunctions.get,
+                    set: MonsterTypeListConfigFunctions.set
                 } as Modding.Settings.CheckboxGroupConfig
             ]);
         });
@@ -160,7 +125,7 @@ export class SettingsManager {
     }
 
     /**
-     *
+     * Get corresponding setting field's value
      */
     public static get getEnableBossIndicators(): boolean {
         return ModContextMemoizer.ctx.settings
@@ -169,7 +134,7 @@ export class SettingsManager {
     }
 
     /**
-     *
+     * Get corresponding setting field's value
      */
     public static get getEnableActiveMonsterTypeIndicators(): boolean {
         return ModContextMemoizer.ctx.settings
@@ -178,7 +143,7 @@ export class SettingsManager {
     }
 
     /**
-     *
+     * Get corresponding setting field's value
      */
     public static get getEnableInactiveMonsterTypeIndicators(): boolean {
         return ModContextMemoizer.ctx.settings
@@ -187,7 +152,7 @@ export class SettingsManager {
     }
 
     /**
-     *
+     * Get corresponding setting field's value
      */
     public static get getDisableSpecificMonsterTypes(): string[] {
         return ModContextMemoizer.ctx.settings
@@ -196,7 +161,7 @@ export class SettingsManager {
     }
 
     /**
-     *
+     * Get corresponding setting field's value
      */
     public static get getEnableSpecificMonsterTypes(): string[] {
         return ModContextMemoizer.ctx.settings
@@ -207,7 +172,7 @@ export class SettingsManager {
     /**
      * Change color of save button from primary to danger
      */
-    private static setButtonToReload(): void {
+    public static setButtonToReload(): void {
         const btn = document.getElementById(`${Constants.MOD_NAMESPACE}:save-reload`);
         if (btn && btn.classList.contains("btn-primary")) {
             btn.classList.replace("btn-primary", "btn-danger");

@@ -1,13 +1,14 @@
 // Modules
 // You can import script modules and have full type completion
 import { CombatAreasIndicatorsManager } from './CombatAreasIndicatorsManager';
+import { Constants } from './modifiers/Constants';
 import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
 import { GameObjectDataWrapperInitializer } from './GameObjectDataWrapperInitializer';
 import { ModContextMemoizer } from './ModContextMemoizer';
 import { MonsterType } from './monsterTyping/MonsterType';
 import { MonsterTypeManager } from './monsterTyping/MonsterTypeManager';
 import { MonsterTypeOverview } from './components/MonsterTypeOverview'
-import { SettingsManager } from './Settings';
+import { SettingsManager } from './settings/SettingsManager';
 import { TinyIconsCompatibility } from './compatibility/TinyIconsCompatibility';
 import { TranslationManager } from './translation/TranslationManager';
 
@@ -22,6 +23,8 @@ import '../assets/Logo.png'
 import '../assets/Death_Mark.png'
 import '../assets/Invoke_Death.png'
 import '../assets/Generic_Monster_Type_Icon.png'
+
+import '../src/settings/settings.css'
 // #endregion
 
 export async function setup(ctx: Modding.ModContext) {
