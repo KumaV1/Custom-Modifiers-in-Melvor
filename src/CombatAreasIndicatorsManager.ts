@@ -3,7 +3,7 @@ import { Constants } from "./Constants";
 import { MonsterTypeCombatAreasIndicatorDefinition } from "./monsterTyping/MonsterTypeCombatAreasIndicatorDefinition";
 import { MonsterTypeHelper } from "./monsterTyping/MonsterTypeHelper";
 import { MonsterTypeManager } from "./monsterTyping/MonsterTypeManager";
-import { SettingsManager } from "./Settings";
+import { SettingsManager } from "./settings/SettingsManager";
 import { TranslationManager } from "./translation/TranslationManager";
 
 export class CombatAreasIndicatorsManager {

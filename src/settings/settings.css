@@ -1,0 +1,6 @@
+.cmim-monster-type-list-setting .monster-type-icon-container.monster-type-option-enabled {
+    background-color: #20e31b33 !important;
+}
+.cmim-monster-type-list-setting .monster-type-icon-container:not(.monster-type-option-enabled) {
+    background-color: #7e8999 !important;
+}
