@@ -14,8 +14,6 @@ import { TranslationManager } from "../translation/TranslationManager";
  */
 export class MonsterTypeListConfigFunctions {
     public static render(name: string, onChange: () => void, config: Modding.Settings.SettingConfig): HTMLElement {
-        console.log("===== RENDER ENTERED =====");
-
         // Initialize container
         const root = createElement('div', { classList: ['form-group', 'cmim-monster-type-list-setting'] });
 
@@ -73,8 +71,6 @@ export class MonsterTypeListConfigFunctions {
      * @param previousValue
      */
     public static onChange(value: unknown, previousValue: unknown): string | boolean | void {
-        console.log("===== ONCHANGE ENTERED =====");
-
         SettingsManager.setButtonToReload();
 
         const hint = document.querySelector(`label[for="${Constants.MOD_NAMESPACE}:${this.name}"] > small`);
@@ -90,7 +86,6 @@ export class MonsterTypeListConfigFunctions {
      * @returns
      */
     public static get(root: HTMLElement): string[] {
-        console.log("===== GET ENTERED =====");
         const enabledIconContainers = root.querySelectorAll('div.monster-type-option-enabled');
         const value: string[] = [];
         enabledIconContainers.forEach((ic) => {
@@ -107,11 +102,7 @@ export class MonsterTypeListConfigFunctions {
      * @param value
      */
     public static set(root: HTMLElement, value: string[]): void {
-        console.log("===== SET ENTERED =====");
-        console.log(root);
-        console.log(value);
         if (!value || value.length === 0) {
-            console.log("Just returned, doing nothing");
             return;
         }
 

@@ -165,8 +165,7 @@ export class MonsterTypeManager {
     public static registerMonsterTypeData(ctx: Modding.ModContext): void {
         ctx.onInterfaceAvailable(() => {
             const types: MonsterTypeDefinition[] =
-                MonsterTypeManager.getActiveTypesAsArray()
-                    .concat(MonsterTypeManager.getInactiveTypesAsArray());
+                MonsterTypeManager.getAllTypesAsArray();
 
             const translationManager = new TranslationManager(ctx);
             translationManager.registerMonsterTypes(types);
@@ -238,7 +237,7 @@ export class MonsterTypeManager {
             return;
         }
 
-        MonsterTypeManager.registerOrUpdateType(type, type, ModifierConstants.GENERIC_MODIFIER_ICON_RESOURCE_PATH, monsterIds, false);
+        MonsterTypeManager.registerOrUpdateType(type, type, ModContextMemoizer.ctx.getResourceUrl(ModifierConstants.GENERIC_MODIFIER_ICON_RESOURCE_PATH), monsterIds, false);
     }
 
     /**
