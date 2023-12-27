@@ -1,9 +1,12 @@
 # Changelog
 
+## v2.3.1
+* Re-designed monster-type-list-based settings to be way more compact (courtesy of slahsh)
+* Fixed issue where mods could accidentally overwrite monster type allocations of other mods
+
 ## v2.3.0
 * Game data is now always loaded for all monster types
 * Added mod setting to forcefully set monster types active
-
 
 ## v2.2.2
 * Re-added/Newly-added api-methods are now actually added/accessible (rather than just the logic behind them...)
