@@ -44,28 +44,9 @@ we should preferably avoid any error from happening because of it.
 
 Because of that, you should preferably implement this mod in a way that "only" disables functionalies, rather than throwing errors.
 
-## Monster Types
-Unlike the rest of the modifiers, monster types have been implemented in a way that they can be expanded on dynamically. 
-Be it by this mod itself, or by other mods, that want to add their own types.
-
-Because of it, a lot of the data is built and registered dynamically. 
-That being said, you can still have a look at a translation file and check the "generic" type section to get an idea of which modifiers are possible.
-
-*Example*
-```js
-MODIFIER_DATA_MonsterTypeTraitApplied: "Marks the affected as ${monsterType}"
-```
-becomes
-```js
-MODIFIER_DATA_humanTraitApplied: "Marks the affected as Human"
-```
-
-You can make use of the endpoints `mod.api.customModifiersInMelvor.getActiveTypes()`/`mod.api.customModifiersInMelvor.getInactiveTypes()`, to have a closer look at the names of the modifiers created.
-The translation entries then generally follow the pattern `MODIFIER_DATA_Name of Modifier`.
-
 ## Data files
-***IMPORTANT**: Please also have a look at the "API calls" section, as you are gonna require the usage of at least one API-endpoint, 
-if you want to add monster-type based modifiers or effects to your data file(s)!*
+***IMPORTANT**: If you decide to use modifiers specific to the monster type system (e.g. `increasedDamageAgainstDragons`), then make sure to have a look at the "API calls" section, as you are gonna require the usage of at least one API-endpoint, 
+in order to make proper use of those modifiers!*
 
 The main topic to talk about. Let's say you were to add a modifier of this mod to one of your items.
 If your mod is now loaded without this mod, the mapping/creation of the items and its data will run into an error.
@@ -158,12 +139,31 @@ if (cmimLoaded) {
 },
 ```
 
+## Monster Types
+Unlike the rest of the modifiers, monster types have been implemented in a way that they can be expanded on dynamically. 
+Be it by this mod itself, or by other mods, that want to add their own types.
+
+Because of it, a lot of the data is built and registered dynamically. 
+That being said, you can still have a look at a translation file and check the "generic" type section to get an idea of which modifiers are possible.
+
+*Example*
+```js
+MODIFIER_DATA_MonsterTypeTraitApplied: "Marks the affected as ${monsterType}"
+```
+becomes
+```js
+MODIFIER_DATA_humanTraitApplied: "Marks the affected as Human"
+```
+
+You can make use of the endpoints `mod.api.customModifiersInMelvor.getActiveTypes()`/`mod.api.customModifiersInMelvor.getInactiveTypes()`, to have a closer look at the names of the modifiers created.
+The translation entries then generally follow the pattern `MODIFIER_DATA_Name of Modifier`.
+
 ## API calls
 Aside from data registration, you might also want to make use of API calls.
 To avoid errors here, you should always check the api object, 
 before actually trying to call the methods.
 
-***Important**: All api calls related to monster type allocation should be made done by the time the **onMoadsLoaded** lifecycle hook is finished!*
+***Important**: All api calls related to monster type allocation should be made during the **onMoadsLoaded** lifecycle hook!*
 
 ```js
 if (mod.api.customModifiersInMelvor) {
@@ -177,7 +177,7 @@ While we are on the topic of API calls - while documentation below will also inf
 during combat there are two main checks to be aware of.
 
 Organic type allocation is applied on spawm, as easily checkable properties on the character object.
-This is qicker than always checking collections in the background.
+This is quicker than always checking collections in the background.
 ```js
 // Structure
 character.isTYPE
@@ -207,14 +207,11 @@ However, what if you want to add additional monster type definitions based on yo
 First things first, one important thing to note is the difference between **active** and **inactive** types. 
 Active types are those that at least one mod actually makes use of (e.g. using the `Human` type, because you want to use the `increasedDamageAgainstHumans` modifier),
 whereas inactive types are those that get defined, but actually end up not being used by any of the loaded mods.
-The reason for this difference is to avoid blurting the combat calculations with unnecessary processing.
+The reason for this difference is to avoid blurting the combat calculations with unnecessary processes.
 
 With that out of the way, this mod provides multiple API endpoints that you can utilize. 
-One thing of note, you don't have to worry about expansions purchased by the user, when utilizing these endpoints.
-
-**IMPORTANT**: Please make sure, that all additions/updates to monster type definitions are made **before** `onCharacterLoaded`,
-as that's the last lifecycle hook before offline calculation is processed, but furthermore, it's when settings of this mod are evaluated,
-which are not supposed to have their changes to monster type definitions be overwritten by other mods!
+One thing of note, you don't have to worry about expansions purchased by the user, when utilizing these endpoints,
+though you may still do so, in order to keep collections as small as possible.
 
 ```ts
 // Structure
@@ -279,6 +276,7 @@ registerOrUpdateType("Dragon", "Dragons", "https://cdn.melvor.net/core/v018/asse
 monsterIsOfType: (monster: Monster, monsterType: string | MonsterType) => boolean
 
 // Example
+monsterIsOfType(monsterObject, MonsterType.Dragon); // if you have the type-definition classes, see "Intellisense" section
 monsterIsOfType(monsterObject, "Dragon");
 
 // Purpose: Check, for a specific monster, whether they are of a certain type

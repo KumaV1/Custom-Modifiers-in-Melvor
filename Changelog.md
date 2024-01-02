@@ -1,8 +1,8 @@
 # Changelog
 
 ## v2.3.1
-* Re-designed monster-type-list-based settings to be way more compact (courtesy of slahsh)
-* Fixed issue where mods could accidentally overwrite monster type allocations of other mods
+* Re-designed monster-type-list-based settings to be way more compact (courtesy of slahsh's "Skill Boosts" mod)
+* Fixed issue where, under certain circumstances, mods could accidentally overwrite monster type allocations of other mods
 
 ## v2.3.0
 * Game data is now always loaded for all monster types
@@ -34,7 +34,7 @@ for types activated before the [Tiny Icons mod](https://mod.io/g/melvoridle/m/ti
 
 ## v2.1.0
 * Added "damage taken from monster type" modifiers
-* Added modifiers and effects to aponInterfaceReady ply monster types ("trait") during combat
+* Added modifiers and effects to apply monster types ("trait") during combat
 * After some time for backwards-compatibility, all monster types are now inactive by default
 * `registerOrUpdateType` endpoint now defaults to `true` for the `active` parameter
 
