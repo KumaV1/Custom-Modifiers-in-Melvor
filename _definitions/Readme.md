@@ -1,6 +1,6 @@
 **[Custom Modifiers in Melvor](https://github.com/KumaV1/Custom-Modifiers-in-Melvor)** | **[How to integrate Intellisense](https://github.com/KumaV1/Custom-Modifiers-in-Melvor/blob/develop/ModCreatorReadme.md#intellisense)**\
-**Current mod version: 2.2.2**\
-**Definitions last changed version: 2.2.1**
+**Current mod version: 2.3.1**\
+**Definitions last changed version: 2.3.1**
 
 This folder contains some type definitions for things added by the base mod.
 Most noticable use cases probably being the API endpoints.

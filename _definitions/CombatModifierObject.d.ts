@@ -32,6 +32,7 @@ declare global {
         dragonTraitApplied: Standard,
         elementalTraitApplied: Standard,
         humanTraitApplied: Standard,
+        mythicalCreatureTraitApplied: Standard,
         seaCreatureTraitApplied: Standard,
         undeadTraitApplied: Standard
     }

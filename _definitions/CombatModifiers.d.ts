@@ -1,5 +1,3 @@
-// Possibly move modifiers based on monster types to "_definitions" - although other mods are most likely not gonna use those modifiers in their own code
-// Exception to that being the "trait applied" modifiers I guess
 declare global {
     interface CombatModifiers {
         increasedChanceToApplySlowOnSpawn: number,
@@ -33,6 +31,7 @@ declare global {
         dragonTraitApplied: number,
         elementalTraitApplied: number,
         humanTraitApplied: number,
+        mythicalCreatureTraitApplied: number,
         seaCreatureTraitApplied: number,
         undeadTraitApplied: number
     }

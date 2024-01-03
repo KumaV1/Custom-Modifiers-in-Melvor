@@ -1,6 +1,6 @@
-// IMPORTANT: Only types actually set to be active will be set like this, so true/truthy checks can only succeed in that case
+/** IMPORTANT: Only types actually set to be active will have those properties set during spawn, so true/truthy checks can only succeed for active monster types */
 declare global {
-    interface Character {
+    interface Enemy {
         isAnimal: boolean,
         isDemon: boolean,
         isDragon: boolean,
