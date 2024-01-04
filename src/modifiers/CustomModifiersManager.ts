@@ -1234,11 +1234,26 @@ export class CustomModifiersManager {
         // @ts-ignore You can actually patch base classes no problem
         this.context.patch(Character, "applyUniqueSpawnEffects").after(function () {
             // Static
-            if (rollPercentage(this.modifiers.increasedChanceToApplySlowOnSpawn - this.modifiers.decreasedChanceToApplySlowOnSpawn)) {
-                this.applyModifierEffect(new SlowEffect(25, 3), this.target, this.game.normalAttack);
-            }
             if (rollPercentage(this.modifiers.increasedChanceToApplyStunOnSpawn - this.modifiers.decreasedChanceToApplyStunOnSpawn)) {
                 this.applyStun({ chance: 100, turns: 1, type: 'Stun', flavour: 'Stun' }, this.target);
+            }
+            if (rollPercentage(this.modifiers.increasedChanceToApplyFreezeOnSpawn - this.modifiers.decreasedChanceToApplyFreezeOnSpawn)) {
+                this.applyStun({ chance: 100, turns: 1, type: 'Stun', flavour: 'Freeze' }, this.target);
+            }
+            if (rollPercentage(this.modifiers.increasedChanceToApplySleepOnSpawn - this.modifiers.decreasedChanceToApplySleepOnSpawn)) {
+                this.applySleep({ chance: 100, turns: 1, type: 'Sleep' }, this.target, this.game.normalAttack);
+            }
+            if (rollPercentage(this.modifiers.increasedChanceToApplyShockOnSpawn - this.modifiers.decreasedChanceToApplyShockOnSpawn)) {
+                this.applyModifierEffect(shockEffect, this.target, this.game.normalAttack);
+            }
+            if (rollPercentage(this.modifiers.increasedChanceToApplyFrostburnOnSpawn - this.modifiers.decreasedChanceToApplyFrostburnOnSpawn)) {
+                this.applyModifierEffect(frostBurnEffect, this.target, this.game.normalAttack);
+            }
+            if (rollPercentage(this.modifiers.increasedChanceToApplyAfflictionOnSpawn - this.modifiers.decreasedChanceToApplyAfflictionOnSpawn)) {
+                this.applyModifierEffect(afflictionEffect, this.target, this.game.normalAttack);
+            }
+            if (rollPercentage(this.modifiers.increasedChanceToApplySlowOnSpawn - this.modifiers.decreasedChanceToApplySlowOnSpawn)) {
+                this.applyModifierEffect(new SlowEffect(25, 3), this.target, this.game.normalAttack);
             }
             if (rollPercentage(this.modifiers.increasedChanceToApplyPoisonOnSpawn - this.modifiers.decreasedChanceToApplyPoisonOnSpawn)) {
                 this.applyDOT(poisonEffect, this.target, 0);
@@ -1246,26 +1261,11 @@ export class CustomModifiersManager {
             if (rollPercentage(this.modifiers.increasedChanceToApplyDeadlyPoisonOnSpawn - this.modifiers.decreasedChanceToApplyDeadlyPoisonOnSpawn)) {
                 this.applyDOT(deadlyPoisonEffect, this.target, 0);
             }
-            if (rollPercentage(this.modifiers.increasedChanceToApplyAfflictionOnSpawn - this.modifiers.decreasedChanceToApplyAfflictionOnSpawn)) {
-                this.applyModifierEffect(afflictionEffect, this.target, this.game.normalAttack);
-            }
             if (rollPercentage(this.modifiers.increasedChanceToApplyBleedOnSpawn - this.modifiers.decreasedChanceToApplyBleedOnSpawn)) {
                 this.applyDOT({ chance: 100, procs: 20, interval: 500, type: 'DOT', subtype: 'Bleed', damage: [{ "roll": false, "character": "Attacker", "maxRoll": "MaxHit", "maxPercent": 100 }] }, this.target, this.game.normalAttack);
             }
             if (rollPercentage(this.modifiers.increasedChanceToApplyBurnOnSpawn - this.modifiers.decreasedChanceToApplyBurnOnSpawn)) {
                 this.applyDOT(burnEffect, this.target, this.game.normalAttack);
-            }
-            if (rollPercentage(this.modifiers.increasedChanceToApplyFreezeOnSpawn - this.modifiers.decreasedChanceToApplyFreezeOnSpawn)) {
-                this.applyStun({ chance: 100, turns: 1, type: 'Stun', flavour: 'Freeze' }, this.target);
-            }
-            if (rollPercentage(this.modifiers.increasedChanceToApplyFrostburnOnSpawn - this.modifiers.decreasedChanceToApplyFrostburnOnSpawn)) {
-                this.applyModifierEffect(frostBurnEffect, this.target, this.game.normalAttack);
-            }
-            if (rollPercentage(this.modifiers.increasedChanceToApplyShockOnSpawn - this.modifiers.decreasedChanceToApplyShockOnSpawn)) {
-                this.applyModifierEffect(shockEffect, this.target, this.game.normalAttack);
-            }
-            if (rollPercentage(this.modifiers.increasedChanceToApplySleepOnSpawn - this.modifiers.decreasedChanceToApplySleepOnSpawn)) {
-                this.applySleep({ chance: 100, turns: 1, type: 'Sleep' }, this.target, this.game.normalAttack);
             }
 
             // Monster type
