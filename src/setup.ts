@@ -15,7 +15,7 @@ import { TranslationManager } from './translation/TranslationManager';
 // Data
 // Game data for registration
 import ModData from '../data/data.json'
-import ModTestData from '../data/test-data.json'
+//import ModTestData from '../data/test-data.json'
 
 // Images
 // #region Image imports
@@ -43,7 +43,7 @@ export async function setup(ctx: Modding.ModContext) {
     // Register our GameData
     await ctx.gameData.addPackage(ModData);
     // @ts-ignore
-    await ctx.gameData.addPackage(ModTestData);
+    //await ctx.gameData.addPackage(ModTestData);
 
     // Memorize context, to make it easily accessable on mod api calls by other mods
     ModContextMemoizer.memoizeContext(ctx);

@@ -1168,6 +1168,20 @@ export class CustomModifiersManager {
             this.decreasedChanceToApplyPoisonOnSpawn ??= 0;
             this.increasedChanceToApplyDeadlyPoisonOnSpawn ??= 0;
             this.decreasedChanceToApplyDeadlyPoisonOnSpawn ??= 0;
+            this.increasedChanceToApplyAfflictionOnSpawn ??= 0;
+            this.decreasedChanceToApplyAfflictionOnSpawn ??= 0;
+            this.increasedChanceToApplyBleedOnSpawn ??= 0;
+            this.decreasedChanceToApplyBleedOnSpawn ??= 0;
+            this.increasedChanceToApplyBurnOnSpawn ??= 0;
+            this.decreasedChanceToApplyBurnOnSpawn ??= 0;
+            this.increasedChanceToApplyFreezeOnSpawn ??= 0;
+            this.decreasedChanceToApplyFreezeOnSpawn ??= 0;
+            this.increasedChanceToApplyFrostburnOnSpawn ??= 0;
+            this.decreasedChanceToApplyFrostburnOnSpawn ??= 0;
+            this.increasedChanceToApplyShockOnSpawn ??= 0;
+            this.decreasedChanceToApplyShockOnSpawn ??= 0;
+            this.increasedChanceToApplySleepOnSpawn ??= 0;
+            this.decreasedChanceToApplySleepOnSpawn ??= 0;
 
             this.deathMark ??= 0;
             this.increasedDeathMarkOnHit ??= 0;
@@ -1219,6 +1233,7 @@ export class CustomModifiersManager {
     private patchApplyUniqueSpawnEffects() {
         // @ts-ignore You can actually patch base classes no problem
         this.context.patch(Character, "applyUniqueSpawnEffects").after(function () {
+            // Static
             if (rollPercentage(this.modifiers.increasedChanceToApplySlowOnSpawn - this.modifiers.decreasedChanceToApplySlowOnSpawn)) {
                 this.applyModifierEffect(new SlowEffect(25, 3), this.target, this.game.normalAttack);
             }
@@ -1231,7 +1246,29 @@ export class CustomModifiersManager {
             if (rollPercentage(this.modifiers.increasedChanceToApplyDeadlyPoisonOnSpawn - this.modifiers.decreasedChanceToApplyDeadlyPoisonOnSpawn)) {
                 this.applyDOT(deadlyPoisonEffect, this.target, 0);
             }
+            if (rollPercentage(this.modifiers.increasedChanceToApplyAfflictionOnSpawn - this.modifiers.decreasedChanceToApplyAfflictionOnSpawn)) {
+                this.applyModifierEffect(afflictionEffect, this.target, this.game.normalAttack);
+            }
+            if (rollPercentage(this.modifiers.increasedChanceToApplyBleedOnSpawn - this.modifiers.decreasedChanceToApplyBleedOnSpawn)) {
+                this.applyDOT({ chance: 100, procs: 20, interval: 500, type: 'DOT', subtype: 'Bleed', damage: [{ "roll": false, "character": "Attacker", "maxRoll": "MaxHit", "maxPercent": 100 }] }, this.target, this.game.normalAttack);
+            }
+            if (rollPercentage(this.modifiers.increasedChanceToApplyBurnOnSpawn - this.modifiers.decreasedChanceToApplyBurnOnSpawn)) {
+                this.applyDOT(burnEffect, this.target, this.game.normalAttack);
+            }
+            if (rollPercentage(this.modifiers.increasedChanceToApplyFreezeOnSpawn - this.modifiers.decreasedChanceToApplyFreezeOnSpawn)) {
+                this.applyStun({ chance: 100, turns: 1, type: 'Stun', flavour: 'Freeze' }, this.target);
+            }
+            if (rollPercentage(this.modifiers.increasedChanceToApplyFrostburnOnSpawn - this.modifiers.decreasedChanceToApplyFrostburnOnSpawn)) {
+                this.applyModifierEffect(frostBurnEffect, this.target, this.game.normalAttack);
+            }
+            if (rollPercentage(this.modifiers.increasedChanceToApplyShockOnSpawn - this.modifiers.decreasedChanceToApplyShockOnSpawn)) {
+                this.applyModifierEffect(shockEffect, this.target, this.game.normalAttack);
+            }
+            if (rollPercentage(this.modifiers.increasedChanceToApplySleepOnSpawn - this.modifiers.decreasedChanceToApplySleepOnSpawn)) {
+                this.applySleep({ chance: 100, turns: 1, type: 'Sleep' }, this.target, this.game.normalAttack);
+            }
 
+            // Monster type
             const types = MonsterTypeManager.getActiveTypesAsArray();
             for (var i = 0; i < types.length; i++) {
                 const type = types[i];
