@@ -274,6 +274,132 @@ export class CustomModifiersManager {
             isNegative: true,
             tags: ['combat']
         };
+        modifierData.increasedChanceToApplyAfflictionOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToApplyAfflictionOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToApplyAfflictionOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToApplyAfflictionOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedChanceToApplyBleedOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToApplyBleedOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToApplyBleedOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToApplyBleedOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedChanceToApplyBurnOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToApplyBurnOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToApplyBurnOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToApplyBurnOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedChanceToApplyFreezeOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToApplyFreezeOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToApplyFreezeOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToApplyFreezeOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedChanceToApplyFrostburnOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToApplyFrostburnOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToApplyFrostburnOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToApplyFrostburnOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedChanceToApplyShockOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToApplyShockOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToApplyShockOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToApplyShockOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedChanceToApplySleepOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToApplySleepOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToApplySleepOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToApplySleepOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
     }
 
     /**

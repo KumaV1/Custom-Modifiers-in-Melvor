@@ -68,6 +68,7 @@ export const pt = {
     Monster_Type_Overview_Inactive_Types_Affected_By_Mod_Settings: "Can't become active due to selection in mod settings",
 
     // ### Modifiers
+    // #### Spawn
     MODIFIER_DATA_increasedChanceToApplySlowOnSpawn: "+${value}% chance to apply 25% increased attack interval for three turns to the Target on spawn or revive",
     MODIFIER_DATA_decreasedChanceToApplySlowOnSpawn: "-${value}% chance to apply 25% increased attack interval for three turns to the Target on spawn or revive",
     MODIFIER_DATA_increasedChanceToApplyStunOnSpawn: "+${value}% chance to apply stun for one turn to the Target on spawn or revive",
@@ -76,6 +77,20 @@ export const pt = {
     MODIFIER_DATA_decreasedChanceToApplyPoisonOnSpawn: "-${value}% chance to apply poison to the Target on spawn or revive",
     MODIFIER_DATA_increasedChanceToApplyDeadlyPoisonOnSpawn: "+${value}% chance to apply deadly poison to the Target on spawn or revive",
     MODIFIER_DATA_decreasedChanceToApplyDeadlyPoisonOnSpawn: "-${value}% chance to apply deadly poison to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplyAfflictionOnSpawn: "+${value}% chance to apply one stack of affliction to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplyAfflictionOnSpawn: "-${value}% chance to apply one stack of affliction to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplyBleedOnSpawn: "+${value}% chance to apply bleed, dealing 100% of your maximum hit as damage over 10s, to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplyBleedOnSpawn: "-${value}% chance to apply bleed, dealing 100% of your maximum hit as damage over 10s, to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplyBurnOnSpawn: "+${value}% chance to apply burn, dealing 15% of the target's current HP over 2.5 seconds, to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplyBurnOnSpawn: "-${value}% chance to apply burn, dealing 15% of the target's current HP over 2.5 seconds, to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplyFreezeOnSpawn: "+${value}% chance to apply freeze for one turn to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplyFreezeOnSpawn: "-${value}% chance to apply freeze for one turn to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplyFrostburnOnSpawn: "+${value}% chance to apply frostburn for one turn to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplyFrostburnOnSpawn: "-${value}% chance to apply frostburn for one turn to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplyShockOnSpawn: "+${value}% chance to apply one stack of shock to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplyShockOnSpawn: "-${value}% chance to apply one stack of shock to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplySleepOnSpawn: "+${value}% chance to apply sleep for one turn to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplySleepOnSpawn: "-${value}% chance to apply sleep for one turn to the Target on spawn or revive",
 
     // #### Death mark (not to be confused with mark of death)
     Death_Mark_Notification_Text: "You have been executed by death mark",
