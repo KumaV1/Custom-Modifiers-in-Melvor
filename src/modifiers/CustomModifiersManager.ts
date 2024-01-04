@@ -5,6 +5,7 @@ import { MonsterTypeDefinition } from '../monsterTyping/MonsterTypeDefinition';
 import { MonsterTypeHelper } from '../monsterTyping/MonsterTypeHelper';
 import { MonsterTypeManager } from '../monsterTyping/MonsterTypeManager';
 import { SettingsManager } from '../settings/SettingsManager';
+import { CmimUtils } from '../Utils';
 
 /**
  * Patches different sections of the code, in order to integrate custom modifiers
@@ -230,6 +231,18 @@ export class CustomModifiersManager {
             isNegative: false,
             tags: ['combat']
         };
+        modifierData.applyStunOnSpawn = {
+            get langDescription() {
+                return '${value}'
+            },
+            modifyValue: (value: number) => {
+                return CmimUtils.getModifierDescription(value, 'applyStunOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
         modifierData.decreasedChanceToApplyStunOnSpawn = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedChanceToApplyStunOnSpawn');
@@ -293,6 +306,18 @@ export class CustomModifiersManager {
             isNegative: true,
             tags: ['combat']
         };
+        modifierData.applyAfflictionOnSpawn = {
+            get langDescription() {
+                return '${value}'
+            },
+            modifyValue: (value: number) => {
+                return CmimUtils.getModifierDescription(value, 'applyAfflictionOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
         modifierData.increasedChanceToApplyBleedOnSpawn = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToApplyBleedOnSpawn');
@@ -347,6 +372,18 @@ export class CustomModifiersManager {
             isNegative: true,
             tags: ['combat']
         };
+        modifierData.applyFreezeOnSpawn = {
+            get langDescription() {
+                return '${value}'
+            },
+            modifyValue: (value: number) => {
+                return CmimUtils.getModifierDescription(value, 'applyFreezeOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
         modifierData.increasedChanceToApplyFrostburnOnSpawn = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToApplyFrostburnOnSpawn');
@@ -383,6 +420,18 @@ export class CustomModifiersManager {
             isNegative: true,
             tags: ['combat']
         };
+        modifierData.applyShockOnSpawn = {
+            get langDescription() {
+                return '${value}'
+            },
+            modifyValue: (value: number) => {
+                return CmimUtils.getModifierDescription(value, 'applyShockOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
         modifierData.increasedChanceToApplySleepOnSpawn = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToApplySleepOnSpawn');
@@ -399,6 +448,18 @@ export class CustomModifiersManager {
             description: '',
             isSkill: false,
             isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.applySleepOnSpawn = {
+            get langDescription() {
+                return '${value}'
+            },
+            modifyValue: (value: number) => {
+                return CmimUtils.getModifierDescription(value, 'applySleepOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
             tags: ['combat']
         };
     }
@@ -459,6 +520,18 @@ export class CustomModifiersManager {
             description: '',
             isSkill: false,
             isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.applyDeathMarkOnSpawn = {
+            get langDescription() {
+                return '${value}'
+            },
+            modifyValue: (value: number) => {
+                return CmimUtils.getModifierDescription(value, 'applyDeathMarkOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
             tags: ['combat']
         };
     }
@@ -1165,24 +1238,29 @@ export class CustomModifiersManager {
             this.decreasedChanceToApplySlowOnSpawn ??= 0;
             this.increasedChanceToApplyStunOnSpawn ??= 0;
             this.decreasedChanceToApplyStunOnSpawn ??= 0;
+            this.applyStunOnSpawn ??= 0;
             this.increasedChanceToApplyPoisonOnSpawn ??= 0;
             this.decreasedChanceToApplyPoisonOnSpawn ??= 0;
             this.increasedChanceToApplyDeadlyPoisonOnSpawn ??= 0;
             this.decreasedChanceToApplyDeadlyPoisonOnSpawn ??= 0;
             this.increasedChanceToApplyAfflictionOnSpawn ??= 0;
             this.decreasedChanceToApplyAfflictionOnSpawn ??= 0;
+            this.applyAfflictionOnSpawn ??= 0;
             this.increasedChanceToApplyBleedOnSpawn ??= 0;
             this.decreasedChanceToApplyBleedOnSpawn ??= 0;
             this.increasedChanceToApplyBurnOnSpawn ??= 0;
             this.decreasedChanceToApplyBurnOnSpawn ??= 0;
             this.increasedChanceToApplyFreezeOnSpawn ??= 0;
             this.decreasedChanceToApplyFreezeOnSpawn ??= 0;
+            this.applyFreezeOnSpawn ??= 0;
             this.increasedChanceToApplyFrostburnOnSpawn ??= 0;
             this.decreasedChanceToApplyFrostburnOnSpawn ??= 0;
             this.increasedChanceToApplyShockOnSpawn ??= 0;
             this.decreasedChanceToApplyShockOnSpawn ??= 0;
+            this.applyShockOnSpawn ??= 0;
             this.increasedChanceToApplySleepOnSpawn ??= 0;
             this.decreasedChanceToApplySleepOnSpawn ??= 0;
+            this.applySleepOnSpawn ??= 0;
 
             this.deathMark ??= 0;
             this.increasedDeathMarkOnHit ??= 0;
@@ -1190,6 +1268,7 @@ export class CustomModifiersManager {
             this.decreasedChanceToApplyStackOfDeathMark ??= 0;
             this.increasedDeathMarkImmunity ??= 0;
             this.decreasedDeathMarkImmunity ??= 0;
+            this.applyDeathMarkOnSpawn ??= 0;
 
             this.increasedDamageTakenFromAirSpells ??= 0;
             this.decreasedDamageTakenFromAirSpells ??= 0;
