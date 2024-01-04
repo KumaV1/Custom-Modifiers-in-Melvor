@@ -23,6 +23,10 @@ export const ja = {
     // ##### Info label
     Settings_Setting_Label_Disabling_Info: "This section serves as a way of disabling certain parts of this mod's functionality. Aside from making content purposefully easier/harder, the other main reason you may want to do this, is because this mod might end up adding a noteworthy amount of calculation time, leading to a noticeable increase in loading time of offline gains (especially, if the monster type system is being made use of). Disabling some code from running at all may therefore result in a noteworthy performance improvement.",
 
+    // ##### On-spawn modifiers
+    Settings_Setting_Label_Disable_All_On_Spawn_Modifiers: 'Disable on-spawn modifiers',
+    Settings_Setting_Hint_Disable_All_On_Spawn_Modifiers: 'Disables all on-spawn modifiers added by this mod',
+
     // ##### Keep specific monster types inactive
     Settings_Setting_Label_Keep_Specific_Monster_Types_Inactive: 'Keep specific monster types inactive',
     Settings_Setting_Hint_Keep_Specific_Monster_Types_Inactive: 'Forces the selected monster types to stay inactive, regardless of what any mod may communicate. Monster types added by other mods will lose their checkbox state, if you happen to load your save without said mod',

@@ -4,6 +4,7 @@ import { CustomModifiersCalculator } from './CustomModifiersCalculator'
 import { MonsterTypeDefinition } from '../monsterTyping/MonsterTypeDefinition';
 import { MonsterTypeHelper } from '../monsterTyping/MonsterTypeHelper';
 import { MonsterTypeManager } from '../monsterTyping/MonsterTypeManager';
+import { SettingsManager } from '../settings/SettingsManager';
 
 /**
  * Patches different sections of the code, in order to integrate custom modifiers
@@ -1233,6 +1234,11 @@ export class CustomModifiersManager {
     private patchApplyUniqueSpawnEffects() {
         // @ts-ignore You can actually patch base classes no problem
         this.context.patch(Character, "applyUniqueSpawnEffects").after(function () {
+            // Do not do anything, if functionaly has been enabled through mod settings
+            if (SettingsManager.getDisableAllOnSpawnModifiers()) {
+                return;
+            }
+
             // Static
             if (rollPercentage(this.modifiers.increasedChanceToApplyStunOnSpawn - this.modifiers.decreasedChanceToApplyStunOnSpawn)) {
                 this.applyStun({ chance: 100, turns: 1, type: 'Stun', flavour: 'Stun' }, this.target);
@@ -1268,7 +1274,7 @@ export class CustomModifiersManager {
                 this.applyDOT(burnEffect, this.target, this.game.normalAttack);
             }
 
-            // Monster type
+            // Monster types
             const types = MonsterTypeManager.getActiveTypesAsArray();
             for (var i = 0; i < types.length; i++) {
                 const type = types[i];

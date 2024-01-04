@@ -23,6 +23,10 @@
     // ##### Info label
     Settings_Setting_Label_Disabling_Info: "Dieser Bereich dient dazu, bestimmte Funktionalitäten dieses Mods zu deaktivieren. Ein Grund dafür ist, dass man damit Inhalte absichtlich leichter/schwieriger machen kann. Ein anderer Grund ist, dass dieser Mod weitere Berechnungen erfordert, was zu einer spürbaren Erhöhung der Charakter-Ladezeit führen kann (insbesondere, wenn das Monsterarten-System auageschöpft wird). Bestimmte Berechnungen daran zu hindern überhaupt durchgeführt zu werden, kann dementsprechend zu einer bemerkbaren Verbesserung von Ladezeiten führen.",
 
+    // ##### On-spawn modifiers
+    Settings_Setting_Label_Disable_All_On_Spawn_Modifiers: 'Erscheinungs-Modifikatoren deaktivieren',
+    Settings_Setting_Hint_Disable_All_On_Spawn_Modifiers: 'Deaktiviert alle Erscheinungs-Modifikatoren, welche von diesem Mod hinzugefügt werden',
+
     // ##### Keep specific monster types inactive
     Settings_Setting_Label_Keep_Specific_Monster_Types_Inactive: 'Bestimmte Monsterarten inaktiv lassen',
     Settings_Setting_Hint_Keep_Specific_Monster_Types_Inactive: 'Erzwingt, dass die ausgewählten Monsterarten inaktiv bleiben, unabhängig davon, was andere Mods definieren. Für Monsterarten, welche von anderen Mods hinzugefügt wurden, geht die Nachhaltung des Kontroll-Kästchens verloren, wenn der Charakter ohne besagten Mod geladen wird',
