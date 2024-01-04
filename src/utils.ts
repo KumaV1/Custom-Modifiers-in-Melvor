@@ -1,4 +1,8 @@
 export class CmimUtils {
+    public static log(message: string) {
+        console.log(`[CMiM] ${message}`);
+    }
+
     /**
      * Remove ALL elements with the given class from the document tree
      * @param className
