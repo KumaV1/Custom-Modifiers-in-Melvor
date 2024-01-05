@@ -28,6 +28,7 @@ declare global {
         decreasedChanceToApplySleepOnSpawn: number,
         applySleepOnSpawn: number,
 
+        /** Flag (by the custom effect) that effect has been applied, it's NOT an increasing value */
         deathMark: number,
         increasedDeathMarkOnHit: number,
         increasedChanceToApplyStackOfDeathMark: number,

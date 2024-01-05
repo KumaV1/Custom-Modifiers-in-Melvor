@@ -1313,7 +1313,7 @@ export class CustomModifiersManager {
     private patchApplyUniqueSpawnEffects() {
         // @ts-ignore You can actually patch base classes no problem
         this.context.patch(Character, "applyUniqueSpawnEffects").after(function () {
-            // Do not do anything, if functionaly has been enabled through mod settings
+            // Do not do anything, if functionality has been disabled through mod settings
             if (SettingsManager.getDisableAllOnSpawnModifiers()) {
                 return;
             }

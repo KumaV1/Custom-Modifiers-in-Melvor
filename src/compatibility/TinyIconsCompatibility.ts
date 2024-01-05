@@ -87,7 +87,6 @@ export class TinyIconsCompatibility {
         decreasedChanceToApplyPoisonOnSpawn: ['poison'],
         increasedChanceToApplyDeadlyPoisonOnSpawn: ['deadly_poison'],
         decreasedChanceToApplyDeadlyPoisonOnSpawn: ['deadly_poison'],
-
         increasedChanceToApplyAfflictionOnSpawn: ['afflicted'],
         decreasedChanceToApplyAfflictionOnSpawn: ['afflicted'],
         applyAfflictionOnSpawn: ['afflicted'],
@@ -107,13 +106,13 @@ export class TinyIconsCompatibility {
         decreasedChanceToApplySleepOnSpawn: ['sleep'],
         applySleepOnSpawn: ['sleep'],
 
-        deathMark: ['cmim_death_mark', 'combat'],
-        increasedDeathMarkOnHit: ['cmim_death_mark', 'combat'],
-        increasedChanceToApplyStackOfDeathMark: ['cmim_death_mark', 'combat'],
-        decreasedChanceToApplyStackOfDeathMark: ['cmim_death_mark', 'combat'],
-        increasedDeathMarkImmunity: ['cmim_death_mark', 'combat'],
-        decreasedDeathMarkImmunity: ['cmim_death_mark', 'combat'],
-        applyDeathMarkOnSpawn: ['cmim_death_mark', 'combat'],
+        deathMark: ['cmim_death_mark'],
+        increasedDeathMarkOnHit: ['cmim_death_mark'],
+        increasedChanceToApplyStackOfDeathMark: ['cmim_death_mark'],
+        decreasedChanceToApplyStackOfDeathMark: ['cmim_death_mark'],
+        increasedDeathMarkImmunity: ['cmim_death_mark'],
+        decreasedDeathMarkImmunity: ['cmim_death_mark'],
+        applyDeathMarkOnSpawn: ['cmim_death_mark'],
 
         increasedDamageTakenFromAirSpells: ["ti_magic_dn", "air_strike"],
         decreasedDamageTakenFromAirSpells: ["ti_magic_up", "air_strike"],
