@@ -23,6 +23,10 @@ export const ja = {
     // ##### Info label
     Settings_Setting_Label_Disabling_Info: "This section serves as a way of disabling certain parts of this mod's functionality. Aside from making content purposefully easier/harder, the other main reason you may want to do this, is because this mod might end up adding a noteworthy amount of calculation time, leading to a noticeable increase in loading time of offline gains (especially, if the monster type system is being made use of). Disabling some code from running at all may therefore result in a noteworthy performance improvement.",
 
+    // ##### On-spawn modifiers
+    Settings_Setting_Label_Disable_All_On_Spawn_Modifiers: 'Disable on-spawn modifiers',
+    Settings_Setting_Hint_Disable_All_On_Spawn_Modifiers: 'Disables all on-spawn modifiers added by this mod',
+
     // ##### Keep specific monster types inactive
     Settings_Setting_Label_Keep_Specific_Monster_Types_Inactive: 'Keep specific monster types inactive',
     Settings_Setting_Hint_Keep_Specific_Monster_Types_Inactive: 'Forces the selected monster types to stay inactive, regardless of what any mod may communicate. Monster types added by other mods will lose their checkbox state, if you happen to load your save without said mod',
@@ -68,14 +72,39 @@ export const ja = {
     Monster_Type_Overview_Inactive_Types_Affected_By_Mod_Settings: "Can't become active due to selection in mod settings",
 
     // ### Modifiers
+    // #### Spawn
     MODIFIER_DATA_increasedChanceToApplySlowOnSpawn: "+${value}% chance to apply 25% increased attack interval for three turns to the Target on spawn or revive",
     MODIFIER_DATA_decreasedChanceToApplySlowOnSpawn: "-${value}% chance to apply 25% increased attack interval for three turns to the Target on spawn or revive",
     MODIFIER_DATA_increasedChanceToApplyStunOnSpawn: "+${value}% chance to apply stun for one turn to the Target on spawn or revive",
     MODIFIER_DATA_decreasedChanceToApplyStunOnSpawn: "-${value}% chance to apply stun for one turn to the Target on spawn or revive",
+    MODIFIER_DATA_applyStunOnSpawn: "Apply ${value} turn of Stun to the Target on spawn or revive",
+    MODIFIER_DATA_applyStunOnSpawn_Plural: "Apply ${value} turns of Stun to the Target on spawn or revive",
     MODIFIER_DATA_increasedChanceToApplyPoisonOnSpawn: "+${value}% chance to apply poison to the Target on spawn or revive",
     MODIFIER_DATA_decreasedChanceToApplyPoisonOnSpawn: "-${value}% chance to apply poison to the Target on spawn or revive",
     MODIFIER_DATA_increasedChanceToApplyDeadlyPoisonOnSpawn: "+${value}% chance to apply deadly poison to the Target on spawn or revive",
     MODIFIER_DATA_decreasedChanceToApplyDeadlyPoisonOnSpawn: "-${value}% chance to apply deadly poison to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplyAfflictionOnSpawn: "+${value}% chance to apply one stack of affliction to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplyAfflictionOnSpawn: "-${value}% chance to apply one stack of affliction to the Target on spawn or revive",
+    MODIFIER_DATA_applyAfflictionOnSpawn: "Apply ${value} stack of Affliction to the Target on spawn or revive",
+    MODIFIER_DATA_applyAfflictionOnSpawn_Plural: "Apply ${value} stacks of Affliction to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplyBleedOnSpawn: "+${value}% chance to apply bleed, dealing 100% of your maximum hit as damage over 10s, to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplyBleedOnSpawn: "-${value}% chance to apply bleed, dealing 100% of your maximum hit as damage over 10s, to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplyBurnOnSpawn: "+${value}% chance to apply burn, dealing 15% of the target's current HP over 2.5 seconds, to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplyBurnOnSpawn: "-${value}% chance to apply burn, dealing 15% of the target's current HP over 2.5 seconds, to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplyFreezeOnSpawn: "+${value}% chance to apply freeze for one turn to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplyFreezeOnSpawn: "-${value}% chance to apply freeze for one turn to the Target on spawn or revive",
+    MODIFIER_DATA_applyFreezeOnSpawn: "Apply ${value} turn of Freeze to the Target on spawn or revive",
+    MODIFIER_DATA_applyFreezeOnSpawn_Plural: "Apply ${value} turns of Freeze to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplyFrostburnOnSpawn: "+${value}% chance to apply frostburn for three turns to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplyFrostburnOnSpawn: "-${value}% chance to apply frostburn for three turns to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplyShockOnSpawn: "+${value}% chance to apply one stack of shock to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplyShockOnSpawn: "-${value}% chance to apply one stack of shock to the Target on spawn or revive",
+    MODIFIER_DATA_applyShockOnSpawn: "Apply ${value} stack of Shock to the Target on spawn or revive",
+    MODIFIER_DATA_applyShockOnSpawn_Plural: "Apply ${value} stack of Shock to the Target on spawn or revive",
+    MODIFIER_DATA_increasedChanceToApplySleepOnSpawn: "+${value}% chance to apply sleep for one turn to the Target on spawn or revive",
+    MODIFIER_DATA_decreasedChanceToApplySleepOnSpawn: "-${value}% chance to apply sleep for one turn to the Target on spawn or revive",
+    MODIFIER_DATA_applySleepOnSpawn: "Apply ${value} turn of Sleep to the Target on spawn or revive",
+    MODIFIER_DATA_applySleepOnSpawn_Plural: "Apply ${value} turns of Sleep to the Target on spawn or revive",
 
     // #### Death mark (not to be confused with mark of death)
     Death_Mark_Notification_Text: "You have been executed by death mark",
@@ -86,6 +115,8 @@ export const ja = {
     MODIFIER_DATA_decreasedChanceToApplyStackOfDeathMark: "-${value}% chance to apply one stack of death mark on the enemy",
     MODIFIER_DATA_increasedDeathMarkImmunity: "+${value}% chance to resist application of death mark stacks",
     MODIFIER_DATA_decreasedDeathMarkImmunity: "-${value}% chance to resist application of death mark stacks",
+    MODIFIER_DATA_applyDeathMarkOnSpawn: "Apply ${value} stack of Death Mark to the Target on spawn or revive",
+    MODIFIER_DATA_applyDeathMarkOnSpawn_Plural: "Apply ${value} stacks of Death Mark to the Target on spawn or revive",
 
     // #### Spell type
     MODIFIER_DATA_increasedDamageTakenFromAirSpells: "+${value}% Damage taken from air spells",

@@ -6,6 +6,9 @@ import { MonsterTypeManager } from "../monsterTyping/MonsterTypeManager";
 import { TranslationManager } from "../translation/TranslationManager";
 
 export class SettingsManager {
+    /** Because this is slightly quicker than constantly checking the html-element's value attribute */
+    private static _onSpawnModifiersDisabled: boolean = false;
+
     public static init(ctx: Modding.ModContext) {
         // Create static-defined settings
         ctx.settings.section(TranslationManager.getLangString("Settings_Section_Combat_Areas_Indicator", true)).add([
@@ -59,6 +62,15 @@ export class SettingsManager {
                 name: 'disabling-info',
                 label: TranslationManager.getLangString("Settings_Setting_Label_Disabling_Info", true),
             } as Modding.Settings.SettingConfig,
+            {
+                type: 'switch',
+                name: 'disable-all-on-spawn-modifiers',
+                label: 'Disable on-spawn modifiers',
+                hint: 'Disables all on spawn modifiers added by this mod',
+                onChange(value: boolean, previousValue: boolean): void {
+                    SettingsManager._onSpawnModifiersDisabled = value;
+                }
+            } as Modding.Settings.SwitchConfig
         ]);
 
         ctx.settings.section(TranslationManager.getLangString("Settings_Section_Enabling", true)).add([
@@ -113,6 +125,7 @@ export class SettingsManager {
         });
 
         // On character load, use settings to potentially disable/enable certain types that would otherwise be active
+        // Also cache one setting's value, as it is accessed very often compared to most other settings, which are not checked much per character load
         ctx.onCharacterLoaded(function () {
             SettingsManager.getDisableSpecificMonsterTypes.forEach(function (value: string) {
                 MonsterTypeManager.trySetTypeInactive(value);
@@ -121,6 +134,10 @@ export class SettingsManager {
             SettingsManager.getEnableSpecificMonsterTypes.forEach(function (value: string) {
                 MonsterTypeManager.trySetTypeActive(value);
             });
+
+            SettingsManager._onSpawnModifiersDisabled = ctx.settings
+                .section(TranslationManager.getLangString("Settings_Section_Disabling", true))
+                .get('disable-all-on-spawn-modifiers') as boolean ?? false;
         });
     }
 
@@ -149,6 +166,14 @@ export class SettingsManager {
         return ModContextMemoizer.ctx.settings
             .section(TranslationManager.getLangString("Settings_Section_Combat_Areas_Indicator", true))
             .get('enable-inactive-monster-type-indicators') as boolean;
+    }
+
+    /**
+     * Get CACHED VALUE of setting field
+     * @returns
+     */
+    public static getDisableAllOnSpawnModifiers(): boolean {
+        return SettingsManager._onSpawnModifiersDisabled;
     }
 
     /**

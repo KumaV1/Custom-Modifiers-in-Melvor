@@ -1,4 +1,8 @@
 export class CmimUtils {
+    public static log(message: string) {
+        console.log(`[CMiM] ${message}`);
+    }
+
     /**
      * Remove ALL elements with the given class from the document tree
      * @param className
@@ -30,5 +34,22 @@ export class CmimUtils {
 
             return 0;
         });
+    }
+
+    /**
+     * Returns one of two different modifier descriptions, as some may, ever so slightly, vary between singular and plural.
+     * That being said, it's important to note that this method expects a certain naming convention for plural texts
+     * @param value the value of the modifier
+     * @param modifierName
+     * @returns
+     */
+    public static getModifierDescription(value: number, modifierName: string): string {
+        return value > 1
+            ? templateLangString(`MODIFIER_DATA_${modifierName}_Plural`, {
+                value: numberWithCommas(value)
+            })
+            : templateLangString(`MODIFIER_DATA_${modifierName}`, {
+                value: numberWithCommas(value)
+            });
     }
 }

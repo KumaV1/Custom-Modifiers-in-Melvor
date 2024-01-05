@@ -23,6 +23,10 @@
     // ##### Info label
     Settings_Setting_Label_Disabling_Info: "Dieser Bereich dient dazu, bestimmte Funktionalitäten dieses Mods zu deaktivieren. Ein Grund dafür ist, dass man damit Inhalte absichtlich leichter/schwieriger machen kann. Ein anderer Grund ist, dass dieser Mod weitere Berechnungen erfordert, was zu einer spürbaren Erhöhung der Charakter-Ladezeit führen kann (insbesondere, wenn das Monsterarten-System auageschöpft wird). Bestimmte Berechnungen daran zu hindern überhaupt durchgeführt zu werden, kann dementsprechend zu einer bemerkbaren Verbesserung von Ladezeiten führen.",
 
+    // ##### On-spawn modifiers
+    Settings_Setting_Label_Disable_All_On_Spawn_Modifiers: 'Erscheinungs-Modifikatoren deaktivieren',
+    Settings_Setting_Hint_Disable_All_On_Spawn_Modifiers: 'Deaktiviert alle Erscheinungs-Modifikatoren, welche von diesem Mod hinzugefügt werden',
+
     // ##### Keep specific monster types inactive
     Settings_Setting_Label_Keep_Specific_Monster_Types_Inactive: 'Bestimmte Monsterarten inaktiv lassen',
     Settings_Setting_Hint_Keep_Specific_Monster_Types_Inactive: 'Erzwingt, dass die ausgewählten Monsterarten inaktiv bleiben, unabhängig davon, was andere Mods definieren. Für Monsterarten, welche von anderen Mods hinzugefügt wurden, geht die Nachhaltung des Kontroll-Kästchens verloren, wenn der Charakter ohne besagten Mod geladen wird',
@@ -69,24 +73,51 @@
     Monster_Type_Overview_Inactive_Types_Affected_By_Mod_Settings: "Kann aufgrund von einer Auswahl in den Mod-Einstellungen nicht aktiv werden",
 
     // ### Modifiers
+    // #### Spawn
     MODIFIER_DATA_increasedChanceToApplySlowOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass +25% Angriffsintervall für drei Runden auf das Ziel angewendet wird",
     MODIFIER_DATA_decreasedChanceToApplySlowOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass +25% Angriffsintervall für drei Runden auf das Ziel angewendet wird",
     MODIFIER_DATA_increasedChanceToApplyStunOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass das Ziel für eine Runde betäubt wird",
     MODIFIER_DATA_decreasedChanceToApplyStunOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass das Ziel für eine Runde betäubt wird",
+    MODIFIER_DATA_applyStunOnSpawn: "Beim Erscheinen oder der Wiederbelebung, betäubt das Ziel für ${value} Runde",
+    MODIFIER_DATA_applyStunOnSpawn_Plural: "Beim Erscheinen oder der Wiederbelebung, betäubt das Ziel für ${value} Runden",
     MODIFIER_DATA_increasedChanceToApplyPoisonOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass Giftschaden beim Gegner verursacht wird",
     MODIFIER_DATA_decreasedChanceToApplyPoisonOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass Giftschaden beim Gegner verursacht wird",
     MODIFIER_DATA_increasedChanceToApplyDeadlyPoisonOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass tödlicher Giftschaden beim Gegner verursacht wird",
     MODIFIER_DATA_decreasedChanceToApplyDeadlyPoisonOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass tödlicher Giftschaden beim Gegner verursacht wird",
+    MODIFIER_DATA_increasedChanceToApplyAfflictionOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass dem Ziel ein Stapel Leid zugefügt wird",
+    MODIFIER_DATA_decreasedChanceToApplyAfflictionOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass dem Ziel ein Stapel Leid zugefügt wird",
+    MODIFIER_DATA_applyAfflictionOnSpawn: "Beim Erscheinen oder der Wiederbelebung, fügt dem Ziel ${value} Stapel Leid hinzu",
+    MODIFIER_DATA_applyAfflictionOnSpawn_Plural: "Beim Erscheinen oder der Wiederbelebung, fügt dem Ziel ${value} Stapel Leid hinzu",
+    MODIFIER_DATA_increasedChanceToApplyBleedOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass das Ziel eine Blutung erleidet, welche, über 10s hinweg, 100% deines Maximalschaden an Schaden verursacht",
+    MODIFIER_DATA_decreasedChanceToApplyBleedOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass das Ziel eine Blutung erleidet, welche, über 10s hinweg, 100% deines Maximalschaden an Schaden verursacht",
+    MODIFIER_DATA_increasedChanceToApplyBurnOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass das Ziel eine Verbrennung erleidet, welche, über 2,5s hinweg, 15% der derzeitigen Lebenspunkte des Gegners an Schaden verursacht",
+    MODIFIER_DATA_decreasedChanceToApplyBurnOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass das Ziel eine Verbrennung erleidet, welche, über 2,5s hinweg, 15% der derzeitigen Lebenspunkte des Gegners an Schaden verursacht",
+    MODIFIER_DATA_increasedChanceToApplyFreezeOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass das Ziel für eine Runde eingefroren wird",
+    MODIFIER_DATA_decreasedChanceToApplyFreezeOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass das Ziel für eine Runde eingefroren wird",
+    MODIFIER_DATA_applyFreezeOnSpawn: "Beim Erscheinen oder der Wiederbelebung, friert das Ziel für ${value} Runde ein",
+    MODIFIER_DATA_applyFreezeOnSpawn_Plural: "Beim Erscheinen oder der Wiederbelebung, friert das Ziel für ${value} Runden ein",
+    MODIFIER_DATA_increasedChanceToApplyFrostburnOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass das Ziel für drei Runden Frostbrand erleidet",
+    MODIFIER_DATA_decreasedChanceToApplyFrostburnOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass das Ziel für drei Runden Frostbrand erleidet",
+    MODIFIER_DATA_increasedChanceToApplyShockOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass dem Ziel ein Stapel Schock hinzugefügt wird",
+    MODIFIER_DATA_decreasedChanceToApplyShockOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass dem Ziel ein Stapel Schock hinzugefügt wird",
+    MODIFIER_DATA_applyShockOnSpawn: "Beim Erscheinen oder der Wiederbelebung, fügt dem Ziel ${value} Stapel Schock hinzu",
+    MODIFIER_DATA_applyShockOnSpawn_Plural: "Beim Erscheinen oder der Wiederbelebung, fügt dem Ziel ${value} Stapel Schock hinzu",
+    MODIFIER_DATA_increasedChanceToApplySleepOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass das Ziel für eine Runde eingeschläfert wird",
+    MODIFIER_DATA_decreasedChanceToApplySleepOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass das Ziel für eine Runde eingeschläfert wird",
+    MODIFIER_DATA_applySleepOnSpawn: "Beim Erscheinen oder der Wiederbelebung, schläfert das Ziel für ${value} Runde ein",
+    MODIFIER_DATA_applySleepOnSpawn_Plural: "Beim Erscheinen oder der Wiederbelebung, schläfert das Ziel für ${value} Runden ein",
 
     // #### Death mark (not to be confused with mark of death)
     Death_Mark_Notification_Text: "Du bist durch Todesurteil hingerichtet worden",
     COMBAT_MISC_Death_Mark_Effect: "Todesurteil",
-    MODIFIER_DATA_deathMark: "Wenn der Prozentsatz der verbleibenden maximalen HP niedriger ist als die Anzahl der Stapel (MAX 20% / 5.000), werde sofort hingerichtet",
+    MODIFIER_DATA_deathMark: "Wenn der Prozentsatz der verbleibenden maximalen Lebenspunkte niedriger ist als die Anzahl der Stapel (MAX 20% / 5.000), werde sofort hingerichtet",
     MODIFIER_DATA_increasedDeathMarkOnHit: "+${value} Todesurteil-Stapel, wenn ein Angriff trifft",
     MODIFIER_DATA_increasedChanceToApplyStackOfDeathMark: "+${value}% Chance einen Stapel Todesurteil beim Gegner hinzuzufügen",
     MODIFIER_DATA_decreasedChanceToApplyStackOfDeathMark: "-${value}% Chance einen Stapel Todesurteil beim Gegner hinzuzufügen",
     MODIFIER_DATA_increasedDeathMarkImmunity: "+${value} Chance, der Anwendung von Todesurteil-Stapeln zu widerstehen",
     MODIFIER_DATA_decreasedDeathMarkImmunity: "-${value} Chance, der Anwendung von Todesurteil-Stapeln zu widerstehen",
+    MODIFIER_DATA_applyDeathMarkOnSpawn: "Beim Erscheinen oder der Wiederbelebung, fügt dem Ziel ${value} Stapel Todesurteil hinzu",
+    MODIFIER_DATA_applyDeathMarkOnSpawn_Plural: "Beim Erscheinen oder der Wiederbelebung, fügt dem Ziel ${value} Stapel Todesurteil hinzu",
 
     // #### Spell type
     MODIFIER_DATA_increasedDamageTakenFromAirSpells: "+${value}% mehr erlittener Schaden von Luftzaubern",

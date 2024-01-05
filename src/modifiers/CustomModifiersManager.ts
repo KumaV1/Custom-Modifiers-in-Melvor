@@ -1,9 +1,11 @@
-﻿import { Constants } from '../Constants';
+﻿import { CmimUtils } from '../Utils';
+import { Constants } from '../Constants';
 import { Constants as ModifierConstants } from './Constants';
 import { CustomModifiersCalculator } from './CustomModifiersCalculator'
 import { MonsterTypeDefinition } from '../monsterTyping/MonsterTypeDefinition';
 import { MonsterTypeHelper } from '../monsterTyping/MonsterTypeHelper';
 import { MonsterTypeManager } from '../monsterTyping/MonsterTypeManager';
+import { SettingsManager } from '../settings/SettingsManager';
 
 /**
  * Patches different sections of the code, in order to integrate custom modifiers
@@ -229,6 +231,18 @@ export class CustomModifiersManager {
             isNegative: false,
             tags: ['combat']
         };
+        modifierData.applyStunOnSpawn = {
+            get langDescription() {
+                return '${value}'
+            },
+            modifyValue: (value: number) => {
+                return CmimUtils.getModifierDescription(value, 'applyStunOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
         modifierData.decreasedChanceToApplyStunOnSpawn = {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedChanceToApplyStunOnSpawn');
@@ -272,6 +286,180 @@ export class CustomModifiersManager {
             description: '',
             isSkill: false,
             isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedChanceToApplyAfflictionOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToApplyAfflictionOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToApplyAfflictionOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToApplyAfflictionOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.applyAfflictionOnSpawn = {
+            get langDescription() {
+                return '${value}'
+            },
+            modifyValue: (value: number) => {
+                return CmimUtils.getModifierDescription(value, 'applyAfflictionOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.increasedChanceToApplyBleedOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToApplyBleedOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToApplyBleedOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToApplyBleedOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedChanceToApplyBurnOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToApplyBurnOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToApplyBurnOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToApplyBurnOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedChanceToApplyFreezeOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToApplyFreezeOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToApplyFreezeOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToApplyFreezeOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.applyFreezeOnSpawn = {
+            get langDescription() {
+                return '${value}'
+            },
+            modifyValue: (value: number) => {
+                return CmimUtils.getModifierDescription(value, 'applyFreezeOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.increasedChanceToApplyFrostburnOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToApplyFrostburnOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToApplyFrostburnOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToApplyFrostburnOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedChanceToApplyShockOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToApplyShockOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToApplyShockOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToApplyShockOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.applyShockOnSpawn = {
+            get langDescription() {
+                return '${value}'
+            },
+            modifyValue: (value: number) => {
+                return CmimUtils.getModifierDescription(value, 'applyShockOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.increasedChanceToApplySleepOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToApplySleepOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToApplySleepOnSpawn = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToApplySleepOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.applySleepOnSpawn = {
+            get langDescription() {
+                return '${value}'
+            },
+            modifyValue: (value: number) => {
+                return CmimUtils.getModifierDescription(value, 'applySleepOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
             tags: ['combat']
         };
     }
@@ -332,6 +520,18 @@ export class CustomModifiersManager {
             description: '',
             isSkill: false,
             isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.applyDeathMarkOnSpawn = {
+            get langDescription() {
+                return '${value}'
+            },
+            modifyValue: (value: number) => {
+                return CmimUtils.getModifierDescription(value, 'applyDeathMarkOnSpawn');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
             tags: ['combat']
         };
     }
@@ -1038,10 +1238,29 @@ export class CustomModifiersManager {
             this.decreasedChanceToApplySlowOnSpawn ??= 0;
             this.increasedChanceToApplyStunOnSpawn ??= 0;
             this.decreasedChanceToApplyStunOnSpawn ??= 0;
+            this.applyStunOnSpawn ??= 0;
             this.increasedChanceToApplyPoisonOnSpawn ??= 0;
             this.decreasedChanceToApplyPoisonOnSpawn ??= 0;
             this.increasedChanceToApplyDeadlyPoisonOnSpawn ??= 0;
             this.decreasedChanceToApplyDeadlyPoisonOnSpawn ??= 0;
+            this.increasedChanceToApplyAfflictionOnSpawn ??= 0;
+            this.decreasedChanceToApplyAfflictionOnSpawn ??= 0;
+            this.applyAfflictionOnSpawn ??= 0;
+            this.increasedChanceToApplyBleedOnSpawn ??= 0;
+            this.decreasedChanceToApplyBleedOnSpawn ??= 0;
+            this.increasedChanceToApplyBurnOnSpawn ??= 0;
+            this.decreasedChanceToApplyBurnOnSpawn ??= 0;
+            this.increasedChanceToApplyFreezeOnSpawn ??= 0;
+            this.decreasedChanceToApplyFreezeOnSpawn ??= 0;
+            this.applyFreezeOnSpawn ??= 0;
+            this.increasedChanceToApplyFrostburnOnSpawn ??= 0;
+            this.decreasedChanceToApplyFrostburnOnSpawn ??= 0;
+            this.increasedChanceToApplyShockOnSpawn ??= 0;
+            this.decreasedChanceToApplyShockOnSpawn ??= 0;
+            this.applyShockOnSpawn ??= 0;
+            this.increasedChanceToApplySleepOnSpawn ??= 0;
+            this.decreasedChanceToApplySleepOnSpawn ??= 0;
+            this.applySleepOnSpawn ??= 0;
 
             this.deathMark ??= 0;
             this.increasedDeathMarkOnHit ??= 0;
@@ -1049,6 +1268,7 @@ export class CustomModifiersManager {
             this.decreasedChanceToApplyStackOfDeathMark ??= 0;
             this.increasedDeathMarkImmunity ??= 0;
             this.decreasedDeathMarkImmunity ??= 0;
+            this.applyDeathMarkOnSpawn ??= 0;
 
             this.increasedDamageTakenFromAirSpells ??= 0;
             this.decreasedDamageTakenFromAirSpells ??= 0;
@@ -1093,19 +1313,81 @@ export class CustomModifiersManager {
     private patchApplyUniqueSpawnEffects() {
         // @ts-ignore You can actually patch base classes no problem
         this.context.patch(Character, "applyUniqueSpawnEffects").after(function () {
+            // Do not do anything, if functionality has been disabled through mod settings
+            if (SettingsManager.getDisableAllOnSpawnModifiers()) {
+                return;
+            }
+
+            // Static
+            if (game.customModifiersInMelvor.stackingEffects.deathMarkEffect !== undefined && this.modifiers.applyDeathMarkOnSpawn > 0) {
+                this.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffect, this.target, this.modifiers.applyDeathMarkOnSpawn);
+            }
+
+            let afflictionStacks = this.modifiers.applyAfflictionOnSpawn;
+            if (rollPercentage(this.modifiers.increasedChanceToApplyAfflictionOnSpawn - this.modifiers.decreasedChanceToApplyAfflictionOnSpawn)) {
+                afflictionStacks++;
+            }
+            for (var i = 0; i < afflictionStacks; i++) {
+                this.applyModifierEffect(afflictionEffect, this.target, this.game.normalAttack);
+            }
+
+            let stunTurns = this.modifiers.applyStunOnSpawn;
+            if (rollPercentage(this.modifiers.increasedChanceToApplyStunOnSpawn - this.modifiers.decreasedChanceToApplyStunOnSpawn)) {
+                stunTurns++;
+            }
+            if (stunTurns > 0) {
+                this.applyStun({ chance: 100, turns: stunTurns, type: 'Stun', flavour: 'Stun' }, this.target);
+            }
+
+            let freezeTurns = this.modifiers.applyFreezeOnSpawn;
+            if (rollPercentage(this.modifiers.increasedChanceToApplyFreezeOnSpawn - this.modifiers.decreasedChanceToApplyFreezeOnSpawn)) {
+                freezeTurns++;
+            }
+            if (freezeTurns > 0) {
+                this.applyStun({ chance: 100, turns: freezeTurns, type: 'Stun', flavour: 'Freeze' }, this.target);
+            }
+
+            let sleepTurns = this.modifiers.applySleepOnSpawn;
+            if (rollPercentage(this.modifiers.increasedChanceToApplySleepOnSpawn - this.modifiers.decreasedChanceToApplySleepOnSpawn)) {
+                sleepTurns++;
+            }
+            if (sleepTurns > 0) {
+                this.applySleep({ chance: 100, turns: sleepTurns, type: 'Sleep' }, this.target, this.game.normalAttack);
+            }
+
+            let shockStacks = this.modifiers.applyShockOnSpawn;
+            if (rollPercentage(this.modifiers.increasedChanceToApplyShockOnSpawn - this.modifiers.decreasedChanceToApplyShockOnSpawn)) {
+                shockStacks++;
+            }
+            for (var i = 0; i < shockStacks; i++) {
+                this.applyModifierEffect(shockEffect, this.target, this.game.normalAttack);
+            }
+
+            if (rollPercentage(this.modifiers.increasedChanceToApplyFrostburnOnSpawn - this.modifiers.decreasedChanceToApplyFrostburnOnSpawn)) {
+                this.applyModifierEffect(frostBurnEffect, this.target, this.game.normalAttack);
+            }
+
             if (rollPercentage(this.modifiers.increasedChanceToApplySlowOnSpawn - this.modifiers.decreasedChanceToApplySlowOnSpawn)) {
                 this.applyModifierEffect(new SlowEffect(25, 3), this.target, this.game.normalAttack);
             }
-            if (rollPercentage(this.modifiers.increasedChanceToApplyStunOnSpawn - this.modifiers.decreasedChanceToApplyStunOnSpawn)) {
-                this.applyStun({ chance: 100, turns: 1, type: 'Stun', flavour: 'Stun' }, this.target);
-            }
+
             if (rollPercentage(this.modifiers.increasedChanceToApplyPoisonOnSpawn - this.modifiers.decreasedChanceToApplyPoisonOnSpawn)) {
                 this.applyDOT(poisonEffect, this.target, 0);
             }
+
             if (rollPercentage(this.modifiers.increasedChanceToApplyDeadlyPoisonOnSpawn - this.modifiers.decreasedChanceToApplyDeadlyPoisonOnSpawn)) {
                 this.applyDOT(deadlyPoisonEffect, this.target, 0);
             }
 
+            if (rollPercentage(this.modifiers.increasedChanceToApplyBleedOnSpawn - this.modifiers.decreasedChanceToApplyBleedOnSpawn)) {
+                this.applyDOT({ chance: 100, procs: 20, interval: 500, type: 'DOT', subtype: 'Bleed', damage: [{ "roll": false, "character": "Attacker", "maxRoll": "MaxHit", "maxPercent": 100 }] }, this.target, this.game.normalAttack);
+            }
+
+            if (rollPercentage(this.modifiers.increasedChanceToApplyBurnOnSpawn - this.modifiers.decreasedChanceToApplyBurnOnSpawn)) {
+                this.applyDOT(burnEffect, this.target, this.game.normalAttack);
+            }
+
+            // Monster types
             const types = MonsterTypeManager.getActiveTypesAsArray();
             for (var i = 0; i < types.length; i++) {
                 const type = types[i];
@@ -1136,9 +1418,9 @@ export class CustomModifiersManager {
         this.context.patch(Character, "addHitpoints").after(function () {
             // If death marks are applied and hitpoints are under certain threshold, execute character
             if (this.modifiers.deathMark > 0 && this.hitpoints <= ModifierConstants.DEATH_MARK_MAX_FLAT_HP) {
-                const effect = this.stackingEffect.get(this.game.deathMarkEffect);
+                const effect = this.stackingEffect.get(game.customModifiersInMelvor.stackingEffects.deathMarkEffect);
                 if (effect === undefined) {
-                    console.log("Death mark effect not found on game object");
+                    CmimUtils.log("[Character.addHitpoints] Death mark effect not found on game object");
                 }
                 else {
                     const maxHpPercentage = (this.hitpoints / this.stats.maxHitpoints) * 100;
@@ -1179,17 +1461,17 @@ export class CustomModifiersManager {
         // @ts-ignore You can actually patch base classes no problem
         this.context.patch(Character, "clampDamageValue").after(function (returnedDamage) {
             // do some custom stuff inbetween
-            if (this.target.barrier <= 0 && this.game.deathMarkEffect !== undefined) {
+            if (this.target.barrier <= 0 && game.customModifiersInMelvor.stackingEffects.deathMarkEffect !== undefined) {
                 if (this.modifiers.increasedDeathMarkOnHit > 0) {
                     if (rollPercentage(100 - (this.target.modifiers.increasedDeathMarkImmunity - this.target.modifiers.decreasedDeathMarkImmunity))) {
-                        this.applyStackingEffect(this.game.deathMarkEffect, this.target, this.modifiers.increasedDeathMarkOnHit);
+                        this.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffectt, this.target, this.modifiers.increasedDeathMarkOnHit);
                         this.target.rendersRequired.effects = true;
                     }
                 }
 
                 if (rollPercentage(this.modifiers.increasedChanceToApplyStackOfDeathMark - this.modifiers.decreasedChanceToApplyStackOfDeathMark)) {
                     if (rollPercentage(100 - (this.target.modifiers.increasedDeathMarkImmunity - this.target.modifiers.decreasedDeathMarkImmunity))) {
-                        this.applyStackingEffect(this.game.deathMarkEffect, this.target, 1);
+                        this.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffect, this.target, 1);
                         this.target.rendersRequired.effects = true;
                     }
                 }

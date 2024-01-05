@@ -192,7 +192,7 @@ export class CombatAreasIndicatorsManager {
                 }
             }
         } catch (e) {
-            console.log(`Couldn't generate boss and/or monster type badges: Reason: ${e}'`);
+            CmimUtils.log(`Couldn't generate boss and/or monster type badges: Reason: ${e}`);
         }
     }
 
