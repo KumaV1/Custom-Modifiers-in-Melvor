@@ -107,6 +107,10 @@
     MODIFIER_DATA_applySleepOnSpawn: "Beim Erscheinen oder der Wiederbelebung, schläfert das Ziel für ${value} Runde ein",
     MODIFIER_DATA_applySleepOnSpawn_Plural: "Beim Erscheinen oder der Wiederbelebung, schläfert das Ziel für ${value} Runden ein",
 
+    // #### On hit
+    MODIFIER_DATA_increasedChanceToApplyBleed: "+${value}% Chance, dass bei einem Treffer Blutungen verursacht werden, welche über 10s hinweg 100% deines Maximalschaden an Schaden zufügen",
+    MODIFIER_DATA_decreasedChanceToApplyBleed: "-${value}% Chance, dass bei einem Treffer Blutungen verursacht werden, welche über 10s hinweg 100% deines Maximalschaden an Schaden zufügen",
+
     // #### Death mark (not to be confused with mark of death)
     Death_Mark_Notification_Text: "Du bist durch Todesurteil hingerichtet worden",
     COMBAT_MISC_Death_Mark_Effect: "Todesurteil",

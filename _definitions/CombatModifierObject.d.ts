@@ -28,6 +28,9 @@ declare global {
         decreasedChanceToApplySleepOnSpawn: Standard,
         applySleepOnSpawn: Standard,
 
+        increasedChanceToApplyBleed: Standard,
+        decreasedChanceToApplyBleed: Standard,
+
         /** Flag (by the custom effect) that effect has been applied, it's NOT an increasing value */
         deathMark: Standard,
         increasedDeathMarkOnHit: Standard,

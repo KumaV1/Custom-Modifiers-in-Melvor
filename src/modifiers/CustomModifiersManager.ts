@@ -20,6 +20,7 @@ export class CustomModifiersManager {
     public registerModifiers() {
         this.registerSkillModifiers();
         this.registerSpawnModifiers();
+        this.registerOnHitModifiers();
         this.registerDeathMarkModifiers();
         this.registerCombatAreaModifiers();
         this.registerSlayerAreaModifiers();
@@ -460,6 +461,30 @@ export class CustomModifiersManager {
             description: '',
             isSkill: false,
             isNegative: false,
+            tags: ['combat']
+        };
+    }
+
+    /**
+     *
+     */
+    private registerOnHitModifiers() {
+        modifierData.increasedChanceToApplyBleed = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToApplyBleed');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToApplyBleed = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToApplyBleed');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
             tags: ['combat']
         };
     }
@@ -1262,6 +1287,9 @@ export class CustomModifiersManager {
             this.decreasedChanceToApplySleepOnSpawn ??= 0;
             this.applySleepOnSpawn ??= 0;
 
+            this.increasedChanceToApplyBleed ??= 0;
+            this.decreasedChanceToApplyBleed ??= 0;
+
             this.deathMark ??= 0;
             this.increasedDeathMarkOnHit ??= 0;
             this.increasedChanceToApplyStackOfDeathMark ??= 0;
@@ -1380,11 +1408,11 @@ export class CustomModifiersManager {
             }
 
             if (rollPercentage(this.modifiers.increasedChanceToApplyBleedOnSpawn - this.modifiers.decreasedChanceToApplyBleedOnSpawn)) {
-                this.applyDOT({ chance: 100, procs: 20, interval: 500, type: 'DOT', subtype: 'Bleed', damage: [{ "roll": false, "character": "Attacker", "maxRoll": "MaxHit", "maxPercent": 100 }] }, this.target, this.game.normalAttack);
+                this.applyDOT({ chance: 100, procs: 20, interval: 500, type: 'DOT', subtype: 'Bleed', damage: [{ "roll": false, "character": "Attacker", "maxRoll": "MaxHit", "maxPercent": 100 }] }, this.target, 0);
             }
 
             if (rollPercentage(this.modifiers.increasedChanceToApplyBurnOnSpawn - this.modifiers.decreasedChanceToApplyBurnOnSpawn)) {
-                this.applyDOT(burnEffect, this.target, this.game.normalAttack);
+                this.applyDOT(burnEffect, this.target, 0);
             }
 
             // Monster types
@@ -1461,34 +1489,40 @@ export class CustomModifiersManager {
         // @ts-ignore You can actually patch base classes no problem
         this.context.patch(Character, "clampDamageValue").after(function (returnedDamage) {
             // do some custom stuff inbetween
-            if (this.target.barrier <= 0 && game.customModifiersInMelvor.stackingEffects.deathMarkEffect !== undefined) {
-                if (this.modifiers.increasedDeathMarkOnHit > 0) {
-                    if (rollPercentage(100 - (this.target.modifiers.increasedDeathMarkImmunity - this.target.modifiers.decreasedDeathMarkImmunity))) {
-                        this.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffectt, this.target, this.modifiers.increasedDeathMarkOnHit);
-                        this.target.rendersRequired.effects = true;
+            if (this.target.barrier <= 0) {
+                if (game.customModifiersInMelvor.stackingEffects.deathMarkEffect !== undefined) {
+                    if (this.modifiers.increasedDeathMarkOnHit > 0) {
+                        if (rollPercentage(100 - (this.target.modifiers.increasedDeathMarkImmunity - this.target.modifiers.decreasedDeathMarkImmunity))) {
+                            this.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffectt, this.target, this.modifiers.increasedDeathMarkOnHit);
+                            this.target.rendersRequired.effects = true;
+                        }
+                    }
+
+                    if (rollPercentage(this.modifiers.increasedChanceToApplyStackOfDeathMark - this.modifiers.decreasedChanceToApplyStackOfDeathMark)) {
+                        if (rollPercentage(100 - (this.target.modifiers.increasedDeathMarkImmunity - this.target.modifiers.decreasedDeathMarkImmunity))) {
+                            this.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffect, this.target, 1);
+                            this.target.rendersRequired.effects = true;
+                        }
+                    }
+
+                    const types = MonsterTypeManager.getActiveTypesAsArray();
+                    for (var i = 0; i < types.length; i++) {
+                        const type = types[i];
+
+                        let turns = this.modifiers[type.modifierPropertyNames.applyTraitTurns];
+                        if (rollPercentage(this.modifiers[type.modifierPropertyNames.increasedChanceToApplyTrait] - this.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTrait])) {
+                            turns++;
+                        }
+
+                        if (turns > 0) {
+                            this.applyStackingEffect(this.game.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect], this.target, turns);
+                            this.target.rendersRequired.effects = true;
+                        }
                     }
                 }
 
-                if (rollPercentage(this.modifiers.increasedChanceToApplyStackOfDeathMark - this.modifiers.decreasedChanceToApplyStackOfDeathMark)) {
-                    if (rollPercentage(100 - (this.target.modifiers.increasedDeathMarkImmunity - this.target.modifiers.decreasedDeathMarkImmunity))) {
-                        this.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffect, this.target, 1);
-                        this.target.rendersRequired.effects = true;
-                    }
-                }
-
-                const types = MonsterTypeManager.getActiveTypesAsArray();
-                for (var i = 0; i < types.length; i++) {
-                    const type = types[i];
-
-                    let turns = this.modifiers[type.modifierPropertyNames.applyTraitTurns];
-                    if (rollPercentage(this.modifiers[type.modifierPropertyNames.increasedChanceToApplyTrait] - this.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTrait])) {
-                        turns++;
-                    }
-
-                    if (turns > 0) {
-                        this.applyStackingEffect(this.game.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect], this.target, turns);
-                        this.target.rendersRequired.effects = true;
-                    }
+                if (rollPercentage(this.modifiers.increasedChanceToApplyBleed - this.modifiers.decreasedChanceToApplyBleed)) {
+                    this.applyDOT({ chance: 100, procs: 20, interval: 500, type: 'DOT', subtype: 'Bleed', damage: [{ "roll": false, "character": "Attacker", "maxRoll": "MaxHit", "maxPercent": 100 }] }, this.target, 0);
                 }
             }
 

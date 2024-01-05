@@ -106,6 +106,10 @@
     MODIFIER_DATA_applySleepOnSpawn: "Apply ${value} turn of Sleep to the Target on spawn or revive",
     MODIFIER_DATA_applySleepOnSpawn_Plural: "Apply ${value} turns of Sleep to the Target on spawn or revive",
 
+    // #### On hit
+    MODIFIER_DATA_increasedChanceToApplyBleed: "+${value}% chance to inflict Bleed, that deals 100% of your maximum hit as damage over 10s, when hitting with an attack",
+    MODIFIER_DATA_decreasedChanceToApplyBleed: "-${value}% chance to inflict Bleed, that deals 100% of your maximum hit as damage over 10s, when hitting with an attack",
+
     // #### Death mark (not to be confused with mark of death)
     Death_Mark_Notification_Text: "You have been executed by death mark",
     COMBAT_MISC_Death_Mark_Effect: "Death mark",
