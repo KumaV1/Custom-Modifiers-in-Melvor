@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.4.0
+* Added more on-spawn modifiers
+* Added setting to disable on-spawn modifiers
+* Added modifiers to apply bleed on hit (dealing 100% of max hit over 10s)
+* Fixed an issue with death mark effect (presumably introduced with v2.3.0)
+
 ## v2.3.1
 * Re-designed monster-type-list-based settings to be way more compact (courtesy of slahsh's "Skill Boosts" mod)
 * Fixed issue where, under certain circumstances, mods could accidentally overwrite monster type allocations of other mods
