@@ -106,6 +106,9 @@ export class TinyIconsCompatibility {
         decreasedChanceToApplySleepOnSpawn: ['sleep'],
         applySleepOnSpawn: ['sleep'],
 
+        increasedChanceToApplyBleed: ['bleed'],
+        decreasedChanceToApplyBleed: ['bleed'],
+
         deathMark: ['cmim_death_mark'],
         increasedDeathMarkOnHit: ['cmim_death_mark'],
         increasedChanceToApplyStackOfDeathMark: ['cmim_death_mark'],
