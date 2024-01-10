@@ -1,9 +1,16 @@
 ﻿export const de = {
+    Combat_Modifier_UI_Impact_Indicator_Headline: 'Cmim-Mod-Warnung',
+    Combat_Modifier_UI_Impact_Indicator_Text: "Sie profitiere derzeit von einem Modifikator, welcher die Chance verleiht den erhaltenen Schaden auf 0 zu reduzieren. Aufgrunddessen, wo/wie dieser implementiert werden musste, kann es passieren, dass bestimmte Schadensinformationen (z.B. Maximalschaden) fälschlicherweise 0 anzeigen - selbst, wenn das Ziel so stark ist, dass dies nicht realistisch möglich sein sollte.",
+    Combat_Modifier_UI_Impact_Indicator_Hint: 'Diese Warnung kann in den Mod-Einstellungen deaktiviert werden',
     Combat_Area_Boss_Indicator: 'Boss',
 
     // ### Settings
     // #### Combat Areas Indicators section
     Settings_Section_Combat_Areas_Indicator: 'Indikatoren in Kampfgebieten',
+
+    // ##### Enable modifier ui impact indicator
+    Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: 'Indikator, für den Fall, dass bestimmte Modifikatoren einen fälschlichen Einfluss auf die Kampf-Ansicht ausüben kann',
+    Settings_Setting_Hint_Enable_Modifier_UI_Impact_Indicator: 'Betrifft derzeit nur einen bestimmten Modifikator. Der angezeigte Indikator bietet genauere Informationen',
 
     // ##### Enable active monster type indicators
     Settings_Setting_Label_Enable_Boss_Indicators: 'Indikatoren für Bosse aktivieren',

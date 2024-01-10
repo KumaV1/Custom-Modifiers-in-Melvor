@@ -1,5 +1,5 @@
 import { Constants } from "../Constants";
-import { CombatAreasIndicatorsManager } from "../CombatAreasIndicatorsManager";
+import { CombatAreasUIManager } from "../CombatAreasUIManager";
 import { ModContextMemoizer } from "../ModContextMemoizer";
 import { MonsterTypeListConfigFunctions } from "./MonsterTypeListConfigFunctions";
 import { MonsterTypeManager } from "../monsterTyping/MonsterTypeManager";
@@ -14,12 +14,28 @@ export class SettingsManager {
         ctx.settings.section(TranslationManager.getLangString("Settings_Section_Combat_Areas_Indicator", true)).add([
             {
                 type: 'switch',
+                name: 'enable-modifier-ui-impact-indicator',
+                label: TranslationManager.getLangString("Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator", true),
+                hint: TranslationManager.getLangString("Settings_Setting_Hint_Enable_Modifier_UI_Impact_Indicator", true),
+                default: true,
+                onChange(value: boolean, previousValue: boolean): void {
+                    SettingsManager.setButtonToReload();
+
+                    const hint = document.querySelector(`label[for="${Constants.MOD_NAMESPACE}:enable-modifier-ui-impact-indicator"] > small`);
+                    if (hint) {
+                        hint.textContent = TranslationManager.getLangString("Settings_Hint_Save_Reload_Required", true);
+                        hint.classList.add("text-warning");
+                    }
+                }
+            } as Modding.Settings.SwitchConfig,
+            {
+                type: 'switch',
                 name: 'enable-boss-indicators',
                 label: TranslationManager.getLangString("Settings_Setting_Label_Enable_Boss_Indicators", true),
                 hint: TranslationManager.getLangString("Settings_Setting_Hint_Enable_Boss_Indicators", true),
                 default: true,
                 onChange(value: boolean, previousValue: boolean): void {
-                    CombatAreasIndicatorsManager.rebuildCombatAreaMonsterTypeIndicators(
+                    CombatAreasUIManager.rebuildCombatAreaMonsterTypeIndicators(
                         value,
                         SettingsManager.getEnableActiveMonsterTypeIndicators,
                         SettingsManager.getEnableInactiveMonsterTypeIndicators
@@ -33,7 +49,7 @@ export class SettingsManager {
                 hint: TranslationManager.getLangString("Settings_Setting_Hint_Enable_Active_Monster_Type_Indicators", true),
                 default: true,
                 onChange(value: boolean, previousValue: boolean): void {
-                    CombatAreasIndicatorsManager.rebuildCombatAreaMonsterTypeIndicators(
+                    CombatAreasUIManager.rebuildCombatAreaMonsterTypeIndicators(
                         SettingsManager.getEnableBossIndicators,
                         value,
                         SettingsManager.getEnableInactiveMonsterTypeIndicators
@@ -47,7 +63,7 @@ export class SettingsManager {
                 hint: TranslationManager.getLangString("Settings_Setting_Hint_Enable_Inactive_Monster_Type_Indicators", true),
                 default: true,
                 onChange(value: boolean, previousValue: boolean): void {
-                    CombatAreasIndicatorsManager.rebuildCombatAreaMonsterTypeIndicators(
+                    CombatAreasUIManager.rebuildCombatAreaMonsterTypeIndicators(
                         SettingsManager.getEnableBossIndicators,
                         SettingsManager.getEnableActiveMonsterTypeIndicators,
                         value
@@ -139,6 +155,15 @@ export class SettingsManager {
                 .section(TranslationManager.getLangString("Settings_Section_Disabling", true))
                 .get('disable-all-on-spawn-modifiers') as boolean ?? false;
         });
+    }
+
+    /**
+     * Get corresponding setting field's value
+     */
+    public static get getEnableModifierUIImpactIndicator(): boolean {
+        return ModContextMemoizer.ctx.settings
+            .section(TranslationManager.getLangString("Settings_Section_Combat_Areas_Indicator", true))
+            .get('enable-modifier-ui-impact-indicator') as boolean;
     }
 
     /**

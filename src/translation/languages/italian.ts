@@ -1,9 +1,16 @@
 export const it = {
+    Combat_Modifier_UI_Impact_Indicator_Headline: 'Cmim-Mod warning',
+    Combat_Modifier_UI_Impact_Indicator_Text: "You are currently benefitting from a modifier that provides a chance to reduce the damage taken to 0. Due to how/where that modifier had to be implemented, it's possible that damage displays (e.g. max hit) may wrongly render as 0, even for enemies that are too strong for that to be realistically possible.",
+    Combat_Modifier_UI_Impact_Indicator_Hint: 'This warning can be toggled off in the mod settings',
     Combat_Area_Boss_Indicator: 'Boss',
 
     // ### Settings
     // #### Combat Areas Indicators section
     Settings_Section_Combat_Areas_Indicator: 'Combat Areas Indicators',
+
+    // ##### Enable modifier ui impact indicator
+    Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: 'Enable indicator, for when certain modifiers may cause a faulty display in the UI',
+    Settings_Setting_Hint_Enable_Modifier_UI_Impact_Indicator: 'Currently affects only one modifier. The displayed indicator provides more info',
 
     // ##### Enable active monster type indicators
     Settings_Setting_Label_Enable_Boss_Indicators: 'Enable boss indicators',
