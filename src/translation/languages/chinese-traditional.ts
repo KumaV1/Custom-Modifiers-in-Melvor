@@ -1,6 +1,6 @@
 export const zhTW = {
     Combat_Modifier_UI_Impact_Indicator_Headline: 'Cmim-Mod warning',
-    Combat_Modifier_UI_Impact_Indicator_Text: "You are currently benefitting from a modifier that provides a chance to reduce the damage taken to 0. Due to how/where that modifier had to be implemented, it's possible that damage displays (e.g. max hit) may wrongly render as 0, even for enemies that are too strong for that to be realistically possible.",
+    Combat_Modifier_UI_Impact_Indicator_Text: "At least one combatant is currently benefitting from a modifier that provides a chance to reduce the damage taken to 0. Due to how/where that modifier had to be implemented, it's possible that damage displays (e.g. max hit) may wrongly render as 0, even for enemies that are too strong for that to be realistically possible.",
     Combat_Modifier_UI_Impact_Indicator_Hint: 'This warning can be toggled off in the mod settings',
     Combat_Area_Boss_Indicator: 'Boss',
 

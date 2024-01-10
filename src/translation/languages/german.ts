@@ -1,6 +1,6 @@
 ﻿export const de = {
     Combat_Modifier_UI_Impact_Indicator_Headline: 'Cmim-Mod-Warnung',
-    Combat_Modifier_UI_Impact_Indicator_Text: "Sie profitiere derzeit von einem Modifikator, welcher die Chance verleiht den erhaltenen Schaden auf 0 zu reduzieren. Aufgrunddessen, wo/wie dieser implementiert werden musste, kann es passieren, dass bestimmte Schadensinformationen (z.B. Maximalschaden) fälschlicherweise 0 anzeigen - selbst, wenn das Ziel so stark ist, dass dies nicht realistisch möglich sein sollte.",
+    Combat_Modifier_UI_Impact_Indicator_Text: "Sie oder das Ziel profitieren derzeit von einem Modifikator, welcher die Chance verleiht den erhaltenen Schaden auf 0 zu reduzieren. Aufgrunddessen, wo/wie dieser Modifikator implementiert werden musste, kann es passieren, dass bestimmte Schadensinformationen (z.B. Maximalschaden) fälschlicherweise 0 anzeigen - selbst, wenn das Ziel so stark ist, dass dies nicht realistisch möglich sein sollte.",
     Combat_Modifier_UI_Impact_Indicator_Hint: 'Diese Warnung kann in den Mod-Einstellungen deaktiviert werden',
     Combat_Area_Boss_Indicator: 'Boss',
 

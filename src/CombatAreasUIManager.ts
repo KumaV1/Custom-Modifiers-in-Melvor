@@ -16,7 +16,7 @@ export class CombatAreasUIManager {
      */
     public static initModifierUIImpactIndicator(ctx: Modding.ModContext): void {
         ctx.onInterfaceReady(function () {
-            if (SettingsManager.getEnableModifierUIImpactIndicator) { // Setting
+            if (SettingsManager.getEnableModifierUIImpactIndicator) {
                 // Build and add indicator html
                 const containerEl = CombatAreasUIManager.createModifierUIImpactIndicator();
                 CombatAreasUIManager._modifierUIImpactIndicatorElement = containerEl;
@@ -245,11 +245,14 @@ export class CombatAreasUIManager {
      * and toggle its visibility if necessary
      */
     private static evaluateModifierUIImpactIndicatorDisplay(): void {
-        const requireDisplay = game.modifiers.increasedChanceToReduceAttackDamageToZero - game.modifiers.decreasedChanceToReduceAttackDamageToZero > 0;
-        if (requireDisplay) {
-            showElement(CombatAreasUIManager._modifierUIImpactIndicatorElement);
-        } else {
-            hideElement(CombatAreasUIManager._modifierUIImpactIndicatorElement);
+        if (game.combat.fightInProgress) {
+            const requireDisplay = (game.combat.player.modifiers.increasedChanceToReduceAttackDamageToZero - game.combat.player.modifiers.decreasedChanceToReduceAttackDamageToZero) > 0
+                || (game.combat.enemy.modifiers.increasedChanceToReduceAttackDamageToZero - game.combat.enemy.modifiers.decreasedChanceToReduceAttackDamageToZero) > 0;
+            if (requireDisplay) {
+                showElement(CombatAreasUIManager._modifierUIImpactIndicatorElement);
+            } else {
+                hideElement(CombatAreasUIManager._modifierUIImpactIndicatorElement);
+            }
         }
     }
 
