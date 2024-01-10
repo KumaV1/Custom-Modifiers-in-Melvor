@@ -1,5 +1,14 @@
 declare global {
     interface CombatModifierObject<Standard> {
+        increasedChanceToReduceAttackDamageToZero: Standard,
+        decreasedChanceToReduceAttackDamageToZero: Standard,
+        increasedDamageFlatWhileTargetHasMaxHP: Standard,
+        decreasedDamageFlatWhileTargetHasMaxHP: Standard,
+        increasedDamagePercentWhileTargetHasMaxHP: Standard,
+        decreasedDamagePercentWhileTargetHasMaxHP: Standard,
+        increasedDamageFlatIgnoringDamageReduction: Standard,
+        decreasedDamageFlatIgnoringDamageReduction: Standard,
+
         increasedChanceToApplySlowOnSpawn: Standard,
         decreasedChanceToApplySlowOnSpawn: Standard,
         increasedChanceToApplyStunOnSpawn: Standard,

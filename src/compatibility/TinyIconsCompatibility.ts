@@ -3,6 +3,15 @@ import { MonsterTypeDefinition } from '../monsterTyping/MonsterTypeDefinition';
 export class TinyIconsCompatibility {
     /** Non-dynamic modifiers */
     private tinyIconCustomModifierTags = {
+        increasedChanceToReduceAttackDamageToZero: ['ti_combat_up'],
+        decreasedChanceToReduceAttackDamageToZero: ['ti_combat_dn'],
+        increasedDamageFlatWhileTargetHasMaxHP: ['ti_combat_up', 'hitpoints'],
+        decreasedDamageFlatWhileTargetHasMaxHP: ['ti_combat_dn', 'hitpoints'],
+        increasedDamagePercentWhileTargetHasMaxHP: ['ti_combat_up', 'hitpoints'],
+        decreasedDamagePercentWhileTargetHasMaxHP: ['ti_combat_dn', 'hitpoints'],
+        increasedDamageFlatIgnoringDamageReduction: ['ti_combat_up'],
+        decreasedDamageFlatIgnoringDamageReduction: ['ti_combat_dn'],
+
         increasedMaxHitPercentToCombatAreaMonsters: ['combat', 'ti_combat_up'],
         decreasedMaxHitPercentToCombatAreaMonsters: ['combat', 'ti_combat_dn'],
         increasedMaxHitFlatToCombatAreaMonsters: ['combat', 'ti_combat_up'],

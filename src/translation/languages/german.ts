@@ -73,6 +73,16 @@
     Monster_Type_Overview_Inactive_Types_Affected_By_Mod_Settings: "Kann aufgrund von einer Auswahl in den Mod-Einstellungen nicht aktiv werden",
 
     // ### Modifiers
+    // #### Directly affecting damage dealt
+    MODIFIER_DATA_increasedChanceToReduceAttackDamageToZero: '+${value}% Chance (MAX: 90%), dass der durch einen Angriff erlittene Schaden auf 0 reduziert wird (der Angriff wird immernoch als Treffer interpretiert und Kalkulationen wie Über-Zeit-Effekte sind unbetroffen von dieser Veränderung)',
+    MODIFIER_DATA_decreasedChanceToReduceAttackDamageToZero: '-${value}% Chance (MAX: 90%), dass der durch einen Angriff erlittene Schaden auf 0 reduziert wird (der Angriff wird immernoch als Treffer interpretiert und Kalkulationen wie Über-Zeit-Effekte sind unbetroffen von dieser Veränderung)',
+    MODIFIER_DATA_increasedDamageFlatWhileTargetHasMaxHP: '+${value} Schaden, wenn das Ziel volle Lebenspunkte hat',
+    MODIFIER_DATA_decreasedDamageFlatWhileTargetHasMaxHP: '-${value} Schaden, wenn das Ziel volle Lebenspunkte hat',
+    MODIFIER_DATA_increasedDamagePercentWhileTargetHasMaxHP: '+${value}% Schaden, wenn das Ziel volle Lebenspunkte hat',
+    MODIFIER_DATA_decreasedDamagePercentWhileTargetHasMaxHP: '-${value}% Schaden, wenn das Ziel volle Lebenspunkte hat',
+    MODIFIER_DATA_increasedDamageFlatIgnoringDamageReduction: "+${value} Schaden, welcher die Schadensreduzierung des Ziels ignoriert",
+    MODIFIER_DATA_decreasedDamageFlatIgnoringDamageReduction: "-${value} Schaden, welcher die Schadensreduzierung des Ziels ignoriert",
+
     // #### Spawn
     MODIFIER_DATA_increasedChanceToApplySlowOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass +25% Angriffsintervall für drei Runden auf das Ziel angewendet wird",
     MODIFIER_DATA_decreasedChanceToApplySlowOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass +25% Angriffsintervall für drei Runden auf das Ziel angewendet wird",
@@ -191,7 +201,7 @@
     MODIFIER_DATA_dragonTraitApplied: "Markiert den Betroffenen als Drachen",
     MODIFIER_DATA_undeadTraitApplied: "Markiert den Betroffenen als Untot",
 
-    // #### Type
+    // #### Monster Type
     // ##### Generic; these will be used to dynamically build the ones further down below, as those also have to be dynamically built
     MONSTER_TYPE_SINGULAR_Animal: "Tier",
     MONSTER_TYPE_PLURAL_Animal: "Tiere",

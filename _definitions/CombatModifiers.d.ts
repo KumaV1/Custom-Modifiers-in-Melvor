@@ -1,5 +1,14 @@
 declare global {
     interface CombatModifiers {
+        increasedChanceToReduceAttackDamageToZero: number,
+        decreasedChanceToReduceAttackDamageToZero: number,
+        increasedDamageFlatWhileTargetHasMaxHP: number,
+        decreasedDamageFlatWhileTargetHasMaxHP: number,
+        increasedDamagePercentWhileTargetHasMaxHP: number,
+        decreasedDamagePercentWhileTargetHasMaxHP: number,
+        increasedDamageFlatIgnoringDamageReduction: number,
+        decreasedDamageFlatIgnoringDamageReduction: number,
+
         increasedChanceToApplySlowOnSpawn: number,
         decreasedChanceToApplySlowOnSpawn: number,
         increasedChanceToApplyStunOnSpawn: number,

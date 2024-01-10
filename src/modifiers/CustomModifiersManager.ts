@@ -28,6 +28,7 @@ export class CustomModifiersManager {
         this.registerSlayerTaskModifiers();
         this.registerSpellModifiers();
         this.registerBossModifiers();
+        this.registerGeneralModifiers();
     }
 
     /**
@@ -1191,6 +1192,82 @@ export class CustomModifiersManager {
         };
     }
 
+    /** Modifiers that don't fit any of the previous groups */
+    private registerGeneralModifiers() {
+        modifierData.increasedChanceToReduceAttackDamageToZero = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToReduceAttackDamageToZero');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToReduceAttackDamageToZero = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToReduceAttackDamageToZero');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedDamageFlatWhileTargetHasMaxHP = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageFlatWhileTargetHasMaxHP');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageFlatWhileTargetHasMaxHP = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageFlatWhileTargetHasMaxHP');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedDamagePercentWhileTargetHasMaxHP = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamagePercentWhileTargetHasMaxHP');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamagePercentWhileTargetHasMaxHP = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamagePercentWhileTargetHasMaxHP');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedDamageFlatIgnoringDamageReduction = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageFlatIgnoringDamageReduction');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageFlatIgnoringDamageReduction = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageFlatIgnoringDamageReduction');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+    }
+
     // #endregion
 
     // #region Method patching
@@ -1502,23 +1579,23 @@ export class CustomModifiersManager {
                         if (rollPercentage(100 - (this.target.modifiers.increasedDeathMarkImmunity - this.target.modifiers.decreasedDeathMarkImmunity))) {
                             this.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffect, this.target, 1);
                             this.target.rendersRequired.effects = true;
-                        }
+                    }
+                }
+
+                const types = MonsterTypeManager.getActiveTypesAsArray();
+                for (var i = 0; i < types.length; i++) {
+                    const type = types[i];
+
+                    let turns = this.modifiers[type.modifierPropertyNames.applyTraitTurns];
+                    if (rollPercentage(this.modifiers[type.modifierPropertyNames.increasedChanceToApplyTrait] - this.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTrait])) {
+                        turns++;
                     }
 
-                    const types = MonsterTypeManager.getActiveTypesAsArray();
-                    for (var i = 0; i < types.length; i++) {
-                        const type = types[i];
-
-                        let turns = this.modifiers[type.modifierPropertyNames.applyTraitTurns];
-                        if (rollPercentage(this.modifiers[type.modifierPropertyNames.increasedChanceToApplyTrait] - this.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTrait])) {
-                            turns++;
-                        }
-
-                        if (turns > 0) {
-                            this.applyStackingEffect(this.game.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect], this.target, turns);
-                            this.target.rendersRequired.effects = true;
-                        }
+                    if (turns > 0) {
+                        this.applyStackingEffect(this.game.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect], this.target, turns);
+                        this.target.rendersRequired.effects = true;
                     }
+                }
                 }
 
                 if (rollPercentage(this.modifiers.increasedChanceToApplyBleed - this.modifiers.decreasedChanceToApplyBleed)) {
