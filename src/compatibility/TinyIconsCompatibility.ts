@@ -11,6 +11,10 @@ export class TinyIconsCompatibility {
         decreasedDamagePercentWhileTargetHasMaxHP: ['ti_combat_dn', 'hitpoints'],
         increasedDamageFlatIgnoringDamageReduction: ['ti_combat_up'],
         decreasedDamageFlatIgnoringDamageReduction: ['ti_combat_dn'],
+        increasedDamagePreventionThreshold: ['ti_combat_up'],
+        decreasedDamagePreventionThreshold: ['ti_combat_dn'],
+        increasedBarrierDamagePreventionThreshold: ['barrier', 'ti_combat_up'],
+        decreasedBarrierDamagePreventionThreshold: ['barrier', 'ti_combat_dn'],
 
         increasedMaxHitPercentToCombatAreaMonsters: ['combat', 'ti_combat_up'],
         decreasedMaxHitPercentToCombatAreaMonsters: ['combat', 'ti_combat_dn'],

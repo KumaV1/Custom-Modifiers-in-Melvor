@@ -1271,6 +1271,46 @@ export class CustomModifiersManager {
             isNegative: true,
             tags: ['combat']
         };
+        modifierData.increasedDamagePreventionThreshold = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamagePreventionThreshold');
+            },
+            modifyValue: multiplyByNumberMultiplier,
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamagePreventionThreshold = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamagePreventionThreshold');
+            },
+            modifyValue: multiplyByNumberMultiplier,
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedBarrierDamagePreventionThreshold = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedBarrierDamagePreventionThreshold');
+            },
+            modifyValue: multiplyByNumberMultiplier,
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedBarrierDamagePreventionThreshold = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedBarrierDamagePreventionThreshold');
+            },
+            modifyValue: multiplyByNumberMultiplier,
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
     }
 
     // #endregion
@@ -1349,6 +1389,10 @@ export class CustomModifiersManager {
             this.decreasedDamagePercentWhileTargetHasMaxHP ??= 0;
             this.increasedDamageFlatIgnoringDamageReduction ??= 0;
             this.decreasedDamageFlatIgnoringDamageReduction ??= 0;
+            this.increasedDamagePreventionThreshold ??= 0;
+            this.decreasedDamagePreventionThreshold ??= 0;
+            this.increasedBarrierDamagePreventionThreshold ??= 0;
+            this.decreasedBarrierDamagePreventionThreshold ??= 0;
 
             this.increasedChanceToApplySlowOnSpawn ??= 0;
             this.decreasedChanceToApplySlowOnSpawn ??= 0;

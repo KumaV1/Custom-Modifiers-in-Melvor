@@ -89,6 +89,10 @@
     MODIFIER_DATA_decreasedDamagePercentWhileTargetHasMaxHP: '-${value}% Schaden, wenn das Ziel volle Lebenspunkte hat',
     MODIFIER_DATA_increasedDamageFlatIgnoringDamageReduction: "+${value} Schaden, welcher die Schadensreduzierung des Ziels ignoriert",
     MODIFIER_DATA_decreasedDamageFlatIgnoringDamageReduction: "-${value} Schaden, welcher die Schadensreduzierung des Ziels ignoriert",
+    MODIFIER_DATA_increasedDamagePreventionThreshold: '+${value} Schadensverhütungsschwelle. Jedwede Schadenszuführung unter der Schadensverhütungsschwelle wird auf 0 reduziert',
+    MODIFIER_DATA_decreasedDamagePreventionThreshold: '-${value} Schadensverhütungsschwelle. Jedwede Schadenszuführung unter der Schadensverhütungsschwelle wird auf 0 reduziert',
+    MODIFIER_DATA_increasedBarrierDamagePreventionThreshold: '+${value} Barriere-Schadensverhütungsschwelle. Jedwede Schadenszuführung gegen eine Barriere unter der Schadensverhütungsschwelle wird auf 0 reduziert',
+    MODIFIER_DATA_decreasedBarrierDamagePreventionThreshold: '-${value} Barriere-Schadensverhütungsschwelle. Jedwede Schadenszuführung gegen eine Barriere unter der Schadensverhütungsschwelle wird auf 0 reduziert',
 
     // #### Spawn
     MODIFIER_DATA_increasedChanceToApplySlowOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass +25% Angriffsintervall für drei Runden auf das Ziel angewendet wird",

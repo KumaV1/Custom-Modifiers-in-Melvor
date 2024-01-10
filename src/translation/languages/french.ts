@@ -88,6 +88,10 @@ export const fr = {
     MODIFIER_DATA_decreasedDamagePercentWhileTargetHasMaxHP: '-${value}% damage while target has full HP',
     MODIFIER_DATA_increasedDamageFlatIgnoringDamageReduction: "+${value} damage, which is unaffected by the enemies' damage reduction",
     MODIFIER_DATA_decreasedDamageFlatIgnoringDamageReduction: "-${value} damage, which is unaffected by the enemies' damage reduction",
+    MODIFIER_DATA_increasedDamagePreventionThreshold: '+${value} damage prevention threshold (any damage splat below the threshold is reduced to 0)',
+    MODIFIER_DATA_decreasedDamagePreventionThreshold: '-${value} damage prevention threshold (any damage splat below the threshold is reduced to 0)',
+    MODIFIER_DATA_increasedBarrierDamagePreventionThreshold: '+${value} barrier damage prevention threshold (any damage splat against a barrier below the threshold is reduced to 0)',
+    MODIFIER_DATA_decreasedBarrierDamagePreventionThreshold: '-${value} barrier damage prevention threshold (any damage splat against a barrier below the threshold is reduced to 0)',
 
     // #### Spawn
     MODIFIER_DATA_increasedChanceToApplySlowOnSpawn: "+${value}% chance to apply 25% increased attack interval for three turns to the Target on spawn or revive",
