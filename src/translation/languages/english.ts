@@ -1,9 +1,16 @@
 ﻿export const en = {
+    Combat_Modifier_UI_Impact_Indicator_Headline: 'Cmim-Mod warning',
+    Combat_Modifier_UI_Impact_Indicator_Text: "At least one combatant is currently benefitting from a modifier that provides a chance to reduce the damage taken to 0. Due to how/where that modifier had to be implemented, it's possible that damage displays (e.g. max hit) may wrongly render as 0, even for enemies that are too strong for that to be realistically possible.",
+    Combat_Modifier_UI_Impact_Indicator_Hint: 'This warning can be toggled off in the mod settings',
     Combat_Area_Boss_Indicator: 'Boss',
 
     // ### Settings
     // #### Combat Areas Indicators section
     Settings_Section_Combat_Areas_Indicator: 'Combat Areas Indicators',
+
+    // ##### Enable modifier ui impact indicator
+    Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: 'Enable indicator, for when certain modifiers may cause a faulty display in the UI',
+    Settings_Setting_Hint_Enable_Modifier_UI_Impact_Indicator: 'Currently affects only one modifier. The displayed indicator provides more info',
 
     // ##### Enable active monster type indicators
     Settings_Setting_Label_Enable_Boss_Indicators: 'Enable boss indicators',
@@ -72,6 +79,16 @@
     Monster_Type_Overview_Inactive_Types_Affected_By_Mod_Settings: "Can't become active due to selection in mod settings",
 
     // ### Modifiers
+    // #### Directly affecting damage dealt
+    MODIFIER_DATA_increasedChanceToReduceAttackDamageToZero: '+${value}% chance (MAX: 90%) to reduce damage taken from an attack to 0 (still treated as being hit and does not affect calculation of on-hit-effects like damage-over-time)',
+    MODIFIER_DATA_decreasedChanceToReduceAttackDamageToZero: '-${value}% chance (MAX: 90%) to reduce damage taken from an attack to 0 (still treated as being hit and does not affect calculation of on-hit-effects like damage-over-time)',
+    MODIFIER_DATA_increasedDamageFlatWhileTargetHasMaxHP: '+${value} damage while target has full HP',
+    MODIFIER_DATA_decreasedDamageFlatWhileTargetHasMaxHP: '-${value} damage while target has full HP',
+    MODIFIER_DATA_increasedDamagePercentWhileTargetHasMaxHP: '+${value}% damage while target has full HP',
+    MODIFIER_DATA_decreasedDamagePercentWhileTargetHasMaxHP: '-${value}% damage while target has full HP',
+    MODIFIER_DATA_increasedDamageFlatIgnoringDamageReduction: "+${value} damage, which is unaffected by the enemies' damage reduction",
+    MODIFIER_DATA_decreasedDamageFlatIgnoringDamageReduction: "-${value} damage, which is unaffected by the enemies' damage reduction",
+
     // #### Spawn
     MODIFIER_DATA_increasedChanceToApplySlowOnSpawn: "+${value}% chance to apply 25% increased attack interval for three turns to the Target on spawn or revive",
     MODIFIER_DATA_decreasedChanceToApplySlowOnSpawn: "-${value}% chance to apply 25% increased attack interval for three turns to the Target on spawn or revive",
@@ -185,7 +202,7 @@
     MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerTasks: '-${value}% Accuracy Rating against Slayer Tasks',
     MODIFIER_DATA_decreasedDamageReductionAgainstSlayerTasks: '-${value}% Damage Reduction against Slayer Tasks',
 
-    // #### Type
+    // #### Monster Type
     // ##### Generic; these will be used to dynamically build the ones further down below, as those also have to be dynamically built
     MONSTER_TYPE_SINGULAR_Animal: "Animal",
     MONSTER_TYPE_PLURAL_Animal: "Animals",

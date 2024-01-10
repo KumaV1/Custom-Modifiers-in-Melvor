@@ -1,6 +1,6 @@
 // Modules
 // You can import script modules and have full type completion
-import { CombatAreasIndicatorsManager } from './CombatAreasIndicatorsManager';
+import { CombatAreasUIManager } from './CombatAreasUIManager';
 import { Constants } from './modifiers/Constants';
 import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
 import { GameObjectDataWrapperInitializer } from './GameObjectDataWrapperInitializer';
@@ -37,7 +37,7 @@ export async function setup(ctx: Modding.ModContext) {
     initSettings(ctx);
     initModCompatibility(ctx);
     initDynamicMonsterTypes(ctx);
-    initCombatAreasIndicators(ctx);
+    initCombatUIIndicators(ctx);
     initOverviewContainer(ctx);
 
     // Register our GameData
@@ -169,6 +169,11 @@ function initDynamicMonsterTypes(ctx: Modding.ModContext) {
     MonsterTypeManager.registerMonsterTypeData(ctx);
 }
 
-function initCombatAreasIndicators(ctx: Modding.ModContext) {
-    CombatAreasIndicatorsManager.initCombatAreasIndicators(ctx);
+/**
+ * Runs some logic that (may) add additional info in the Combat UI
+ * @param ctx
+ */
+function initCombatUIIndicators(ctx: Modding.ModContext) {
+    CombatAreasUIManager.initModifierUIImpactIndicator(ctx);
+    CombatAreasUIManager.initCombatAreasIndicators(ctx);
 }

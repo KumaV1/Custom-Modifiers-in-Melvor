@@ -6,14 +6,42 @@ import { MonsterTypeManager } from "./monsterTyping/MonsterTypeManager";
 import { SettingsManager } from "./settings/SettingsManager";
 import { TranslationManager } from "./translation/TranslationManager";
 
-export class CombatAreasIndicatorsManager {
+export class CombatAreasUIManager {
+    private static _modifierUIImpactIndicatorElement: HTMLElement;
+
+    /**
+     * Patches the display of a warning message,
+     * to indicate if modifiers are active that may cause wrong information in the UI
+     * @param ctx
+     */
+    public static initModifierUIImpactIndicator(ctx: Modding.ModContext): void {
+        ctx.onInterfaceReady(function () {
+            if (SettingsManager.getEnableModifierUIImpactIndicator) {
+                // Build and add indicator html
+                const containerEl = CombatAreasUIManager.createModifierUIImpactIndicator();
+                CombatAreasUIManager._modifierUIImpactIndicatorElement = containerEl;
+
+                const siblingEl = document.getElementById('combat-select-area-Dungeon');
+                if (siblingEl !== undefined && siblingEl !== null) {
+                    siblingEl.insertAdjacentElement("afterend", containerEl);
+                }
+
+                // Check, whenever a fight starts, whether to display the info or not
+                ctx.patch(CombatManager, 'startFight').after(function (returnValue: void, tickOffset: boolean | undefined) {
+                    CombatAreasUIManager.evaluateModifierUIImpactIndicatorDisplay();
+                });
+            }
+        });
+    }
+
     /**
      * Patch creation of combat areas html, so we can hook into it and add some badges,
      * though only if said badges have been enabled in mod settings
+     * @param ctx
      */
     public static initCombatAreasIndicators(ctx: Modding.ModContext): void {
         ctx.onInterfaceReady(function () {
-            CombatAreasIndicatorsManager.buildCombatAreasIndicators(
+            CombatAreasUIManager.buildCombatAreasIndicators(
                 SettingsManager.getEnableBossIndicators,
                 SettingsManager.getEnableActiveMonsterTypeIndicators,
                 SettingsManager.getEnableInactiveMonsterTypeIndicators
@@ -33,7 +61,7 @@ export class CombatAreasIndicatorsManager {
         CmimUtils.removeElementsByClass(Constants.COMBAT_AREAS_INDICATOR_BADGE_BR_CLASS);
 
         // Rebuild anew, repeating "init" just not in a lifecycle hook
-        CombatAreasIndicatorsManager.buildCombatAreasIndicators(bossEnabled, activeEnabled, inactiveEnabled);
+        CombatAreasUIManager.buildCombatAreasIndicators(bossEnabled, activeEnabled, inactiveEnabled);
     }
 
     /**
@@ -83,7 +111,7 @@ export class CombatAreasIndicatorsManager {
                         let ui: HTMLElement[] = [];
 
                         if (bossEnabled && monster.isBoss) {
-                            ui.push(CombatAreasIndicatorsManager.createCombatAreaBossIndicatorBadge());
+                            ui.push(CombatAreasUIManager.createCombatAreaBossIndicatorBadge());
                         }
 
                         for (var k = 0; k < indicatorDefinitions.length; k++) {
@@ -96,7 +124,7 @@ export class CombatAreasIndicatorsManager {
                         // If we injected at least one badge, we also want to add a linebreak
                         // Added here at the end, as injecting it at the start of an element's innerhtml doesn't work (at least not via insertBefore)
                         if (ui.length > 0) {
-                            ui.push(CombatAreasIndicatorsManager.createCombatAreaIndicatorBadgeBr());
+                            ui.push(CombatAreasUIManager.createCombatAreaIndicatorBadgeBr());
                         }
 
                         // Inject badges into first td-element, placing it above the monster's name
@@ -125,7 +153,7 @@ export class CombatAreasIndicatorsManager {
                         let ui: HTMLElement[] = [];
 
                         if (bossEnabled && monster.isBoss) {
-                            ui.push(CombatAreasIndicatorsManager.createCombatAreaBossIndicatorBadge());
+                            ui.push(CombatAreasUIManager.createCombatAreaBossIndicatorBadge());
                         }
 
                         for (var k = 0; k < indicatorDefinitions.length; k++) {
@@ -137,7 +165,7 @@ export class CombatAreasIndicatorsManager {
 
                         // If we injected at least one badge, we also want to add a linebreak
                         if (ui.length > 0) {
-                            ui.push(CombatAreasIndicatorsManager.createCombatAreaIndicatorBadgeBr());
+                            ui.push(CombatAreasUIManager.createCombatAreaIndicatorBadgeBr());
                         }
 
                         // Inject badges into first td-element, placing it above the monster's name
@@ -183,7 +211,7 @@ export class CombatAreasIndicatorsManager {
                         const dungeonMediaBodyInjectTargetElement = dungeonMediaBodyElement.children[1];
 
                         // Start of with a line break
-                        dungeonMediaBodyInjectTargetElement.appendChild(CombatAreasIndicatorsManager.createCombatAreaIndicatorBadgeBr());
+                        dungeonMediaBodyInjectTargetElement.appendChild(CombatAreasUIManager.createCombatAreaIndicatorBadgeBr());
 
                         for (var k = 0; k < ui.length; k++) {
                             dungeonMediaBodyInjectTargetElement.appendChild(ui[k]);
@@ -197,16 +225,44 @@ export class CombatAreasIndicatorsManager {
     }
 
     /**
+     * Creates container displaying a warn message about possibly falty information in the combat UI
+     * @returns
+     */
+    private static createModifierUIImpactIndicator(): HTMLElement {
+        let containerEl = document.createElement("div");
+        containerEl.classList.add('d-none', 'text-warning', 'row', 'row-deck', 'gutters-tiny', Constants.COMBAT_MODIFIER_UI_IMPACT_INDICATOR_CONTAINER_CLASS);
+
+        const headline = TranslationManager.getLangString("Combat_Modifier_UI_Impact_Indicator_Headline", true);
+        const text = TranslationManager.getLangString("Combat_Modifier_UI_Impact_Indicator_Text", true);
+        const hint = TranslationManager.getLangString("Combat_Modifier_UI_Impact_Indicator_Hint", true);
+        containerEl.innerHTML = `<div class="col-12"><div class="block block-rounded block-link-pop border-top border-warning border-4x bg-combat-dark p-3"><h5 class="mb-1">${headline}</h5><span class="font-w400">${text}</span><br><span class="font-w400 text-info">${hint}</span></div></div>`;
+
+        return containerEl;
+    }
+
+    /**
+     * Re-evaluate whether the indicator container has to be displayed or not,
+     * and toggle its visibility if necessary
+     */
+    private static evaluateModifierUIImpactIndicatorDisplay(): void {
+        if (game.combat.fightInProgress) {
+            const requireDisplay = (game.combat.player.modifiers.increasedChanceToReduceAttackDamageToZero - game.combat.player.modifiers.decreasedChanceToReduceAttackDamageToZero) > 0
+                || (game.combat.enemy.modifiers.increasedChanceToReduceAttackDamageToZero - game.combat.enemy.modifiers.decreasedChanceToReduceAttackDamageToZero) > 0;
+            if (requireDisplay) {
+                showElement(CombatAreasUIManager._modifierUIImpactIndicatorElement);
+            } else {
+                hideElement(CombatAreasUIManager._modifierUIImpactIndicatorElement);
+            }
+        }
+    }
+
+    /**
      * Creates a br with class(es), which are used before/after badges at times and should also be targetable through defined classes
      * @returns
      */
     private static createCombatAreaBossIndicatorBadge(): HTMLElement {
         let badgeEl = document.createElement('span');
-        badgeEl.classList.add('badge');
-        badgeEl.classList.add('bage-pill');
-        badgeEl.classList.add('mr-1');
-        badgeEl.classList.add('badge-success');
-        badgeEl.classList.add(Constants.COMBAT_AREAS_INDICATOR_BADGE_CLASS);
+        badgeEl.classList.add('badge', 'bage-pill', 'mr-1', 'badge-success', Constants.COMBAT_AREAS_INDICATOR_BADGE_CLASS);
 
         badgeEl.innerHTML = TranslationManager.getTranslationOrFallback(
             'Combat_Area_Boss_Indicator',

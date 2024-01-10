@@ -1,9 +1,16 @@
 ﻿export const de = {
+    Combat_Modifier_UI_Impact_Indicator_Headline: 'Cmim-Mod-Warnung',
+    Combat_Modifier_UI_Impact_Indicator_Text: "Sie oder das Ziel profitieren derzeit von einem Modifikator, welcher die Chance verleiht den erhaltenen Schaden auf 0 zu reduzieren. Aufgrunddessen, wo/wie dieser Modifikator implementiert werden musste, kann es passieren, dass bestimmte Schadensinformationen (z.B. Maximalschaden) fälschlicherweise 0 anzeigen - selbst, wenn das Ziel so stark ist, dass dies nicht realistisch möglich sein sollte.",
+    Combat_Modifier_UI_Impact_Indicator_Hint: 'Diese Warnung kann in den Mod-Einstellungen deaktiviert werden',
     Combat_Area_Boss_Indicator: 'Boss',
 
     // ### Settings
     // #### Combat Areas Indicators section
     Settings_Section_Combat_Areas_Indicator: 'Indikatoren in Kampfgebieten',
+
+    // ##### Enable modifier ui impact indicator
+    Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: 'Indikator, für den Fall, dass bestimmte Modifikatoren einen fälschlichen Einfluss auf die Kampf-Ansicht ausüben kann',
+    Settings_Setting_Hint_Enable_Modifier_UI_Impact_Indicator: 'Betrifft derzeit nur einen bestimmten Modifikator. Der angezeigte Indikator bietet genauere Informationen',
 
     // ##### Enable active monster type indicators
     Settings_Setting_Label_Enable_Boss_Indicators: 'Indikatoren für Bosse aktivieren',
@@ -73,6 +80,16 @@
     Monster_Type_Overview_Inactive_Types_Affected_By_Mod_Settings: "Kann aufgrund von einer Auswahl in den Mod-Einstellungen nicht aktiv werden",
 
     // ### Modifiers
+    // #### Directly affecting damage dealt
+    MODIFIER_DATA_increasedChanceToReduceAttackDamageToZero: '+${value}% Chance (MAX: 90%), dass der durch einen Angriff erlittene Schaden auf 0 reduziert wird (der Angriff wird immernoch als Treffer interpretiert und Kalkulationen wie Über-Zeit-Effekte sind unbetroffen von dieser Veränderung)',
+    MODIFIER_DATA_decreasedChanceToReduceAttackDamageToZero: '-${value}% Chance (MAX: 90%), dass der durch einen Angriff erlittene Schaden auf 0 reduziert wird (der Angriff wird immernoch als Treffer interpretiert und Kalkulationen wie Über-Zeit-Effekte sind unbetroffen von dieser Veränderung)',
+    MODIFIER_DATA_increasedDamageFlatWhileTargetHasMaxHP: '+${value} Schaden, wenn das Ziel volle Lebenspunkte hat',
+    MODIFIER_DATA_decreasedDamageFlatWhileTargetHasMaxHP: '-${value} Schaden, wenn das Ziel volle Lebenspunkte hat',
+    MODIFIER_DATA_increasedDamagePercentWhileTargetHasMaxHP: '+${value}% Schaden, wenn das Ziel volle Lebenspunkte hat',
+    MODIFIER_DATA_decreasedDamagePercentWhileTargetHasMaxHP: '-${value}% Schaden, wenn das Ziel volle Lebenspunkte hat',
+    MODIFIER_DATA_increasedDamageFlatIgnoringDamageReduction: "+${value} Schaden, welcher die Schadensreduzierung des Ziels ignoriert",
+    MODIFIER_DATA_decreasedDamageFlatIgnoringDamageReduction: "-${value} Schaden, welcher die Schadensreduzierung des Ziels ignoriert",
+
     // #### Spawn
     MODIFIER_DATA_increasedChanceToApplySlowOnSpawn: "Beim Erscheinen oder der Wiederbelebung, +${value}% Chance, dass +25% Angriffsintervall für drei Runden auf das Ziel angewendet wird",
     MODIFIER_DATA_decreasedChanceToApplySlowOnSpawn: "Beim Erscheinen oder der Wiederbelebung, -${value}% Chance, dass +25% Angriffsintervall für drei Runden auf das Ziel angewendet wird",
@@ -191,7 +208,7 @@
     MODIFIER_DATA_dragonTraitApplied: "Markiert den Betroffenen als Drachen",
     MODIFIER_DATA_undeadTraitApplied: "Markiert den Betroffenen als Untot",
 
-    // #### Type
+    // #### Monster Type
     // ##### Generic; these will be used to dynamically build the ones further down below, as those also have to be dynamically built
     MONSTER_TYPE_SINGULAR_Animal: "Tier",
     MONSTER_TYPE_PLURAL_Animal: "Tiere",

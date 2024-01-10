@@ -330,72 +330,180 @@ export class CustomModifiersCalculator {
 
     // #endregion
 
+    // #region Attack Damage
+
+    // #region Flat attack damage additions
+
+    /**
+     * Calculates change to flat attack damage (that is still affected by things like DR later)
+     * @param attacker
+     * @param target
+     * @returns
+     */
+    public static getPlayerFlatAttackDamageBonusModification(attacker: Player, target: Character): number {
+        return CustomModifiersCalculator.getCharacterFlatAttackDamageBonusModification(attacker, target);
+    }
+
+    /**
+     * Calculates change to flat attack damage (that is still affected by things like DR later)
+     * @param attacker
+     * @param target
+     * @returns
+     */
+    public static getEnemyFlatAttackDamageBonusModification(attacker: Enemy, target: Character): number {
+        return CustomModifiersCalculator.getCharacterFlatAttackDamageBonusModification(attacker, target);
+    }
+
+    /**
+     * Calculates change to flat attack damage (that is still affected by things like DR later; logic shared across both player and enemy)
+     * @param attacker
+     * @param target
+     * @returns
+     */
+    private static getCharacterFlatAttackDamageBonusModification(attacker: Character, target: Character): number {
+        return target.hitpointsPercent === 100
+            ? numberMultiplier * (attacker.modifiers.increasedDamageFlatWhileTargetHasMaxHP - attacker.modifiers.decreasedDamageFlatWhileTargetHasMaxHP)
+            : 0;
+    }
+
+    // #endregion
+
+    // #region Modification of calculated attack damage
+
+    /**
+     * Calculates modification to attack damage (original method does changed based on things like DR and dragonfire at this point)
+     * @param attacker
+     * @param target
+     * @param attack
+     * @param damage - the damage originally provided, before the patched method ran
+     * @param currentDamage - the damage as calculated after the patched method ran
+     * @returns
+     */
+    public static getPlayerDamageModification(attacker: Player, target: Character, attack: SpecialAttack, damage: number, currentDamage: number): number {
+        return CustomModifiersCalculator.getCharacterDamageModification(attacker, target, attack, damage, currentDamage);
+    }
+
+    /**
+     * Calculates modification to attack damage (original method does changed based on things like DR and dragonfire at this point)
+     * @param attacker
+     * @param target
+     * @param attack
+     * @param damage - the damage originally provided, before the patched method ran
+     * @param currentDamage - the damage as calculated after the patched method ran
+     * @returns
+     */
+    public static getEnemyDamageModification(attacker: Enemy, target: Character, attack: SpecialAttack, damage: number, currentDamage: number): number {
+        return CustomModifiersCalculator.getCharacterDamageModification(attacker, target, attack, damage, currentDamage);
+    }
+
+    /**
+     * Calculates modification to attack damage (original method does changed based on things like DR and dragonfire at this point; logic shared between both player and enemy)
+     * @param attacker
+     * @param target
+     * @param attack
+     * @param damage - the damage originally provided, before the patched method ran
+     * @param currentDamage - the damage as calculated after the patched method ran
+     * @returns
+     */
+    private static getCharacterDamageModification(attacker: Character, target: Character, attack: SpecialAttack, damage: number, currentDamage: number): number {
+        // First, we mimic the original method's restrictions
+        if (target.isBarrierActive || attacker.modifiers.disableAttackDamage > 0) {
+            return 0;
+        }
+
+        // If there are no restrictions, we can check whether to nullify the damage,
+        // in which case we actually return the negative current damage, so it equals out to 0
+        const chanceToReduceDamageToZero = target.modifiers.increasedChanceToReduceAttackDamageToZero - target.modifiers.decreasedChanceToReduceAttackDamageToZero;
+        if (rollPercentage(Math.min(90, chanceToReduceDamageToZero))) {
+            return -currentDamage;
+        }
+
+        // Otherwise, we check whether the character has a dr-ignoring bonus, in which case we add that, while also re-applying percentage modifications like the patched method does
+        const flatDamageIgnoringReduction = numberMultiplier * (attacker.modifiers.increasedDamageFlatIgnoringDamageReduction - attacker.modifiers.decreasedDamageFlatIgnoringDamageReduction);
+        return flatDamageIgnoringReduction > 0
+            ? attack.isDragonbreath
+                ? attacker.applyDamageModifiers(target, flatDamageIgnoringReduction) * (1 - target.modifiers.decreasedDragonBreathDamage / 100)
+                : attacker.applyDamageModifiers(target, flatDamageIgnoringReduction)
+            : 0;
+    }
+
+    // #endregion
+
+    // #endregion
+
     // #region (Total) Damage
 
     // #region Percentage - (Total) Damage Percent
 
     /**
      * Calculates change to percentage-based (total) damage value
-     * @param entity
+     * @param attacker
+     * @param target
      * @returns
      */
-    public static getPlayerDamagePercentageModification(entity: Player): number {
-        let modification = 0;
-        if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculator.getCharacterDamagePercentageModifiers(entity);
-        }
-
-        return modification;
+    public static getPlayerDamagePercentageModification(attacker: Player, target: Character): number {
+        return CustomModifiersCalculator.getCharacterDamagePercentageModifiers(attacker, target);
     }
 
     /**
      * Calculates change to percentage-based (total) damage value
-     * @param entity
+     * @param attacker
+     * @param target
      * @returns
      */
-    public static getEnemyDamagePercentageModification(entity: Enemy): number {
-        let modification = 0;
-        if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculator.getCharacterDamagePercentageModifiers(entity);
-        }
-
-        return modification;
+    public static getEnemyDamagePercentageModification(attacker: Enemy, target: Character): number {
+        return CustomModifiersCalculator.getCharacterDamagePercentageModifiers(attacker, target);
     }
 
     /**
      * Calculates change to percentage-based (total) damage value (logic shared across both player and enemy)
      *
      * REMARK: "damage" and "damage taken" run during the same calculation. Therefore:
-     * * increasedDamage -> Based on what THE ENTITY's target is/uses and whether the THE ENTITY has the corresponding modifiers
-     * * increasedDamageTaken -> Based on what THE ENTITY is/uses and whether the THE ENTITY's ENEMY has the corresponding modifiers
-     * @param entity
+     * * increasedDamage -> Based on what THE TARGET is/uses and whether the THE ATTACKER has the corresponding modifiers
+     * * increasedDamageTaken -> Based on what THE ATTACKER is/uses and whether the THE TARGET has the corresponding modifiers
+     * @param attacker
+     * @param target
      */
-    private static getCharacterDamagePercentageModifiers(entity: Character): number {
-        return CustomModifiersCalculator.getDamagePercentageModificationForMonsterTypes(entity)
-            + CustomModifiersCalculator.getDamagePercentageModificationForSpellTypes(entity);
+    private static getCharacterDamagePercentageModifiers(attacker: Character, target: Character): number {
+        return CustomModifiersCalculator.getDamagePercentageModificationForStats(attacker, target)
+            + CustomModifiersCalculator.getDamagePercentageModificationForMonsterTypes(attacker, target)
+            + CustomModifiersCalculator.getDamagePercentageModificationForSpellTypes(attacker, target);
     }
 
     /**
-     * alculates change to percentage-based (total) damage value,
-     * specifically based on the type of spell being used
-     * @param entity
+     * Calculates change to percentage-based (total) damage value,
+     * specifically based on stats of either characters, and ongoing changes during battle (e.g., based on hp lost)
+     * @param attacker
+     * @param target
      */
-    private static getDamagePercentageModificationForSpellTypes(entity: Character): number {
+    private static getDamagePercentageModificationForStats(attacker: Character, target: Character): number {
+        return target.hitpointsPercent === 100
+            ? attacker.modifiers.increasedDamagePercentWhileTargetHasMaxHP - attacker.modifiers.decreasedDamagePercentWhileTargetHasMaxHP
+            : 0;
+    }
+
+    /**
+     * Calculates change to percentage-based (total) damage value,
+     * specifically based on the type of spell being used
+     * @param attacker
+     * @param target
+     */
+    private static getDamagePercentageModificationForSpellTypes(attacker: Character, target: Character): number {
         let modification = 0;
 
-        if (entity.attackType === Constants.ATTACK_TYPES_MAGIC) {
-            switch (entity.spellSelection.standard?.spellType) {
+        if (attacker.attackType === Constants.ATTACK_TYPES_MAGIC) {
+            switch (attacker.spellSelection.standard?.spellType) {
                 case SpellTypes.Air:
-                    modification += entity.target.modifiers.increasedDamageTakenFromAirSpells - entity.target.modifiers.decreasedDamageTakenFromAirSpells;
+                    modification += target.modifiers.increasedDamageTakenFromAirSpells - target.modifiers.decreasedDamageTakenFromAirSpells;
                     break;
                 case SpellTypes.Water:
-                    modification += entity.target.modifiers.increasedDamageTakenFromWaterSpells - entity.target.modifiers.decreasedDamageTakenFromWaterSpells;
+                    modification += target.modifiers.increasedDamageTakenFromWaterSpells - target.modifiers.decreasedDamageTakenFromWaterSpells;
                     break;
                 case SpellTypes.Earth:
-                    modification += entity.target.modifiers.increasedDamageTakenFromEarthSpells - entity.target.modifiers.decreasedDamageTakenFromEarthSpells;
+                    modification += target.modifiers.increasedDamageTakenFromEarthSpells - target.modifiers.decreasedDamageTakenFromEarthSpells;
                     break;
                 case SpellTypes.Fire:
-                    modification += entity.target.modifiers.increasedDamageTakenFromFireSpells - entity.target.modifiers.decreasedDamageTakenFromFireSpells;
+                    modification += target.modifiers.increasedDamageTakenFromFireSpells - target.modifiers.decreasedDamageTakenFromFireSpells;
                     break;
                 default:
             }
@@ -406,25 +514,26 @@ export class CustomModifiersCalculator {
 
     /**
      * Calculates change to percentage-based (total) damage value (logic shared across both player and enemy)
-     * @param entity
+     * @param attacker
+     * @param target
      */
-    private static getDamagePercentageModificationForMonsterTypes(entity: Character): number {
+    private static getDamagePercentageModificationForMonsterTypes(attacker: Character, target: Character): number {
         let modification = 0;
 
         const types = MonsterTypeManager.getActiveTypesAsArray();
         for (var i = 0; i < types.length; i++) {
             const type = types[i];
 
-            if (MonsterTypeHelper.entityIsTreatedAsType(entity.target, type)) {
+            if (MonsterTypeHelper.entityIsTreatedAsType(target, type)) {
                 // Damage Percent
                 // @ts-ignore - We know these properties exist, as they were dynamically added before
-                modification += entity.modifiers[type.modifierPropertyNames.increasedDamage] - entity.modifiers[type.modifierPropertyNames.decreasedDamage];
+                modification += attacker.modifiers[type.modifierPropertyNames.increasedDamage] - attacker.modifiers[type.modifierPropertyNames.decreasedDamage];
             }
 
-            if (MonsterTypeHelper.entityIsTreatedAsType(entity, type)) {
+            if (MonsterTypeHelper.entityIsTreatedAsType(attacker, type)) {
                 // Damage Percent
                 // @ts-ignore - We know these properties exist, as they were dynamically added before
-                modification += entity.target.modifiers[type.modifierPropertyNames.increasedDamageTaken] - entity.target.modifiers[type.modifierPropertyNames.decreasedDamageTaken];
+                modification += target.modifiers[type.modifierPropertyNames.increasedDamageTaken] - attacker.target.modifiers[type.modifierPropertyNames.decreasedDamageTaken];
             }
         }
 

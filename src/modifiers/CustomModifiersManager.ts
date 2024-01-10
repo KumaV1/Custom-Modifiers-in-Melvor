@@ -28,6 +28,7 @@ export class CustomModifiersManager {
         this.registerSlayerTaskModifiers();
         this.registerSpellModifiers();
         this.registerBossModifiers();
+        this.registerGeneralModifiers();
     }
 
     /**
@@ -45,6 +46,7 @@ export class CustomModifiersManager {
         this.patchApplyOnHitEffects();
         this.patchMinHitCalculations();
         this.patchMaxHitCalculations();
+        this.patchAttackDamageCalculations();
         this.patchDamageModifierCalculations();
         this.patchAccuracyCalculations();
         this.patchDamageReductionCalculations();
@@ -1191,6 +1193,86 @@ export class CustomModifiersManager {
         };
     }
 
+    /** Modifiers that don't fit any of the previous groups */
+    private registerGeneralModifiers() {
+        modifierData.increasedChanceToReduceAttackDamageToZero = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedChanceToReduceAttackDamageToZero');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedChanceToReduceAttackDamageToZero = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedChanceToReduceAttackDamageToZero');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedDamageFlatWhileTargetHasMaxHP = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageFlatWhileTargetHasMaxHP');
+            },
+            modifyValue: multiplyByNumberMultiplier,
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageFlatWhileTargetHasMaxHP = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageFlatWhileTargetHasMaxHP');
+            },
+            modifyValue: multiplyByNumberMultiplier,
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedDamagePercentWhileTargetHasMaxHP = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamagePercentWhileTargetHasMaxHP');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamagePercentWhileTargetHasMaxHP = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamagePercentWhileTargetHasMaxHP');
+            },
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedDamageFlatIgnoringDamageReduction = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamageFlatIgnoringDamageReduction');
+            },
+            modifyValue: multiplyByNumberMultiplier,
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamageFlatIgnoringDamageReduction = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamageFlatIgnoringDamageReduction');
+            },
+            modifyValue: multiplyByNumberMultiplier,
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+    }
+
     // #endregion
 
     // #region Method patching
@@ -1259,6 +1341,15 @@ export class CustomModifiersManager {
          * or "getSkillModifierValue" parses undefined to 0 anyway
          */
         this.context.patch(CombatModifiers, "reset").after(function () {
+            this.increasedChanceToReduceAttackDamageToZero ??= 0;
+            this.decreasedChanceToReduceAttackDamageToZero ??= 0;
+            this.increasedDamageFlatWhileTargetHasMaxHP ??= 0;
+            this.decreasedDamageFlatWhileTargetHasMaxHP ??= 0;
+            this.increasedDamagePercentWhileTargetHasMaxHP ??= 0;
+            this.decreasedDamagePercentWhileTargetHasMaxHP ??= 0;
+            this.increasedDamageFlatIgnoringDamageReduction ??= 0;
+            this.decreasedDamageFlatIgnoringDamageReduction ??= 0;
+
             this.increasedChanceToApplySlowOnSpawn ??= 0;
             this.decreasedChanceToApplySlowOnSpawn ??= 0;
             this.increasedChanceToApplyStunOnSpawn ??= 0;
@@ -1502,23 +1593,23 @@ export class CustomModifiersManager {
                         if (rollPercentage(100 - (this.target.modifiers.increasedDeathMarkImmunity - this.target.modifiers.decreasedDeathMarkImmunity))) {
                             this.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffect, this.target, 1);
                             this.target.rendersRequired.effects = true;
-                        }
+                    }
+                }
+
+                const types = MonsterTypeManager.getActiveTypesAsArray();
+                for (var i = 0; i < types.length; i++) {
+                    const type = types[i];
+
+                    let turns = this.modifiers[type.modifierPropertyNames.applyTraitTurns];
+                    if (rollPercentage(this.modifiers[type.modifierPropertyNames.increasedChanceToApplyTrait] - this.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTrait])) {
+                        turns++;
                     }
 
-                    const types = MonsterTypeManager.getActiveTypesAsArray();
-                    for (var i = 0; i < types.length; i++) {
-                        const type = types[i];
-
-                        let turns = this.modifiers[type.modifierPropertyNames.applyTraitTurns];
-                        if (rollPercentage(this.modifiers[type.modifierPropertyNames.increasedChanceToApplyTrait] - this.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTrait])) {
-                            turns++;
-                        }
-
-                        if (turns > 0) {
-                            this.applyStackingEffect(this.game.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect], this.target, turns);
-                            this.target.rendersRequired.effects = true;
-                        }
+                    if (turns > 0) {
+                        this.applyStackingEffect(this.game.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect], this.target, turns);
+                        this.target.rendersRequired.effects = true;
                     }
+                }
                 }
 
                 if (rollPercentage(this.modifiers.increasedChanceToApplyBleed - this.modifiers.decreasedChanceToApplyBleed)) {
@@ -1574,14 +1665,38 @@ export class CustomModifiersManager {
     }
 
     /**
-     * Patches new (total) damage (percentage) changing modifiers into base logic
+     * Patches certain modifiers that affect the damage already rolled basically
+     */
+    private patchAttackDamageCalculations() {
+        this.context.patch(Player, "getFlatAttackDamageBonus").after(function (returnValue: number, target: Character) {
+            return returnValue + CustomModifiersCalculator.getPlayerFlatAttackDamageBonusModification(this, target);
+        });
+        this.context.patch(Enemy, "getFlatAttackDamageBonus").after(function (returnValue: number, target: Character) {
+            return returnValue + CustomModifiersCalculator.getEnemyFlatAttackDamageBonusModification(this, target);
+        });
+
+        /**
+         * @param returnValue the current flat damage, after 'modifyAttackDamage' ran
+         * @param damage the damage originally provided to
+         */
+        this.context.patch(Player, "modifyAttackDamage").after(function (returnValue: number, target: Character, attack: SpecialAttack, damage: number) {
+            return returnValue + CustomModifiersCalculator.getPlayerDamageModification(this, target, attack, damage, returnValue);
+        });
+        this.context.patch(Enemy, "modifyAttackDamage").after(function (returnValue: number, target: Character, attack: SpecialAttack, damage: number) {
+            return returnValue + CustomModifiersCalculator.getEnemyDamageModification(this, target, attack, damage, returnValue);
+        });
+    }
+
+    /**
+     * Patches new (total) damage (percentage) changing modifiers into base logic.
+     * As example, the base method includes things like "increasedDamageTaken" and the increases through effects like Stun
      */
     private patchDamageModifierCalculations() {
-        this.context.patch(Player, "getDamageModifiers").after(function (totalModifier: number) {
-            return totalModifier += CustomModifiersCalculator.getPlayerDamagePercentageModification(this);
+        this.context.patch(Player, "getDamageModifiers").after(function (totalModifier: number, target: Character) {
+            return totalModifier += CustomModifiersCalculator.getPlayerDamagePercentageModification(this, target);
         });
-        this.context.patch(Enemy, "getDamageModifiers").after(function (totalModifier: number) {
-            return totalModifier += CustomModifiersCalculator.getEnemyDamagePercentageModification(this);
+        this.context.patch(Enemy, "getDamageModifiers").after(function (totalModifier: number, target: Character) {
+            return totalModifier += CustomModifiersCalculator.getEnemyDamagePercentageModification(this, target);
         });
     }
 
@@ -1590,7 +1705,7 @@ export class CustomModifiersManager {
      */
     private patchAccuracyCalculations() {
         /**
-         * @param returnValue the current flat accuracy, afer 'modifyAccuracy' run (which includes several percentage based modifiers)
+         * @param returnValue the current flat accuracy, afer 'modifyAccuracy' ran (which includes several percentage based modifiers)
          * @param accuracy the accuracy originally provided to the method, the value we use to calculate our percentage boosts with,
          *                 as there is no flat accuracy bonus between the start of the method and the addition of percentage based boosts
          */
