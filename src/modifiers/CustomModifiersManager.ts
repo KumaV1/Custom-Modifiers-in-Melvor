@@ -46,6 +46,7 @@ export class CustomModifiersManager {
         this.patchApplyOnHitEffects();
         this.patchMinHitCalculations();
         this.patchMaxHitCalculations();
+        this.patchAttackDamageCalculations();
         this.patchDamageModifierCalculations();
         this.patchAccuracyCalculations();
         this.patchDamageReductionCalculations();
@@ -1336,6 +1337,15 @@ export class CustomModifiersManager {
          * or "getSkillModifierValue" parses undefined to 0 anyway
          */
         this.context.patch(CombatModifiers, "reset").after(function () {
+            this.increasedChanceToReduceAttackDamageToZero ??= 0;
+            this.decreasedChanceToReduceAttackDamageToZero ??= 0;
+            this.increasedDamageFlatWhileTargetHasMaxHP ??= 0;
+            this.decreasedDamageFlatWhileTargetHasMaxHP ??= 0;
+            this.increasedDamagePercentWhileTargetHasMaxHP ??= 0;
+            this.decreasedDamagePercentWhileTargetHasMaxHP ??= 0;
+            this.increasedDamageFlatIgnoringDamageReduction ??= 0;
+            this.decreasedDamageFlatIgnoringDamageReduction ??= 0;
+
             this.increasedChanceToApplySlowOnSpawn ??= 0;
             this.decreasedChanceToApplySlowOnSpawn ??= 0;
             this.increasedChanceToApplyStunOnSpawn ??= 0;
@@ -1651,14 +1661,38 @@ export class CustomModifiersManager {
     }
 
     /**
-     * Patches new (total) damage (percentage) changing modifiers into base logic
+     * Patches certain modifiers that affect the damage already rolled basically
+     */
+    private patchAttackDamageCalculations() {
+        this.context.patch(Player, "getFlatAttackDamageBonus").after(function (returnValue: number, target: Character) {
+            return returnValue + CustomModifiersCalculator.getPlayerFlatAttackDamageBonusModification(this, target);
+        });
+        this.context.patch(Enemy, "getFlatAttackDamageBonus").after(function (returnValue: number, target: Character) {
+            return returnValue + CustomModifiersCalculator.getEnemyFlatAttackDamageBonusModification(this, target);
+        });
+
+        /**
+         * @param returnValue the current flat damage, after 'modifyAttackDamage' ran
+         * @param damage the damage originally provided to
+         */
+        this.context.patch(Player, "modifyAttackDamage").after(function (returnValue: number, target: Character, attack: SpecialAttack, damage: number) {
+            return returnValue + CustomModifiersCalculator.getPlayerDamageModification(this, target, attack, damage, returnValue);
+        });
+        this.context.patch(Enemy, "modifyAttackDamage").after(function (returnValue: number, target: Character, attack: SpecialAttack, damage: number) {
+            return returnValue + CustomModifiersCalculator.getEnemyDamageModification(this, target, attack, damage, returnValue);
+        });
+    }
+
+    /**
+     * Patches new (total) damage (percentage) changing modifiers into base logic.
+     * As example, the base method includes things like "increasedDamageTaken" and the increases through effects like Stun
      */
     private patchDamageModifierCalculations() {
-        this.context.patch(Player, "getDamageModifiers").after(function (totalModifier: number) {
-            return totalModifier += CustomModifiersCalculator.getPlayerDamagePercentageModification(this);
+        this.context.patch(Player, "getDamageModifiers").after(function (totalModifier: number, target: Character) {
+            return totalModifier += CustomModifiersCalculator.getPlayerDamagePercentageModification(this, target);
         });
-        this.context.patch(Enemy, "getDamageModifiers").after(function (totalModifier: number) {
-            return totalModifier += CustomModifiersCalculator.getEnemyDamagePercentageModification(this);
+        this.context.patch(Enemy, "getDamageModifiers").after(function (totalModifier: number, target: Character) {
+            return totalModifier += CustomModifiersCalculator.getEnemyDamagePercentageModification(this, target);
         });
     }
 
@@ -1667,7 +1701,7 @@ export class CustomModifiersManager {
      */
     private patchAccuracyCalculations() {
         /**
-         * @param returnValue the current flat accuracy, afer 'modifyAccuracy' run (which includes several percentage based modifiers)
+         * @param returnValue the current flat accuracy, afer 'modifyAccuracy' ran (which includes several percentage based modifiers)
          * @param accuracy the accuracy originally provided to the method, the value we use to calculate our percentage boosts with,
          *                 as there is no flat accuracy bonus between the start of the method and the addition of percentage based boosts
          */
