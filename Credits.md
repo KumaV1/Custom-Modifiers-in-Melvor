@@ -3,6 +3,7 @@
 * [Sense-q's](https://github.com/sense-q) [Tiny Icons Mod](https://mod.io/g/melvoridle/m/tiny-icons), used for the logo of this mod
 * [Game icons](https://game-icons.net/), used for the generic monster type icon
 * _Slahsh_, who originally created the design of icon-list mod settings that has been implemented in this mod (with permission)
+* _OttoTsuma_, who first created some of the modifiers that have been integrated into this mod (with permission)
 
 # Contribution
 * KumaV1 (`#___kuma___` in Discord)
