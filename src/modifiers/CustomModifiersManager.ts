@@ -1217,6 +1217,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedDamageFlatWhileTargetHasMaxHP');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -1226,6 +1227,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedDamageFlatWhileTargetHasMaxHP');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,
@@ -1253,6 +1255,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedDamageFlatIgnoringDamageReduction');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: false,
@@ -1262,6 +1265,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedDamageFlatIgnoringDamageReduction');
             },
+            modifyValue: multiplyByNumberMultiplier,
             description: '',
             isSkill: false,
             isNegative: true,

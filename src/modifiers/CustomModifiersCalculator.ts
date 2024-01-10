@@ -362,7 +362,7 @@ export class CustomModifiersCalculator {
      */
     private static getCharacterFlatAttackDamageBonusModification(attacker: Character, target: Character): number {
         return target.hitpointsPercent === 100
-            ? attacker.modifiers.increasedDamageFlatWhileTargetHasMaxHP - attacker.modifiers.decreasedDamageFlatWhileTargetHasMaxHP
+            ? numberMultiplier * (attacker.modifiers.increasedDamageFlatWhileTargetHasMaxHP - attacker.modifiers.decreasedDamageFlatWhileTargetHasMaxHP)
             : 0;
     }
 
@@ -418,10 +418,13 @@ export class CustomModifiersCalculator {
             return -currentDamage;
         }
 
-        // Otherwise, we return the modifier stats. As they purposely ignore DR, we don't have to worry about actually applying it, unlike the method that was patched
-        // REMARK: Technically speaking, these modifiers do not just ignore damage reduction, but would also ignore any other modifications;
-        // they are added as is to basically the final damage that will be dealt at that point
-        return attacker.modifiers.increasedDamageFlatIgnoringDamageReduction - attacker.modifiers.decreasedDamageFlatIgnoringDamageReduction;
+        // Otherwise, we check whether the character has a dr-ignoring bonus, in which case we add that, while also re-applying percentage modifications like the patched method does
+        const flatDamageIgnoringReduction = numberMultiplier * (attacker.modifiers.increasedDamageFlatIgnoringDamageReduction - attacker.modifiers.decreasedDamageFlatIgnoringDamageReduction);
+        return flatDamageIgnoringReduction > 0
+            ? attack.isDragonbreath
+                ? attacker.applyDamageModifiers(target, flatDamageIgnoringReduction) * (1 - target.modifiers.decreasedDragonBreathDamage / 100)
+                : attacker.applyDamageModifiers(target, flatDamageIgnoringReduction)
+            : 0;
     }
 
     // #endregion
