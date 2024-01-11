@@ -88,6 +88,8 @@ export const zhTW = {
     MODIFIER_DATA_decreasedDamagePercentWhileTargetHasMaxHP: '-${value}% damage while target has full HP',
     MODIFIER_DATA_increasedDamageFlatIgnoringDamageReduction: "+${value} damage, which is unaffected by the enemies' damage reduction",
     MODIFIER_DATA_decreasedDamageFlatIgnoringDamageReduction: "-${value} damage, which is unaffected by the enemies' damage reduction",
+    MODIFIER_DATA_increasedGlobalDamagePreventionThreshold: '+${value} global damage prevention threshold (any damage splat below the threshold is reduced to 0)',
+    MODIFIER_DATA_decreasedGlobalDamagePreventionThreshold: '-${value} global damage prevention threshold (any damage splat below the threshold is reduced to 0)',
     MODIFIER_DATA_increasedDamagePreventionThreshold: '+${value} damage prevention threshold (any damage splat below the threshold is reduced to 0)',
     MODIFIER_DATA_decreasedDamagePreventionThreshold: '-${value} damage prevention threshold (any damage splat below the threshold is reduced to 0)',
     MODIFIER_DATA_increasedBarrierDamagePreventionThreshold: '+${value} barrier damage prevention threshold (any damage splat against a barrier below the threshold is reduced to 0)',
@@ -267,6 +269,8 @@ export const zhTW = {
     MODIFIER_DATA_decreasedGlobalAccuracyAgainstBosses: '-${value}% Accuracy Rating when fighting bosses',
 
     // #### Skilling
+    MODIFIER_DATA_increasedThievingDamagePreventionThreshold: '+${value} thieving damage prevention threshold (any damage splat below the threshold is reduced to 0)',
+    MODIFIER_DATA_decreasedThievingDamagePreventionThreshold: '-${value} thieving damage prevention threshold (any damage splat below the threshold is reduced to 0)',
     MODIFIER_DATA_increasedGlobalSkillXPPerLevel: "+${value}% Global Skill XP per level in currently training skill",
     MODIFIER_DATA_decreasedGlobalSkillXPPerLevel: "-${value}% Global Skill XP per level in currently training skill",
     MODIFIER_DATA_increasedSkillXPPerSkillLevel: "+${value}% ${skillName} Skill XP per level in ${skillName}",

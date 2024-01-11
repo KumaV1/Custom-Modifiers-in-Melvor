@@ -62,6 +62,9 @@ declare global {
         increasedGlobalAccuracyAgainstBosses: number,
         decreasedGlobalAccuracyAgainstBosses: number,
 
+        increasedThievingDamagePreventionThreshold: number,
+        decreasedThievingDamagePreventionThreshold: number
+
         /** Percentage */
         increasedGlobalSkillXPPerLevel: Standard,
         /** Percentage */
