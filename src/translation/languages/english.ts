@@ -64,7 +64,7 @@
     Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "For any monsters added through other mods, said mods have to set type definitions themselves for those monsters",
 
     Monster_Type_Overview_Player_Traits_Tab_Header: "Player traits",
-    Monster_Type_Overview_Player_Traits_Information_Type_Allocation: "Aside from organic type allocation, a type can also be forcefully applied by usage of the respective modifier, usually through equipped items or possibly shop purchase(s)",
+    Monster_Type_Overview_Player_Traits_Information_Type_Allocation: "Aside from organic type allocation, a type can also be forcefully applied by usage of the respective modifier, usually through skills, equipped items or possibly shop purchase(s)",
     Monster_Type_Overview_Player_Traits_Information_Display: 'This overview displays all types (and the value of the modifier) currently affecting the Character - more info may be determinable using the "Show Skill Modifiers" mod',
     Monster_Type_Overview_Player_Traits_Information_Data_Loaded: "This display is static, based on when the character was loaded",
     Monster_Type_Overview_Player_Traits_No_Entries: "The character is not affected by any type allocation modifiers",
