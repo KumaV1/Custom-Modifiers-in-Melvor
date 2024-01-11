@@ -1676,7 +1676,7 @@ export class CustomModifiersManager {
                 if (game.customModifiersInMelvor.stackingEffects.deathMarkEffect !== undefined) {
                     if (this.modifiers.increasedDeathMarkOnHit > 0) {
                         if (rollPercentage(100 - (this.target.modifiers.increasedDeathMarkImmunity - this.target.modifiers.decreasedDeathMarkImmunity))) {
-                            this.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffectt, this.target, this.modifiers.increasedDeathMarkOnHit);
+                            this.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffect, this.target, this.modifiers.increasedDeathMarkOnHit);
                             this.target.rendersRequired.effects = true;
                         }
                     }
