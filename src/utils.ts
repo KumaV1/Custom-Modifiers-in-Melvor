@@ -52,4 +52,13 @@ export class CmimUtils {
                 value: numberWithCommas(value)
             });
     }
+
+    /**
+     * Check whether the given splash is any form of heal
+     * @param type
+     * @returns whether the given splash type counts as heal
+     */
+    public static splashTypeIsHeal(type: SplashType) {
+        return type === 'Heal' || type === 'Regen';
+    }
 }

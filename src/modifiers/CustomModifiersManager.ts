@@ -9,7 +9,11 @@ import { SettingsManager } from '../settings/SettingsManager';
 
 /**
  * Patches different sections of the code, in order to integrate custom modifiers
- * Check "./definitions" for typescript intellisense and not throwing errors
+ * Check "./definitions" for typescript intellisense and not throwing errors.
+ *
+ * REMARK: Usually, Player and Enemy end up with separate patches,
+ * to avoid having to worry about code-order. It also helps in implementing a structure from the get go,
+ * that is easy to expand for either type, rather than having to refactor things later on
  */
 export class CustomModifiersManager {
     constructor(private readonly context: Modding.ModContext) { }
@@ -50,6 +54,7 @@ export class CustomModifiersManager {
         this.patchDamageModifierCalculations();
         this.patchAccuracyCalculations();
         this.patchDamageReductionCalculations();
+        this.patchDamage();
     }
 
     /**
@@ -1786,6 +1791,69 @@ export class CustomModifiersManager {
         this.context.patch(Enemy, "modifyDamageReduction").after(function (returnValue) {
             return returnValue += CustomModifiersCalculator.getEnemyDamageReductionFlatModification(this);
         });
+    }
+
+    /**
+     * Patch method that takes care of actually triggering the damage step.
+     * The patch basically conditionally changes some of the parameter values, before then running the original logic
+     */
+    private patchDamage() {
+        this.context.patch(Player, "damage").before(function (amount: number, source: SplashType, thieving?: boolean | undefined) {
+            // Thieving is currently not relevant
+            if (thieving) {
+                return [amount, source, thieving];
+            }
+
+            return CustomModifiersManager.getCharacterDamageShouldBeZero(this, amount, source)
+                ? [0, source, thieving]
+                : [amount, source, thieving];
+        });
+        this.context.patch(Enemy, "damage").before(function (amount: number, source: SplashType) {
+            return CustomModifiersManager.getCharacterDamageShouldBeZero(this, amount, source)
+                ? [0, source]
+                : [amount, source];
+        });
+    }
+
+    /**
+     * Shared logic between character classes, that may cause the damage to be reduced to zero
+     * @param entity the entity that is to receive damage
+     * @param amount the amount is to be received
+     * @param source the source of the damage that is to be received
+     * @returns Whether the method patch should call the original logic with damage set to 0
+     */
+    private static getCharacterDamageShouldBeZero(entity: Character, amount: number, source: SplashType): boolean {
+        // Do not run this logic, if the splat in question is actually a heal (unlikely based on function name, but possible based on type definition)
+        if (CmimUtils.splashTypeIsHeal(source)) {
+            return false;
+        }
+
+        const barrierActive = entity.isBarrierActive;
+        const canDamageBarrier = entity.canDamageBarrier(source);
+
+        // If barrier is active, but the damage cannot deal damage to it,
+        // then damage is already impossible, so we don't have to evaluate any modifiers
+        if (barrierActive && !canDamageBarrier) {
+            return false;
+        }
+
+        // If barrier is active, and the damage source is capable of dealing damage to it,
+        // then we have to evaluate the barrier modifiers
+        if (entity.isBarrierActive && canDamageBarrier) {
+            const threshold = numberMultiplier * (entity.modifiers.increasedBarrierDamagePreventionThreshold - entity.modifiers.decreasedBarrierDamagePreventionThreshold);
+            if (threshold > 0 && amount < threshold) {
+                return true;
+            }
+        }
+
+        // Otherwise, no barrier is active, so we evaluate the non-barrier modifiers
+        const threshold = numberMultiplier * (entity.modifiers.increasedDamagePreventionThreshold - entity.modifiers.decreasedDamagePreventionThreshold);
+        if (threshold > 0 && amount < threshold) {
+            return true;
+        }
+
+        // Nothing ended up causing the damage having to be set to 0
+        return false;
     }
 
     // #endregion
