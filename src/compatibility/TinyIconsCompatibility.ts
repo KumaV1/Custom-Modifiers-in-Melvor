@@ -11,6 +11,12 @@ export class TinyIconsCompatibility {
         decreasedDamagePercentWhileTargetHasMaxHP: ['ti_combat_dn', 'hitpoints'],
         increasedDamageFlatIgnoringDamageReduction: ['ti_combat_up'],
         decreasedDamageFlatIgnoringDamageReduction: ['ti_combat_dn'],
+        increasedGlobalDamagePreventionThreshold: ['ti_combat_up', 'thieving'],
+        decreasedGlobalDamagePreventionThreshold: ['ti_combat_dn', 'thieving'],
+        increasedDamagePreventionThreshold: ['ti_combat_up'],
+        decreasedDamagePreventionThreshold: ['ti_combat_dn'],
+        increasedBarrierDamagePreventionThreshold: ['barrier', 'ti_combat_up'],
+        decreasedBarrierDamagePreventionThreshold: ['barrier', 'ti_combat_dn'],
 
         increasedMaxHitPercentToCombatAreaMonsters: ['combat', 'ti_combat_up'],
         decreasedMaxHitPercentToCombatAreaMonsters: ['combat', 'ti_combat_dn'],
@@ -74,6 +80,8 @@ export class TinyIconsCompatibility {
         increasedGlobalAccuracyAgainstBosses: ['dungeon', 'ti_combat_up'],
         decreasedGlobalAccuracyAgainstBosses: ['dungeon', 'ti_combat_dn'],
 
+        increasedThievingDamagePreventionThreshold: ['thieving'],
+        decreasedThievingDamagePreventionThreshold: ['thieving'],
         increasedGlobalSkillXPPerLevel: ['skill'],
         decreasedGlobalSkillXPPerLevel: ['skill'],
         increasedFlatGlobalSkillXP: ['skill'],

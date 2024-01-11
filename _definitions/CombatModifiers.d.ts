@@ -8,6 +8,12 @@ declare global {
         decreasedDamagePercentWhileTargetHasMaxHP: number,
         increasedDamageFlatIgnoringDamageReduction: number,
         decreasedDamageFlatIgnoringDamageReduction: number,
+        increasedGlobalDamagePreventionThreshold: number,
+        decreasedGlobalDamagePreventionThreshold: number,
+        increasedDamagePreventionThreshold: number,
+        decreasedDamagePreventionThreshold: number,
+        increasedBarrierDamagePreventionThreshold: number,
+        decreasedBarrierDamagePreventionThreshold: number,
 
         increasedChanceToApplySlowOnSpawn: number,
         decreasedChanceToApplySlowOnSpawn: number,

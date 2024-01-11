@@ -9,7 +9,11 @@ import { SettingsManager } from '../settings/SettingsManager';
 
 /**
  * Patches different sections of the code, in order to integrate custom modifiers
- * Check "./definitions" for typescript intellisense and not throwing errors
+ * Check "./definitions" for typescript intellisense and not throwing errors.
+ *
+ * REMARK: Usually, Player and Enemy end up with separate patches,
+ * to avoid having to worry about code-order. It also helps in implementing a structure from the get go,
+ * that is easy to expand for either type, rather than having to refactor things later on
  */
 export class CustomModifiersManager {
     constructor(private readonly context: Modding.ModContext) { }
@@ -50,6 +54,8 @@ export class CustomModifiersManager {
         this.patchDamageModifierCalculations();
         this.patchAccuracyCalculations();
         this.patchDamageReductionCalculations();
+        this.patchDamage();
+        this.patchUtils();
     }
 
     /**
@@ -200,6 +206,26 @@ export class CustomModifiersManager {
             isSkill: true,
             isNegative: true,
             tags: [],
+        };
+        modifierData.increasedThievingDamagePreventionThreshold = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedThievingDamagePreventionThreshold');
+            },
+            modifyValue: multiplyByNumberMultiplier,
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['thieving']
+        };
+        modifierData.decreasedThievingDamagePreventionThreshold = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedThievingDamagePreventionThreshold');
+            },
+            modifyValue: multiplyByNumberMultiplier,
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['thieving']
         };
     }
 
@@ -1271,6 +1297,66 @@ export class CustomModifiersManager {
             isNegative: true,
             tags: ['combat']
         };
+        modifierData.increasedGlobalDamagePreventionThreshold = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedGlobalDamagePreventionThreshold');
+            },
+            modifyValue: multiplyByNumberMultiplier,
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedGlobalDamagePreventionThreshold = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedGlobalDamagePreventionThreshold');
+            },
+            modifyValue: multiplyByNumberMultiplier,
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedDamagePreventionThreshold = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedDamagePreventionThreshold');
+            },
+            modifyValue: multiplyByNumberMultiplier,
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedDamagePreventionThreshold = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedDamagePreventionThreshold');
+            },
+            modifyValue: multiplyByNumberMultiplier,
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
+        modifierData.increasedBarrierDamagePreventionThreshold = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_increasedBarrierDamagePreventionThreshold');
+            },
+            modifyValue: multiplyByNumberMultiplier,
+            description: '',
+            isSkill: false,
+            isNegative: false,
+            tags: ['combat']
+        };
+        modifierData.decreasedBarrierDamagePreventionThreshold = {
+            get langDescription() {
+                return getLangString('MODIFIER_DATA_decreasedBarrierDamagePreventionThreshold');
+            },
+            modifyValue: multiplyByNumberMultiplier,
+            description: '',
+            isSkill: false,
+            isNegative: true,
+            tags: ['combat']
+        };
     }
 
     // #endregion
@@ -1349,6 +1435,12 @@ export class CustomModifiersManager {
             this.decreasedDamagePercentWhileTargetHasMaxHP ??= 0;
             this.increasedDamageFlatIgnoringDamageReduction ??= 0;
             this.decreasedDamageFlatIgnoringDamageReduction ??= 0;
+            this.increasedGlobalDamagePreventionThreshold ??= 0;
+            this.decreasedGlobalDamagePreventionThreshold ??= 0;
+            this.increasedDamagePreventionThreshold ??= 0;
+            this.decreasedDamagePreventionThreshold ??= 0;
+            this.increasedBarrierDamagePreventionThreshold ??= 0;
+            this.decreasedBarrierDamagePreventionThreshold ??= 0;
 
             this.increasedChanceToApplySlowOnSpawn ??= 0;
             this.decreasedChanceToApplySlowOnSpawn ??= 0;
@@ -1742,6 +1834,108 @@ export class CustomModifiersManager {
         this.context.patch(Enemy, "modifyDamageReduction").after(function (returnValue) {
             return returnValue += CustomModifiersCalculator.getEnemyDamageReductionFlatModification(this);
         });
+    }
+
+    /**
+     * Patch method that takes care of actually triggering the damage step.
+     * The patch basically conditionally changes some of the parameter values, before then running the original logic
+     */
+    private patchDamage() {
+        this.context.patch(Player, "damage").before(function (amount: number, source: SplashType, thieving?: boolean | undefined) {
+            // Thieving
+            if (thieving) {
+                const threshold: number = numberMultiplier * (this.modifiers.increasedGlobalDamagePreventionThreshold
+                    - this.modifiers.decreasedGlobalDamagePreventionThreshold
+                    + this.modifiers.increasedThievingDamagePreventionThreshold
+                    - this.modifiers.decreasedThievingDamagePreventionThreshold);
+
+                return threshold > 0 && amount < threshold
+                    ? [0, source, thieving]
+                    : [amount, source, thieving];
+            }
+
+            // Combat
+            return CustomModifiersManager.getCharacterDamageShouldBeZero(this, amount, source)
+                ? [0, source, thieving]
+                : [amount, source, thieving];
+        });
+        this.context.patch(Enemy, "damage").before(function (amount: number, source: SplashType) {
+            return CustomModifiersManager.getCharacterDamageShouldBeZero(this, amount, source)
+                ? [0, source]
+                : [amount, source];
+        });
+    }
+
+    /**
+     * Shared logic between character classes, that may cause the damage to be reduced to zero
+     * @param entity the entity that is to receive damage
+     * @param amount the amount is to be received
+     * @param source the source of the damage that is to be received
+     * @returns Whether the method patch should call the original logic with damage set to 0
+     */
+    private static getCharacterDamageShouldBeZero(entity: Character, amount: number, source: SplashType): boolean {
+        // Do not run this logic, if the splat in question is actually a heal (unlikely based on function name, but possible based on type definition)
+        if (CmimUtils.splashTypeIsHeal(source)) {
+            return false;
+        }
+
+        const barrierActive = entity.isBarrierActive;
+        const canDamageBarrier = entity.canDamageBarrier(source);
+
+        // If barrier is active, but the damage cannot deal damage to it,
+        // then damage is already impossible, so we don't have to evaluate any modifiers
+        if (barrierActive && !canDamageBarrier) {
+            return false;
+        }
+
+        // If barrier is active, and the damage source is capable of dealing damage to it,
+        // then we have to evaluate the barrier modifiers
+        if (entity.isBarrierActive && canDamageBarrier) {
+            const threshold = numberMultiplier * (entity.modifiers.increasedGlobalDamagePreventionThreshold
+                - entity.modifiers.decreasedGlobalDamagePreventionThreshold
+                + entity.modifiers.increasedBarrierDamagePreventionThreshold
+                - entity.modifiers.decreasedBarrierDamagePreventionThreshold);
+            if (threshold > 0 && amount < threshold) {
+                return true;
+            }
+        }
+
+        // Otherwise, no barrier is active, so we evaluate the non-barrier modifiers
+        const threshold = numberMultiplier * (entity.modifiers.increasedGlobalDamagePreventionThreshold
+            - entity.modifiers.decreasedGlobalDamagePreventionThreshold
+            + entity.modifiers.increasedDamagePreventionThreshold
+            - entity.modifiers.decreasedDamagePreventionThreshold);
+        if (threshold > 0 && amount < threshold) {
+            return true;
+        }
+
+        // Nothing ended up causing the damage having to be set to 0
+        return false;
+    }
+
+    /**
+     * Patches some of the util functions.
+     * Do note though, that the original logic isn't stored by this patcher, but instead through the 'GameObjectDataWrapperInitializer' class
+     */
+    private patchUtils() {
+        // Build new function logic
+        let newFunc = function (damage: number): void {
+            // Check the modifiers that may change how the original logic is supposed to behave
+            const threshold: number = numberMultiplier * (game.modifiers.increasedGlobalDamagePreventionThreshold
+                - game.modifiers.decreasedGlobalDamagePreventionThreshold
+                + game.modifiers.increasedThievingDamagePreventionThreshold
+                - game.modifiers.decreasedThievingDamagePreventionThreshold);
+
+            // Call the original logic, with its expected parameter possibly changed
+            if (threshold > 0 && damage < threshold) {
+                game.customModifiersInMelvor.originalFunctions.utils.stunNotify(0);
+            } else {
+                game.customModifiersInMelvor.originalFunctions.utils.stunNotify(damage);
+            }
+        }
+
+        // Re-define original function with new logic (original logic has already been stored at this point)
+        window.stunNotify = newFunc;
     }
 
     // #endregion

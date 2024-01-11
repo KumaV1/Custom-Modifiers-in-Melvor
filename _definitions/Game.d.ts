@@ -15,7 +15,12 @@ declare global {
         customModifiersInMelvor: {
             stackingEffects: CmimStackingEffectCollection
             customModifierEffects: CmimCustomModifierEffectCollection
-            specialAttacks: CmimSpecialAttackCollection
+            specialAttacks: CmimSpecialAttackCollection,
+            originalFunctions: {
+                utils: {
+                    stunNotify(damage: number): void
+                }
+            }
         }
     }
 }

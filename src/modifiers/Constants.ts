@@ -3,7 +3,7 @@ export class Constants {
     static readonly DEATH_MARK_MAX_PERCENT = 20;
     static readonly DEATH_MARK_MAX_FLAT_HP = 5000;
     static readonly DEATH_MARK_NOTIFICATION_ID = "DEATH_MARK_TRIGGERED";
-    static readonly DEATH_MARK_NOTIFICATION_TEXT_LANGUAGE_ID = "customModifiersInMelvor:Death_Mark_Notification_Text";
+    static readonly DEATH_MARK_NOTIFICATION_TEXT_LANGUAGE_ID = "customModifiersInMelvor_Death_Mark_Notification_Text";
 
     // Names and descriptions are irrelevant, as those are defined through translation files
     static readonly TRAIT_STACKING_EFFECT_ID_SUFFIX = "_Trait_Stacking_Effect";

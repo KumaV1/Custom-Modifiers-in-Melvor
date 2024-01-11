@@ -10,7 +10,12 @@ export class GameObjectDataWrapperInitializer {
         game.customModifiersInMelvor = {
             stackingEffects: {},
             customModifierEffects: {},
-            specialAttacks: {}
+            specialAttacks: {},
+            originalFunctions: {
+                utils: {
+                    stunNotify: stunNotify
+                }
+            }
         };
     }
 }
