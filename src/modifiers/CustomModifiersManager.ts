@@ -6,6 +6,7 @@ import { MonsterTypeDefinition } from '../monsterTyping/MonsterTypeDefinition';
 import { MonsterTypeHelper } from '../monsterTyping/MonsterTypeHelper';
 import { MonsterTypeManager } from '../monsterTyping/MonsterTypeManager';
 import { SettingsManager } from '../settings/SettingsManager';
+import { languages } from '../translation/languages';
 
 /**
  * Patches different sections of the code, in order to integrate custom modifiers
@@ -103,7 +104,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedGlobalSkillXPPerLevel');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedGlobalSkillXPPerLevel,
             isSkill: false,
             isNegative: false,
             tags: [],
@@ -112,7 +113,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedGlobalSkillXPPerLevel');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedGlobalSkillXPPerLevel,
             isSkill: false,
             isNegative: true,
             tags: [],
@@ -121,7 +122,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedSkillXPPerSkillLevel');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedSkillXPPerSkillLevel,
             isSkill: true,
             isNegative: false,
             tags: [],
@@ -130,7 +131,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedSkillXPPerSkillLevel');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedSkillXPPerSkillLevel,
             isSkill: true,
             isNegative: true,
             tags: [],
@@ -139,7 +140,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedFlatGlobalSkillXP');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedFlatGlobalSkillXP,
             isSkill: false,
             isNegative: false,
             tags: [],
@@ -148,7 +149,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedFlatGlobalSkillXP');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedFlatGlobalSkillXP,
             isSkill: false,
             isNegative: true,
             tags: [],
@@ -157,7 +158,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedFlatSkillXP');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedFlatSkillXP,
             isSkill: true,
             isNegative: false,
             tags: [],
@@ -166,7 +167,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedFlatSkillXP');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedFlatSkillXP,
             isSkill: true,
             isNegative: true,
             tags: [],
@@ -175,7 +176,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedFlatGlobalSkillXPPerSkillLevel');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedFlatGlobalSkillXPPerSkillLevel,
             isSkill: false,
             isNegative: false,
             tags: [],
@@ -184,7 +185,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedFlatGlobalSkillXPPerSkillLevel');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedFlatGlobalSkillXPPerSkillLevel,
             isSkill: false,
             isNegative: true,
             tags: [],
@@ -193,7 +194,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedFlatSkillXPPerSkillLevel');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedFlatSkillXPPerSkillLevel,
             isSkill: true,
             isNegative: false,
             tags: [],
@@ -202,7 +203,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedFlatSkillXPPerSkillLevel');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedFlatSkillXPPerSkillLevel,
             isSkill: true,
             isNegative: true,
             tags: [],
@@ -212,7 +213,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_increasedThievingDamagePreventionThreshold');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedThievingDamagePreventionThreshold,
             isSkill: false,
             isNegative: false,
             tags: ['thieving']
@@ -222,7 +223,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_decreasedThievingDamagePreventionThreshold');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedThievingDamagePreventionThreshold,
             isSkill: false,
             isNegative: true,
             tags: ['thieving']
@@ -237,7 +238,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToApplySlowOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedChanceToApplySlowOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -246,7 +247,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedChanceToApplySlowOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedChanceToApplySlowOnSpawn,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -255,7 +256,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToApplyStunOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedChanceToApplyStunOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -267,7 +268,7 @@ export class CustomModifiersManager {
             modifyValue: (value: number) => {
                 return CmimUtils.getModifierDescription(value, 'applyStunOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_applyStunOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -276,7 +277,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedChanceToApplyStunOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyStunOnSpawn,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -285,7 +286,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToApplyPoisonOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedChanceToApplyPoisonOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -294,7 +295,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedChanceToApplyPoisonOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyPoisonOnSpawn,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -303,7 +304,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToApplyDeadlyPoisonOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedChanceToApplyDeadlyPoisonOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -312,7 +313,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedChanceToApplyDeadlyPoisonOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyDeadlyPoisonOnSpawn,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -321,7 +322,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToApplyAfflictionOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedChanceToApplyAfflictionOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -330,7 +331,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedChanceToApplyAfflictionOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyAfflictionOnSpawn,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -342,7 +343,7 @@ export class CustomModifiersManager {
             modifyValue: (value: number) => {
                 return CmimUtils.getModifierDescription(value, 'applyAfflictionOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_applyAfflictionOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -351,7 +352,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToApplyBleedOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedChanceToApplyBleedOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -360,7 +361,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedChanceToApplyBleedOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyBleedOnSpawn,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -369,7 +370,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToApplyBurnOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedChanceToApplyBurnOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -378,7 +379,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedChanceToApplyBurnOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyBurnOnSpawn,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -387,7 +388,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToApplyFreezeOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedChanceToApplyFreezeOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -396,7 +397,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedChanceToApplyFreezeOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyFreezeOnSpawn,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -408,7 +409,7 @@ export class CustomModifiersManager {
             modifyValue: (value: number) => {
                 return CmimUtils.getModifierDescription(value, 'applyFreezeOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_applyFreezeOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -417,7 +418,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToApplyFrostburnOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedChanceToApplyFrostburnOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -426,7 +427,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedChanceToApplyFrostburnOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyFrostburnOnSpawn,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -435,7 +436,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToApplyShockOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedChanceToApplyShockOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -444,7 +445,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedChanceToApplyShockOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyShockOnSpawn,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -456,7 +457,7 @@ export class CustomModifiersManager {
             modifyValue: (value: number) => {
                 return CmimUtils.getModifierDescription(value, 'applyShockOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_applyShockOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -465,7 +466,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToApplySleepOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedChanceToApplySleepOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -474,7 +475,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedChanceToApplySleepOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedChanceToApplySleepOnSpawn,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -486,7 +487,7 @@ export class CustomModifiersManager {
             modifyValue: (value: number) => {
                 return CmimUtils.getModifierDescription(value, 'applySleepOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_applySleepOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -501,7 +502,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToApplyBleed');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedChanceToApplyBleed,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -510,7 +511,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedChanceToApplyBleed');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyBleed,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -525,7 +526,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_deathMark');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_deathMark,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -534,7 +535,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedDeathMarkOnHit');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedDeathMarkOnHit,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -543,7 +544,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToApplyStackOfDeathMark');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedChanceToApplyStackOfDeathMark,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -552,7 +553,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedChanceToApplyStackOfDeathMark');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyStackOfDeathMark,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -561,7 +562,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedDeathMarkImmunity');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedDeathMarkImmunity,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -570,7 +571,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedDeathMarkImmunity');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedDeathMarkImmunity,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -582,7 +583,7 @@ export class CustomModifiersManager {
             modifyValue: (value: number) => {
                 return CmimUtils.getModifierDescription(value, 'applyDeathMarkOnSpawn');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_applyDeathMarkOnSpawn,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -594,7 +595,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMaxHitPercentToCombatAreaMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedMaxHitPercentToCombatAreaMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -603,7 +604,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitPercentToCombatAreaMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedMaxHitPercentToCombatAreaMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -613,7 +614,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_increasedMaxHitFlatToCombatAreaMonsters');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedMaxHitFlatToCombatAreaMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -623,7 +624,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitFlatToCombatAreaMonsters');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedMaxHitFlatToCombatAreaMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -633,7 +634,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_increasedFlatMinHitToCombatAreaMonsters');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedFlatMinHitToCombatAreaMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -643,7 +644,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_decreasedFlatMinHitToCombatAreaMonsters');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedFlatMinHitToCombatAreaMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -652,7 +653,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitToCombatAreaMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedMinHitBasedOnMaxHitToCombatAreaMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -661,7 +662,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToCombatAreaMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToCombatAreaMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -670,7 +671,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstCombatAreaMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedGlobalAccuracyAgainstCombatAreaMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -679,7 +680,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstCombatAreaMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedGlobalAccuracyAgainstCombatAreaMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -688,7 +689,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedDamageReductionAgainstCombatAreaMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedDamageReductionAgainstCombatAreaMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -697,7 +698,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedDamageReductionAgainstCombatAreaMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedDamageReductionAgainstCombatAreaMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -709,7 +710,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMaxHitPercentToSlayerAreaMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedMaxHitPercentToSlayerAreaMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -718,7 +719,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitPercentToSlayerAreaMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedMaxHitPercentToSlayerAreaMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -728,7 +729,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_increasedMaxHitFlatToSlayerAreaMonsters');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedMaxHitFlatToSlayerAreaMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -738,7 +739,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitFlatToSlayerAreaMonsters');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedMaxHitFlatToSlayerAreaMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -748,7 +749,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_increasedFlatMinHitToSlayerAreaMonsters');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedFlatMinHitToSlayerAreaMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -758,7 +759,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_decreasedFlatMinHitToSlayerAreaMonsters');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedFlatMinHitToSlayerAreaMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -767,7 +768,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitToSlayerAreaMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedMinHitBasedOnMaxHitToSlayerAreaMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -776,7 +777,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -785,7 +786,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstSlayerAreaMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedGlobalAccuracyAgainstSlayerAreaMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -794,7 +795,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerAreaMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerAreaMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -803,7 +804,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedDamageReductionAgainstSlayerAreaMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedDamageReductionAgainstSlayerAreaMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -812,7 +813,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedDamageReductionAgainstSlayerAreaMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedDamageReductionAgainstSlayerAreaMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -824,7 +825,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMaxHitPercentToDungeonMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedMaxHitPercentToDungeonMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -833,7 +834,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitPercentToDungeonMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedMaxHitPercentToDungeonMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -843,7 +844,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_increasedMaxHitFlatToDungeonMonsters');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedMaxHitFlatToDungeonMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -853,7 +854,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitFlatToDungeonMonsters');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedMaxHitFlatToDungeonMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -863,7 +864,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_increasedFlatMinHitToDungeonMonsters');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedFlatMinHitToDungeonMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -873,7 +874,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_decreasedFlatMinHitToDungeonMonsters');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedFlatMinHitToDungeonMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -882,7 +883,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitToDungeonMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedMinHitBasedOnMaxHitToDungeonMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -891,7 +892,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToDungeonMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToDungeonMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -900,7 +901,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstDungeonMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedGlobalAccuracyAgainstDungeonMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -909,7 +910,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstDungeonMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedGlobalAccuracyAgainstDungeonMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -919,7 +920,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedDamageReductionAgainstDungeonMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedDamageReductionAgainstDungeonMonsters,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -928,7 +929,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedDamageReductionAgainstDungeonMonsters');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedDamageReductionAgainstDungeonMonsters,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -940,7 +941,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMaxHitPercentToSlayerTasks');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedMaxHitPercentToSlayerTasks,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -949,7 +950,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitPercentToSlayerTasks');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedMaxHitPercentToSlayerTasks,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -959,7 +960,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_increasedMaxHitFlatToSlayerTasks');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedMaxHitFlatToSlayerTasks,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -969,7 +970,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitFlatToSlayerTasks');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedMaxHitFlatToSlayerTasks,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -979,7 +980,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_increasedFlatMinHitToSlayerTasks');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedFlatMinHitToSlayerTasks,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -989,7 +990,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_decreasedFlatMinHitToSlayerTasks');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedFlatMinHitToSlayerTasks,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -998,7 +999,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitToSlayerTasks');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedMinHitBasedOnMaxHitToSlayerTasks,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1007,7 +1008,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToSlayerTasks');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToSlayerTasks,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1016,7 +1017,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstSlayerTasks');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedGlobalAccuracyAgainstSlayerTasks,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1025,7 +1026,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerTasks');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerTasks,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1034,7 +1035,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedDamageReductionAgainstSlayerTasks');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedDamageReductionAgainstSlayerTasks,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1049,7 +1050,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedDamageTakenFromAirSpells');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedDamageTakenFromAirSpells,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1058,7 +1059,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedDamageTakenFromAirSpells');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedDamageTakenFromAirSpells,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1067,7 +1068,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedDamageTakenFromWaterSpells');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedDamageTakenFromWaterSpells,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1076,7 +1077,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedDamageTakenFromWaterSpells');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedDamageTakenFromWaterSpells,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1085,7 +1086,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedDamageTakenFromEarthSpells');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedDamageTakenFromEarthSpells,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1094,7 +1095,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedDamageTakenFromEarthSpells');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedDamageTakenFromEarthSpells,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1103,7 +1104,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedDamageTakenFromFireSpells');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedDamageTakenFromFireSpells,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1112,7 +1113,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedDamageTakenFromFireSpells');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedDamageTakenFromFireSpells,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1127,7 +1128,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMaxHitPercentAgainstBosses');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedMaxHitPercentAgainstBosses,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1136,7 +1137,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitPercentAgainstBosses');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedMaxHitPercentAgainstBosses,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1146,7 +1147,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_increasedMaxHitFlatAgainstBosses');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedMaxHitFlatAgainstBosses,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1156,7 +1157,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_decreasedMaxHitFlatAgainstBosses');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedMaxHitFlatAgainstBosses,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1166,7 +1167,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_increasedFlatMinHitAgainstBosses');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedFlatMinHitAgainstBosses,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1176,7 +1177,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_decreasedFlatMinHitAgainstBosses');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedFlatMinHitAgainstBosses,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1185,7 +1186,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstBosses');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstBosses,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1194,7 +1195,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstBosses');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstBosses,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1203,7 +1204,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstBosses');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedGlobalAccuracyAgainstBosses,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1212,7 +1213,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstBosses');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedGlobalAccuracyAgainstBosses,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1225,7 +1226,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedChanceToReduceAttackDamageToZero');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedChanceToReduceAttackDamageToZero,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1234,7 +1235,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedChanceToReduceAttackDamageToZero');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedChanceToReduceAttackDamageToZero,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1244,7 +1245,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_increasedDamageFlatWhileTargetHasMaxHP');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedDamageFlatWhileTargetHasMaxHP,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1254,7 +1255,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_decreasedDamageFlatWhileTargetHasMaxHP');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedDamageFlatWhileTargetHasMaxHP,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1263,7 +1264,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_increasedDamagePercentWhileTargetHasMaxHP');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedDamagePercentWhileTargetHasMaxHP,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1272,7 +1273,7 @@ export class CustomModifiersManager {
             get langDescription() {
                 return getLangString('MODIFIER_DATA_decreasedDamagePercentWhileTargetHasMaxHP');
             },
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedDamagePercentWhileTargetHasMaxHP,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1282,7 +1283,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_increasedDamageFlatIgnoringDamageReduction');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedDamageFlatIgnoringDamageReduction,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1292,7 +1293,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_decreasedDamageFlatIgnoringDamageReduction');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedDamageFlatIgnoringDamageReduction,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1302,7 +1303,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_increasedGlobalDamagePreventionThreshold');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedGlobalDamagePreventionThreshold,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1312,7 +1313,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_decreasedGlobalDamagePreventionThreshold');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedGlobalDamagePreventionThreshold,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1322,7 +1323,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_increasedDamagePreventionThreshold');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedDamagePreventionThreshold,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1332,7 +1333,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_decreasedDamagePreventionThreshold');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedDamagePreventionThreshold,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1342,7 +1343,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_increasedBarrierDamagePreventionThreshold');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_increasedBarrierDamagePreventionThreshold,
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -1352,7 +1353,7 @@ export class CustomModifiersManager {
                 return getLangString('MODIFIER_DATA_decreasedBarrierDamagePreventionThreshold');
             },
             modifyValue: multiplyByNumberMultiplier,
-            description: '',
+            description: languages.en.MODIFIER_DATA_decreasedBarrierDamagePreventionThreshold,
             isSkill: false,
             isNegative: true,
             tags: ['combat']
@@ -1622,7 +1623,7 @@ export class CustomModifiersManager {
     /**
      * Whenever the amount of HP changes, check the death mark threshold.
      * The original function doesn't really do anything aside from changing hp, only setting some "rerender/recompute" flags,
-     * so it's pretty much perfect
+     * so it's pretty much perfect (it's, btw, the function called by the damage-function, to actually go and change the hp)
      */
     private patchAddHitpoints() {
         // @ts-ignore You can actually patch base classes no problem
@@ -1661,57 +1662,62 @@ export class CustomModifiersManager {
     }
 
     /**
-     * "On hit effect" means both literal "on hit modifiers" but also stuff like "roll to poison, only because you actually hit the enemy".
-     * REMARK: We patch 'clampDamageValue' because it is only ever called in ONE location. We don't patch to modify its functionality,
-     * we actually patch it as a means of injecting our code into the process we want to (there is no natural method to before/after patch).
-     *
-     * More specifically, the patched method is called only when the entity's target has been rolled to hit,
-     * which is the condition for which we want to implement some more stuff
+     * "On hit effect" means both literal "on hit modifiers" but also stuff like "roll to poison, only because you actually hit the enemy"
      */
     private patchApplyOnHitEffects() {
-        // @ts-ignore You can actually patch base classes no problem
-        this.context.patch(Character, "clampDamageValue").after(function (returnedDamage) {
-            // do some custom stuff inbetween
-            if (this.target.barrier <= 0) {
-                if (game.customModifiersInMelvor.stackingEffects.deathMarkEffect !== undefined) {
-                    if (this.modifiers.increasedDeathMarkOnHit > 0) {
-                        if (rollPercentage(100 - (this.target.modifiers.increasedDeathMarkImmunity - this.target.modifiers.decreasedDeathMarkImmunity))) {
-                            this.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffectt, this.target, this.modifiers.increasedDeathMarkOnHit);
-                            this.target.rendersRequired.effects = true;
-                        }
-                    }
+        this.context.patch(Player, "onHit").after(function (returnValue: void) {
+            CustomModifiersManager.onCharacterHit(this);
+        });
 
-                    if (rollPercentage(this.modifiers.increasedChanceToApplyStackOfDeathMark - this.modifiers.decreasedChanceToApplyStackOfDeathMark)) {
-                        if (rollPercentage(100 - (this.target.modifiers.increasedDeathMarkImmunity - this.target.modifiers.decreasedDeathMarkImmunity))) {
-                            this.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffect, this.target, 1);
-                            this.target.rendersRequired.effects = true;
-                    }
+        this.context.patch(Enemy, "onHit").after(function (returnValue: void) {
+            CustomModifiersManager.onCharacterHit(this);
+        });
+    }
+
+    /**
+     *
+     * @param entity
+     */
+    private static onCharacterHit(entity: Character): void {
+        // do some custom stuff inbetween
+        if (entity.target.barrier <= 0) {
+            // Death mark
+            if (game.customModifiersInMelvor.stackingEffects.deathMarkEffect !== undefined) {
+                let deathMarkStacks = entity.modifiers.increasedDeathMarkOnHit;
+                if (rollPercentage(entity.modifiers.increasedChanceToApplyStackOfDeathMark - entity.modifiers.decreasedChanceToApplyStackOfDeathMark)) {
+                    deathMarkStacks++;
                 }
-
-                const types = MonsterTypeManager.getActiveTypesAsArray();
-                for (var i = 0; i < types.length; i++) {
-                    const type = types[i];
-
-                    let turns = this.modifiers[type.modifierPropertyNames.applyTraitTurns];
-                    if (rollPercentage(this.modifiers[type.modifierPropertyNames.increasedChanceToApplyTrait] - this.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTrait])) {
-                        turns++;
+                if (deathMarkStacks > 0) {
+                    if (rollPercentage(100 - (entity.target.modifiers.increasedDeathMarkImmunity - entity.target.modifiers.decreasedDeathMarkImmunity))) {
+                        entity.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffect, entity.target, deathMarkStacks);
+                        entity.target.rendersRequired.effects = true;
                     }
-
-                    if (turns > 0) {
-                        this.applyStackingEffect(this.game.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect], this.target, turns);
-                        this.target.rendersRequired.effects = true;
-                    }
-                }
-                }
-
-                if (rollPercentage(this.modifiers.increasedChanceToApplyBleed - this.modifiers.decreasedChanceToApplyBleed)) {
-                    this.applyDOT({ chance: 100, procs: 20, interval: 500, type: 'DOT', subtype: 'Bleed', damage: [{ "roll": false, "character": "Attacker", "maxRoll": "MaxHit", "maxPercent": 100 }] }, this.target, 0);
                 }
             }
 
-            // return unchanged value
-            return returnedDamage;
-        });
+            // Monster type traits
+            const types = MonsterTypeManager.getActiveTypesAsArray();
+            for (var i = 0; i < types.length; i++) {
+                const type = types[i];
+
+                // @ts-ignore - collection keys
+                let turns = entity.modifiers[type.modifierPropertyNames.applyTraitTurns];
+                // @ts-ignore - collection keys
+                if (rollPercentage(entity.modifiers[type.modifierPropertyNames.increasedChanceToApplyTrait] - entity.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTrait])) {
+                    turns++;
+                }
+
+                if (turns > 0) {
+                    entity.applyStackingEffect(entity.game.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect], entity.target, turns);
+                    entity.target.rendersRequired.effects = true;
+                }
+            }
+
+            // Bleed
+            if (rollPercentage(entity.modifiers.increasedChanceToApplyBleed - entity.modifiers.decreasedChanceToApplyBleed)) {
+                entity.applyDOT({ chance: 100, procs: 20, interval: 500, type: 'DOT', subtype: 'Bleed', damage: [{ "roll": false, "character": "Attacker", "maxRoll": "MaxHit", "maxPercent": 100 }] }, entity.target, 0);
+            }
+        }
     }
 
     /**
@@ -1823,7 +1829,7 @@ export class CustomModifiersManager {
         // 2.3) THEN, that result is once again multiplicated, this time by "halveDamageReduction" (if set, that is)
         // 2.4) That is the final result for the Enemy class
         // 3) However, with the player, the following two things happen too
-        // 3.1) "increasedDamageReductionWithActivePrayer" is ADDITIVELY added to DR%
+        // 3.1) "increasedDamageReductionWithActivePrayer" is ADDITIVELY added to DR% (this was a bug and has since been patched)
         // 3.2) Then, the final DR% at that point in time is multiplied by combat triangle (which based on mode may define something like "You are only 10% as accurate against monsters strong to your attack style")
         // based on combat triangle, which has to be repeated for the overall custom DR% calculated for this case
         // #endregion
