@@ -1661,57 +1661,62 @@ export class CustomModifiersManager {
     }
 
     /**
-     * "On hit effect" means both literal "on hit modifiers" but also stuff like "roll to poison, only because you actually hit the enemy".
-     * REMARK: We patch 'clampDamageValue' because it is only ever called in ONE location. We don't patch to modify its functionality,
-     * we actually patch it as a means of injecting our code into the process we want to (there is no natural method to before/after patch).
-     *
-     * More specifically, the patched method is called only when the entity's target has been rolled to hit,
-     * which is the condition for which we want to implement some more stuff
+     * "On hit effect" means both literal "on hit modifiers" but also stuff like "roll to poison, only because you actually hit the enemy"
      */
     private patchApplyOnHitEffects() {
-        // @ts-ignore You can actually patch base classes no problem
-        this.context.patch(Character, "clampDamageValue").after(function (returnedDamage) {
-            // do some custom stuff inbetween
-            if (this.target.barrier <= 0) {
-                if (game.customModifiersInMelvor.stackingEffects.deathMarkEffect !== undefined) {
-                    if (this.modifiers.increasedDeathMarkOnHit > 0) {
-                        if (rollPercentage(100 - (this.target.modifiers.increasedDeathMarkImmunity - this.target.modifiers.decreasedDeathMarkImmunity))) {
-                            this.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffect, this.target, this.modifiers.increasedDeathMarkOnHit);
-                            this.target.rendersRequired.effects = true;
-                        }
-                    }
+        this.context.patch(Player, "onHit").after(function (returnValue: void) {
+            CustomModifiersManager.onCharacterHit(this);
+        });
 
-                    if (rollPercentage(this.modifiers.increasedChanceToApplyStackOfDeathMark - this.modifiers.decreasedChanceToApplyStackOfDeathMark)) {
-                        if (rollPercentage(100 - (this.target.modifiers.increasedDeathMarkImmunity - this.target.modifiers.decreasedDeathMarkImmunity))) {
-                            this.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffect, this.target, 1);
-                            this.target.rendersRequired.effects = true;
-                    }
+        this.context.patch(Enemy, "onHit").after(function (returnValue: void) {
+            CustomModifiersManager.onCharacterHit(this);
+        });
+    }
+
+    /**
+     *
+     * @param entity
+     */
+    private static onCharacterHit(entity: Character): void {
+        // do some custom stuff inbetween
+        if (entity.target.barrier <= 0) {
+            // Death mark
+            if (game.customModifiersInMelvor.stackingEffects.deathMarkEffect !== undefined) {
+                let deathMarkStacks = entity.modifiers.increasedDeathMarkOnHit;
+                if (rollPercentage(entity.modifiers.increasedChanceToApplyStackOfDeathMark - entity.modifiers.decreasedChanceToApplyStackOfDeathMark)) {
+                    deathMarkStacks++;
                 }
-
-                const types = MonsterTypeManager.getActiveTypesAsArray();
-                for (var i = 0; i < types.length; i++) {
-                    const type = types[i];
-
-                    let turns = this.modifiers[type.modifierPropertyNames.applyTraitTurns];
-                    if (rollPercentage(this.modifiers[type.modifierPropertyNames.increasedChanceToApplyTrait] - this.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTrait])) {
-                        turns++;
+                if (deathMarkStacks > 0) {
+                    if (rollPercentage(100 - (entity.target.modifiers.increasedDeathMarkImmunity - entity.target.modifiers.decreasedDeathMarkImmunity))) {
+                        entity.applyStackingEffect(game.customModifiersInMelvor.stackingEffects.deathMarkEffect, entity.target, deathMarkStacks);
+                        entity.target.rendersRequired.effects = true;
                     }
-
-                    if (turns > 0) {
-                        this.applyStackingEffect(this.game.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect], this.target, turns);
-                        this.target.rendersRequired.effects = true;
-                    }
-                }
-                }
-
-                if (rollPercentage(this.modifiers.increasedChanceToApplyBleed - this.modifiers.decreasedChanceToApplyBleed)) {
-                    this.applyDOT({ chance: 100, procs: 20, interval: 500, type: 'DOT', subtype: 'Bleed', damage: [{ "roll": false, "character": "Attacker", "maxRoll": "MaxHit", "maxPercent": 100 }] }, this.target, 0);
                 }
             }
 
-            // return unchanged value
-            return returnedDamage;
-        });
+            // Monster type traits
+            const types = MonsterTypeManager.getActiveTypesAsArray();
+            for (var i = 0; i < types.length; i++) {
+                const type = types[i];
+
+                // @ts-ignore - collection keys
+                let turns = entity.modifiers[type.modifierPropertyNames.applyTraitTurns];
+                // @ts-ignore - collection keys
+                if (rollPercentage(entity.modifiers[type.modifierPropertyNames.increasedChanceToApplyTrait] - entity.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTrait])) {
+                    turns++;
+                }
+
+                if (turns > 0) {
+                    entity.applyStackingEffect(entity.game.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect], entity.target, turns);
+                    entity.target.rendersRequired.effects = true;
+                }
+            }
+
+            // Bleed
+            if (rollPercentage(entity.modifiers.increasedChanceToApplyBleed - entity.modifiers.decreasedChanceToApplyBleed)) {
+                entity.applyDOT({ chance: 100, procs: 20, interval: 500, type: 'DOT', subtype: 'Bleed', damage: [{ "roll": false, "character": "Attacker", "maxRoll": "MaxHit", "maxPercent": 100 }] }, entity.target, 0);
+            }
+        }
     }
 
     /**
