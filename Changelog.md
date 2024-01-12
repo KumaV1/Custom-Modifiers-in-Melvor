@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.5.0
+* Added some of the tes/Elder Scrolls modifiers (with permission)
+* Added "damage prevention threshold" modifiers
+* Fixed issue with effect applications running into errors
+
 ## 2.4.0
 * Added more on-spawn modifiers
 * Added setting to disable on-spawn modifiers

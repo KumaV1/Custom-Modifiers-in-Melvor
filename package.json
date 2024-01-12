@@ -1,6 +1,6 @@
 {
   "name": "custom-modifiers-in-melvor",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "MelvorIdle mod, adding custom modifiers",
   "main": "index.js",
   "scripts": {
