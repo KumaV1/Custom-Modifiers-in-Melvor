@@ -72,11 +72,23 @@ export class CustomModifiersManager {
 
             // Create and register custom effect and stacking effect data
             const customEffectData: CustomEffectData = MonsterTypeHelper.createTraitCustomEffectDataInfiniteObject(type);
-
             game.customModifiersInMelvor.customModifierEffects[type.effectPropertyObjectNames.traitApplicationCustomModifierEffect] = customEffectData;
 
             game.registerDataPackage(MonsterTypeHelper.createTraitStackingEffectGamePackage(type));
+            const stackingEffect = game.stackingEffects.getObjectByID(`${Constants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`);
+            if (stackingEffect === undefined) {
+                CmimUtils.log(`Failed to find stacking effect for monster type '${type.singularName}' after registering it`);
+            } else {
+                game.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect] = stackingEffect;
+            }
+
             game.registerDataPackage(MonsterTypeHelper.createTraitCustomModifierEffectAttackGamePackage(type, customEffectData));
+            const specialAttack = game.specialAttacks.getObjectByID(`${Constants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_ATTACK_ID_SUFFIX}`);
+            if (specialAttack === undefined) {
+                CmimUtils.log(`Failed to find special attack for monster type '${type.singularName}' after registering it`);
+            } else {
+                game.customModifiersInMelvor.specialAttacks[type.effectPropertyObjectNames.traitApplicationCustomModifierEffectAttack] = specialAttack;
+            }
         }
     }
 
@@ -1390,7 +1402,8 @@ export class CustomModifiersManager {
      */
     private patchGame() {
         /**
-         * Register custom effects and attacks as properties on the Game object (akin to e.g. "unholyMarkEffect"), for easy and quick access
+         * Register custom effects and attacks as properties on the Game object (akin to e.g. "unholyMarkEffect"),
+         * for easy and quick access
          */
         this.context.patch(Game, "postDataRegistration").after(function () {
             const deathMarkEffect = this.stackingEffects.getObjectByID(ModifierConstants.DEATH_MARK_EFFECT_FULL_ID);
@@ -1709,9 +1722,9 @@ export class CustomModifiersManager {
 
                 if (turns > 0) {
                     entity.applyStackingEffect(entity.game.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect], entity.target, turns);
-                    entity.target.rendersRequired.effects = true;
+                        entity.target.rendersRequired.effects = true;
+                    }
                 }
-            }
 
             // Bleed
             if (rollPercentage(entity.modifiers.increasedChanceToApplyBleed - entity.modifiers.decreasedChanceToApplyBleed)) {
