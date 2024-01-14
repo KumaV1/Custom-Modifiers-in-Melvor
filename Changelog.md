@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.5.1
+* Fixed namespace casing issue for one monster in type allocation
+
 ## 2.5.0
 * Added some of the tes/Elder Scrolls modifiers (with permission)
 * Added "damage prevention threshold" modifiers
