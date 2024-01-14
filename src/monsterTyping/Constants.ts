@@ -73,7 +73,7 @@ export class Constants {
 
     static readonly ELEMENTALS_BASE: string[] = [
         "melvorD:Ice",
-        "MelvorD:FireSpirit",
+        "melvorD:FireSpirit",
         "melvorF:AirGolem",
         "melvorF:WaterGuard",
         "melvorF:WaterMonster",
