@@ -59,7 +59,7 @@
     PAGE_NAME_Monster_Types_Overview: "Monsterarten",
 
     Monster_Type_Overview_Remarks_Prefix: "Bitte beachtet die folgenden Punkte:",
-    Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor hat keine eigene Implementation für Monsterart-Zuweisung. Diese sind stattdessen durch den Mod 'Custom Modifiers in Melvor' hinzugefügt worden",
+    Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor hat keine eigene Implementation für Monsterart-Zuweisung. Diese sind stattdessen durch den Mod \"Custom Modifiers in Melvor\" hinzugefügt worden",
     Monster_Type_Overview_Remarks_Displayed_Type_Allocation: "Diese Übersicht zeigt alle Monsterarten-Zuweisungen. Wenn ein Monster in einer Sektion nicht auftaucht, dann bedeutet das, dass das Monster diese Monsterart nicht zugewiesen hat. Es kann natürlich sein, dass Monsterart-Zuweisungen unakkurat sind. Zögert bitte nicht Feedback zu allem zu geben, was eurer Meinung nach angepasst werden sollte",
     Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "Monster, welche durch andere Mods hinzugefügt werden, müssen von besagten Mods selbst mit der entsprechenden Monsterart-Zuweisung ausgestattet werden",
 

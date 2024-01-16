@@ -59,7 +59,7 @@
     PAGE_NAME_Monster_Types_Overview: "怪物类型",
 
     Monster_Type_Overview_Remarks_Prefix: "请注意以下几点：",
-    Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor 本身并不包含类型定义。相反，'Custom Modifiers in Melvor' mod 为 mod 定义和分配怪物类型奠定了基础",
+    Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor 本身并不包含类型定义。相反，\"Custom Modifiers in Melvor\" mod 为 mod 定义和分配怪物类型奠定了基础",
     Monster_Type_Overview_Remarks_Displayed_Type_Allocation: "该显示屏会显示所有已定义的类型分配。如果怪物没有显示在某个部分中，那么它们就没有被类型化。尽管如此，类型定义可能并不准确。如果您认为有任何需要调整的地方，请随时提出反馈意见",
     Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "对于通过其他修改器添加的任何怪物，这些修改器必须自己为这些怪物设置类型定义",
 

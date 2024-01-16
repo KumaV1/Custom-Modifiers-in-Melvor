@@ -59,7 +59,7 @@
     PAGE_NAME_Monster_Types_Overview: "몬스터 유형",
 
     Monster_Type_Overview_Remarks_Prefix: "다음 사항에 유의하세요:",
-    Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "멜버에는 원래 유형 정의가 포함되어 있지 않습니다. 대신, 'Custom Modifiers in Melvor' 모드를 통해 모드에서 몬스터 유형을 정의하고 할당할 수 있는 기반을 마련했습니다.",
+    Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "멜버에는 원래 유형 정의가 포함되어 있지 않습니다. 대신, \"Custom Modifiers in Melvor\" 모드를 통해 모드에서 몬스터 유형을 정의하고 할당할 수 있는 기반을 마련했습니다.",
     Monster_Type_Overview_Remarks_Displayed_Type_Allocation: "이 표시에는 정의된 모든 유형 할당이 표시됩니다. 몬스터가 섹션에 표시되지 않는다면 해당 몬스터는 유형이 정의되지 않은 것입니다. 즉, 유형 정의가 부정확할 수 있습니다. 조정이 필요하다고 생각되는 부분이 있으면 언제든지 피드백을 주세요.",
     Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "다른 모드를 통해 추가된 몬스터의 경우, 해당 모드가 해당 몬스터에 대한 유형 정의를 직접 설정해야 합니다.",
 

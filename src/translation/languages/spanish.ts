@@ -58,7 +58,7 @@
     // ### Monster type overview
     "PAGE_NAME_Monster_Types_Overview": "Tipos de monstruos",
     "Monster_Type_Overview_Remarks_Prefix": "Tenga en cuenta los siguientes puntos:",
-    "Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types": "Melvor no incluye definiciones de tipos de forma inherente. En su lugar, el mod 'Custom Modifiers in Melvor' ha sentado las bases para que los mods definan y asignen tipos de monstruos",
+    "Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types": "Melvor no incluye definiciones de tipos de forma inherente. En su lugar, el mod \"Custom Modifiers in Melvor\" ha sentado las bases para que los mods definan y asignen tipos de monstruos",
     "Monster_Type_Overview_Remarks_Displayed_Type_Allocation": "Esta pantalla muestra todas las asignaciones de tipos definidas. Si un monstruo no se muestra en una sección, entonces no está tipado como tal. Dicho esto, las definiciones de tipos pueden ser inexactas. No dudes en comentar cualquier cosa que creas que debería ajustarse.",
     "Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation": "Para cualquier monstruo añadido a través de otros mods, dichos mods tienen que establecer ellos mismos las definiciones de tipo para esos monstruos.",
     "Monster_Type_Overview_Player_Traits_Tab_Header": "Rasgos del jugador",
