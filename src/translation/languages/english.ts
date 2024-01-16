@@ -59,7 +59,7 @@
     PAGE_NAME_Monster_Types_Overview: "Monster types",
 
     Monster_Type_Overview_Remarks_Prefix: "Please be aware of the following points:",
-    Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor does not inherintly include type definitions. Instead, the 'Custom Modifiers in Melvor' mod has layed the foundation for mods to define and allocate monster types",
+    Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor does not inherently include type definitions. Instead, the 'Custom Modifiers in Melvor' mod has laid the foundation for mods to define and allocate monster types",
     Monster_Type_Overview_Remarks_Displayed_Type_Allocation: "This display shows all defined type allocations. If a monster isn't displayed in a section, then they are not typed as such. That being said, type definitions may be inaccurate. Feel free to give feedback on anything you think should be adjusted",
     Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "For any monsters added through other mods, said mods have to set type definitions themselves for those monsters",
 
