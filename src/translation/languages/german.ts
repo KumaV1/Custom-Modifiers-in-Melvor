@@ -6,13 +6,13 @@
 
     // ### Settings
     // #### Combat Areas Indicators section
-    Settings_Section_Combat_Areas_Indicator: 'Indikatoren in Kampfgebieten',
+    Settings_Section_Indicators: 'Indikatoren',
 
     // ##### Enable modifier ui impact indicator
     Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: 'Indikator, für den Fall, dass bestimmte Modifikatoren einen fälschlichen Einfluss auf die Kampf-Ansicht ausüben kann',
     Settings_Setting_Hint_Enable_Modifier_UI_Impact_Indicator: 'Betrifft derzeit nur einen bestimmten Modifikator. Der angezeigte Indikator bietet genauere Informationen',
 
-    // ##### Enable active monster type indicators
+    // ##### Enable boss indicators
     Settings_Setting_Label_Enable_Boss_Indicators: 'Indikatoren für Bosse aktivieren',
     Settings_Setting_Hint_Enable_Boss_Indicators: "Normalerweise ist nur das letzte Monster eines Verlieses als Boss klassifiziert. Es kann jedoch Ausnahmen geben, bei welchen auch Monster im Kampf- oder Berserkergebieten als Boss klassifiziert sein können, welche durch diese Einstellung hervorgehoben werden",
 
@@ -59,12 +59,12 @@
     PAGE_NAME_Monster_Types_Overview: "Monsterarten",
 
     Monster_Type_Overview_Remarks_Prefix: "Bitte beachtet die folgenden Punkte:",
-    Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor hat keine eigene Implementation für Monsterart-Zuweisung. Diese sind stattdessen durch den Mod 'Custom Modifiers in Melvor' hinzugefügt worden",
+    Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor hat keine eigene Implementation für Monsterart-Zuweisung. Diese sind stattdessen durch den Mod \"Custom Modifiers in Melvor\" hinzugefügt worden",
     Monster_Type_Overview_Remarks_Displayed_Type_Allocation: "Diese Übersicht zeigt alle Monsterarten-Zuweisungen. Wenn ein Monster in einer Sektion nicht auftaucht, dann bedeutet das, dass das Monster diese Monsterart nicht zugewiesen hat. Es kann natürlich sein, dass Monsterart-Zuweisungen unakkurat sind. Zögert bitte nicht Feedback zu allem zu geben, was eurer Meinung nach angepasst werden sollte",
     Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "Monster, welche durch andere Mods hinzugefügt werden, müssen von besagten Mods selbst mit der entsprechenden Monsterart-Zuweisung ausgestattet werden",
 
     Monster_Type_Overview_Player_Traits_Tab_Header: "Spieler-Modifikatoren",
-    Monster_Type_Overview_Player_Traits_Information: "Neben der organischen Artenzuweisung, kann eine Art auch durch die Verwendung des jeweiligen Modifikators erzwungen werden - in der Regel durch ausgerüstete Gegenstände, oder ggf. Einkäufe im Laden. Diese Übersicht zeigt alle Arten (und den Wert ihres jeweiligen Modifikators) an, welche den Charakter derzeit beeinflussen. DIESE ANZEIGE IST STATISCH, BASIEREND AUF DEM STAND ALS DER CHARAKTER GELADEN WURDE!",
+    Monster_Type_Overview_Player_Traits_Information: "Neben der organischen Artenzuweisung, kann eine Art auch durch die Verwendung des jeweiligen Modifikators erzwungen werden - in der Regel durch Fertigkeiten, ausgerüstete Gegenstände, oder ggf. Einkäufe im Laden. Diese Übersicht zeigt alle Arten (und den Wert ihres jeweiligen Modifikators) an, welche den Charakter derzeit beeinflussen. DIESE ANZEIGE IST STATISCH, BASIEREND AUF DEM STAND ALS DER CHARAKTER GELADEN WURDE!",
     Monster_Type_Overview_Player_Traits_Information_Type_Allocation: "Neben der organischen Artenzuweisung, kann eine Art auch durch die Verwendung des jeweiligen Modifikators erzwungen werden - in der Regel durch ausgerüstete Gegenstände, oder ggf. Einkäufe im Laden",
     Monster_Type_Overview_Player_Traits_Information_Display: 'Diese Übersicht zeigt alle Arten (und den Wert ihres jeweiligen Modifikators) an, welche den Charakter derzeit beeinflussen - genauere Info ist ggf. durch den "Show Skill Modifiers" herausfindbar',
     Monster_Type_Overview_Player_Traits_Information_Data_Loaded: "Diese Anzeige ist statisch, basierend auf dem Stand als der Charakter geladen wurde",
