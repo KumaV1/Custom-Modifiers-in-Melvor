@@ -11,7 +11,7 @@ export class SettingsManager {
 
     public static init(ctx: Modding.ModContext) {
         // Create static-defined settings
-        ctx.settings.section(TranslationManager.getLangString("Settings_Section_Combat_Areas_Indicator", true)).add([
+        ctx.settings.section(TranslationManager.getLangString("Settings_Section_Indicators", true)).add([
             {
                 type: 'switch',
                 name: 'enable-modifier-ui-impact-indicator',
@@ -162,7 +162,7 @@ export class SettingsManager {
      */
     public static get getEnableModifierUIImpactIndicator(): boolean {
         return ModContextMemoizer.ctx.settings
-            .section(TranslationManager.getLangString("Settings_Section_Combat_Areas_Indicator", true))
+            .section(TranslationManager.getLangString("Settings_Section_Indicators", true))
             .get('enable-modifier-ui-impact-indicator') as boolean;
     }
 
@@ -171,7 +171,7 @@ export class SettingsManager {
      */
     public static get getEnableBossIndicators(): boolean {
         return ModContextMemoizer.ctx.settings
-            .section(TranslationManager.getLangString("Settings_Section_Combat_Areas_Indicator", true))
+            .section(TranslationManager.getLangString("Settings_Section_Indicators", true))
             .get('enable-boss-indicators') as boolean;
     }
 
@@ -180,7 +180,7 @@ export class SettingsManager {
      */
     public static get getEnableActiveMonsterTypeIndicators(): boolean {
         return ModContextMemoizer.ctx.settings
-            .section(TranslationManager.getLangString("Settings_Section_Combat_Areas_Indicator", true))
+            .section(TranslationManager.getLangString("Settings_Section_Indicators", true))
             .get('enable-active-monster-type-indicators') as boolean;
     }
 
@@ -189,7 +189,7 @@ export class SettingsManager {
      */
     public static get getEnableInactiveMonsterTypeIndicators(): boolean {
         return ModContextMemoizer.ctx.settings
-            .section(TranslationManager.getLangString("Settings_Section_Combat_Areas_Indicator", true))
+            .section(TranslationManager.getLangString("Settings_Section_Indicators", true))
             .get('enable-inactive-monster-type-indicators') as boolean;
     }
 

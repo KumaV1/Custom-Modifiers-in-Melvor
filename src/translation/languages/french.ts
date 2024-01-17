@@ -6,7 +6,7 @@
 
     // ### Settings
     // #### Combat Areas Indicators section
-    Settings_Section_Combat_Areas_Indicator: 'Indicateurs des zones de combat',
+    Settings_Section_Indicators: 'Indicateurs',
 
     // ##### Enable modifier ui impact indicator
     Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: "Indicateur d'activation, pour les cas où certains modificateurs peuvent entraîner un affichage défectueux dans l'interface utilisateur.",

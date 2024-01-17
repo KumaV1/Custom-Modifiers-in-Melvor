@@ -6,7 +6,7 @@
 
     // ### Settings
     // #### Combat Areas Indicators section
-    Settings_Section_Combat_Areas_Indicator: 'Combat Areas Indicators',
+    Settings_Section_Indicators: 'Combat Areas Indicators',
 
     // ##### Enable modifier ui impact indicator
     Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: 'Enable indicator, for when certain modifiers may cause a faulty display in the UI',

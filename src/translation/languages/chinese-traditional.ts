@@ -6,7 +6,7 @@
 
     // ### Settings
     // #### Combat Areas Indicators section
-    Settings_Section_Combat_Areas_Indicator: '作戰區域指標',
+    Settings_Section_Indicators: '指標',
 
     // ##### Enable modifier ui impact indicator
     Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: '啟用指示器，當某些修飾符可能導致使用者介面顯示錯誤時',

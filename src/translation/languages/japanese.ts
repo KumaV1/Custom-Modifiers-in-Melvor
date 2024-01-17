@@ -6,7 +6,7 @@ export const ja = {
 
     // ### Settings
     // #### Combat Areas Indicators section
-    "Settings_Section_Combat_Areas_Indicator": "戦闘地域の指標",
+    "Settings_Section_Indicators": "指標",
 
     // ##### Enable modifier ui impact indicator
     "Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator": "特定のモディファイアがUIの表示に不具合を生じさせる可能性がある場合に、インジケータを有効にする。",

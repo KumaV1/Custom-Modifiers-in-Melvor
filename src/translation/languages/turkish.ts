@@ -6,7 +6,7 @@
 
     // ### Settings
     // #### Combat Areas Indicators section
-    "Settings_Section_Combat_Areas_Indicator": "Savaş Alanları Göstergeleri",
+    "Settings_Section_Indicators": "Göstergeler",
 
     // ##### Enable modifier ui impact indicator
     "Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator": "Belirli değiştiricilerin kullanıcı arayüzünde hatalı bir görüntüye neden olabileceği durumlar için etkinleştirme göstergesi",

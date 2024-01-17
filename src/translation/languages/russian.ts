@@ -6,7 +6,7 @@
 
     // ### Settings
     // #### Combat Areas Indicators section
-    "Settings_Section_Combat_Areas_Indicator": "Показатели районов боевых действий",
+    "Settings_Section_Indicators": "Индикаторы",
 
     // ##### Enable modifier ui impact indicator
     "Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator": "Индикатор включения, когда определенные модификаторы могут вызвать неправильное отображение в пользовательском интерфейсе",

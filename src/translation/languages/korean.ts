@@ -6,7 +6,7 @@
 
     // ### Settings
     // #### Combat Areas Indicators section
-    Settings_Section_Combat_Areas_Indicator: '전투 지역 표시기',
+    Settings_Section_Indicators: '지표',
 
     // ##### Enable modifier ui impact indicator
     Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: '특정 수정자가 사용자 인터페이스에 오류를 일으킬 수 있는 경우 표시기를 활성화합니다.',
