@@ -12,7 +12,7 @@
     Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: '특정 수정자가 사용자 인터페이스에 오류를 일으킬 수 있는 경우 표시기를 활성화합니다.',
     Settings_Setting_Hint_Enable_Modifier_UI_Impact_Indicator: '현재 하나의 수정자에만 영향을 줍니다. 표시된 표시기는 자세한 정보를 제공합니다.',
 
-    // ##### Enable active monster type indicators
+    // ##### Enable boss indicators
     Settings_Setting_Label_Enable_Boss_Indicators: '보스 표시기 사용',
     Settings_Setting_Hint_Enable_Boss_Indicators: "일반적으로 던전의 최종 몬스터만 보스로 분류됩니다. 하지만 이 규칙에 예외가 있을 수 있는데, 전투 또는 처치 구역에 있는 몬스터도 보스로 분류될 수 있으며, 이 설정은 이를 강조합니다.",
 

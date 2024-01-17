@@ -59,7 +59,7 @@
     PAGE_NAME_Monster_Types_Overview: "Tipos de monstros",
 
     Monster_Type_Overview_Remarks_Prefix: "Tenha em atenção os seguintes pontos:",
-    Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor não inclui inerentemente definições de tipos. Em vez disso, o mod "Custom Modifiers in Melvor" lançou as bases para que os mods definam e atribuam tipos de monstros",
+    Monster_Type_Overview_Remarks_Not_Inherit_Monster_Types: "Melvor não inclui inerentemente definições de tipos. Em vez disso, o mod \"Custom Modifiers in Melvor\" lançou as bases para que os mods definam e atribuam tipos de monstros",
     Monster_Type_Overview_Remarks_Displayed_Type_Allocation: "Este ecrã mostra todas as atribuições de tipos definidas. Se um monstro não for apresentado numa secção, então não está tipado como tal. Dito isso, as definições de tipo podem ser imprecisas. Sinta-se à vontade para dar feedback sobre qualquer coisa que ache que deva ser ajustada",
     Monster_Type_Overview_Remarks_Custom_Mods_Monster_Type_Allocation: "Para quaisquer monstros adicionados através de outros mods, esses mods têm de definir eles próprios definições de tipo para esses monstros",
 

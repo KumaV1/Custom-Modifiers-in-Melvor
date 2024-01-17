@@ -12,7 +12,7 @@
     "Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator": "Indicador de activación, para cuando ciertos modificadores pueden causar una visualización defectuosa en la interfaz de usuario.",
     "Settings_Setting_Hint_Enable_Modifier_UI_Impact_Indicator": "Actualmente sólo afecta a un modificador. El indicador mostrado proporciona más información",
 
-    // ##### Enable active monster type indicators
+    // ##### Enable boss indicators
     "Settings_Setting_Label_Enable_Boss_Indicators": "Activar indicadores de jefe",
     "Settings_Setting_Hint_Enable_Boss_Indicators": "Normalmente, sólo el monstruo final de una mazmorra se clasifica como jefe. Puede haber excepciones a esta regla, sin embargo, donde los monstruos en Combat- o Slayer Áreas también puede ser clasificado como un jefe, que este ajuste se destacan",
 

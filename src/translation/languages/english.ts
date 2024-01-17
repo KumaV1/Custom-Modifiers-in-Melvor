@@ -12,7 +12,7 @@
     Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: 'Enable indicator, for when certain modifiers may cause a faulty display in the UI',
     Settings_Setting_Hint_Enable_Modifier_UI_Impact_Indicator: 'Currently affects only one modifier. The displayed indicator provides more info',
 
-    // ##### Enable active monster type indicators
+    // ##### Enable boss indicators
     Settings_Setting_Label_Enable_Boss_Indicators: 'Enable boss indicators',
     Settings_Setting_Hint_Enable_Boss_Indicators: "Usually, only the final monster of a dungeon is classified as a boss. There may be exceptions to this rule, though, where monsters in Combat- or Slayer Areas may also be classified as a boss, which this setting will highlight",
 

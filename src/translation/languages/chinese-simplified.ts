@@ -12,7 +12,7 @@
     Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: '启用指示器，用于显示某些修改器可能导致用户界面显示错误的情况',
     Settings_Setting_Hint_Enable_Modifier_UI_Impact_Indicator: '目前只影响一个修改器。显示的指示器可提供更多信息',
 
-    // ##### Enable active monster type indicators
+    // ##### Enable boss indicators
     Settings_Setting_Label_Enable_Boss_Indicators: '启用老板指示器',
     Settings_Setting_Hint_Enable_Boss_Indicators: "通常情况下，只有地牢的最终怪物才会被归类为 BOSS。但也可能有例外情况，战斗区或杀手区的怪物也可能被归类为 BOSS，本设置将强调这一点",
 

@@ -12,7 +12,7 @@
     Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: "Indicatore di abilitazione, per i casi in cui alcuni modificatori possono causare una visualizzazione errata nell'interfaccia utente.",
     Settings_Setting_Hint_Enable_Modifier_UI_Impact_Indicator: "Attualmente influisce solo su un modificatore. L'indicatore visualizzato fornisce maggiori informazioni",
 
-    // ##### Enable active monster type indicators
+    // ##### Enable boss indicators
     Settings_Setting_Label_Enable_Boss_Indicators: 'Abilitare gli indicatori del capo',
     Settings_Setting_Hint_Enable_Boss_Indicators: "Di solito, solo il mostro finale di un dungeon viene classificato come boss. Tuttavia, ci possono essere delle eccezioni a questa regola, in cui anche i mostri delle aree di combattimento o di uccisione possono essere classificati come boss.",
 

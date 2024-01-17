@@ -12,7 +12,7 @@
     "Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator": "Belirli değiştiricilerin kullanıcı arayüzünde hatalı bir görüntüye neden olabileceği durumlar için etkinleştirme göstergesi",
     "Settings_Setting_Hint_Enable_Modifier_UI_Impact_Indicator": "Şu anda yalnızca bir değiştiriciyi etkilemektedir. Görüntülenen gösterge daha fazla bilgi sağlar",
 
-    // ##### Enable active monster type indicators
+    // ##### Enable boss indicators
     "Settings_Setting_Label_Enable_Boss_Indicators": "Patron göstergelerini etkinleştirin",
     "Settings_Setting_Hint_Enable_Boss_Indicators": "Genellikle bir zindanın yalnızca son canavarı boss olarak sınıflandırılır. Ancak bu kuralın istisnaları olabilir, Savaş veya Avcı Alanlarındaki canavarlar da boss olarak sınıflandırılabilir, bu ayar da bunu vurgulayacaktır",
 

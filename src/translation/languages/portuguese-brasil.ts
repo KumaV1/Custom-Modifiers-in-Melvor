@@ -12,7 +12,7 @@
     Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: 'Indicador de ativação, para quando determinados modificadores podem causar uma exibição defeituosa na interface do usuário',
     Settings_Setting_Hint_Enable_Modifier_UI_Impact_Indicator: 'Atualmente, afeta apenas um modificador. O indicador exibido fornece mais informações',
 
-    // ##### Enable active monster type indicators
+    // ##### Enable boss indicators
     Settings_Setting_Label_Enable_Boss_Indicators: 'Ativar indicadores de chefe',
     Settings_Setting_Hint_Enable_Boss_Indicators: "Normalmente, somente o monstro final de uma masmorra é classificado como chefe. No entanto, pode haver exceções a essa regra, em que monstros em áreas de combate ou de caça também podem ser classificados como chefes, o que será destacado nesta configuração",
 

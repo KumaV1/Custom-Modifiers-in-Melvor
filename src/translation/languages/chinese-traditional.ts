@@ -12,7 +12,7 @@
     Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: '啟用指示器，當某些修飾符可能導致使用者介面顯示錯誤時',
     Settings_Setting_Hint_Enable_Modifier_UI_Impact_Indicator: '目前僅影響一項修改器。 顯示的指示器提供更多信息',
 
-    // ##### Enable active monster type indicators
+    // ##### Enable boss indicators
     Settings_Setting_Label_Enable_Boss_Indicators: '啟用老闆指標',
     Settings_Setting_Hint_Enable_Boss_Indicators: "通常，只有地下城的最後一個怪物才會被歸類為 老闆。 不過，此規則可能有例外，戰鬥區域或殺手區域中的怪物也可能被歸類為 老闆，此設定將突出顯示這一點",
 

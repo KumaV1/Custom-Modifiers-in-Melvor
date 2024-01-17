@@ -12,7 +12,7 @@
     Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: "Indicateur d'activation, pour les cas où certains modificateurs peuvent entraîner un affichage défectueux dans l'interface utilisateur.",
     Settings_Setting_Hint_Enable_Modifier_UI_Impact_Indicator: "N'affecte actuellement qu'un seul modificateur. L'indicateur affiché fournit plus d'informations",
 
-    // ##### Enable active monster type indicators
+    // ##### Enable boss indicators
     Settings_Setting_Label_Enable_Boss_Indicators: 'Activer les indicateurs de patron',
     Settings_Setting_Hint_Enable_Boss_Indicators: "En général, seul le dernier monstre d'un donjon est considéré comme un boss. Il peut cependant y avoir des exceptions à cette règle, lorsque les monstres des zones de combat ou de massacre peuvent également être classés comme boss, ce que ce paramètre mettra en évidence",
 

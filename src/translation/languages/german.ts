@@ -12,7 +12,7 @@
     Settings_Setting_Label_Enable_Modifier_UI_Impact_Indicator: 'Indikator, für den Fall, dass bestimmte Modifikatoren einen fälschlichen Einfluss auf die Kampf-Ansicht ausüben kann',
     Settings_Setting_Hint_Enable_Modifier_UI_Impact_Indicator: 'Betrifft derzeit nur einen bestimmten Modifikator. Der angezeigte Indikator bietet genauere Informationen',
 
-    // ##### Enable active monster type indicators
+    // ##### Enable boss indicators
     Settings_Setting_Label_Enable_Boss_Indicators: 'Indikatoren für Bosse aktivieren',
     Settings_Setting_Hint_Enable_Boss_Indicators: "Normalerweise ist nur das letzte Monster eines Verlieses als Boss klassifiziert. Es kann jedoch Ausnahmen geben, bei welchen auch Monster im Kampf- oder Berserkergebieten als Boss klassifiziert sein können, welche durch diese Einstellung hervorgehoben werden",
 
