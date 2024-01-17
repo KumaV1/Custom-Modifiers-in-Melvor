@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.5.2
+* Added machine translation for languages other than English and German
+
 ## 2.5.1
 * Fixed namespace casing issue for one monster in type allocation
 
