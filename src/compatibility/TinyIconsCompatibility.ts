@@ -1,4 +1,4 @@
-import { MonsterTypeDefinition } from '../monsterTyping/MonsterTypeDefinition';
+import { MonsterTypeDefinition } from '../models/monsterTyping/MonsterTypeDefinition';
 
 export class TinyIconsCompatibility {
     /** Non-dynamic modifiers */

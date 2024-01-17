@@ -1,9 +1,9 @@
-import { Constants } from "../Constants";
-import { CmimUtils } from "../Utils";
-import { MonsterTypeManager } from "../monsterTyping/MonsterTypeManager";
+import { CmimUtils } from "../../Utils";
+import { ModConstants } from "../../constants/ModConstants";
+import { MonsterTypeManager } from "../../managers/MonsterTypeManager";
 import { MonsterTypeIcon } from "./MonsterTypeIcon";
-import { SettingsManager } from "./SettingsManager";
-import { TranslationManager } from "../translation/TranslationManager";
+import { SettingsManager } from "../../managers/SettingsManager";
+import { TranslationManager } from "../../managers/TranslationManager";
 
 /**
  * Group of static functions used in the config objects for settings.
@@ -23,7 +23,7 @@ export class MonsterTypeListConfigFunctions {
                 className: 'font-weight-normal',
                 text: config.label
             });
-            label.setAttribute('for', `${Constants.MOD_NAMESPACE}:${this.name}`);
+            label.setAttribute('for', `${ModConstants.MOD_NAMESPACE}:${this.name}`);
             if (config.hint) {
                 const forceWrapper = createElement('span', { className: 'ms__force-wrap' });
                 const hint = createElement('small', {
@@ -73,7 +73,7 @@ export class MonsterTypeListConfigFunctions {
     public static onChange(value: unknown, previousValue: unknown): string | boolean | void {
         SettingsManager.setButtonToReload();
 
-        const hint = document.querySelector(`label[for="${Constants.MOD_NAMESPACE}:${this.name}"] > small`);
+        const hint = document.querySelector(`label[for="${ModConstants.MOD_NAMESPACE}:${this.name}"] > small`);
         if (hint) {
             hint.textContent = TranslationManager.getLangString("Settings_Hint_Save_Reload_Required", true);
             hint.classList.add("text-warning");

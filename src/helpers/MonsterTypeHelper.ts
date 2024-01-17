@@ -1,11 +1,13 @@
-import { Constants } from '../Constants';
-import { Constants as ModifierConstants } from '../modifiers/Constants';
-import { Constants as MonsterTypeConstants } from '../monsterTyping/Constants'
-import { MonsterTypeDefinition } from './MonsterTypeDefinition';
-import { MonsterTypeEffectObjectNames } from './MonsterTypeEffectObjectNames';
-import { MonsterTypeModifierPropertyNames } from './MonsterTypeModifierPropertyNames'
-import { MonsterTypeModifierType } from './MonsterTypeModifierType'
-import { TranslationManager } from '../translation/TranslationManager';
+import { ModConstants } from '../constants/ModConstants';
+import { ModifierConstants } from '../constants/ModifierConstants';
+import { MonsterTypeConstants } from '../constants/MonsterTypeConstants'
+import { MonsterTypeDefinition } from '../models/monsterTyping/MonsterTypeDefinition';
+import { MonsterTypeEffectObjectNames } from '../models/monsterTyping/MonsterTypeEffectObjectNames';
+import { MonsterTypeModifierPropertyNames } from '../models/monsterTyping/MonsterTypeModifierPropertyNames'
+import { MonsterTypeModifierType } from '../models/enums/MonsterTypeModifierType'
+import { TranslationManager } from '../managers/TranslationManager';
+
+import { languages } from '../languages';
 
 export class MonsterTypeHelper {
     /**
@@ -69,12 +71,13 @@ export class MonsterTypeHelper {
      * @returns
      */
     public static createModifierDataObject(modifierType: MonsterTypeModifierType, modifierName: string) {
-        // First, create the default state of the object to crate
+        // First, create the default state of the object to create
         let modifierObject = {
             get langDescription() {
                 return getLangString(`MODIFIER_DATA_${modifierName}`);
             },
-            description: '',
+            // @ts-ignore Ignore implicit any error
+            description: languages.en[`MODIFIER_DATA_${modifierName}`],
             isSkill: false,
             isNegative: false,
             tags: ['combat']
@@ -119,8 +122,8 @@ export class MonsterTypeHelper {
      */
     public static createTraitStackingEffectGamePackage(type: MonsterTypeDefinition): GameDataPackage {
         return {
-            "$schema": Constants.SCHEMA,
-            "namespace": Constants.MOD_NAMESPACE,
+            "$schema": ModConstants.SCHEMA,
+            "namespace": ModConstants.MOD_NAMESPACE,
             "data": {
                 "stackingEffects": [MonsterTypeHelper.createTraitStackingEffectDataObject(type)]
             }
@@ -164,8 +167,8 @@ export class MonsterTypeHelper {
      */
     public static createTraitCustomModifierEffectAttackGamePackage(type: MonsterTypeDefinition, customEffectData: CustomEffectData): GameDataPackage {
         return {
-            "$schema": Constants.SCHEMA,
-            "namespace": Constants.MOD_NAMESPACE,
+            "$schema": ModConstants.SCHEMA,
+            "namespace": ModConstants.MOD_NAMESPACE,
             "data": {
                 "attacks": [MonsterTypeHelper.createTraitCustomEffectAttackDataObject(type, customEffectData)]
             }
@@ -259,7 +262,7 @@ export class MonsterTypeHelper {
         badgeEl.classList.add('bage-pill');
         badgeEl.classList.add('mr-1');
         badgeEl.classList.add(typeActive ? 'badge-success' : 'badge-warning');
-        badgeEl.classList.add(Constants.COMBAT_AREAS_INDICATOR_BADGE_CLASS);
+        badgeEl.classList.add(ModConstants.COMBAT_AREAS_INDICATOR_BADGE_CLASS);
 
         badgeEl.innerHTML = displayCount
             ? `${count} `

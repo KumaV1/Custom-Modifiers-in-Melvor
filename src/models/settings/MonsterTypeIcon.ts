@@ -1,5 +1,5 @@
 import { MonsterTypeDefinition } from "../monsterTyping/MonsterTypeDefinition";
-import { TranslationManager } from "../translation/TranslationManager";
+import { TranslationManager } from "../../managers/TranslationManager";
 
 /** A class to build a monster type info icon */
 export class MonsterTypeIcon extends InfoIcon {

@@ -1,4 +1,4 @@
-export class Constants {
+export class ModConstants {
     static readonly SCHEMA = "https://melvoridle.com/assets/schema/gameData.json";
     static readonly MOD_NAMESPACE = "customModifiersInMelvor";
 

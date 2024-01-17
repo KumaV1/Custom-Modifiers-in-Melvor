@@ -1,10 +1,10 @@
-import { CmimUtils } from "./Utils";
-import { Constants } from "./Constants";
-import { MonsterTypeCombatAreasIndicatorDefinition } from "./monsterTyping/MonsterTypeCombatAreasIndicatorDefinition";
-import { MonsterTypeHelper } from "./monsterTyping/MonsterTypeHelper";
-import { MonsterTypeManager } from "./monsterTyping/MonsterTypeManager";
-import { SettingsManager } from "./settings/SettingsManager";
-import { TranslationManager } from "./translation/TranslationManager";
+import { CmimUtils } from "../Utils";
+import { ModConstants } from "../constants/ModConstants";
+import { MonsterTypeCombatAreasIndicatorDefinition } from "../models/monsterTyping/MonsterTypeCombatAreasIndicatorDefinition";
+import { MonsterTypeHelper } from "../helpers/MonsterTypeHelper";
+import { MonsterTypeManager } from "../managers/MonsterTypeManager";
+import { SettingsManager } from "../managers/SettingsManager";
+import { TranslationManager } from "../managers/TranslationManager";
 
 export class CombatAreasUIManager {
     private static _modifierUIImpactIndicatorElement: HTMLElement;
@@ -57,8 +57,8 @@ export class CombatAreasUIManager {
      */
     public static rebuildCombatAreaMonsterTypeIndicators(bossEnabled: boolean, activeEnabled: boolean, inactiveEnabled: boolean): void {
         // Delete all existing
-        CmimUtils.removeElementsByClass(Constants.COMBAT_AREAS_INDICATOR_BADGE_CLASS);
-        CmimUtils.removeElementsByClass(Constants.COMBAT_AREAS_INDICATOR_BADGE_BR_CLASS);
+        CmimUtils.removeElementsByClass(ModConstants.COMBAT_AREAS_INDICATOR_BADGE_CLASS);
+        CmimUtils.removeElementsByClass(ModConstants.COMBAT_AREAS_INDICATOR_BADGE_BR_CLASS);
 
         // Rebuild anew, repeating "init" just not in a lifecycle hook
         CombatAreasUIManager.buildCombatAreasIndicators(bossEnabled, activeEnabled, inactiveEnabled);
@@ -230,7 +230,7 @@ export class CombatAreasUIManager {
      */
     private static createModifierUIImpactIndicator(): HTMLElement {
         let containerEl = document.createElement("div");
-        containerEl.classList.add('d-none', 'text-warning', 'row', 'row-deck', 'gutters-tiny', Constants.COMBAT_MODIFIER_UI_IMPACT_INDICATOR_CONTAINER_CLASS);
+        containerEl.classList.add('d-none', 'text-warning', 'row', 'row-deck', 'gutters-tiny', ModConstants.COMBAT_MODIFIER_UI_IMPACT_INDICATOR_CONTAINER_CLASS);
 
         const headline = TranslationManager.getLangString("Combat_Modifier_UI_Impact_Indicator_Headline", true);
         const text = TranslationManager.getLangString("Combat_Modifier_UI_Impact_Indicator_Text", true);
@@ -262,7 +262,7 @@ export class CombatAreasUIManager {
      */
     private static createCombatAreaBossIndicatorBadge(): HTMLElement {
         let badgeEl = document.createElement('span');
-        badgeEl.classList.add('badge', 'bage-pill', 'mr-1', 'badge-success', Constants.COMBAT_AREAS_INDICATOR_BADGE_CLASS);
+        badgeEl.classList.add('badge', 'bage-pill', 'mr-1', 'badge-success', ModConstants.COMBAT_AREAS_INDICATOR_BADGE_CLASS);
 
         badgeEl.innerHTML = TranslationManager.getTranslationOrFallback(
             'Combat_Area_Boss_Indicator',
@@ -279,7 +279,7 @@ export class CombatAreasUIManager {
      */
     private static createCombatAreaIndicatorBadgeBr(): HTMLElement {
         let br = document.createElement("br");
-        br.classList.add(Constants.COMBAT_AREAS_INDICATOR_BADGE_BR_CLASS);
+        br.classList.add(ModConstants.COMBAT_AREAS_INDICATOR_BADGE_BR_CLASS);
 
         return br;
     }

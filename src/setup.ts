@@ -1,16 +1,15 @@
 // Modules
 // You can import script modules and have full type completion
-import { CombatAreasUIManager } from './CombatAreasUIManager';
-import { Constants } from './modifiers/Constants';
-import { CustomModifiersManager } from './modifiers/CustomModifiersManager';
+import { CombatAreasUIManager } from './managers/CombatAreasUIManager';
+import { CustomModifiersManager } from './managers/CustomModifiersManager';
 import { GameObjectDataWrapperInitializer } from './GameObjectDataWrapperInitializer';
 import { ModContextMemoizer } from './ModContextMemoizer';
-import { MonsterType } from './monsterTyping/MonsterType';
-import { MonsterTypeManager } from './monsterTyping/MonsterTypeManager';
-import { MonsterTypeOverview } from './components/MonsterTypeOverview'
-import { SettingsManager } from './settings/SettingsManager';
+import { MonsterType } from './models/enums/MonsterType';
+import { MonsterTypeManager } from './managers/MonsterTypeManager';
+import { MonsterTypeOverview } from './ui/MonsterTypeOverview'
+import { SettingsManager } from './managers/SettingsManager';
 import { TinyIconsCompatibility } from './compatibility/TinyIconsCompatibility';
-import { TranslationManager } from './translation/TranslationManager';
+import { TranslationManager } from './managers/TranslationManager';
 
 // Data
 // Game data for registration
@@ -24,7 +23,7 @@ import '../assets/Death_Mark.png'
 import '../assets/Invoke_Death.png'
 import '../assets/Generic_Monster_Type_Icon.png'
 
-import '../src/settings/settings.css'
+import './ui/settings.css'
 // #endregion
 
 export async function setup(ctx: Modding.ModContext) {

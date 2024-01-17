@@ -1,8 +1,8 @@
 import { CmimUtils } from "../Utils";
-import { MonsterTypeDefinition } from "../monsterTyping/MonsterTypeDefinition";
-import { MonsterTypeManager } from "../monsterTyping/MonsterTypeManager"
-import { SettingsManager } from "../settings/SettingsManager";
-import { TranslationManager } from "../translation/TranslationManager";
+import { MonsterTypeDefinition } from "../models/monsterTyping/MonsterTypeDefinition";
+import { MonsterTypeManager } from "../managers/MonsterTypeManager"
+import { SettingsManager } from "../managers/SettingsManager";
+import { TranslationManager } from "../managers/TranslationManager";
 
 interface MonsterTypeOverviewPlayerTraitEntry {
     name: string,

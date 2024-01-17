@@ -1,12 +1,13 @@
 ﻿import { CmimUtils } from '../Utils';
-import { Constants } from '../Constants';
-import { Constants as ModifierConstants } from './Constants';
-import { CustomModifiersCalculator } from './CustomModifiersCalculator'
-import { MonsterTypeDefinition } from '../monsterTyping/MonsterTypeDefinition';
-import { MonsterTypeHelper } from '../monsterTyping/MonsterTypeHelper';
-import { MonsterTypeManager } from '../monsterTyping/MonsterTypeManager';
-import { SettingsManager } from '../settings/SettingsManager';
-import { languages } from '../translation/languages';
+import { ModConstants } from '../constants/ModConstants';
+import { ModifierConstants } from '../constants/ModifierConstants';
+import { CustomModifiersCalculationHelper } from '../helpers/CustomModifiersCalculationHelper'
+import { MonsterTypeDefinition } from '../models/monsterTyping/MonsterTypeDefinition';
+import { MonsterTypeHelper } from '../helpers/MonsterTypeHelper';
+import { MonsterTypeManager } from '../managers/MonsterTypeManager';
+import { SettingsManager } from '../managers/SettingsManager';
+
+import { languages } from '../languages';
 
 /**
  * Patches different sections of the code, in order to integrate custom modifiers
@@ -75,7 +76,7 @@ export class CustomModifiersManager {
             game.customModifiersInMelvor.customModifierEffects[type.effectPropertyObjectNames.traitApplicationCustomModifierEffect] = customEffectData;
 
             game.registerDataPackage(MonsterTypeHelper.createTraitStackingEffectGamePackage(type));
-            const stackingEffect = game.stackingEffects.getObjectByID(`${Constants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`);
+            const stackingEffect = game.stackingEffects.getObjectByID(`${ModConstants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`);
             if (stackingEffect === undefined) {
                 CmimUtils.log(`Failed to find stacking effect for monster type '${type.singularName}' after registering it`);
             } else {
@@ -83,7 +84,7 @@ export class CustomModifiersManager {
             }
 
             game.registerDataPackage(MonsterTypeHelper.createTraitCustomModifierEffectAttackGamePackage(type, customEffectData));
-            const specialAttack = game.specialAttacks.getObjectByID(`${Constants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_ATTACK_ID_SUFFIX}`);
+            const specialAttack = game.specialAttacks.getObjectByID(`${ModConstants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_ATTACK_ID_SUFFIX}`);
             if (specialAttack === undefined) {
                 CmimUtils.log(`Failed to find special attack for monster type '${type.singularName}' after registering it`);
             } else {
@@ -1385,7 +1386,7 @@ export class CustomModifiersManager {
          */
         // @ts-ignore You can actually patch base classes no problem
         this.context.patch(Skill, "getXPModifier").after(function (currentAmount) {
-            return currentAmount += CustomModifiersCalculator.getPercentagetXpModification(this);
+            return currentAmount += CustomModifiersCalculationHelper.getPercentagetXpModification(this);
         });
 
         /**
@@ -1393,7 +1394,7 @@ export class CustomModifiersManager {
          */
         // @ts-ignore You can actually patch base classes no problem
         this.context.patch(Skill, "modifyXP").after(function (currentAmount) {
-            return currentAmount += CustomModifiersCalculator.getFlatXpModification(this);
+            return currentAmount += CustomModifiersCalculationHelper.getFlatXpModification(this);
         });
     }
 
@@ -1415,12 +1416,12 @@ export class CustomModifiersManager {
             for (var i = 0; i < types.length; i++) {
                 const type = types[i];
 
-                const stackingEffect = this.stackingEffects.getObjectByID(`${Constants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`);
+                const stackingEffect = this.stackingEffects.getObjectByID(`${ModConstants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`);
                 if (stackingEffect) {
                     this.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect] = stackingEffect;
                 }
 
-                const traitApplyingAttack = this.specialAttacks.getObjectByID(`${Constants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_ATTACK_ID_SUFFIX}`);
+                const traitApplyingAttack = this.specialAttacks.getObjectByID(`${ModConstants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_ATTACK_ID_SUFFIX}`);
                 if (traitApplyingAttack) {
                     this.customModifiersInMelvor.specialAttacks[type.effectPropertyObjectNames.traitApplicationCustomModifierEffectAttack] = traitApplyingAttack;
                 }
@@ -1654,7 +1655,7 @@ export class CustomModifiersManager {
                         // then build a notification for them, so they know it was death mark that killed them
                         if (this instanceof Player) {
                             const notification: NotificationData = {
-                                media: Constants.ERROR_ICON_MEDIA_PATH,
+                                media: ModConstants.ERROR_ICON_MEDIA_PATH,
                                 quantity: 1,
                                 text: getLangString(ModifierConstants.DEATH_MARK_NOTIFICATION_TEXT_LANGUAGE_ID),
                                 isImportant: true,
@@ -1741,12 +1742,12 @@ export class CustomModifiersManager {
      */
     private patchMinHitCalculations() {
         this.context.patch(Player, "modifyMinHit").after(function (minHit: number) {
-            minHit += CustomModifiersCalculator.getPlayerMinHitModification(this);
+            minHit += CustomModifiersCalculationHelper.getPlayerMinHitModification(this);
 
             return clampValue(minHit, 1, this.stats.maxHit);
         });
         this.context.patch(Enemy, "modifyMinHit").after(function (minHit: number) {
-            minHit += CustomModifiersCalculator.getEnemyMinHitModification(this);
+            minHit += CustomModifiersCalculationHelper.getEnemyMinHitModification(this);
 
             return clampValue(minHit, 1, this.stats.maxHit);
         });
@@ -1757,19 +1758,19 @@ export class CustomModifiersManager {
      */
     private patchMaxHitCalculations() {
         this.context.patch(Player, "getMaxHitModifier").after(function (maxHitModifier: number): number {
-            return maxHitModifier += CustomModifiersCalculator.getPlayerMaxHitPercentageModification(this);
+            return maxHitModifier += CustomModifiersCalculationHelper.getPlayerMaxHitPercentageModification(this);
         });
         this.context.patch(Enemy, "getMaxHitModifier").after(function (maxHitModifier: number): number {
-            return maxHitModifier += CustomModifiersCalculator.getEnemyMaxHitPercentageModification(this);
+            return maxHitModifier += CustomModifiersCalculationHelper.getEnemyMaxHitPercentageModification(this);
         });
 
         this.context.patch(Player, "modifyMaxHit").after(function (maxHit) {
-            maxHit += CustomModifiersCalculator.getPlayerMaxHitFlatModification(this);
+            maxHit += CustomModifiersCalculationHelper.getPlayerMaxHitFlatModification(this);
 
             return Math.max(maxHit, 1);
         });
         this.context.patch(Enemy, "modifyMaxHit").after(function (maxHit) {
-            maxHit += CustomModifiersCalculator.getEnemyMaxHitFlatModification(this);
+            maxHit += CustomModifiersCalculationHelper.getEnemyMaxHitFlatModification(this);
 
             return Math.max(maxHit, 1);
         });
@@ -1780,10 +1781,10 @@ export class CustomModifiersManager {
      */
     private patchAttackDamageCalculations() {
         this.context.patch(Player, "getFlatAttackDamageBonus").after(function (returnValue: number, target: Character) {
-            return returnValue + CustomModifiersCalculator.getPlayerFlatAttackDamageBonusModification(this, target);
+            return returnValue + CustomModifiersCalculationHelper.getPlayerFlatAttackDamageBonusModification(this, target);
         });
         this.context.patch(Enemy, "getFlatAttackDamageBonus").after(function (returnValue: number, target: Character) {
-            return returnValue + CustomModifiersCalculator.getEnemyFlatAttackDamageBonusModification(this, target);
+            return returnValue + CustomModifiersCalculationHelper.getEnemyFlatAttackDamageBonusModification(this, target);
         });
 
         /**
@@ -1791,10 +1792,10 @@ export class CustomModifiersManager {
          * @param damage the damage originally provided to
          */
         this.context.patch(Player, "modifyAttackDamage").after(function (returnValue: number, target: Character, attack: SpecialAttack, damage: number) {
-            return returnValue + CustomModifiersCalculator.getPlayerDamageModification(this, target, attack, damage, returnValue);
+            return returnValue + CustomModifiersCalculationHelper.getPlayerDamageModification(this, target, attack, damage, returnValue);
         });
         this.context.patch(Enemy, "modifyAttackDamage").after(function (returnValue: number, target: Character, attack: SpecialAttack, damage: number) {
-            return returnValue + CustomModifiersCalculator.getEnemyDamageModification(this, target, attack, damage, returnValue);
+            return returnValue + CustomModifiersCalculationHelper.getEnemyDamageModification(this, target, attack, damage, returnValue);
         });
     }
 
@@ -1804,10 +1805,10 @@ export class CustomModifiersManager {
      */
     private patchDamageModifierCalculations() {
         this.context.patch(Player, "getDamageModifiers").after(function (totalModifier: number, target: Character) {
-            return totalModifier += CustomModifiersCalculator.getPlayerDamagePercentageModification(this, target);
+            return totalModifier += CustomModifiersCalculationHelper.getPlayerDamagePercentageModification(this, target);
         });
         this.context.patch(Enemy, "getDamageModifiers").after(function (totalModifier: number, target: Character) {
-            return totalModifier += CustomModifiersCalculator.getEnemyDamagePercentageModification(this, target);
+            return totalModifier += CustomModifiersCalculationHelper.getEnemyDamagePercentageModification(this, target);
         });
     }
 
@@ -1821,10 +1822,10 @@ export class CustomModifiersManager {
          *                 as there is no flat accuracy bonus between the start of the method and the addition of percentage based boosts
          */
         this.context.patch(Player, "modifyAccuracy").after(function (returnValue, accuracy) {
-            return returnValue += CustomModifiersCalculator.getPlayerAccuracyFlatModification(this, accuracy);
+            return returnValue += CustomModifiersCalculationHelper.getPlayerAccuracyFlatModification(this, accuracy);
         });
         this.context.patch(Enemy, "modifyAccuracy").after(function (returnValue, accuracy) {
-            return returnValue += CustomModifiersCalculator.getEnemyAccuracyFlatModification(this, accuracy);
+            return returnValue += CustomModifiersCalculationHelper.getEnemyAccuracyFlatModification(this, accuracy);
         });
     }
 
@@ -1848,10 +1849,10 @@ export class CustomModifiersManager {
         // #endregion
 
         this.context.patch(Player, "modifyDamageReduction").after(function (returnValue) {
-            return returnValue += CustomModifiersCalculator.getPlayerDamageReductionFlatModification(this);
+            return returnValue += CustomModifiersCalculationHelper.getPlayerDamageReductionFlatModification(this);
         });
         this.context.patch(Enemy, "modifyDamageReduction").after(function (returnValue) {
-            return returnValue += CustomModifiersCalculator.getEnemyDamageReductionFlatModification(this);
+            return returnValue += CustomModifiersCalculationHelper.getEnemyDamageReductionFlatModification(this);
         });
     }
 

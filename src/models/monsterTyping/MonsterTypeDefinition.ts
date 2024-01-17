@@ -1,5 +1,5 @@
 import { MonsterTypeEffectObjectNames } from './MonsterTypeEffectObjectNames';
-import { MonsterTypeHelper } from './MonsterTypeHelper';
+import { MonsterTypeHelper } from '../../helpers/MonsterTypeHelper';
 import { MonsterTypeModifierPropertyNames } from './MonsterTypeModifierPropertyNames'
 
 export class MonsterTypeDefinition {

@@ -1,4 +1,4 @@
-export class Constants {
+export class MonsterTypeConstants {
     static readonly ANIMALS_BASE: string[] = [
         "melvorD:Chicken",
         "melvorD:Cow",

@@ -1,7 +1,7 @@
-import { Constants } from '../Constants';
-import { ModifierType } from './ModifierType';
-import { MonsterTypeHelper } from '../monsterTyping/MonsterTypeHelper';
-import { MonsterTypeManager } from '../monsterTyping/MonsterTypeManager';
+import { ModConstants } from '../constants/ModConstants';
+import { ModifierType } from '../models/enums/ModifierType';
+import { MonsterTypeHelper } from '../helpers/MonsterTypeHelper';
+import { MonsterTypeManager } from '../managers/MonsterTypeManager';
 
 /**
  * While the main patching is defined by the manager,
@@ -16,7 +16,7 @@ import { MonsterTypeManager } from '../monsterTyping/MonsterTypeManager';
  * NOTE: Rather than following the usual order of "public methods, then private methods",
  * the methods have instead been grouped and wrapped with a region, based on what they are modifying
  */
-export class CustomModifiersCalculator {
+export class CustomModifiersCalculationHelper {
     // #region XP
 
     // #region Percentage - XP
@@ -78,7 +78,7 @@ export class CustomModifiersCalculator {
     public static getPlayerMinHitModification(entity: Player) {
         let modification = 0;
         if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculator.getCharacterMinHitModification(entity);
+            modification += CustomModifiersCalculationHelper.getCharacterMinHitModification(entity);
 
             if (entity.manager.enemy.isBoss) {
                 modification += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstBosses - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstBosses)) / 100);
@@ -117,7 +117,7 @@ export class CustomModifiersCalculator {
     public static getEnemyMinHitModification(entity: Enemy): number {
         let modification = 0;
         if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculator.getCharacterMinHitModification(entity);
+            modification += CustomModifiersCalculationHelper.getCharacterMinHitModification(entity);
         }
 
         return modification;
@@ -129,7 +129,7 @@ export class CustomModifiersCalculator {
      * @returns
      */
     private static getCharacterMinHitModification(entity: Character): number {
-        return CustomModifiersCalculator.getCharacterMinHitModificationForMonsterTypes(entity);
+        return CustomModifiersCalculationHelper.getCharacterMinHitModificationForMonsterTypes(entity);
     }
 
     /**
@@ -173,7 +173,7 @@ export class CustomModifiersCalculator {
     public static getPlayerMaxHitPercentageModification(entity: Player) {
         let modification = 0;
         if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculator.getCharacterMaxHitPercentageModification(entity);
+            modification += CustomModifiersCalculationHelper.getCharacterMaxHitPercentageModification(entity);
 
             if (entity.manager.enemy.isBoss) {
                 modification += entity.modifiers.increasedMaxHitPercentAgainstBosses - entity.modifiers.decreasedMaxHitPercentAgainstBosses;
@@ -207,7 +207,7 @@ export class CustomModifiersCalculator {
     public static getEnemyMaxHitPercentageModification(entity: Enemy) {
         let modification = 0;
         if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculator.getCharacterMaxHitPercentageModification(entity);
+            modification += CustomModifiersCalculationHelper.getCharacterMaxHitPercentageModification(entity);
         }
 
         return modification;
@@ -218,7 +218,7 @@ export class CustomModifiersCalculator {
      * @param entity
      */
     private static getCharacterMaxHitPercentageModification(entity: Character): number {
-        return CustomModifiersCalculator.getCharacterMaxHitPercentageModificationForMonsterTypes(entity);
+        return CustomModifiersCalculationHelper.getCharacterMaxHitPercentageModificationForMonsterTypes(entity);
     }
 
     /**
@@ -257,7 +257,7 @@ export class CustomModifiersCalculator {
 
         let modification = 0;
         if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculator.getCharacterMaxHitFlatModification(entity);
+            modification += CustomModifiersCalculationHelper.getCharacterMaxHitFlatModification(entity);
 
             if (entity.manager.enemy.isBoss) {
                 modification += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstBosses - entity.modifiers.decreasedMaxHitFlatAgainstBosses);
@@ -292,7 +292,7 @@ export class CustomModifiersCalculator {
     public static getEnemyMaxHitFlatModification(entity: Enemy): number {
         let modification = 0;
         if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculator.getCharacterMaxHitFlatModification(entity);
+            modification += CustomModifiersCalculationHelper.getCharacterMaxHitFlatModification(entity);
         }
 
         return modification;
@@ -303,7 +303,7 @@ export class CustomModifiersCalculator {
      * @param entity
      */
     private static getCharacterMaxHitFlatModification(entity: Character): number {
-        return CustomModifiersCalculator.getCharacterMaxHitFlatModificationForMonsterTypes(entity);
+        return CustomModifiersCalculationHelper.getCharacterMaxHitFlatModificationForMonsterTypes(entity);
     }
 
     /**
@@ -341,7 +341,7 @@ export class CustomModifiersCalculator {
      * @returns
      */
     public static getPlayerFlatAttackDamageBonusModification(attacker: Player, target: Character): number {
-        return CustomModifiersCalculator.getCharacterFlatAttackDamageBonusModification(attacker, target);
+        return CustomModifiersCalculationHelper.getCharacterFlatAttackDamageBonusModification(attacker, target);
     }
 
     /**
@@ -351,7 +351,7 @@ export class CustomModifiersCalculator {
      * @returns
      */
     public static getEnemyFlatAttackDamageBonusModification(attacker: Enemy, target: Character): number {
-        return CustomModifiersCalculator.getCharacterFlatAttackDamageBonusModification(attacker, target);
+        return CustomModifiersCalculationHelper.getCharacterFlatAttackDamageBonusModification(attacker, target);
     }
 
     /**
@@ -380,7 +380,7 @@ export class CustomModifiersCalculator {
      * @returns
      */
     public static getPlayerDamageModification(attacker: Player, target: Character, attack: SpecialAttack, damage: number, currentDamage: number): number {
-        return CustomModifiersCalculator.getCharacterDamageModification(attacker, target, attack, damage, currentDamage);
+        return CustomModifiersCalculationHelper.getCharacterDamageModification(attacker, target, attack, damage, currentDamage);
     }
 
     /**
@@ -393,7 +393,7 @@ export class CustomModifiersCalculator {
      * @returns
      */
     public static getEnemyDamageModification(attacker: Enemy, target: Character, attack: SpecialAttack, damage: number, currentDamage: number): number {
-        return CustomModifiersCalculator.getCharacterDamageModification(attacker, target, attack, damage, currentDamage);
+        return CustomModifiersCalculationHelper.getCharacterDamageModification(attacker, target, attack, damage, currentDamage);
     }
 
     /**
@@ -442,7 +442,7 @@ export class CustomModifiersCalculator {
      * @returns
      */
     public static getPlayerDamagePercentageModification(attacker: Player, target: Character): number {
-        return CustomModifiersCalculator.getCharacterDamagePercentageModifiers(attacker, target);
+        return CustomModifiersCalculationHelper.getCharacterDamagePercentageModifiers(attacker, target);
     }
 
     /**
@@ -452,7 +452,7 @@ export class CustomModifiersCalculator {
      * @returns
      */
     public static getEnemyDamagePercentageModification(attacker: Enemy, target: Character): number {
-        return CustomModifiersCalculator.getCharacterDamagePercentageModifiers(attacker, target);
+        return CustomModifiersCalculationHelper.getCharacterDamagePercentageModifiers(attacker, target);
     }
 
     /**
@@ -465,9 +465,9 @@ export class CustomModifiersCalculator {
      * @param target
      */
     private static getCharacterDamagePercentageModifiers(attacker: Character, target: Character): number {
-        return CustomModifiersCalculator.getDamagePercentageModificationForStats(attacker, target)
-            + CustomModifiersCalculator.getDamagePercentageModificationForMonsterTypes(attacker, target)
-            + CustomModifiersCalculator.getDamagePercentageModificationForSpellTypes(attacker, target);
+        return CustomModifiersCalculationHelper.getDamagePercentageModificationForStats(attacker, target)
+            + CustomModifiersCalculationHelper.getDamagePercentageModificationForMonsterTypes(attacker, target)
+            + CustomModifiersCalculationHelper.getDamagePercentageModificationForSpellTypes(attacker, target);
     }
 
     /**
@@ -491,7 +491,7 @@ export class CustomModifiersCalculator {
     private static getDamagePercentageModificationForSpellTypes(attacker: Character, target: Character): number {
         let modification = 0;
 
-        if (attacker.attackType === Constants.ATTACK_TYPES_MAGIC) {
+        if (attacker.attackType === ModConstants.ATTACK_TYPES_MAGIC) {
             switch (attacker.spellSelection.standard?.spellType) {
                 case SpellTypes.Air:
                     modification += target.modifiers.increasedDamageTakenFromAirSpells - target.modifiers.decreasedDamageTakenFromAirSpells;
@@ -558,7 +558,7 @@ export class CustomModifiersCalculator {
         // Calculate percentage-based modifier
         let accuracyModifier = 0;
         if (entity.manager.fightInProgress) {
-            accuracyModifier += CustomModifiersCalculator.getCharacterAccuracyPercentageModifiers(entity);
+            accuracyModifier += CustomModifiersCalculationHelper.getCharacterAccuracyPercentageModifiers(entity);
 
             if (entity.manager.enemy.isBoss) {
                 accuracyModifier += entity.modifiers.increasedGlobalAccuracyAgainstBosses - entity.modifiers.decreasedGlobalAccuracyAgainstBosses;
@@ -586,7 +586,7 @@ export class CustomModifiersCalculator {
         let accuracyModification = applyModifier(accuracy, accuracyModifier, ModifierType.MultiplyBaseByPercentageWithFlooring);
 
         // Just like with the base game calculation, we have to keep the "globalAccuracyHPScaling" modifier in mind
-        return CustomModifiersCalculator.applyGlobalAccuracyHpScaling(entity, accuracyModification);
+        return CustomModifiersCalculationHelper.applyGlobalAccuracyHpScaling(entity, accuracyModification);
     }
 
     /**
@@ -598,14 +598,14 @@ export class CustomModifiersCalculator {
     public static getEnemyAccuracyFlatModification(entity: Enemy, accuracy: number): number {
         let accuracyModifier = 0;
         if (entity.manager.fightInProgress) {
-            accuracyModifier += CustomModifiersCalculator.getCharacterAccuracyPercentageModifiers(entity);
+            accuracyModifier += CustomModifiersCalculationHelper.getCharacterAccuracyPercentageModifiers(entity);
         }
 
         // Get flat bonus, based on original value and percentage-bonus calculated
         const accuracyModification = applyModifier(accuracy, accuracyModifier, ModifierType.MultiplyBaseByPercentageWithFlooring);
 
         // Just like with the base game calculation, we have to keep the "globalAccuracyHPScaling" modifier in mind
-        return CustomModifiersCalculator.applyGlobalAccuracyHpScaling(entity, accuracyModification);
+        return CustomModifiersCalculationHelper.applyGlobalAccuracyHpScaling(entity, accuracyModification);
     }
 
     /**
@@ -613,7 +613,7 @@ export class CustomModifiersCalculator {
      * @param entity
      */
     private static getCharacterAccuracyPercentageModifiers(entity: Character): number {
-        return CustomModifiersCalculator.getCharacterAccuracyPercentageModifiersForMonsterTypes(entity);
+        return CustomModifiersCalculationHelper.getCharacterAccuracyPercentageModifiersForMonsterTypes(entity);
     }
 
     /**
@@ -667,7 +667,7 @@ export class CustomModifiersCalculator {
         // First, run general logic
         let modification = 0;
         if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculator.getCharacterDamageReductionFlatModification(entity);
+            modification += CustomModifiersCalculationHelper.getCharacterDamageReductionFlatModification(entity);
 
             switch (entity.manager.areaType) {
                 case CombatAreaType.Combat:
@@ -689,7 +689,7 @@ export class CustomModifiersCalculator {
 
             // Then, we have to mimic multiplications based on a few conditions,
             // based on the total change we calculated up to this point
-            modification = CustomModifiersCalculator.applyCharacterDamageReductionPercentModification(entity, modification);
+            modification = CustomModifiersCalculationHelper.applyCharacterDamageReductionPercentModification(entity, modification);
 
             // The player specifically also has one more multiplicative calculation to do
             if (entity.manager.fightInProgress) {
@@ -707,12 +707,12 @@ export class CustomModifiersCalculator {
     public static getEnemyDamageReductionFlatModification(entity: Enemy): number {
         let modification = 0;
         if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculator.getCharacterDamageReductionFlatModification(entity);
+            modification += CustomModifiersCalculationHelper.getCharacterDamageReductionFlatModification(entity);
         }
 
         // Then, we have to mimic multiplications based on a few conditions,
         // based on the total change we calculated up to this point
-        return CustomModifiersCalculator.applyCharacterDamageReductionPercentModification(entity, modification);
+        return CustomModifiersCalculationHelper.applyCharacterDamageReductionPercentModification(entity, modification);
     }
 
     /**
@@ -720,7 +720,7 @@ export class CustomModifiersCalculator {
      * @param entity
      */
     private static getCharacterDamageReductionFlatModification(entity: Character): number {
-        return CustomModifiersCalculator.getCharacterDamageReductionFlatModificationForMonsterTypes(entity);
+        return CustomModifiersCalculationHelper.getCharacterDamageReductionFlatModificationForMonsterTypes(entity);
     }
 
     /**

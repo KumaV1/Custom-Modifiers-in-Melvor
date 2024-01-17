@@ -1,8 +1,7 @@
-﻿import { Constants } from '../Constants'
-import { MonsterTypeDefinition } from '../monsterTyping/MonsterTypeDefinition';
-import { MonsterTypeManager } from '../monsterTyping/MonsterTypeManager';
+﻿import { ModConstants } from '../constants/ModConstants'
+import { MonsterTypeDefinition } from '../models/monsterTyping/MonsterTypeDefinition';
 
-import { languages } from './languages';
+import { languages } from '../languages';
 
 /**
  * Patches a couple name/description getters, so they access our integrated localization
@@ -15,7 +14,7 @@ export class TranslationManager {
 
     public patch(): void {
         this.context.patch(Page, 'name').get(function (patch) {
-            if (this.namespace === Constants.MOD_NAMESPACE) {
+            if (this.namespace === ModConstants.MOD_NAMESPACE) {
                 return getLangString(`PAGE_NAME_${this.localID}`);
             }
 
@@ -47,7 +46,7 @@ export class TranslationManager {
             if (keysToNotPrefix.some(prefix => key.includes(prefix))) {
                 loadedLangJson[key] = value;
             } else {
-                loadedLangJson[`${Constants.MOD_NAMESPACE}_${key}`] = value;
+                loadedLangJson[`${ModConstants.MOD_NAMESPACE}_${key}`] = value;
             }
         }
     }
@@ -104,7 +103,7 @@ export class TranslationManager {
      */
     public static getLangString(identifier: string, includeNamespace: boolean = false) {
         return includeNamespace
-            ? getLangString(`${Constants.MOD_NAMESPACE}_${identifier}`)
+            ? getLangString(`${ModConstants.MOD_NAMESPACE}_${identifier}`)
             : getLangString(identifier);
     }
 
@@ -137,7 +136,7 @@ export class TranslationManager {
      */
     public static getTranslationOrFallback(key: string, fallback: string, includeNamespace: boolean = false): string {
         const translation = includeNamespace
-            ? loadedLangJson[`${Constants.MOD_NAMESPACE}_${key}`]
+            ? loadedLangJson[`${ModConstants.MOD_NAMESPACE}_${key}`]
             : loadedLangJson[key];
         //console.log(`translationManager | getTranslationOrFallback | key: ${key} | fallback: ${fallback} | key result: ${translation}`);
         return translation !== undefined && translation !== ''

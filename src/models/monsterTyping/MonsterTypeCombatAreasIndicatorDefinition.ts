@@ -1,8 +1,9 @@
-import { TranslationManager } from "../translation/TranslationManager";
 import { MonsterTypeDefinition } from "./MonsterTypeDefinition";
+import { TranslationManager } from "../../managers/TranslationManager";
 
 /**
- * TODO: Explain
+ * Represents the data structure used to create badges in the Combat UI,
+ * which indicate a specific monster type related to the monster it is located on
  */
 export class MonsterTypeCombatAreasIndicatorDefinition {
     public type: MonsterTypeDefinition

@@ -1,9 +1,9 @@
-import { Constants } from "../Constants";
-import { CombatAreasUIManager } from "../CombatAreasUIManager";
+import { ModConstants } from "../constants/ModConstants";
+import { CombatAreasUIManager } from "../managers/CombatAreasUIManager";
 import { ModContextMemoizer } from "../ModContextMemoizer";
-import { MonsterTypeListConfigFunctions } from "./MonsterTypeListConfigFunctions";
-import { MonsterTypeManager } from "../monsterTyping/MonsterTypeManager";
-import { TranslationManager } from "../translation/TranslationManager";
+import { MonsterTypeListConfigFunctions } from "../models/settings/MonsterTypeListConfigFunctions";
+import { MonsterTypeManager } from "../managers/MonsterTypeManager";
+import { TranslationManager } from "../managers/TranslationManager";
 
 export class SettingsManager {
     /** Because this is slightly quicker than constantly checking the html-element's value attribute */
@@ -21,7 +21,7 @@ export class SettingsManager {
                 onChange(value: boolean, previousValue: boolean): void {
                     SettingsManager.setButtonToReload();
 
-                    const hint = document.querySelector(`label[for="${Constants.MOD_NAMESPACE}:enable-modifier-ui-impact-indicator"] > small`);
+                    const hint = document.querySelector(`label[for="${ModConstants.MOD_NAMESPACE}:enable-modifier-ui-impact-indicator"] > small`);
                     if (hint) {
                         hint.textContent = TranslationManager.getLangString("Settings_Hint_Save_Reload_Required", true);
                         hint.classList.add("text-warning");
@@ -223,7 +223,7 @@ export class SettingsManager {
      * Change color of save button from primary to danger
      */
     public static setButtonToReload(): void {
-        const btn = document.getElementById(`${Constants.MOD_NAMESPACE}:save-reload`);
+        const btn = document.getElementById(`${ModConstants.MOD_NAMESPACE}:save-reload`);
         if (btn && btn.classList.contains("btn-primary")) {
             btn.classList.replace("btn-primary", "btn-danger");
         }

@@ -1,12 +1,11 @@
-import { Constants } from '../Constants';
-import { Constants as ModifierConstants } from '../modifiers/Constants'
-import { CustomModifiersManager } from '../modifiers/CustomModifiersManager';
+import { ModifierConstants } from '../constants/ModifierConstants'
+import { CustomModifiersManager } from '../managers/CustomModifiersManager';
 import { ModContextMemoizer } from '../ModContextMemoizer';
-import { MonsterType } from './MonsterType'
-import { MonsterTypeHelper } from './MonsterTypeHelper';
-import { MonsterTypeDefinition } from './MonsterTypeDefinition';
+import { MonsterType } from '../models/enums/MonsterType'
+import { MonsterTypeHelper } from '../helpers/MonsterTypeHelper';
+import { MonsterTypeDefinition } from '../models/monsterTyping/MonsterTypeDefinition';
 import { TinyIconsCompatibility } from '../compatibility/TinyIconsCompatibility';
-import { TranslationManager } from '../translation/TranslationManager';
+import { TranslationManager } from '../managers/TranslationManager';
 
 /**
  * Takes care of holding which types are allocated to which monsters,
