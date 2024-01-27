@@ -78,7 +78,7 @@ export class CustomModifiersManager {
             game.registerDataPackage(MonsterTypeHelper.createTraitStackingEffectGamePackage(type));
             const stackingEffect = game.stackingEffects.getObjectByID(`${ModConstants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`);
             if (stackingEffect === undefined) {
-                CmimUtils.log(`Failed to find stacking effect for monster type '${type.singularName}' after registering it`);
+                CmimUtils.error(`Failed to find stacking effect for monster type '${type.singularName}' after registering it`);
             } else {
                 game.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect] = stackingEffect;
             }
@@ -86,7 +86,7 @@ export class CustomModifiersManager {
             game.registerDataPackage(MonsterTypeHelper.createTraitCustomModifierEffectAttackGamePackage(type, customEffectData));
             const specialAttack = game.specialAttacks.getObjectByID(`${ModConstants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_ATTACK_ID_SUFFIX}`);
             if (specialAttack === undefined) {
-                CmimUtils.log(`Failed to find special attack for monster type '${type.singularName}' after registering it`);
+                CmimUtils.error(`Failed to find special attack for monster type '${type.singularName}' after registering it`);
             } else {
                 game.customModifiersInMelvor.specialAttacks[type.effectPropertyObjectNames.traitApplicationCustomModifierEffectAttack] = specialAttack;
             }
@@ -1646,7 +1646,7 @@ export class CustomModifiersManager {
             if (this.modifiers.deathMark > 0 && this.hitpoints <= ModifierConstants.DEATH_MARK_MAX_FLAT_HP) {
                 const effect = this.stackingEffect.get(game.customModifiersInMelvor.stackingEffects.deathMarkEffect);
                 if (effect === undefined) {
-                    CmimUtils.log("[Character.addHitpoints] Death mark effect not found on game object");
+                    CmimUtils.error("[Character.addHitpoints] Death mark effect not found on game object");
                 }
                 else {
                     const maxHpPercentage = (this.hitpoints / this.stats.maxHitpoints) * 100;

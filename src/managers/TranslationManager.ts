@@ -12,6 +12,9 @@ import { languages } from '../languages';
 export class TranslationManager {
     constructor(private readonly context: Modding.ModContext) { }
 
+    /**
+     * Patches multiple name/description getters, so they check our custom injected translations
+     */
     public patch(): void {
         this.context.patch(Page, 'name').get(function (patch) {
             if (this.namespace === ModConstants.MOD_NAMESPACE) {
@@ -22,6 +25,9 @@ export class TranslationManager {
         });
     }
 
+    /**
+     * Creates a list of translations for the current languages and registers it
+     */
     public register(): void {
         let lang = setLang;
 

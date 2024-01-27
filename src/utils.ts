@@ -1,6 +1,16 @@
 export class CmimUtils {
+    private static LOG_PREFIX = "[CMiM]";
+
     public static log(message: string) {
-        console.log(`[CMiM] ${message}`);
+        console.log(`${CmimUtils.LOG_PREFIX} ${message}`);
+    }
+
+    public static warn(message: string) {
+        console.warn(`${CmimUtils.LOG_PREFIX} ${message}`);
+    }
+
+    public static error(message: string) {
+        console.error(`${CmimUtils.LOG_PREFIX} ${message}`);
     }
 
     /**
