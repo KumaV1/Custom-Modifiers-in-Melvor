@@ -99,24 +99,36 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
      * @param tab
      */
     function changeTab(tab: 'playerTraits' | 'activeTypes' | 'inactiveTypes') {
-        const playerTraitsContainer = document.getElementById("monster-type-overview__player-traits-container");
-        const activeTypesContainer = document.getElementById("monster-type-overview__active-types-container");
-        const inactiveTypesContainer = document.getElementById("monster-type-overview__inactive-types-container");
+        const playerTraitsTab = document.getElementById("monster-type-overview__player-traits-tab")!;
+        const playerTraitsContainer = document.getElementById("monster-type-overview__player-traits-container")!;
+        const activeTypesTab = document.getElementById("monster-type-overview__active-types-tab")!;
+        const activeTypesContainer = document.getElementById("monster-type-overview__active-types-container")!;
+        const inactiveTypesTab = document.getElementById("monster-type-overview__inactive-types-tab")!;
+        const inactiveTypesContainer = document.getElementById("monster-type-overview__inactive-types-container")!;
         switch (tab) {
             case 'playerTraits':
-                playerTraitsContainer?.classList.remove("d-none");
-                activeTypesContainer?.classList.add("d-none");
-                inactiveTypesContainer?.classList.add("d-none");
+                playerTraitsTab.classList.add("border-success");
+                playerTraitsContainer.classList.remove("d-none");
+                activeTypesTab.classList.remove("border-success");
+                activeTypesContainer.classList.add("d-none");
+                inactiveTypesTab.classList.remove("border-success");
+                inactiveTypesContainer.classList.add("d-none");
                 return;
             case 'activeTypes':
-                playerTraitsContainer?.classList.add("d-none");
-                activeTypesContainer?.classList.remove("d-none");
-                inactiveTypesContainer?.classList.add("d-none");
+                playerTraitsTab.classList.remove("border-success");
+                playerTraitsContainer.classList.add("d-none");
+                activeTypesTab.classList.add("border-success");
+                activeTypesContainer.classList.remove("d-none");
+                inactiveTypesTab.classList.remove("border-success");
+                inactiveTypesContainer.classList.add("d-none");
                 return;
             case 'inactiveTypes':
-                playerTraitsContainer?.classList.add("d-none");
-                activeTypesContainer?.classList.add("d-none");
-                inactiveTypesContainer?.classList.remove("d-none");
+                playerTraitsTab.classList.remove("border-success");
+                playerTraitsContainer.classList.add("d-none");
+                activeTypesTab.classList.remove("border-success");
+                activeTypesContainer.classList.add("d-none");
+                inactiveTypesTab.classList.add("border-success");
+                inactiveTypesContainer.classList.remove("d-none");
                 return;
         }
     }

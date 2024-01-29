@@ -17,6 +17,7 @@
                             <!-- Player Trait Tab -->
                             <div class="col-12 col-sm-4 col-lg4">
                                 <a class="block block-rounded block-link-pop border-top border-combat border-4x pointer-enabled"
+                                   id="monster-type-overview__player-traits-tab"
                                    v-on:click="changeTab('playerTraits')">
                                     <div class="block-content block-content-full">
                                         <div class="media d-flex align-items-center push mb-0">
@@ -31,7 +32,8 @@
                             </div>
                             <!-- Active Monster types Tab -->
                             <div class="col-12 col-sm-4 col-lg4">
-                                <a class="block block-rounded block-link-pop border-top border-combat border-4x pointer-enabled"
+                                <a class="block block-rounded block-link-pop border-top border-success border-combat border-4x pointer-enabled"
+                                   id="monster-type-overview__active-types-tab"
                                    v-on:click="changeTab('activeTypes')">
                                     <div class="block-content block-content-full">
                                         <div class="media d-flex align-items-center push mb-0">
@@ -47,6 +49,7 @@
                             <!-- Inactive Monster types Tab -->
                             <div class="col-12 col-sm-4 col-lg4">
                                 <a class="block block-rounded block-link-pop border-top border-combat border-4x pointer-enabled"
+                                   id="monster-type-overview__inactive-types-tab"
                                    v-on:click="changeTab('inactiveTypes')">
                                     <div class="block-content block-content-full">
                                         <div class="media d-flex align-items-center push mb-0">
@@ -90,7 +93,7 @@
                                         {{ type.name }}
                                     </h2>
                                     <div class="row">
-                                        <div v-for="monster in type.monsters" class="no-bg btn-light m-1 justify-vertical-center">
+                                        <div v-for="monster in type.monsters" class="monster-item no-bg btn-light m-1 justify-vertical-center">
                                             <img class="p-2 combat-enemy-img-sm"
                                                  v-bind:title="monster.name"
                                                  v-bind:src="monster.media">
@@ -117,7 +120,7 @@
                                         <span class="text-warning ml-1"><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Inactive_Types_Affected_By_Mod_Settings"></lang-string></span>
                                     </div>
                                         <div class="row">
-                                        <div v-for="monster in type.monsters" class="no-bg btn-light m-1 justify-vertical-center">
+                                        <div v-for="monster in type.monsters" class="monster-item no-bg btn-light m-1 justify-vertical-center">
                                             <img class="p-2 combat-enemy-img-sm"
                                                  v-bind:title="monster.name"
                                                  v-bind:src="monster.media">
