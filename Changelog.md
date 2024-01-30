@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.5.3
+* Improved performance of toggling combat ui indicator settings in certain situations
+* Monster types defined by this mod now use paths for melvor assets
+* Minor adjustments to Monster type overview UI
+
 ## 2.5.2
 * Added machine translation for languages other than English and German
 
