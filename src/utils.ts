@@ -15,10 +15,13 @@ export class CmimUtils {
 
     /**
      * Remove ALL elements with the given class from the document tree
-     * @param className
+     * @param className class that elements to be removed are expected to have
+     * @param container if provided, limits the deletion process to inside this container (also improves perfornance)
      */
-    public static removeElementsByClass(className: string) {
-        const elements = document.getElementsByClassName(className);
+    public static removeElementsByClass(className: string, container?: HTMLElement | undefined | null) {
+        const elements = container !== undefined && container !== null
+            ? container.getElementsByClassName(className)
+            : document.getElementsByClassName(className);
         while (elements.length > 0) {
             elements[0].parentNode?.removeChild(elements[0]);
         }

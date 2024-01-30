@@ -3,6 +3,7 @@ export class ModConstants {
     static readonly MOD_NAMESPACE = "customModifiersInMelvor";
 
     static readonly ERROR_ICON_MEDIA_PATH = "assets/media/main/error.svg";
+    static readonly COMBAT_CONTAINER_ELEMENT_ID = "combat-container";
 
     static readonly COMBAT_MODIFIER_UI_IMPACT_INDICATOR_CONTAINER_CLASS = "customModifiersInMelvor__modifier-ui-impact-indicator";
 

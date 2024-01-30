@@ -4,3 +4,8 @@
 .cmim-monster-type-list-setting .monster-type-icon-container:not(.monster-type-option-enabled) {
     background-color: #7e8999 !important;
 }
+
+.cmim-monster-type-overview .monster-type-headline-image {
+    height: 30px;
+    width: 30px;
+}

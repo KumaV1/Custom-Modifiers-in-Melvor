@@ -5,7 +5,6 @@ import { MonsterTypeDefinition } from '../models/monsterTyping/MonsterTypeDefini
 import { MonsterTypeEffectObjectNames } from '../models/monsterTyping/MonsterTypeEffectObjectNames';
 import { MonsterTypeModifierPropertyNames } from '../models/monsterTyping/MonsterTypeModifierPropertyNames'
 import { MonsterTypeModifierType } from '../models/enums/MonsterTypeModifierType'
-import { TranslationManager } from '../managers/TranslationManager';
 
 import { languages } from '../languages';
 
@@ -247,31 +246,6 @@ export class MonsterTypeHelper {
         //console.log(`entityIsTreatedAsType | isOfType | propertyName: ${type.modifierPropertyNames.traitApplied} / value: ${entity.target.modifiers[type.modifierPropertyNames.traitApplied]}, ${traitApplied}`);
 
         return isOfType || traitApplied > 0;
-    }
-
-    /**
-     * Create a badge html element to communicate info regarding allocation of the given monster type
-     * @param type the monster type
-     * @param typeActive whether the type is active
-     * @param count how many monsters are currently relevant for this method call
-     * @param displayCount whether the count should be included in the text returned
-     */
-    public static createCombatAreaIndicatorBadge(type: MonsterTypeDefinition, typeActive: boolean, count: number, displayCount: boolean): HTMLElement {
-        let badgeEl = document.createElement('span');
-        badgeEl.classList.add('badge');
-        badgeEl.classList.add('bage-pill');
-        badgeEl.classList.add('mr-1');
-        badgeEl.classList.add(typeActive ? 'badge-success' : 'badge-warning');
-        badgeEl.classList.add(ModConstants.COMBAT_AREAS_INDICATOR_BADGE_CLASS);
-
-        badgeEl.innerHTML = displayCount
-            ? `${count} `
-            : '';
-        badgeEl.innerHTML += count > 1
-            ? TranslationManager.getMonsterTypePluralNameTranslation(type.singularName, type.pluralName)
-            : TranslationManager.getMonsterTypeSingularNameTranslation(type.singularName);
-
-        return badgeEl;
     }
 
     /**

@@ -1,5 +1,5 @@
 <template id="custom-Modifiers-in-Melvor__monster-type-overview-container-template">
-    <div class="content d-none" id="custom-Modifiers-in-Melvor__monster-type-overview-container">
+    <div class="content d-none cmim-monster-type-overview" id="custom-Modifiers-in-Melvor__monster-type-overview-container">
         <div class="row gutters-tiny dow-deck">
             <div class="col-12">
                 <div class="block block-rounded block-content block-content-full">
@@ -17,6 +17,7 @@
                             <!-- Player Trait Tab -->
                             <div class="col-12 col-sm-4 col-lg4">
                                 <a class="block block-rounded block-link-pop border-top border-combat border-4x pointer-enabled"
+                                   id="monster-type-overview__player-traits-tab"
                                    v-on:click="changeTab('playerTraits')">
                                     <div class="block-content block-content-full">
                                         <div class="media d-flex align-items-center push mb-0">
@@ -31,7 +32,8 @@
                             </div>
                             <!-- Active Monster types Tab -->
                             <div class="col-12 col-sm-4 col-lg4">
-                                <a class="block block-rounded block-link-pop border-top border-combat border-4x pointer-enabled"
+                                <a class="block block-rounded block-link-pop border-top border-success border-combat border-4x pointer-enabled"
+                                   id="monster-type-overview__active-types-tab"
                                    v-on:click="changeTab('activeTypes')">
                                     <div class="block-content block-content-full">
                                         <div class="media d-flex align-items-center push mb-0">
@@ -47,6 +49,7 @@
                             <!-- Inactive Monster types Tab -->
                             <div class="col-12 col-sm-4 col-lg4">
                                 <a class="block block-rounded block-link-pop border-top border-combat border-4x pointer-enabled"
+                                   id="monster-type-overview__inactive-types-tab"
                                    v-on:click="changeTab('inactiveTypes')">
                                     <div class="block-content block-content-full">
                                         <div class="media d-flex align-items-center push mb-0">
@@ -86,11 +89,13 @@
                             <div v-if="props.activeTypes.length > 0">
                                 <div class="col-12 mb-3"
                                      v-for="type in props.activeTypes">
-                                    <h2 class="font-w600 mb-2 text-primary text-center">
+                                    <h2 class="font-w600 mb-2 text-primary text-center justify-horizontal-center">
+                                        <img class="skill-icon-xs mr-2 monster-type-headline-image"
+                                             v-bind:src="type.iconResourceUrl" />
                                         {{ type.name }}
                                     </h2>
                                     <div class="row">
-                                        <div v-for="monster in type.monsters" class="no-bg btn-light pointer-enabled m-1 justify-vertical-center">
+                                        <div v-for="monster in type.monsters" class="monster-item no-bg btn-light m-1 justify-vertical-center">
                                             <img class="p-2 combat-enemy-img-sm"
                                                  v-bind:title="monster.name"
                                                  v-bind:src="monster.media">
@@ -109,7 +114,9 @@
                                 <div class="col-12 mb-3"
                                      v-for="type in props.inactiveTypes">
                                     <!-- Should be moved to a sub-template or something -->
-                                    <h2 class="font-w600 mb-2 text-primary text-center">
+                                    <h2 class="font-w600 mb-2 text-primary text-center justify-horizontal-center">
+                                        <img class="skill-icon-xs mr-2 monster-type-headline-image"
+                                             v-bind:src="type.iconResourceUrl"/>
                                         {{ type.name }}
                                     </h2>
                                     <div class="row"
@@ -117,7 +124,7 @@
                                         <span class="text-warning ml-1"><lang-string lang-id="customModifiersInMelvor_Monster_Type_Overview_Inactive_Types_Affected_By_Mod_Settings"></lang-string></span>
                                     </div>
                                         <div class="row">
-                                        <div v-for="monster in type.monsters" class="no-bg btn-light pointer-enabled m-1 justify-vertical-center">
+                                        <div v-for="monster in type.monsters" class="monster-item no-bg btn-light m-1 justify-vertical-center">
                                             <img class="p-2 combat-enemy-img-sm"
                                                  v-bind:title="monster.name"
                                                  v-bind:src="monster.media">
