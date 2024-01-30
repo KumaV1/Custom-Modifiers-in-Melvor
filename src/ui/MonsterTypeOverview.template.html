@@ -1,5 +1,5 @@
 <template id="custom-Modifiers-in-Melvor__monster-type-overview-container-template">
-    <div class="content d-none" id="custom-Modifiers-in-Melvor__monster-type-overview-container">
+    <div class="content d-none cmim-monster-type-overview" id="custom-Modifiers-in-Melvor__monster-type-overview-container">
         <div class="row gutters-tiny dow-deck">
             <div class="col-12">
                 <div class="block block-rounded block-content block-content-full">
@@ -89,7 +89,9 @@
                             <div v-if="props.activeTypes.length > 0">
                                 <div class="col-12 mb-3"
                                      v-for="type in props.activeTypes">
-                                    <h2 class="font-w600 mb-2 text-primary text-center">
+                                    <h2 class="font-w600 mb-2 text-primary text-center justify-horizontal-center">
+                                        <img class="skill-icon-xs mr-2 monster-type-headline-image"
+                                             v-bind:src="type.iconResourceUrl" />
                                         {{ type.name }}
                                     </h2>
                                     <div class="row">
@@ -112,7 +114,9 @@
                                 <div class="col-12 mb-3"
                                      v-for="type in props.inactiveTypes">
                                     <!-- Should be moved to a sub-template or something -->
-                                    <h2 class="font-w600 mb-2 text-primary text-center">
+                                    <h2 class="font-w600 mb-2 text-primary text-center justify-horizontal-center">
+                                        <img class="skill-icon-xs mr-2 monster-type-headline-image"
+                                             v-bind:src="type.iconResourceUrl"/>
                                         {{ type.name }}
                                     </h2>
                                     <div class="row"

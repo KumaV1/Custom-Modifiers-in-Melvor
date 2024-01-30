@@ -11,7 +11,8 @@ interface MonsterTypeOverviewPlayerTraitEntry {
 
 interface MonsterTypeOverviewMonsterType {
     name: string,
-    monsters: Monster[]
+    monsters: Monster[],
+    iconResourceUrl: string
 }
 
 interface MonsterTypeOverviewInactiveMonsterType extends MonsterTypeOverviewMonsterType {
@@ -45,6 +46,11 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
         processType(type, false);
     });
 
+    // Order type lists alphabetically
+    CmimUtils.orderAlphabetically(props.activeTypes, "name");
+    CmimUtils.orderAlphabetically(props.inactiveTypes, "name");
+
+    // == Helper Functions ==
     function processType(type: MonsterTypeDefinition, active: Boolean) {
         // Get matching monsters
         let matchingMonsters: Monster[] = [];
@@ -64,7 +70,8 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
         // Register
         const obj: MonsterTypeOverviewMonsterType = {
             name: name,
-            monsters: matchingMonsters
+            monsters: matchingMonsters,
+            iconResourceUrl: type.iconResourceUrl
         };
         if (active) {
             props.activeTypes.push(obj);
@@ -88,10 +95,6 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
             };
             props.traitsOnPlayer.push(obj);
         }
-
-        // Order type lists alphabetically
-        CmimUtils.orderAlphabetically(props.activeTypes, "name");
-        CmimUtils.orderAlphabetically(props.inactiveTypes, "name");
     }
 
     /**
