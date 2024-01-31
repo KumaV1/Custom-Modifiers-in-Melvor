@@ -1,4 +1,4 @@
-import { CmimUtils } from "../Utils";
+import { CmimUtils } from "../../Utils";
 
 export abstract class ModMonsterTypeAllocationCompatibility {
     /** Version the current state of the compatibility is based on (e.g. '1.0.0') */
