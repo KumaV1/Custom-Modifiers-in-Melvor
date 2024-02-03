@@ -18,6 +18,10 @@ export abstract class ModMtaCompatibility {
     /** Allocate monster types as defined by the class */
     public allocateMonsterTypes() {
         this.context.onModsLoaded(() => {
+            if (!this.isLoaded()) {
+                return;
+            }
+
             // Avoid 'this' ambigiousness
             const modNamespace = this._namespace;
             const modName = this._name;
