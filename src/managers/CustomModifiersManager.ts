@@ -102,7 +102,7 @@ export class CustomModifiersManager {
             //console.log(`Processing modifierProperty: ${key} | ${value}`);
 
             // @ts-ignore We know the keys (property names) match the enum expected as parameter
-            const obj = MonsterTypeHelper.createModifierDataObject(key, value);
+            const obj = MonsterTypeHelper.createModifierDataObject(type, key, value);
 
             // @ts-ignore implicit 'any' type error
             // we know though that it is an object to which we want to add a property

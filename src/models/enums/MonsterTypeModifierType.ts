@@ -1,5 +1,6 @@
 /** The types of modifiers existing for monster types */
 export enum MonsterTypeModifierType {
+    TraitApplied = "traitApplied",
     IncreasedDamage = "increasedDamage",
     DecreasedDamage = "decreasedDamage",
     IncreasedDamageTaken = "increasedDamageTaken",

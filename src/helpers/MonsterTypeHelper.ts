@@ -65,22 +65,30 @@ export class MonsterTypeHelper {
 
     /**
      * Creates the modifier data object, which is used to actually register a modifier to the game
+     * @param type
      * @param modifierType
      * @param modifierName
      * @returns
      */
-    public static createModifierDataObject(modifierType: MonsterTypeModifierType, modifierName: string) {
+    public static createModifierDataObject(type: MonsterTypeDefinition, modifierType: MonsterTypeModifierType, modifierName: string) {
         // First, create the default state of the object to create
         let modifierObject = {
             get langDescription() {
                 return getLangString(`MODIFIER_DATA_${modifierName}`);
             },
-            // @ts-ignore Ignore implicit any error
-            description: languages.en[`MODIFIER_DATA_${modifierName}`],
+            description: '',
             isSkill: false,
             isNegative: false,
             tags: ['combat']
         };
+
+        // Set up an english description (mainly for mod synergy support)
+        // Actually rendered text uses the translation pipeline, so grammar isn't optimized here
+        modifierObject.description = modifierType === MonsterTypeModifierType.TraitApplied
+            ? languages.en[`MODIFIER_DATA_MonsterTypeTraitApplied`]
+            // @ts-ignore Ignore implicit any error
+            : languages.en[`MODIFIER_DATA_${modifierType}AgainstMonsterType`];
+        modifierObject.description = modifierObject.description?.replace("${monsterType}", type.singularName) ?? '';
 
         // Modify negative flag
         switch (modifierType) {
