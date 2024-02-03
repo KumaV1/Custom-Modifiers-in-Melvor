@@ -1,4 +1,5 @@
 import { AbyssalRiftMtaCompatibility } from "./AbyssalRiftMtaCompatibility";
+import { FsdMtaCompatibility } from "./FsdMtaCompatibility";
 import { GwdMtaCompatibility } from "./GwdMtaCompatibility";
 import { MusicMtaCompatibility } from "./MusicMtaCompatibility";
 
@@ -13,5 +14,8 @@ export class MonsterTypeAllocationCompatibilityWrapper {
 
         const gwd = new GwdMtaCompatibility(ctx);
         gwd.allocateMonsterTypes();
+
+        const frem = new FsdMtaCompatibility(ctx);
+        frem.allocateMonsterTypes();
     }
 }
