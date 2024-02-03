@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.4
+* Added monster type allocations for monsters of multiple mods
+* The `Show Skill Modifiers` mod will now display monster type related modifiers
+
 ## 2.5.3
 * Improved performance of toggling combat ui indicator settings in certain situations
 * Monster types defined by this mod now use paths for melvor assets
