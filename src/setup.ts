@@ -5,9 +5,9 @@ import { CustomModifiersManager } from './managers/CustomModifiersManager';
 import { GameObjectDataWrapperInitializer } from './GameObjectDataWrapperInitializer';
 import { ModContextMemoizer } from './ModContextMemoizer';
 import { MonsterType } from './models/enums/MonsterType';
+import { MonsterTypeAllocationCompatibilityWrapper } from './compatibility/monsterTyping/MonsterTypeAllocationCompatibilityWrapper';
 import { MonsterTypeManager } from './managers/MonsterTypeManager';
 import { MonsterTypeOverview } from './ui/MonsterTypeOverview'
-import { MusicMonsterTypeAllocationCompatibility } from './compatibility/monsterTyping/MusicMonsterTypeAllocationCompatibility';
 import { SettingsManager } from './managers/SettingsManager';
 import { TinyIconsCompatibility } from './compatibility/TinyIconsCompatibility';
 import { TranslationManager } from './managers/TranslationManager';
@@ -168,8 +168,7 @@ function initModCompatibility(ctx: Modding.ModContext) {
     const tinyIconsCompatibility = new TinyIconsCompatibility(ctx);
     tinyIconsCompatibility.register();
 
-    const mythMusicCompatibility = new MusicMonsterTypeAllocationCompatibility(ctx);
-    mythMusicCompatibility.allocateMonsterTypes();
+    MonsterTypeAllocationCompatibilityWrapper.registerMonsterTypeAllocations(ctx);
 }
 
 /**

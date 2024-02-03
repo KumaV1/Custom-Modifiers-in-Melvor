@@ -1,6 +1,6 @@
 import { CmimUtils } from "../../Utils";
 
-export abstract class ModMonsterTypeAllocationCompatibility {
+export abstract class ModMtaCompatibility {
     /** Version the current state of the compatibility is based on (e.g. '1.0.0') */
     protected abstract _version: string;
 
