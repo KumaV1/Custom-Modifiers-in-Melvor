@@ -5,6 +5,7 @@ import { CustomModifiersManager } from './managers/CustomModifiersManager';
 import { GameObjectDataWrapperInitializer } from './GameObjectDataWrapperInitializer';
 import { ModContextMemoizer } from './ModContextMemoizer';
 import { MonsterType } from './models/enums/MonsterType';
+import { MonsterTypeAllocationCompatibilityWrapper } from './compatibility/monsterTyping/MonsterTypeAllocationCompatibilityWrapper';
 import { MonsterTypeManager } from './managers/MonsterTypeManager';
 import { MonsterTypeOverview } from './ui/MonsterTypeOverview'
 import { SettingsManager } from './managers/SettingsManager';
@@ -34,8 +35,8 @@ export async function setup(ctx: Modding.ModContext) {
     initCustomModifiers(ctx);
     initTranslation(ctx);
     initSettings(ctx);
-    initModCompatibility(ctx);
     initDynamicMonsterTypes(ctx);
+    initModCompatibility(ctx);
     initCombatUIIndicators(ctx);
     initOverviewContainer(ctx);
 
@@ -150,6 +151,15 @@ function initOverviewContainer(ctx: Modding.ModContext) {
 }
 
 /**
+ * Runs some of the previous managers again, this time specifically for the dynamic monster type definitions
+ * @param ctx
+ */
+function initDynamicMonsterTypes(ctx: Modding.ModContext) {
+    MonsterTypeManager.initNativeMonsterTypes();
+    MonsterTypeManager.registerMonsterTypeData(ctx);
+}
+
+/**
  * Initializes certain functionality, to enable/inject specialized compatibility
  * based on other mods (e.g. "Tiny Icons" for the custom modifiers of this mod)
  * @param ctx
@@ -157,15 +167,8 @@ function initOverviewContainer(ctx: Modding.ModContext) {
 function initModCompatibility(ctx: Modding.ModContext) {
     const tinyIconsCompatibility = new TinyIconsCompatibility(ctx);
     tinyIconsCompatibility.register();
-}
 
-/**
- * Runs some of the previous managers again, this time specifically for the dynamic monster type definitions
- * @param ctx
- */
-function initDynamicMonsterTypes(ctx: Modding.ModContext) {
-    MonsterTypeManager.initNativeMonsterTypes();
-    MonsterTypeManager.registerMonsterTypeData(ctx);
+    MonsterTypeAllocationCompatibilityWrapper.registerMonsterTypeAllocations(ctx);
 }
 
 /**

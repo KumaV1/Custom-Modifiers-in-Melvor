@@ -1649,8 +1649,7 @@ export class CustomModifiersManager {
                     CmimUtils.error("[Character.addHitpoints] Death mark effect not found on game object");
                 }
                 else {
-                    const maxHpPercentage = (this.hitpoints / this.stats.maxHitpoints) * 100;
-                    if (maxHpPercentage < Math.min(ModifierConstants.DEATH_MARK_MAX_PERCENT, effect.stacks)) {
+                    if (this.hitpointsPercent < Math.min(ModifierConstants.DEATH_MARK_MAX_PERCENT, effect.stacks)) {
                         // If the one who got death mark triggered on them was the player,
                         // then build a notification for them, so they know it was death mark that killed them
                         if (this instanceof Player) {
