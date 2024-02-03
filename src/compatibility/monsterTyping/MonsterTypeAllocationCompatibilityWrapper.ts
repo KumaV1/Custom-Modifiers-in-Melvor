@@ -2,6 +2,7 @@ import { AbyssalRiftMtaCompatibility } from "./AbyssalRiftMtaCompatibility";
 import { FsdMtaCompatibility } from "./FsdMtaCompatibility";
 import { GwdMtaCompatibility } from "./GwdMtaCompatibility";
 import { MusicMtaCompatibility } from "./MusicMtaCompatibility";
+import { WgMtaCompatibility } from "./WgMtaCompatibility";
 
 /** A little wrapper of all those monster type allocation compatibility */
 export class MonsterTypeAllocationCompatibilityWrapper {
@@ -17,5 +18,8 @@ export class MonsterTypeAllocationCompatibilityWrapper {
 
         const frem = new FsdMtaCompatibility(ctx);
         frem.allocateMonsterTypes();
+
+        const wg = new WgMtaCompatibility(ctx);
+        wg.allocateMonsterTypes();
     }
 }
