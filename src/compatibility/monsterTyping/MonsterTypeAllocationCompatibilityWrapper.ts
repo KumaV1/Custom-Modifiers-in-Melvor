@@ -1,6 +1,7 @@
 import { AbyssalRiftMtaCompatibility } from "./AbyssalRiftMtaCompatibility";
 import { FsdMtaCompatibility } from "./FsdMtaCompatibility";
 import { GwdMtaCompatibility } from "./GwdMtaCompatibility";
+import { HellsChampionMtaCompatibility } from "./HellsChampionMtaCompatibility";
 import { MusicMtaCompatibility } from "./MusicMtaCompatibility";
 import { WgMtaCompatibility } from "./WgMtaCompatibility";
 
@@ -21,5 +22,8 @@ export class MonsterTypeAllocationCompatibilityWrapper {
 
         const wg = new WgMtaCompatibility(ctx);
         wg.allocateMonsterTypes();
+
+        const hc = new HellsChampionMtaCompatibility(ctx);
+        hc.allocateMonsterTypes();
     }
 }
