@@ -133,11 +133,10 @@ export class TranslationManager {
     }
 
     /**
-     * Full key of the translation entry to retrieve.
-     * Unlike the usual "getLangString()" method, this method will return the key,
-     * if no translation was found, rather than an error message
-     * @param key
-     * @param fallback - optionally provide an alternative return value, if you don't want the key
+     * Gets the translation for the key, while returning the fallback, if an entry coudn't be found (instead of returning "UNDEFINED TRANSLATION")
+     * @param key the key of the localization entry to retrieve
+     * @param fallback the value to return, if a localization entry can't be found
+     * @param includeNamespace whether the mod's namespace should be prefixed before the key
      * @returns
      */
     public static getTranslationOrFallback(key: string, fallback: string, includeNamespace: boolean = false): string {

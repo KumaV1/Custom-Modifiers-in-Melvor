@@ -418,7 +418,8 @@ export class CustomModifiersCalculationHelper {
             return -currentDamage;
         }
 
-        // Otherwise, we check whether the character has a dr-ignoring bonus, in which case we add that, while also re-applying percentage modifications like the patched method does
+        // Otherwise, we check whether the character has a dr-ignoring bonus,
+        // in which case we add that, while also re-applying percentage modifications like the patched method does
         const flatDamageIgnoringReduction = numberMultiplier * (attacker.modifiers.increasedDamageFlatIgnoringDamageReduction - attacker.modifiers.decreasedDamageFlatIgnoringDamageReduction);
         return flatDamageIgnoringReduction > 0
             ? attack.isDragonbreath
@@ -583,7 +584,7 @@ export class CustomModifiersCalculationHelper {
         }
 
         // Get flat bonus, based on original value and percentage-bonus calculated
-        let accuracyModification = applyModifier(accuracy, accuracyModifier, ModifierType.MultiplyBaseByPercentageWithFlooring);
+        const accuracyModification = applyModifier(accuracy, accuracyModifier, ModifierType.MultiplyBaseByPercentageWithFlooring);
 
         // Just like with the base game calculation, we have to keep the "globalAccuracyHPScaling" modifier in mind
         return CustomModifiersCalculationHelper.applyGlobalAccuracyHpScaling(entity, accuracyModification);

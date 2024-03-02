@@ -146,7 +146,14 @@ function initOverviewContainer(ctx: Modding.ModContext) {
 
         // Add template to container
         // Create overview by using component and template definitions
-        ui.create(MonsterTypeOverview(), contentContainerElement);
+        const overview = MonsterTypeOverview();
+        const resultElement = ui.create(overview, contentContainerElement);
+
+        // @ts-ignore
+        game.customModifiersInMelvor.ui = {
+            overview: overview,
+            overviewElement: resultElement
+        };
     });
 }
 

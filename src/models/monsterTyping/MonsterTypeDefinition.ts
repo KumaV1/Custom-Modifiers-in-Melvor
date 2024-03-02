@@ -14,7 +14,7 @@ export class MonsterTypeDefinition {
     public pluralName: string
 
     /** Used for effects and tiny icon support | As of now only supports full url */
-    public iconResourceUrl: string
+    public iconResourceUrl: string // TODO: "Only supports full url" outdated, presumably
 
     /** Dynamically built */
     public isTypePropertyName: string
