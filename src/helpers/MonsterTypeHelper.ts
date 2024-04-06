@@ -266,73 +266,73 @@ export class MonsterTypeHelper {
         switch (type) {
             case MonsterType.Animal:
                 ids = ids.concat(MonsterTypeConstants.ANIMALS_BASE);
-                if (cloudManager.hasTotHEntitlement) {
+                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
                     ids = ids.concat(MonsterTypeConstants.ANIMALS_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlement) {
+                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
                     ids = ids.concat(MonsterTypeConstants.ANIMALS_AOD);
                 }
                 break;
             case MonsterType.Demon:
                 ids = ids.concat(MonsterTypeConstants.DEMONS_BASE);
-                if (cloudManager.hasTotHEntitlement) {
+                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
                     ids = ids.concat(MonsterTypeConstants.DEMONS_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlement) {
+                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
                     ids = ids.concat(MonsterTypeConstants.DEMONS_AOD);
                 }
                 break;
             case MonsterType.Dragon:
                 ids = ids.concat(MonsterTypeConstants.DRAGONS_BASE);
-                if (cloudManager.hasTotHEntitlement) {
+                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
                     ids = ids.concat(MonsterTypeConstants.DRAGONS_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlement) {
+                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
                     ids = ids.concat(MonsterTypeConstants.DRAGONS_AOD);
                 }
                 break;
             case MonsterType.Elemental:
                 ids = ids.concat(MonsterTypeConstants.ELEMENTALS_BASE);
-                if (cloudManager.hasTotHEntitlement) {
+                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
                     ids = ids.concat(MonsterTypeConstants.ELEMENTALS_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlement) {
+                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
                     ids = ids.concat(MonsterTypeConstants.ELEMENTALS_AOD);
                 }
                 break;
             case MonsterType.Human:
                 ids = ids.concat(MonsterTypeConstants.HUMANS_BASE);
-                if (cloudManager.hasTotHEntitlement) {
+                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
                     ids = ids.concat(MonsterTypeConstants.HUMANS_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlement) {
+                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
                     ids = ids.concat(MonsterTypeConstants.HUMANS_AOD);
                 }
                 break;
             case MonsterType.MythicalCreature:
                 ids = ids.concat(MonsterTypeConstants.MYTHICAL_CREATURES_BASE);
-                if (cloudManager.hasTotHEntitlement) {
+                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
                     ids = ids.concat(MonsterTypeConstants.MYTHICAL_CREATURES_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlement) {
+                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
                     ids = ids.concat(MonsterTypeConstants.MYTHICAL_CREATURES_AOD);
                 }
                 break;
             case MonsterType.SeaCreature:
                 ids = ids.concat(MonsterTypeConstants.SEA_CREATURES_BASE);
-                if (cloudManager.hasTotHEntitlement) {
+                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
                     ids = ids.concat(MonsterTypeConstants.SEA_CREATURES_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlement) {
+                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
                     ids = ids.concat(MonsterTypeConstants.SEA_CREATURES_AOD);
                 }
                 break;
             case MonsterType.Undead:
                 ids = ids.concat(MonsterTypeConstants.UNDEAD_BASE);
-                if (cloudManager.hasTotHEntitlement) {
+                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
                     ids = ids.concat(MonsterTypeConstants.UNDEAD_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlement) {
+                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
                     ids = ids.concat(MonsterTypeConstants.UNDEAD_AOD);
                 }
                 break;
