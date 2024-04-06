@@ -5,6 +5,7 @@ declare global {
         isDemon: boolean,
         isDragon: boolean,
         isElemental: boolean,
+        isElf: boolean,
         isHuman: boolean,
         isMythicalCreature: boolean,
         isUndead: boolean,

@@ -214,6 +214,8 @@
     "MONSTER_TYPE_PLURAL_Dragon": "Ejderhalar",
     "MONSTER_TYPE_SINGULAR_Elemental": "Elemental",
     "MONSTER_TYPE_PLURAL_Elemental": "Elementaller",
+    "MONSTER_TYPE_SINGULAR_Elf": "Elf",
+    "MONSTER_TYPE_PLURAL_Elf": "Elfler",
     "MONSTER_TYPE_SINGULAR_Human": "İnsan",
     "MONSTER_TYPE_PLURAL_Human": "İnsanlar",
     "MONSTER_TYPE_SINGULAR_MythicalCreature": "Efsanevi Yaratık",

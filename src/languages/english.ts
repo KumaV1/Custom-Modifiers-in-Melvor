@@ -218,6 +218,8 @@
     MONSTER_TYPE_PLURAL_Dragon: "Dragons",
     MONSTER_TYPE_SINGULAR_Elemental: "Elemental",
     MONSTER_TYPE_PLURAL_Elemental: "Elementals",
+    MONSTER_TYPE_SINGULAR_Elf: "Elf",
+    MONSTER_TYPE_PLURAL_Elf: "Elves",
     MONSTER_TYPE_SINGULAR_Human: "Human",
     MONSTER_TYPE_PLURAL_Human: "Humans",
     MONSTER_TYPE_SINGULAR_MythicalCreature: "Mythical Creature",

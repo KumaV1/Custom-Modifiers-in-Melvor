@@ -89,10 +89,16 @@ export class MonsterTypeConstants {
     ];
     static readonly ELEMENTALS_AOD: string[] = [];
 
+    static readonly ELVES_BASE: string[] = [
+        "melvorD:FrozenArcher",
+        "melvorD:ElderWizard"
+    ];
+    static readonly ELVES_TOTH: string[] = [];
+    static readonly ELVES_AOD: string[] = [];
+
     static readonly HUMANS_BASE: string[] = [
         "melvorD:BlackKnight",
         "melvorD:ConfusedPirate",
-        "melvorD:FrozenArcher",
         "melvorD:Pirate",
         "melvorD:FirstMate",
         "melvorD:JuniorFarmer",
@@ -108,7 +114,6 @@ export class MonsterTypeConstants {
         "melvorD:BanditLeader",
         "melvorD:DarkWizard",
         "melvorD:MasterWizard",
-        "melvorD:ElderWizard",
         "melvorF:Druid",
         "melvorF:Thief",
         "melvorF:Shaman",

@@ -69,6 +69,7 @@ declare global {
         demonTraitApplied: number,
         dragonTraitApplied: number,
         elementalTraitApplied: number,
+        elfTraitApplied: number,
         humanTraitApplied: number,
         mythicalCreatureTraitApplied: number,
         seaCreatureTraitApplied: number,

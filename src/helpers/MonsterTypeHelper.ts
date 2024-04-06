@@ -300,6 +300,15 @@ export class MonsterTypeHelper {
                     ids = ids.concat(MonsterTypeConstants.ELEMENTALS_AOD);
                 }
                 break;
+            case MonsterType.Elf:
+                ids = ids.concat(MonsterTypeConstants.ELVES_BASE);
+                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
+                    ids = ids.concat(MonsterTypeConstants.ELVES_TOTH);
+                }
+                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
+                    ids = ids.concat(MonsterTypeConstants.ELVES_AOD);
+                }
+                break;
             case MonsterType.Human:
                 ids = ids.concat(MonsterTypeConstants.HUMANS_BASE);
                 if (cloudManager.hasTotHEntitlementAndIsEnabled) {

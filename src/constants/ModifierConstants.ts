@@ -21,6 +21,7 @@ export class ModifierConstants {
     static readonly DEMON_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/fierce_devil.png";
     static readonly DRAGON_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/dragon_green.png";
     static readonly ELEMENTAL_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/fire_spirit.png";
+    static readonly ELF_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/elder_wizard.png";
     static readonly HUMAN_MODIFIER_ICON_RESOURCE_URL = "assets/media/skills/thieving/man.svg";
     static readonly MYTHICAL_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/griffin.png";
     static readonly SEA_CREATURE_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/large_crab.png";

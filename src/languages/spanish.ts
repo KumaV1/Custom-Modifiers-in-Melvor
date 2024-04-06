@@ -214,6 +214,8 @@
     "MONSTER_TYPE_PLURAL_Dragon": "Dragones",
     "MONSTER_TYPE_SINGULAR_Elemental": "Elemental",
     "MONSTER_TYPE_PLURAL_Elemental": "Elementales",
+    "MONSTER_TYPE_SINGULAR_Elf": "Duende",
+    "MONSTER_TYPE_PLURAL_Elf": "Duendes",
     "MONSTER_TYPE_SINGULAR_Human": "Humano",
     "MONSTER_TYPE_PLURAL_Human": "Humanos",
     "MONSTER_TYPE_SINGULAR_MythicalCreature": "Criatura mítica",

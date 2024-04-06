@@ -57,6 +57,13 @@ export class MonsterTypeManager {
             false
         );
         MonsterTypeManager.registerOrUpdateType(
+            MonsterType.Elf,
+            "Elves",
+            ModifierConstants.ELF_MODIFIER_ICON_RESOURCE_URL,
+            MonsterTypeHelper.getNonModMonsterIds(MonsterType.Elf),
+            false
+        );
+        MonsterTypeManager.registerOrUpdateType(
             MonsterType.Human,
             "Humans",
             ModifierConstants.HUMAN_MODIFIER_ICON_RESOURCE_URL,
