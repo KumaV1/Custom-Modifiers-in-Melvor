@@ -4,6 +4,7 @@ export enum MonsterType {
     Demon = "Demon",
     Dragon = "Dragon",
     Elemental = "Elemental",
+    Elf = "Elf",
     Human = "Human",
     MythicalCreature = "MythicalCreature",
     SeaCreature = "SeaCreature",

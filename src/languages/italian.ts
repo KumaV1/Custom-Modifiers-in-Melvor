@@ -218,6 +218,8 @@
     MONSTER_TYPE_PLURAL_Dragon: "Draghi",
     MONSTER_TYPE_SINGULAR_Elemental: "Elementare",
     MONSTER_TYPE_PLURAL_Elemental: "Elementali",
+    MONSTER_TYPE_SINGULAR_Elf: "Elfo",
+    MONSTER_TYPE_PLURAL_Elf: "Elfi",
     MONSTER_TYPE_SINGULAR_Human: "Umano",
     MONSTER_TYPE_PLURAL_Human: "Umani",
     MONSTER_TYPE_SINGULAR_MythicalCreature: "Creatura mitica",

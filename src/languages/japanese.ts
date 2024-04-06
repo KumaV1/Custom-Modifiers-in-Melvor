@@ -214,6 +214,8 @@ export const ja = {
     "MONSTER_TYPE_PLURAL_Dragon": "ドラゴン",
     "MONSTER_TYPE_SINGULAR_Elemental": "エレメンタル",
     "MONSTER_TYPE_PLURAL_Elemental": "エレメンタル",
+    "MONSTER_TYPE_SINGULAR_Elf": "エルフ",
+    "MONSTER_TYPE_PLURAL_Elf": "エルフ",
     "MONSTER_TYPE_SINGULAR_Human": "人間",
     "MONSTER_TYPE_PLURAL_Human": "人間",
     "MONSTER_TYPE_SINGULAR_MythicalCreature": "神話上の生き物",

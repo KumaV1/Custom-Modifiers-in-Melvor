@@ -1319,7 +1319,7 @@ export class CustomModifiersManager {
             description: languages.en.MODIFIER_DATA_increasedGlobalDamagePreventionThreshold,
             isSkill: false,
             isNegative: false,
-            tags: ['combat']
+            tags: ['combat', 'thieving']
         };
         modifierData.decreasedGlobalDamagePreventionThreshold = {
             get langDescription() {
@@ -1329,7 +1329,7 @@ export class CustomModifiersManager {
             description: languages.en.MODIFIER_DATA_decreasedGlobalDamagePreventionThreshold,
             isSkill: false,
             isNegative: true,
-            tags: ['combat']
+            tags: ['combat', 'thieving']
         };
         modifierData.increasedDamagePreventionThreshold = {
             get langDescription() {

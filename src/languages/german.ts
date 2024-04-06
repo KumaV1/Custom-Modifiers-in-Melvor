@@ -224,6 +224,8 @@
     MONSTER_TYPE_PLURAL_Dragon: "Drachen",
     MONSTER_TYPE_SINGULAR_Elemental: "Elementar",
     MONSTER_TYPE_PLURAL_Elemental: "Elementare",
+    MONSTER_TYPE_SINGULAR_Elf: "Elfe",
+    MONSTER_TYPE_PLURAL_Elf: "Elfen",
     MONSTER_TYPE_SINGULAR_Human: "Mensch",
     MONSTER_TYPE_PLURAL_Human: "Menschen",
     MONSTER_TYPE_SINGULAR_MythicalCreature: "Fabelwesen",

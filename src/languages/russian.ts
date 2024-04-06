@@ -214,6 +214,8 @@
     "MONSTER_TYPE_PLURAL_Dragon": "Драконы",
     "MONSTER_TYPE_SINGULAR_Elemental": "Элементарный",
     "MONSTER_TYPE_PLURAL_Elemental": "Элементали",
+    "MONSTER_TYPE_SINGULAR_Elf": "Эльф",
+    "MONSTER_TYPE_PLURAL_Elf": "Эльфы",
     "MONSTER_TYPE_SINGULAR_Human": "Человек",
     "MONSTER_TYPE_PLURAL_Human": "Люди",
     "MONSTER_TYPE_SINGULAR_MythicalCreature": "Мифическое существо",

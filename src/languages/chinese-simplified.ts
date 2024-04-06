@@ -218,6 +218,8 @@
     MONSTER_TYPE_PLURAL_Dragon: "龙",
     MONSTER_TYPE_SINGULAR_Elemental: "元素",
     MONSTER_TYPE_PLURAL_Elemental: "元素",
+    MONSTER_TYPE_SINGULAR_Elf: "精灵",
+    MONSTER_TYPE_PLURAL_Elf: "精灵",
     MONSTER_TYPE_SINGULAR_Human: "人类",
     MONSTER_TYPE_PLURAL_Human: "人类",
     MONSTER_TYPE_SINGULAR_MythicalCreature: "神话生物",

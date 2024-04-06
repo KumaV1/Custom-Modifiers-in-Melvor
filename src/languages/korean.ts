@@ -218,6 +218,8 @@
     MONSTER_TYPE_PLURAL_Dragon: "드래곤",
     MONSTER_TYPE_SINGULAR_Elemental: "원소",
     MONSTER_TYPE_PLURAL_Elemental: "원소",
+    MONSTER_TYPE_SINGULAR_Elf: "엘프",
+    MONSTER_TYPE_PLURAL_Elf: "엘프",
     MONSTER_TYPE_SINGULAR_Human: "인간",
     MONSTER_TYPE_PLURAL_Human: "인간",
     MONSTER_TYPE_SINGULAR_MythicalCreature: "신화 생물",
