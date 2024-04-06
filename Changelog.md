@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.5.5
+_(Includes April fools (?8596) compatibility fixes)_
+* Updated checks whether an expansion was loaded
+* Added `thieving` tag to some modifiers that were previously missing it
+* Added new Monster Type `Elf` and swapped some monsters previously tagged as `Human` to it
+
 ## 2.5.4
 * Added monster type allocations for monsters of multiple mods
 * The `Show Skill Modifiers` mod will now display monster type related modifiers
