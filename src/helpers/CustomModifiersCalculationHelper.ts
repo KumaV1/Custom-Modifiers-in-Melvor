@@ -58,7 +58,7 @@ export class CustomModifiersCalculationHelper {
 
         flatXp = Math.max(0, flatXp);
 
-        return skill.game.modifiers.halfSkillXP
+        return skill.game.modifiers.halveSkillXP
             ? flatXp / 2
             : flatXp;
     }
@@ -251,7 +251,7 @@ export class CustomModifiersCalculationHelper {
      * @returns
      */
     public static getPlayerMaxHitFlatModification(entity: Player): number {
-        if (entity.usingAncient) {
+        if (entity.cantUseDamageModifiers) {
             return 0;
         }
 
@@ -423,7 +423,7 @@ export class CustomModifiersCalculationHelper {
         const flatDamageIgnoringReduction = numberMultiplier * (attacker.modifiers.increasedDamageFlatIgnoringDamageReduction - attacker.modifiers.decreasedDamageFlatIgnoringDamageReduction);
         return flatDamageIgnoringReduction > 0
             ? attack.isDragonbreath
-                ? attacker.applyDamageModifiers(target, flatDamageIgnoringReduction) * (1 - target.modifiers.decreasedDragonBreathDamage / 100)
+                ? attacker.applyDamageModifiers(target, flatDamageIgnoringReduction) * (1 + target.modifiers.dragonBreathDamage / 100)
                 : attacker.applyDamageModifiers(target, flatDamageIgnoringReduction)
             : 0;
     }
@@ -589,7 +589,7 @@ export class CustomModifiersCalculationHelper {
         const accuracyModification = applyModifier(accuracy, accuracyModifier, ModifierType.MultiplyBaseByPercentageWithFlooring);
 
         // Just like with the base game calculation, we have to keep the "globalAccuracyHPScaling" modifier in mind
-        return CustomModifiersCalculationHelper.applyGlobalAccuracyHpScaling(entity, accuracyModification);
+        return CustomModifiersCalculationHelper.applyAccuracyRatingHpScaling(entity, accuracyModification);
     }
 
     /**
@@ -608,7 +608,7 @@ export class CustomModifiersCalculationHelper {
         const accuracyModification = applyModifier(accuracy, accuracyModifier, ModifierType.MultiplyBaseByPercentageWithFlooring);
 
         // Just like with the base game calculation, we have to keep the "globalAccuracyHPScaling" modifier in mind
-        return CustomModifiersCalculationHelper.applyGlobalAccuracyHpScaling(entity, accuracyModification);
+        return CustomModifiersCalculationHelper.applyAccuracyRatingHpScaling(entity, accuracyModification);
     }
 
     /**
@@ -645,9 +645,9 @@ export class CustomModifiersCalculationHelper {
      * @param entity
      * @param accuracy
      */
-    private static applyGlobalAccuracyHpScaling(entity: Character, accuracy: number): number {
-        if (entity.modifiers.globalAccuracyHPScaling > 0) {
-            const modifier = (entity.modifiers.globalAccuracyHPScaling * entity.hitpointsPercent) / 100;
+    private static applyAccuracyRatingHpScaling(entity: Character, accuracy: number): number {
+        if (entity.modifiers.accuracyRatingHPScaling > 0) {
+            const modifier = (entity.modifiers.accuracyRatingHPScaling * entity.hitpointsPercent) / 100;
             return Math.floor(accuracy * modifier);
         } else {
             return accuracy;
@@ -665,8 +665,9 @@ export class CustomModifiersCalculationHelper {
     /**
      * Calculate the flat change in DR%
      * @param entity
+     * @param damageType
      */
-    public static getPlayerDamageReductionFlatModification(entity: Player): number {
+    public static getPlayerDamageReductionFlatModification(entity: Player, damageType: DamageType): number {
         // First, run general logic
         let modification = 0;
         if (entity.manager.fightInProgress) {
@@ -692,11 +693,11 @@ export class CustomModifiersCalculationHelper {
 
             // Then, we have to mimic multiplications based on a few conditions,
             // based on the total change we calculated up to this point
-            modification = CustomModifiersCalculationHelper.applyCharacterDamageReductionPercentModification(entity, modification);
+            modification = CustomModifiersCalculationHelper.applyCharacterDamageReductionPercentModification(entity, modification, damageType);
 
             // The player specifically also has one more multiplicative calculation to do
             if (entity.manager.fightInProgress) {
-                modification *= entity.activeTriangle.reductionModifier[entity.attackType][entity.target.attackType];
+                modification *= entity.manager.combatTriangle.reductionModifier[entity.attackType][entity.target.attackType];
             }
         }
 
@@ -706,8 +707,9 @@ export class CustomModifiersCalculationHelper {
     /**
      * Calculate the flat change in DR%
      * @param entity
+     * @param damageType
      */
-    public static getEnemyDamageReductionFlatModification(entity: Enemy): number {
+    public static getEnemyDamageReductionFlatModification(entity: Enemy, damageType: DamageType): number {
         let modification = 0;
         if (entity.manager.fightInProgress) {
             modification += CustomModifiersCalculationHelper.getCharacterDamageReductionFlatModification(entity);
@@ -715,7 +717,7 @@ export class CustomModifiersCalculationHelper {
 
         // Then, we have to mimic multiplications based on a few conditions,
         // based on the total change we calculated up to this point
-        return CustomModifiersCalculationHelper.applyCharacterDamageReductionPercentModification(entity, modification);
+        return CustomModifiersCalculationHelper.applyCharacterDamageReductionPercentModification(entity, modification, damageType);
     }
 
     /**
@@ -750,11 +752,13 @@ export class CustomModifiersCalculationHelper {
      * Applies multiplicative changes of the base game to our calculated DR%
      * @param entity
      * @param damageReduction
+     * @param damageType
      * @returns
      */
-    private static applyCharacterDamageReductionPercentModification(entity: Character, damageReduction: number): number {
-        damageReduction *= 1 + (entity.modifiers.increasedDamageReductionPercent - entity.modifiers.decreasedDamageReductionPercent) / 100;
-        if (entity.modifiers.halveDamageReduction > 0) {
+    private static applyCharacterDamageReductionPercentModification(entity: Character, damageReduction: number, damageType: DamageType): number {
+        const percentModifier = entity.modifiers.getValue("melvorD:resistance", damageType.modQuery);
+        damageReduction *= 1 + percentModifier / 100;
+        if (entity.modifiers.getValue("melvorD:halveResistance", damageType.modQuery)) {
             damageReduction *= 0.5;
         }
 

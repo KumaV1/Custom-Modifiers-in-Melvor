@@ -935,11 +935,11 @@ export class CustomModifiersManager {
         // based on combat triangle, which has to be repeated for the overall custom DR% calculated for this case
         // #endregion
 
-        this.context.patch(Player, "modifyDamageReduction").after(function (returnValue) {
-            return returnValue += CustomModifiersCalculationHelper.getPlayerDamageReductionFlatModification(this);
+        this.context.patch(Player, "modifyResistance").after(function (returnValue, damageType: DamageType, resistance: number) {
+            return returnValue += CustomModifiersCalculationHelper.getPlayerDamageReductionFlatModification(this, damageType);
         });
-        this.context.patch(Enemy, "modifyDamageReduction").after(function (returnValue) {
-            return returnValue += CustomModifiersCalculationHelper.getEnemyDamageReductionFlatModification(this);
+        this.context.patch(Enemy, "modifyResistance").after(function (returnValue, damageType: DamageType, resistance: number) {
+            return returnValue += CustomModifiersCalculationHelper.getEnemyDamageReductionFlatModification(this, damageType);
         });
     }
 
