@@ -21,7 +21,7 @@ interface MonsterTypeOverviewInactiveMonsterType extends MonsterTypeOverviewMons
 
 interface MonsterTypeOverviewProps {
     traitsOnPlayer: MonsterTypeOverviewPlayerTraitEntry[]
-    activeTypes: MonsterTypeOverviewMonsterType[],
+    activeTypes: MonsterTypeOverviewMonsterType[], // add tooltip with "onShow"
     inactiveTypes: MonsterTypeOverviewInactiveMonsterType[]
 }
 
@@ -51,7 +51,7 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
     CmimUtils.orderAlphabetically(props.inactiveTypes, "name");
 
     // == Helper Functions ==
-    function processType(type: MonsterTypeDefinition, active: Boolean) {
+    function processType(type: MonsterTypeDefinition, active: boolean) {
         // Get matching monsters
         let matchingMonsters: Monster[] = [];
         monsters.forEach(function (monster) {

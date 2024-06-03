@@ -1,209 +1,209 @@
 export class MonsterTypeConstants {
-    static readonly ANIMALS_BASE: string[] = [
-        "melvorD:Chicken",
-        "melvorD:Cow",
-        "melvorD:Chick",
-        "melvorD:MummaChicken",
-        "melvorD:Leech",
-        "melvorD:Bat",
-        "melvorD:BigBat",
-        "melvorD:ViciousSerpent",
-        "melvorD:Spider",
-        "melvorD:BrownSpider",
-        "melvorD:EvilSpider",
-        "melvorD:SpiderKing",
-        "melvorD:Seagull",
-        "melvorD:FrozenMammoth",
-        "melvorF:AirGuard",
-        "melvorF:LegaranWurm",
-        "melvorF:NoxiousSerpent",
-        "melvorF:VenomousSnake",
-        "melvorF:GiantMoth",
-        "melvorF:RancoraSpider",
-        "melvorF:SpikedRedClaw"
+    static readonly ANIMALS_BASE: MonsterIDs[] = [
+        MonsterIDs.Chicken,
+        MonsterIDs.Cow,
+        MonsterIDs.Chick,
+        MonsterIDs.MummaChicken,
+        MonsterIDs.Leech,
+        MonsterIDs.Bat,
+        MonsterIDs.BigBat,
+        MonsterIDs.ViciousSerpent,
+        MonsterIDs.Spider,
+        MonsterIDs.BrownSpider,
+        MonsterIDs.EvilSpider,
+        MonsterIDs.SpiderKing,
+        MonsterIDs.Seagull,
+        MonsterIDs.FrozenMammoth,
+        MonsterIDs.AirGuard,
+        MonsterIDs.LegaranWurm,
+        MonsterIDs.NoxiousSerpent,
+        MonsterIDs.VenomousSnake,
+        MonsterIDs.GiantMoth,
+        MonsterIDs.RancoraSpider,
+        MonsterIDs.SpikedRedClaw,
     ];
-    static readonly ANIMALS_TOTH: string[] = [
-        "melvorTotH:BurningSnake",
-        "melvorTotH:PolarBear",
-        "melvorTotH:SpectralIceWolf",
-        "melvorTotH:PoisonToad",
-        "melvorTotH:Conda",
-        "melvorTotH:SpectralIceWolf",
-        "melvorTotH:ScouterSpider",
-        "melvorTotH:TrapperSpider",
-        "melvorTotH:WickedSpider",
-        "melvorTotH:BasherSpider",
-        "melvorTotH:EnforcerSpider",
-        "melvorTotH:GuardianSpider"
+    static readonly ANIMALS_TOTH: MonsterIDs[] = [
+        MonsterIDs.BurningSnake,
+        MonsterIDs.PolarBear,
+        MonsterIDs.SpectralIceWolf,
+        MonsterIDs.PoisonToad,
+        MonsterIDs.Conda,
+        MonsterIDs.SpectralIceWolf,
+        MonsterIDs.ScouterSpider,
+        MonsterIDs.TrapperSpider,
+        MonsterIDs.WickedSpider,
+        MonsterIDs.BasherSpider,
+        MonsterIDs.EnforcerSpider,
+        MonsterIDs.GuardianSpider
     ];
-    static readonly ANIMALS_AOD: string[] = [];
+    static readonly ANIMALS_AOD: MonsterIDs[] = [];
 
-    static readonly DEMONS_BASE: string[] = [
-        "melvorF:RedDevil",
-        "melvorF:FierceDevil",
-        "melvorF:FireGuard",
-        "melvorF:Ignis",
-        "melvorF:Ragnar"
+    static readonly DEMONS_BASE: MonsterIDs[] = [
+        MonsterIDs.RedDevil,
+        MonsterIDs.FierceDevil,
+        MonsterIDs.FireGuard,
+        MonsterIDs.Ignis,
+        MonsterIDs.Ragnar
     ];
-    static readonly DEMONS_TOTH: string[] = [
-        "melvorTotH:MagicFireDemon",
-        "melvorTotH:GuardianoftheHerald"
+    static readonly DEMONS_TOTH: MonsterIDs[] = [
+        MonsterIDs.MagicFireDemon,
+        MonsterIDs.GuardianoftheHerald
     ];
-    static readonly DEMONS_AOD: string[] = [];
+    static readonly DEMONS_AOD: MonsterIDs[] = [];
 
-    static readonly DRAGONS_BASE: string[] = [
-        "melvorD:PratTheProtectorOfSecrets",
-        "melvorD:GreenDragon",
-        "melvorD:BlueDragon",
-        "melvorD:RedDragon",
-        "melvorD:BlackDragon",
-        "melvorD:MalcsTheGuardianOfMelvor",
-        "melvorF:ElderDragon",
-        "melvorF:ChaoticGreaterDragon",
-        "melvorF:HuntingGreaterDragon",
-        "melvorF:WickedGreaterDragon",
-        "melvorF:MalcsTheLeaderOfDragons",
-        "melvorF:GreaterSkeletalDragon"
+    static readonly DRAGONS_BASE: MonsterIDs[] = [
+        MonsterIDs.PratTheProtectorOfSecrets,
+        MonsterIDs.GreenDragon,
+        MonsterIDs.BlueDragon,
+        MonsterIDs.RedDragon,
+        MonsterIDs.BlackDragon,
+        MonsterIDs.MalcsTheGuardianOfMelvor,
+        MonsterIDs.ElderDragon,
+        MonsterIDs.ChaoticGreaterDragon,
+        MonsterIDs.HuntingGreaterDragon,
+        MonsterIDs.WickedGreaterDragon,
+        MonsterIDs.MalcsTheLeaderOfDragons,
+        MonsterIDs.GreaterSkeletalDragon
     ];
-    static readonly DRAGONS_TOTH: string[] = [
-        "melvorTotH:TwinSeaDragonSerpent",
-        "melvorTotH:RaZu"
+    static readonly DRAGONS_TOTH: MonsterIDs[] = [
+        MonsterIDs.TwinSeaDragonSerpent,
+        MonsterIDs.RaZu
     ];
-    static readonly DRAGONS_AOD: string[] = [];
+    static readonly DRAGONS_AOD: MonsterIDs[] = [];
 
-    static readonly ELEMENTALS_BASE: string[] = [
-        "melvorD:Ice",
-        "melvorD:FireSpirit",
-        "melvorF:AirGolem",
-        "melvorF:WaterGuard",
-        "melvorF:WaterMonster",
-        "melvorF:WaterGolem",
-        "melvorF:Glacia",
-        "melvorF:EarthGolem",
-        "melvorF:FireGolem",
+    static readonly ELEMENTALS_BASE: MonsterIDs[] = [
+        MonsterIDs.Ice,
+        MonsterIDs.FireSpirit,
+        MonsterIDs.AirGolem,
+        MonsterIDs.WaterGuard,
+        MonsterIDs.WaterMonster,
+        MonsterIDs.WaterGolem,
+        MonsterIDs.Glacia,
+        MonsterIDs.EarthGolem,
+        MonsterIDs.FireGolem
     ];
-    static readonly ELEMENTALS_TOTH: string[] = [
-        "melvorTotH:InfernalGolem",
-        "melvorTotH:FrostGolem",
-        "melvorTotH:LightningSpirit"
+    static readonly ELEMENTALS_TOTH: MonsterIDs[] = [
+        MonsterIDs.InfernalGolem,
+        MonsterIDs.FrostGolem,
+        MonsterIDs.LightningSpirit
     ];
-    static readonly ELEMENTALS_AOD: string[] = [];
+    static readonly ELEMENTALS_AOD: MonsterIDs[] = [];
 
-    static readonly ELVES_BASE: string[] = [
-        "melvorD:FrozenArcher",
-        "melvorD:ElderWizard"
+    static readonly ELVES_BASE: MonsterIDs[] = [
+        MonsterIDs.FrozenArcher,
+        MonsterIDs.ElderWizard
     ];
-    static readonly ELVES_TOTH: string[] = [];
-    static readonly ELVES_AOD: string[] = [];
+    static readonly ELVES_TOTH: MonsterIDs[] = [];
+    static readonly ELVES_AOD: MonsterIDs[] = [];
 
-    static readonly HUMANS_BASE: string[] = [
-        "melvorD:BlackKnight",
-        "melvorD:ConfusedPirate",
-        "melvorD:Pirate",
-        "melvorD:FirstMate",
-        "melvorD:JuniorFarmer",
-        "melvorD:AdultFarmer",
-        "melvorD:MasterFarmer",
-        "melvorD:Wizard",
-        "melvorD:SteelKnight",
-        "melvorD:MithrilKnight",
-        "melvorD:AdamantKnight",
-        "melvorD:RuneKnight",
-        "melvorD:BanditTrainee",
-        "melvorD:Bandit",
-        "melvorD:BanditLeader",
-        "melvorD:DarkWizard",
-        "melvorD:MasterWizard",
-        "melvorF:Druid",
-        "melvorF:Thief",
-        "melvorF:Shaman",
-        "melvorF:Necromancer",
-        "melvorF:Elementalist",
-        "melvorF:Paladin",
-        "melvorF:Priest",
-        "melvorF:WanderingBard"
+    static readonly HUMANS_BASE: MonsterIDs[] = [
+        MonsterIDs.BlackKnight,
+        MonsterIDs.ConfusedPirate,
+        MonsterIDs.Pirate,
+        MonsterIDs.FirstMate,
+        MonsterIDs.JuniorFarmer,
+        MonsterIDs.AdultFarmer,
+        MonsterIDs.MasterFarmer,
+        MonsterIDs.Wizard,
+        MonsterIDs.SteelKnight,
+        MonsterIDs.MithrilKnight,
+        MonsterIDs.AdamantKnight,
+        MonsterIDs.RuneKnight,
+        MonsterIDs.BanditTrainee,
+        MonsterIDs.Bandit,
+        MonsterIDs.BanditLeader,
+        MonsterIDs.DarkWizard,
+        MonsterIDs.MasterWizard,
+        MonsterIDs.Druid,
+        MonsterIDs.Thief,
+        MonsterIDs.Shaman,
+        MonsterIDs.Necromancer,
+        MonsterIDs.Elementalist,
+        MonsterIDs.Paladin,
+        MonsterIDs.Priest,
+        MonsterIDs.WanderingBard
     ];
-    static readonly HUMANS_TOTH: string[] = [
-        "melvorTotH:DarkKnight",
+    static readonly HUMANS_TOTH: MonsterIDs[] = [
+        MonsterIDs.DarkKnight
     ];
-    static readonly HUMANS_AOD: string[] = [
-        "melvorAoD:BlindWarrior",
-        "melvorAoD:BlindArcher",
-        "melvorAoD:BlindMage",
-        "melvorAoD:SoulTakerWitch"
-    ];
-
-    static readonly MYTHICAL_CREATURES_BASE: string[] = [
-        "melvorD:ElerineMage",
-        "melvorD:ElerineWarrior",
-        "melvorD:ElerineArcher",
-        "melvorF:Griffin",
-        "melvorF:Pegasus",
-        "melvorF:Cerberus",
-        "melvorF:Phoenix",
-        "melvorF:Aleron",
-        "melvorF:EarthGuard",
-        "melvorF:EarthMonster",
-        "melvorF:Ophidia",
-        "melvorF:FireMonster",
-    ];
-    static readonly MYTHICAL_CREATURES_TOTH: string[] = [
-        "melvorTotH:Manticore"
-    ];
-    static readonly MYTHICAL_CREATURES_AOD: string[] = [];
-
-    static readonly SEA_CREATURES_BASE: string[] = [
-        "melvorD:GiantCrab",
-        "melvorD:Tentacle",
-        "melvorD:TheKraken",
-        "melvorF:Lissia",
-        "melvorF:Murtia",
-        "melvorF:Umbora",
-        "melvorF:Rokken",
-        "melvorF:Kutul",
-        "melvorF:Lissia",
-        "melvorF:Murtia",
-        "melvorF:MioliteWarden"
-    ];
-    static readonly SEA_CREATURES_TOTH: string[] = [
-        "melvorTotH:Siren",
-        "melvorTotH:MonsterCroc",
-        "melvorTotH:Leviathan",
-        "melvorTotH:TwinSeaDragonSerpent"
-    ];
-    static readonly SEA_CREATURES_AOD: string[] = [
-        "melvorAoD:ShipwreckBeast",
-        "melvorAoD:Merman",
-        "melvorAoD:MermaidArcher",
-        "melvorAoD:MermanGuard",
-        "melvorAoD:TreacherousJellyfish",
-        "melvorAoD:Nagaia"
+    static readonly HUMANS_AOD: MonsterIDs[] = [
+        MonsterIDs.BlindWarrior,
+        MonsterIDs.BlindArcher,
+        MonsterIDs.BlindMage,
+        MonsterIDs.SoulTakerWitch
     ];
 
-    static readonly UNDEAD_BASE: string[] = [
-        "melvorD:PirateCaptain",
-        "melvorD:ZombieHand",
-        "melvorD:Zombie",
-        "melvorD:ZombieLeader",
-        "melvorD:Ghost",
-        "melvorD:Skeleton",
-        "melvorF:UndeadWerewolf",
-        "melvorF:CursedLich",
-        "melvorF:GreaterSkeletalDragon"
+    static readonly MYTHICAL_CREATURES_BASE: MonsterIDs[] = [
+        MonsterIDs.ElerineMage,
+        MonsterIDs.ElerineWarrior,
+        MonsterIDs.ElerineArcher,
+        MonsterIDs.Griffin,
+        MonsterIDs.Pegasus,
+        MonsterIDs.Cerberus,
+        MonsterIDs.Phoenix,
+        MonsterIDs.Aleron,
+        MonsterIDs.EarthGuard,
+        MonsterIDs.EarthMonster,
+        MonsterIDs.Ophidia,
+        MonsterIDs.FireMonster
     ];
-    static readonly UNDEAD_TOTH: string[] = [
-        "melvorTotH:Phantom",
-        "melvorTotH:Banshee",
-        "melvorTotH:Spectre",
-        "melvorTotH:CursedSkeletonWarrior",
-        "melvorTotH:Fiozor",
-        "melvorTotH:CursedSpirit"
+    static readonly MYTHICAL_CREATURES_TOTH: MonsterIDs[] = [
+        MonsterIDs.Manticore
     ];
-    static readonly UNDEAD_AOD: string[] = [
-        "melvorAoD:BlindGhost",
-        "melvorAoD:Lich",
-        "melvorAoD:GhostSailor",
-        "melvorAoD:GhostMercenary",
-        "melvorAoD:CursedPirateCaptain"
+    static readonly MYTHICAL_CREATURES_AOD: MonsterIDs[] = [];
+
+    static readonly SEA_CREATURES_BASE: MonsterIDs[] = [
+        MonsterIDs.GiantCrab,
+        MonsterIDs.Tentacle,
+        MonsterIDs.TheKraken,
+        MonsterIDs.Lissia,
+        MonsterIDs.Murtia,
+        MonsterIDs.Umbora,
+        MonsterIDs.Rokken,
+        MonsterIDs.Kutul,
+        MonsterIDs.Lissia,
+        MonsterIDs.Murtia,
+        MonsterIDs.MioliteWarden
+    ];
+    static readonly SEA_CREATURES_TOTH: MonsterIDs[] = [
+        MonsterIDs.Siren,
+        MonsterIDs.MonsterCroc,
+        MonsterIDs.Leviathan,
+        MonsterIDs.TwinSeaDragonSerpent
+    ];
+    static readonly SEA_CREATURES_AOD: MonsterIDs[] = [
+        MonsterIDs.ShipwreckBeast,
+        MonsterIDs.Merman,
+        MonsterIDs.MermaidArcher,
+        MonsterIDs.MermanGuard,
+        MonsterIDs.TreacherousJellyfish,
+        MonsterIDs.Nagaia
+    ];
+
+    static readonly UNDEAD_BASE: MonsterIDs[] = [
+        MonsterIDs.PirateCaptain,
+        MonsterIDs.ZombieHand,
+        MonsterIDs.Zombie,
+        MonsterIDs.ZombieLeader,
+        MonsterIDs.Ghost,
+        MonsterIDs.Skeleton,
+        MonsterIDs.UndeadWerewolf,
+        MonsterIDs.CursedLich,
+        MonsterIDs.GreaterSkeletalDragon
+    ];
+    static readonly UNDEAD_TOTH: MonsterIDs[] = [
+        MonsterIDs.Phantom,
+        MonsterIDs.Banshee,
+        MonsterIDs.Spectre,
+        MonsterIDs.CursedSkeletonWarrior,
+        MonsterIDs.Fiozor,
+        MonsterIDs.CursedSpirit
+    ];
+    static readonly UNDEAD_AOD: MonsterIDs[] = [
+        MonsterIDs.BlindGhost,
+        MonsterIDs.Lich,
+        MonsterIDs.GhostSailor,
+        MonsterIDs.GhostMercenary,
+        MonsterIDs.CursedPirateCaptain
     ];
 }

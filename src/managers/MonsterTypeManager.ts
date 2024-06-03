@@ -103,7 +103,7 @@ export class MonsterTypeManager {
      * @param active
      * @returns
      */
-    public static registerOrUpdateType(typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean): void {
+    public static registerOrUpdateType(typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: boolean): void {
         // If the given type is already active, then monster allocation is the only thing we might want to do
         if (this._activeTypes[typeNameSingular]) {
             MonsterTypeManager.addMonstersToType(typeNameSingular, monsterIds);

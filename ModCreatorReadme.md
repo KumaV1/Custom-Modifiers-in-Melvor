@@ -262,7 +262,7 @@ addMonsters("Dragon", ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"]);
 * @param active - whether the type should be set to active (can be omittet, in which case it will default to true) - as a mod consuming the api, this is basically always going to be true, but can technically be set to false as well
 * @returns void
 */
-registerOrUpdateType(typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean)
+registerOrUpdateType(typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: boolean)
 
 // Example
 registerOrUpdateType("Dragon", "Dragons", "https://cdn.melvor.net/core/v018/assets/media/monsters/dragon_green.png", ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"]);

@@ -249,7 +249,7 @@ export class TinyIconsCompatibility {
         }
     }
 
-    private isLoaded(): Boolean {
+    private isLoaded(): boolean {
         return mod.manager.getLoadedModList().includes('Tiny Icons');
     }
 }

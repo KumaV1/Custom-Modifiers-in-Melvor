@@ -8,7 +8,7 @@
         "name": "Test Item",
         "category": "Test",
         "type": "Test",
-        "media": "https://cdn.melvor.net/core/v018/assets/media/skills/summoning/summoning.svg",
+        "media": "melvor:assets/media/skills/summoning/summoning.svg",
         "ignoreCompletion": true,
         "obtainFromItemLog": true,
         "golbinRaidExclusive": true,
@@ -28,7 +28,7 @@
       {
         "id": "Test_Monster",
         "name": "Test Monster",
-        "media": "https://cdn.melvor.net/core/v018/assets/media/skills/summoning/summoning.svg",
+        "media": "melvor:assets/media/skills/summoning/summoning.svg",
         "levels": {
           "Attack": 100,
           "Defence": 1,
@@ -70,7 +70,7 @@
       {
         "id": "Test_Area",
         "name": "Test area",
-        "media": "https://cdn.melvor.net/core/v018/assets/media/skills/summoning/summoning.svg",
+        "media": "melvor:assets/media/skills/summoning/summoning.svg",
         "difficulty": [
           2
         ],

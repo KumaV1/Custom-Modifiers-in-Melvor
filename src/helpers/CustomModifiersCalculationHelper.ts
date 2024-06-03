@@ -494,6 +494,8 @@ export class CustomModifiersCalculationHelper {
 
         if (attacker.attackType === ModConstants.ATTACK_TYPES_MAGIC) {
             switch (attacker.spellSelection.standard?.spellType) {
+                case undefined:
+                    break;
                 case SpellTypes.Air:
                     modification += target.modifiers.increasedDamageTakenFromAirSpells - target.modifiers.decreasedDamageTakenFromAirSpells;
                     break;

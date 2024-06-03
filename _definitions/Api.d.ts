@@ -54,7 +54,7 @@ declare namespace Modding {
              * @param active - whether the type should be set to active (if omitted, will be set to "true") - as a mod consuming the api, this is basically always going to be true, but can technically be set to false as well
              * @returns
              */
-            registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean = true) => void
+            registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: boolean = true) => void
 
             /**
              * Get list of monster ids which are allocated to the given type, regardless of whether they are found to be active or inactive

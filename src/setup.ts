@@ -94,10 +94,10 @@ function initApiEndpoints(ctx: Modding.ModContext) {
         getActiveTypes: () => MonsterTypeManager.getActiveTypes(),
         getInactiveTypes: () => MonsterTypeManager.getInactiveTypes(),
         monsterIsOfType: (monster: Monster, monsterType: string | MonsterType) => MonsterTypeManager.monsterIsOfType(monster, monsterType),
-        registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: Boolean = true) => MonsterTypeManager.registerOrUpdateType(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds, active),
+        registerOrUpdateType: (typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: boolean = true) => MonsterTypeManager.registerOrUpdateType(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds, active),
         getMonstersOfType: (type: string | MonsterType) => MonsterTypeManager.getMonstersOfType(type),
 
-        // DEPRACATED | Throw errors from next update onwards?
+        // DEPRACATED
         getHumans: () => MonsterTypeManager.getHumans(),
         getDragons: () => MonsterTypeManager.getDragons(),
         getUndead: () => MonsterTypeManager.getUndead(),

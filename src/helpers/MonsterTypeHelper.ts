@@ -245,7 +245,7 @@ export class MonsterTypeHelper {
      */
     public static entityIsTreatedAsType(entity: Character, type: MonsterTypeDefinition): boolean {
         // @ts-ignore - We know that behind this property lies a boolean. And if not, well "falsey" check work too
-        const isOfType: Boolean = entity[type.isTypePropertyName];
+        const isOfType: boolean = entity[type.isTypePropertyName];
         // @ts-ignore - We know that behind this property lies a boolean. And if not, well "falsey" check work too
         //console.log(`entityIsTreatedAsType | isOfType | propertyName: ${type.isTypePropertyName} / value: ${entity.target[type.isTypePropertyName]}, ${isOfType}`);
         // @ts-ignore - We know that behind this property lies a boolean. And if not, well "falsey" check work too
@@ -260,8 +260,8 @@ export class MonsterTypeHelper {
      * Returns an array of monster ids, indicating which monsters of base game + expansions are allocated to the corresponding type
      * @param type
      */
-    public static getNonModMonsterIds(type: string): string[] {
-        let ids: string[] = [];
+    public static getNonModMonsterIds(type: string): MonsterIDs[] {
+        let ids: MonsterIDs[] = [];
 
         switch (type) {
             case MonsterType.Animal:
