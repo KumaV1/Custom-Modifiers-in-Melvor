@@ -23,7 +23,7 @@ export class MonsterTypeListConfigFunctions {
                 className: 'font-weight-normal',
                 text: config.label
             });
-            label.setAttribute('for', `${ModConstants.MOD_NAMESPACE}:${this.name}`);
+            label.setAttribute('for', `${ModConstants.MOD_NAMESPACE_NAME}:${this.name}`);
             if (config.hint) {
                 const forceWrapper = createElement('span', { className: 'ms__force-wrap' });
                 const hint = createElement('small', {
@@ -73,7 +73,7 @@ export class MonsterTypeListConfigFunctions {
     public static onChange(value: unknown, previousValue: unknown): string | boolean | void {
         SettingsManager.setButtonToReload();
 
-        const hint = document.querySelector(`label[for="${ModConstants.MOD_NAMESPACE}:${this.name}"] > small`);
+        const hint = document.querySelector(`label[for="${ModConstants.MOD_NAMESPACE_NAME}:${this.name}"] > small`);
         if (hint) {
             hint.textContent = TranslationManager.getLangString("Settings_Hint_Save_Reload_Required", true);
             hint.classList.add("text-warning");

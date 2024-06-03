@@ -1,6 +1,11 @@
 export class ModConstants {
     static readonly SCHEMA = "https://melvoridle.com/assets/schema/gameData.json";
-    static readonly MOD_NAMESPACE = "customModifiersInMelvor";
+    static readonly MOD_NAMESPACE_NAME = "customModifiersInMelvor";
+    static readonly MOD_NAMESPACE_DATA = {
+        name: this.MOD_NAMESPACE_NAME,
+        displayName: "Custom Modifiers in Melvor",
+        isModded: true
+    } as DataNamespace;
 
     static readonly ERROR_ICON_MEDIA_PATH = "assets/media/main/error.svg";
     static readonly COMBAT_CONTAINER_ELEMENT_ID = "combat-container";

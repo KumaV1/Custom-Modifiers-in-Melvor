@@ -17,7 +17,7 @@ export class TranslationManager {
      */
     public patch(): void {
         this.context.patch(Page, 'name').get(function (patch) {
-            if (this.namespace === ModConstants.MOD_NAMESPACE) {
+            if (this.namespace === ModConstants.MOD_NAMESPACE_NAME) {
                 return getLangString(`PAGE_NAME_${this.localID}`);
             }
 
@@ -52,7 +52,7 @@ export class TranslationManager {
             if (keysToNotPrefix.some(prefix => key.includes(prefix))) {
                 loadedLangJson[key] = value;
             } else {
-                loadedLangJson[`${ModConstants.MOD_NAMESPACE}_${key}`] = value;
+                loadedLangJson[`${ModConstants.MOD_NAMESPACE_NAME}_${key}`] = value;
             }
         }
     }
@@ -109,7 +109,7 @@ export class TranslationManager {
      */
     public static getLangString(identifier: string, includeNamespace: boolean = false) {
         return includeNamespace
-            ? getLangString(`${ModConstants.MOD_NAMESPACE}_${identifier}`)
+            ? getLangString(`${ModConstants.MOD_NAMESPACE_NAME}_${identifier}`)
             : getLangString(identifier);
     }
 
@@ -141,7 +141,7 @@ export class TranslationManager {
      */
     public static getTranslationOrFallback(key: string, fallback: string, includeNamespace: boolean = false): string {
         const translation = includeNamespace
-            ? loadedLangJson[`${ModConstants.MOD_NAMESPACE}_${key}`]
+            ? loadedLangJson[`${ModConstants.MOD_NAMESPACE_NAME}_${key}`]
             : loadedLangJson[key];
         //console.log(`translationManager | getTranslationOrFallback | key: ${key} | fallback: ${fallback} | key result: ${translation}`);
         return translation !== undefined && translation !== ''

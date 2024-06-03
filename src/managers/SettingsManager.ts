@@ -21,7 +21,7 @@ export class SettingsManager {
                 onChange(value: boolean, previousValue: boolean): void {
                     SettingsManager.setButtonToReload();
 
-                    const hint = document.querySelector(`label[for="${ModConstants.MOD_NAMESPACE}:enable-modifier-ui-impact-indicator"] > small`);
+                    const hint = document.querySelector(`label[for="${ModConstants.MOD_NAMESPACE_NAME}:enable-modifier-ui-impact-indicator"] > small`);
                     if (hint) {
                         hint.textContent = TranslationManager.getLangString("Settings_Hint_Save_Reload_Required", true);
                         hint.classList.add("text-warning");
@@ -223,7 +223,7 @@ export class SettingsManager {
      * Change color of save button from primary to danger
      */
     public static setButtonToReload(): void {
-        const btn = document.getElementById(`${ModConstants.MOD_NAMESPACE}:save-reload`);
+        const btn = document.getElementById(`${ModConstants.MOD_NAMESPACE_NAME}:save-reload`);
         if (btn && btn.classList.contains("btn-primary")) {
             btn.classList.replace("btn-primary", "btn-danger");
         }

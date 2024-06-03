@@ -8,6 +8,7 @@ import { MonsterTypeManager } from '../managers/MonsterTypeManager';
 import { SettingsManager } from '../managers/SettingsManager';
 
 import { languages } from '../languages';
+import { CustomModifiersRegistrationHelper } from '../helpers/CustomModifiersRegistrationHelper';
 
 /**
  * Patches different sections of the code, in order to integrate custom modifiers
@@ -46,7 +47,7 @@ export class CustomModifiersManager {
         this.patchSkilling();
         this.patchGame();
         this.patchAddHitpoints();
-        this.patchCombatModifiersReset();
+        //this.patchCombatModifiersReset();
         this.patchMonsterTypeAllocation();
         this.patchApplyUniqueSpawnEffects();
         this.patchApplyOnHitEffects();
@@ -76,7 +77,7 @@ export class CustomModifiersManager {
             game.customModifiersInMelvor.customModifierEffects[type.effectPropertyObjectNames.traitApplicationCustomModifierEffect] = customEffectData;
 
             game.registerDataPackage(MonsterTypeHelper.createTraitStackingEffectGamePackage(type));
-            const stackingEffect = game.stackingEffects.getObjectByID(`${ModConstants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`);
+            const stackingEffect = game.stackingEffects.getObjectByID(`${ModConstants.MOD_NAMESPACE_NAME}:${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`);
             if (stackingEffect === undefined) {
                 CmimUtils.error(`Failed to find stacking effect for monster type '${type.singularName}' after registering it`);
             } else {
@@ -84,7 +85,7 @@ export class CustomModifiersManager {
             }
 
             game.registerDataPackage(MonsterTypeHelper.createTraitCustomModifierEffectAttackGamePackage(type, customEffectData));
-            const specialAttack = game.specialAttacks.getObjectByID(`${ModConstants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_ATTACK_ID_SUFFIX}`);
+            const specialAttack = game.specialAttacks.getObjectByID(`${ModConstants.MOD_NAMESPACE_NAME}:${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_ATTACK_ID_SUFFIX}`);
             if (specialAttack === undefined) {
                 CmimUtils.error(`Failed to find special attack for monster type '${type.singularName}' after registering it`);
             } else {
@@ -98,6 +99,8 @@ export class CustomModifiersManager {
      * @param type
      */
     public registerMonsterTypeModifierData(type: MonsterTypeDefinition): void {
+        let modifiers = [] as ModifierData[];
+
         Object.entries(type.modifierPropertyNames).forEach(([key, value]) => {
             //console.log(`Processing modifierProperty: ${key} | ${value}`);
 
@@ -106,1271 +109,354 @@ export class CustomModifiersManager {
 
             // @ts-ignore implicit 'any' type error
             // we know though that it is an object to which we want to add a property
-            modifierData[value] = obj;
+            //modifierData[value] = obj;
+            modifiers.push(obj);
         });
+
+        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
     }
 
     // #region Modifier Registration
 
+    /** Register skill-related modifiers | TODO: Move to data package instead, as not dynamic? */
     private registerSkillModifiers() {
-        modifierData.increasedGlobalSkillXPPerLevel = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedGlobalSkillXPPerLevel');
-            },
-            description: languages.en.MODIFIER_DATA_increasedGlobalSkillXPPerLevel,
-            isSkill: false,
-            isNegative: false,
-            tags: [],
-        };
-        modifierData.decreasedGlobalSkillXPPerLevel = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedGlobalSkillXPPerLevel');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedGlobalSkillXPPerLevel,
-            isSkill: false,
-            isNegative: true,
-            tags: [],
-        };
-        modifierData.increasedSkillXPPerSkillLevel = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedSkillXPPerSkillLevel');
-            },
-            description: languages.en.MODIFIER_DATA_increasedSkillXPPerSkillLevel,
-            isSkill: true,
-            isNegative: false,
-            tags: [],
-        };
-        modifierData.decreasedSkillXPPerSkillLevel = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedSkillXPPerSkillLevel');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedSkillXPPerSkillLevel,
-            isSkill: true,
-            isNegative: true,
-            tags: [],
-        };
-        modifierData.increasedFlatGlobalSkillXP = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedFlatGlobalSkillXP');
-            },
-            description: languages.en.MODIFIER_DATA_increasedFlatGlobalSkillXP,
-            isSkill: false,
-            isNegative: false,
-            tags: [],
-        };
-        modifierData.decreasedFlatGlobalSkillXP = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedFlatGlobalSkillXP');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedFlatGlobalSkillXP,
-            isSkill: false,
-            isNegative: true,
-            tags: [],
-        };
-        modifierData.increasedFlatSkillXP = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedFlatSkillXP');
-            },
-            description: languages.en.MODIFIER_DATA_increasedFlatSkillXP,
-            isSkill: true,
-            isNegative: false,
-            tags: [],
-        };
-        modifierData.decreasedFlatSkillXP = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedFlatSkillXP');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedFlatSkillXP,
-            isSkill: true,
-            isNegative: true,
-            tags: [],
-        };
-        modifierData.increasedFlatGlobalSkillXPPerSkillLevel = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedFlatGlobalSkillXPPerSkillLevel');
-            },
-            description: languages.en.MODIFIER_DATA_increasedFlatGlobalSkillXPPerSkillLevel,
-            isSkill: false,
-            isNegative: false,
-            tags: [],
-        };
-        modifierData.decreasedFlatGlobalSkillXPPerSkillLevel = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedFlatGlobalSkillXPPerSkillLevel');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedFlatGlobalSkillXPPerSkillLevel,
-            isSkill: false,
-            isNegative: true,
-            tags: [],
-        };
-        modifierData.increasedFlatSkillXPPerSkillLevel = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedFlatSkillXPPerSkillLevel');
-            },
-            description: languages.en.MODIFIER_DATA_increasedFlatSkillXPPerSkillLevel,
-            isSkill: true,
-            isNegative: false,
-            tags: [],
-        };
-        modifierData.decreasedFlatSkillXPPerSkillLevel = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedFlatSkillXPPerSkillLevel');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedFlatSkillXPPerSkillLevel,
-            isSkill: true,
-            isNegative: true,
-            tags: [],
-        };
-        modifierData.increasedThievingDamagePreventionThreshold = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedThievingDamagePreventionThreshold');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_increasedThievingDamagePreventionThreshold,
-            isSkill: false,
-            isNegative: false,
-            tags: ['thieving']
-        };
-        modifierData.decreasedThievingDamagePreventionThreshold = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedThievingDamagePreventionThreshold');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_decreasedThievingDamagePreventionThreshold,
-            isSkill: false,
-            isNegative: true,
-            tags: ['thieving']
-        };
+        let modifiers = [] as ModifierData[];
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('increasedGlobalSkillXPPerLevel'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('decreasedGlobalSkillXPPerLevel', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('increasedSkillXPPerSkillLevel'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('decreasedSkillXPPerSkillLevel', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('increasedFlatGlobalSkillXP'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('decreasedFlatGlobalSkillXP', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('increasedFlatSkillXP'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('decreasedFlatSkillXP', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('increasedFlatGlobalSkillXPPerSkillLevel'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('decreasedFlatGlobalSkillXPPerSkillLevel', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('increasedFlatSkillXPPerSkillLevel'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('decreasedFlatSkillXPPerSkillLevel', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('increasedThievingDamagePreventionThreshold'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('decreasedThievingDamagePreventionThreshold', true));
+
+        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
     }
 
     /**
      *
      */
     private registerSpawnModifiers() {
-        modifierData.increasedChanceToApplySlowOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedChanceToApplySlowOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_increasedChanceToApplySlowOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedChanceToApplySlowOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedChanceToApplySlowOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedChanceToApplySlowOnSpawn,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedChanceToApplyStunOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedChanceToApplyStunOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_increasedChanceToApplyStunOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.applyStunOnSpawn = {
-            get langDescription() {
-                return '${value}'
-            },
-            modifyValue: (value: number) => {
-                return CmimUtils.getModifierDescription(value, 'applyStunOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_applyStunOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedChanceToApplyStunOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedChanceToApplyStunOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyStunOnSpawn,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedChanceToApplyPoisonOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedChanceToApplyPoisonOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_increasedChanceToApplyPoisonOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedChanceToApplyPoisonOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedChanceToApplyPoisonOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyPoisonOnSpawn,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedChanceToApplyDeadlyPoisonOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedChanceToApplyDeadlyPoisonOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_increasedChanceToApplyDeadlyPoisonOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedChanceToApplyDeadlyPoisonOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedChanceToApplyDeadlyPoisonOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyDeadlyPoisonOnSpawn,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedChanceToApplyAfflictionOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedChanceToApplyAfflictionOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_increasedChanceToApplyAfflictionOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedChanceToApplyAfflictionOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedChanceToApplyAfflictionOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyAfflictionOnSpawn,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.applyAfflictionOnSpawn = {
-            get langDescription() {
-                return '${value}'
-            },
-            modifyValue: (value: number) => {
-                return CmimUtils.getModifierDescription(value, 'applyAfflictionOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_applyAfflictionOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.increasedChanceToApplyBleedOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedChanceToApplyBleedOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_increasedChanceToApplyBleedOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedChanceToApplyBleedOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedChanceToApplyBleedOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyBleedOnSpawn,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedChanceToApplyBurnOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedChanceToApplyBurnOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_increasedChanceToApplyBurnOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedChanceToApplyBurnOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedChanceToApplyBurnOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyBurnOnSpawn,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedChanceToApplyFreezeOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedChanceToApplyFreezeOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_increasedChanceToApplyFreezeOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedChanceToApplyFreezeOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedChanceToApplyFreezeOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyFreezeOnSpawn,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.applyFreezeOnSpawn = {
-            get langDescription() {
-                return '${value}'
-            },
-            modifyValue: (value: number) => {
-                return CmimUtils.getModifierDescription(value, 'applyFreezeOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_applyFreezeOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.increasedChanceToApplyFrostburnOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedChanceToApplyFrostburnOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_increasedChanceToApplyFrostburnOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedChanceToApplyFrostburnOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedChanceToApplyFrostburnOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyFrostburnOnSpawn,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedChanceToApplyShockOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedChanceToApplyShockOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_increasedChanceToApplyShockOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedChanceToApplyShockOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedChanceToApplyShockOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyShockOnSpawn,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.applyShockOnSpawn = {
-            get langDescription() {
-                return '${value}'
-            },
-            modifyValue: (value: number) => {
-                return CmimUtils.getModifierDescription(value, 'applyShockOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_applyShockOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.increasedChanceToApplySleepOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedChanceToApplySleepOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_increasedChanceToApplySleepOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedChanceToApplySleepOnSpawn = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedChanceToApplySleepOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedChanceToApplySleepOnSpawn,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.applySleepOnSpawn = {
-            get langDescription() {
-                return '${value}'
-            },
-            modifyValue: (value: number) => {
-                return CmimUtils.getModifierDescription(value, 'applySleepOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_applySleepOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
+        let modifiers = [] as ModifierData[];
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToApplySlowOnSpawn'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplySlowOnSpawn', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToApplyStunOnSpawn'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplyStunOnSpawn', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('applyStunOnSpawn'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToApplyPoisonOnSpawn'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplyPoisonOnSpawn', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToApplyDeadlyPoisonOnSpawn'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplyDeadlyPoisonOnSpawn', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToApplyAfflictionOnSpawn'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplyAfflictionOnSpawn', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('applyAfflictionOnSpawn'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToApplyBleedOnSpawn'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplyBleedOnSpawn', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToApplyBurnOnSpawn'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplyBurnOnSpawn', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToApplyFreezeOnSpawn'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplyFreezeOnSpawn', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('applyFreezeOnSpawn'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToApplyFrostburnOnSpawn'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplyFrostburnOnSpawn', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToApplyShockOnSpawn'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplyShockOnSpawn', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('applyShockOnSpawn')); // TODO: Cases like this one require two different descriptions between higher 1 and not higher 1
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToApplySleepOnSpawn'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplySleepOnSpawn', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('applySleepOnSpawn'));
+
+        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
     }
 
     /**
      *
      */
     private registerOnHitModifiers() {
-        modifierData.increasedChanceToApplyBleed = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedChanceToApplyBleed');
-            },
-            description: languages.en.MODIFIER_DATA_increasedChanceToApplyBleed,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedChanceToApplyBleed = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedChanceToApplyBleed');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyBleed,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
+        let modifiers = [] as ModifierData[];
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToApplyBleed'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplyBleed', true));
+
+        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
     }
 
     /**
      *
      */
     private registerDeathMarkModifiers() {
-        modifierData.deathMark = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_deathMark');
-            },
-            description: languages.en.MODIFIER_DATA_deathMark,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedDeathMarkOnHit = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedDeathMarkOnHit');
-            },
-            description: languages.en.MODIFIER_DATA_increasedDeathMarkOnHit,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.increasedChanceToApplyStackOfDeathMark = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedChanceToApplyStackOfDeathMark');
-            },
-            description: languages.en.MODIFIER_DATA_increasedChanceToApplyStackOfDeathMark,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedChanceToApplyStackOfDeathMark = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedChanceToApplyStackOfDeathMark');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedChanceToApplyStackOfDeathMark,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedDeathMarkImmunity = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedDeathMarkImmunity');
-            },
-            description: languages.en.MODIFIER_DATA_increasedDeathMarkImmunity,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedDeathMarkImmunity = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedDeathMarkImmunity');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedDeathMarkImmunity,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.applyDeathMarkOnSpawn = {
-            get langDescription() {
-                return '${value}'
-            },
-            modifyValue: (value: number) => {
-                return CmimUtils.getModifierDescription(value, 'applyDeathMarkOnSpawn');
-            },
-            description: languages.en.MODIFIER_DATA_applyDeathMarkOnSpawn,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
+        let modifiers = [] as ModifierData[];
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('deathMark'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDeathMarkOnHit'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToApplyStackOfDeathMark'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplyStackOfDeathMark', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDeathMarkImmunity'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDeathMarkImmunity', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('applyDeathMarkOnSpawn'));
+
+        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
     }
 
     private registerCombatAreaModifiers() {
-        modifierData.increasedMaxHitPercentToCombatAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedMaxHitPercentToCombatAreaMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_increasedMaxHitPercentToCombatAreaMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedMaxHitPercentToCombatAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedMaxHitPercentToCombatAreaMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedMaxHitPercentToCombatAreaMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedMaxHitFlatToCombatAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedMaxHitFlatToCombatAreaMonsters');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_increasedMaxHitFlatToCombatAreaMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedMaxHitFlatToCombatAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedMaxHitFlatToCombatAreaMonsters');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_decreasedMaxHitFlatToCombatAreaMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedFlatMinHitToCombatAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedFlatMinHitToCombatAreaMonsters');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_increasedFlatMinHitToCombatAreaMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedFlatMinHitToCombatAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedFlatMinHitToCombatAreaMonsters');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_decreasedFlatMinHitToCombatAreaMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedMinHitBasedOnMaxHitToCombatAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitToCombatAreaMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_increasedMinHitBasedOnMaxHitToCombatAreaMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedMinHitBasedOnMaxHitToCombatAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToCombatAreaMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToCombatAreaMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedGlobalAccuracyAgainstCombatAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstCombatAreaMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_increasedGlobalAccuracyAgainstCombatAreaMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedGlobalAccuracyAgainstCombatAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstCombatAreaMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedGlobalAccuracyAgainstCombatAreaMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedDamageReductionAgainstCombatAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedDamageReductionAgainstCombatAreaMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_increasedDamageReductionAgainstCombatAreaMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedDamageReductionAgainstCombatAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedDamageReductionAgainstCombatAreaMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedDamageReductionAgainstCombatAreaMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
+        let modifiers = [] as ModifierData[];
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitPercentToCombatAreaMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitPercentToCombatAreaMonsters', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitFlatToCombatAreaMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitFlatToCombatAreaMonsters', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedFlatMinHitToCombatAreaMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedFlatMinHitToCombatAreaMonsters', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMinHitBasedOnMaxHitToCombatAreaMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMinHitBasedOnMaxHitToCombatAreaMonsters', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedGlobalAccuracyAgainstCombatAreaMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedGlobalAccuracyAgainstCombatAreaMonsters', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageReductionAgainstCombatAreaMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageReductionAgainstCombatAreaMonsters', true));
+
+        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
     }
 
     private registerSlayerAreaModifiers() {
-        modifierData.increasedMaxHitPercentToSlayerAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedMaxHitPercentToSlayerAreaMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_increasedMaxHitPercentToSlayerAreaMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedMaxHitPercentToSlayerAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedMaxHitPercentToSlayerAreaMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedMaxHitPercentToSlayerAreaMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedMaxHitFlatToSlayerAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedMaxHitFlatToSlayerAreaMonsters');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_increasedMaxHitFlatToSlayerAreaMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedMaxHitFlatToSlayerAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedMaxHitFlatToSlayerAreaMonsters');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_decreasedMaxHitFlatToSlayerAreaMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedFlatMinHitToSlayerAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedFlatMinHitToSlayerAreaMonsters');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_increasedFlatMinHitToSlayerAreaMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedFlatMinHitToSlayerAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedFlatMinHitToSlayerAreaMonsters');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_decreasedFlatMinHitToSlayerAreaMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedMinHitBasedOnMaxHitToSlayerAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitToSlayerAreaMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_increasedMinHitBasedOnMaxHitToSlayerAreaMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedGlobalAccuracyAgainstSlayerAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstSlayerAreaMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_increasedGlobalAccuracyAgainstSlayerAreaMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedGlobalAccuracyAgainstSlayerAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerAreaMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerAreaMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedDamageReductionAgainstSlayerAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedDamageReductionAgainstSlayerAreaMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_increasedDamageReductionAgainstSlayerAreaMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedDamageReductionAgainstSlayerAreaMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedDamageReductionAgainstSlayerAreaMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedDamageReductionAgainstSlayerAreaMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
+        let modifiers = [] as ModifierData[];
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitPercentToSlayerAreaMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitPercentToSlayerAreaMonsters', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitFlatToSlayerAreaMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitFlatToSlayerAreaMonsters', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedFlatMinHitToSlayerAreaMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedFlatMinHitToSlayerAreaMonsters', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMinHitBasedOnMaxHitToSlayerAreaMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedGlobalAccuracyAgainstSlayerAreaMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedGlobalAccuracyAgainstSlayerAreaMonsters', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageReductionAgainstSlayerAreaMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageReductionAgainstSlayerAreaMonsters', true));
+
+        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
     }
 
     private registerDungeonModifiers() {
-        modifierData.increasedMaxHitPercentToDungeonMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedMaxHitPercentToDungeonMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_increasedMaxHitPercentToDungeonMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedMaxHitPercentToDungeonMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedMaxHitPercentToDungeonMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedMaxHitPercentToDungeonMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedMaxHitFlatToDungeonMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedMaxHitFlatToDungeonMonsters');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_increasedMaxHitFlatToDungeonMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedMaxHitFlatToDungeonMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedMaxHitFlatToDungeonMonsters');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_decreasedMaxHitFlatToDungeonMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedFlatMinHitToDungeonMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedFlatMinHitToDungeonMonsters');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_increasedFlatMinHitToDungeonMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedFlatMinHitToDungeonMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedFlatMinHitToDungeonMonsters');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_decreasedFlatMinHitToDungeonMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedMinHitBasedOnMaxHitToDungeonMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitToDungeonMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_increasedMinHitBasedOnMaxHitToDungeonMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedMinHitBasedOnMaxHitToDungeonMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToDungeonMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToDungeonMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedGlobalAccuracyAgainstDungeonMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstDungeonMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_increasedGlobalAccuracyAgainstDungeonMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedGlobalAccuracyAgainstDungeonMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstDungeonMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedGlobalAccuracyAgainstDungeonMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
+        let modifiers = [] as ModifierData[];
 
-        modifierData.increasedDamageReductionAgainstDungeonMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedDamageReductionAgainstDungeonMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_increasedDamageReductionAgainstDungeonMonsters,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedDamageReductionAgainstDungeonMonsters = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedDamageReductionAgainstDungeonMonsters');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedDamageReductionAgainstDungeonMonsters,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitPercentToDungeonMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitPercentToDungeonMonsters', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitFlatToDungeonMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitFlatToDungeonMonsters', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedFlatMinHitToDungeonMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedFlatMinHitToDungeonMonsters', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMinHitBasedOnMaxHitToDungeonMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMinHitBasedOnMaxHitToDungeonMonsters', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedGlobalAccuracyAgainstDungeonMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedGlobalAccuracyAgainstDungeonMonsters', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageReductionAgainstDungeonMonsters'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageReductionAgainstDungeonMonsters', true));
+
+        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
     }
 
     private registerSlayerTaskModifiers() {
-        modifierData.increasedMaxHitPercentToSlayerTasks = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedMaxHitPercentToSlayerTasks');
-            },
-            description: languages.en.MODIFIER_DATA_increasedMaxHitPercentToSlayerTasks,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedMaxHitPercentToSlayerTasks = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedMaxHitPercentToSlayerTasks');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedMaxHitPercentToSlayerTasks,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedMaxHitFlatToSlayerTasks = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedMaxHitFlatToSlayerTasks');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_increasedMaxHitFlatToSlayerTasks,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedMaxHitFlatToSlayerTasks = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedMaxHitFlatToSlayerTasks');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_decreasedMaxHitFlatToSlayerTasks,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedFlatMinHitToSlayerTasks = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedFlatMinHitToSlayerTasks');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_increasedFlatMinHitToSlayerTasks,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedFlatMinHitToSlayerTasks = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedFlatMinHitToSlayerTasks');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_decreasedFlatMinHitToSlayerTasks,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedMinHitBasedOnMaxHitToSlayerTasks = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitToSlayerTasks');
-            },
-            description: languages.en.MODIFIER_DATA_increasedMinHitBasedOnMaxHitToSlayerTasks,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedMinHitBasedOnMaxHitToSlayerTasks = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToSlayerTasks');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedMinHitBasedOnMaxHitToSlayerTasks,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedGlobalAccuracyAgainstSlayerTasks = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstSlayerTasks');
-            },
-            description: languages.en.MODIFIER_DATA_increasedGlobalAccuracyAgainstSlayerTasks,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedGlobalAccuracyAgainstSlayerTasks = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerTasks');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedGlobalAccuracyAgainstSlayerTasks,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.decreasedDamageReductionAgainstSlayerTasks = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedDamageReductionAgainstSlayerTasks');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedDamageReductionAgainstSlayerTasks,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
+        let modifiers = [] as ModifierData[];
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitPercentToSlayerTasks'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitPercentToSlayerTasks', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitFlatToSlayerTasks'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitFlatToSlayerTasks', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedFlatMinHitToSlayerTasks'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedFlatMinHitToSlayerTasks', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMinHitBasedOnMaxHitToSlayerTasks'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMinHitBasedOnMaxHitToSlayerTasks', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedGlobalAccuracyAgainstSlayerTasks'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedGlobalAccuracyAgainstSlayerTasks', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageReductionAgainstSlayerTasks', true));
+
+        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
     }
 
     /**
      *
      */
     private registerSpellModifiers() {
-        modifierData.increasedDamageTakenFromAirSpells = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedDamageTakenFromAirSpells');
-            },
-            description: languages.en.MODIFIER_DATA_increasedDamageTakenFromAirSpells,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.decreasedDamageTakenFromAirSpells = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedDamageTakenFromAirSpells');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedDamageTakenFromAirSpells,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.increasedDamageTakenFromWaterSpells = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedDamageTakenFromWaterSpells');
-            },
-            description: languages.en.MODIFIER_DATA_increasedDamageTakenFromWaterSpells,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.decreasedDamageTakenFromWaterSpells = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedDamageTakenFromWaterSpells');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedDamageTakenFromWaterSpells,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.increasedDamageTakenFromEarthSpells = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedDamageTakenFromEarthSpells');
-            },
-            description: languages.en.MODIFIER_DATA_increasedDamageTakenFromEarthSpells,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.decreasedDamageTakenFromEarthSpells = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedDamageTakenFromEarthSpells');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedDamageTakenFromEarthSpells,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.increasedDamageTakenFromFireSpells = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedDamageTakenFromFireSpells');
-            },
-            description: languages.en.MODIFIER_DATA_increasedDamageTakenFromFireSpells,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.decreasedDamageTakenFromFireSpells = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedDamageTakenFromFireSpells');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedDamageTakenFromFireSpells,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
+        let modifiers = [] as ModifierData[];
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageTakenFromAirSpells'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageTakenFromAirSpells', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageTakenFromWaterSpells'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageTakenFromWaterSpells', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageTakenFromEarthSpells'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageTakenFromEarthSpells', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageTakenFromFireSpells'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageTakenFromFireSpells', true));
+
+        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
     }
 
     /**
      *
      */
     private registerBossModifiers() {
-        modifierData.increasedMaxHitPercentAgainstBosses = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedMaxHitPercentAgainstBosses');
-            },
-            description: languages.en.MODIFIER_DATA_increasedMaxHitPercentAgainstBosses,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedMaxHitPercentAgainstBosses = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedMaxHitPercentAgainstBosses');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedMaxHitPercentAgainstBosses,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedMaxHitFlatAgainstBosses = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedMaxHitFlatAgainstBosses');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_increasedMaxHitFlatAgainstBosses,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedMaxHitFlatAgainstBosses = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedMaxHitFlatAgainstBosses');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_decreasedMaxHitFlatAgainstBosses,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedFlatMinHitAgainstBosses = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedFlatMinHitAgainstBosses');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_increasedFlatMinHitAgainstBosses,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedFlatMinHitAgainstBosses = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedFlatMinHitAgainstBosses');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_decreasedFlatMinHitAgainstBosses,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedMinHitBasedOnMaxHitAgainstBosses = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstBosses');
-            },
-            description: languages.en.MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstBosses,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedMinHitBasedOnMaxHitAgainstBosses = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstBosses');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstBosses,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedGlobalAccuracyAgainstBosses = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedGlobalAccuracyAgainstBosses');
-            },
-            description: languages.en.MODIFIER_DATA_increasedGlobalAccuracyAgainstBosses,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedGlobalAccuracyAgainstBosses = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedGlobalAccuracyAgainstBosses');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedGlobalAccuracyAgainstBosses,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
+        let modifiers = [] as ModifierData[];
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitPercentAgainstBosses'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitPercentAgainstBosses', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitFlatAgainstBosses'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitFlatAgainstBosses', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedFlatMinHitAgainstBosses'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedFlatMinHitAgainstBosses', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMinHitBasedOnMaxHitAgainstBosses'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMinHitBasedOnMaxHitAgainstBosses', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedGlobalAccuracyAgainstBosses'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedGlobalAccuracyAgainstBosses', true));
+
+        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
     }
 
     /** Modifiers that don't fit any of the previous groups */
     private registerGeneralModifiers() {
-        modifierData.increasedChanceToReduceAttackDamageToZero = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedChanceToReduceAttackDamageToZero');
-            },
-            description: languages.en.MODIFIER_DATA_increasedChanceToReduceAttackDamageToZero,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedChanceToReduceAttackDamageToZero = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedChanceToReduceAttackDamageToZero');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedChanceToReduceAttackDamageToZero,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedDamageFlatWhileTargetHasMaxHP = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedDamageFlatWhileTargetHasMaxHP');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_increasedDamageFlatWhileTargetHasMaxHP,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedDamageFlatWhileTargetHasMaxHP = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedDamageFlatWhileTargetHasMaxHP');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_decreasedDamageFlatWhileTargetHasMaxHP,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedDamagePercentWhileTargetHasMaxHP = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedDamagePercentWhileTargetHasMaxHP');
-            },
-            description: languages.en.MODIFIER_DATA_increasedDamagePercentWhileTargetHasMaxHP,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedDamagePercentWhileTargetHasMaxHP = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedDamagePercentWhileTargetHasMaxHP');
-            },
-            description: languages.en.MODIFIER_DATA_decreasedDamagePercentWhileTargetHasMaxHP,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedDamageFlatIgnoringDamageReduction = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedDamageFlatIgnoringDamageReduction');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_increasedDamageFlatIgnoringDamageReduction,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedDamageFlatIgnoringDamageReduction = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedDamageFlatIgnoringDamageReduction');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_decreasedDamageFlatIgnoringDamageReduction,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedGlobalDamagePreventionThreshold = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedGlobalDamagePreventionThreshold');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_increasedGlobalDamagePreventionThreshold,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat', 'thieving']
-        };
-        modifierData.decreasedGlobalDamagePreventionThreshold = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedGlobalDamagePreventionThreshold');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_decreasedGlobalDamagePreventionThreshold,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat', 'thieving']
-        };
-        modifierData.increasedDamagePreventionThreshold = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedDamagePreventionThreshold');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_increasedDamagePreventionThreshold,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedDamagePreventionThreshold = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedDamagePreventionThreshold');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_decreasedDamagePreventionThreshold,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
-        modifierData.increasedBarrierDamagePreventionThreshold = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_increasedBarrierDamagePreventionThreshold');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_increasedBarrierDamagePreventionThreshold,
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
-        modifierData.decreasedBarrierDamagePreventionThreshold = {
-            get langDescription() {
-                return getLangString('MODIFIER_DATA_decreasedBarrierDamagePreventionThreshold');
-            },
-            modifyValue: multiplyByNumberMultiplier,
-            description: languages.en.MODIFIER_DATA_decreasedBarrierDamagePreventionThreshold,
-            isSkill: false,
-            isNegative: true,
-            tags: ['combat']
-        };
+        let modifiers = [] as ModifierData[];
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToReduceAttackDamageToZero'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToReduceAttackDamageToZero', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageFlatWhileTargetHasMaxHP'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageFlatWhileTargetHasMaxHP', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamagePercentWhileTargetHasMaxHP'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamagePercentWhileTargetHasMaxHP', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageFlatIgnoringDamageReduction'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageFlatIgnoringDamageReduction', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedGlobalDamagePreventionThreshold'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedGlobalDamagePreventionThreshold', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamagePreventionThreshold'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamagePreventionThreshold', true));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedBarrierDamagePreventionThreshold'));
+
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedBarrierDamagePreventionThreshold', true));
+
+        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
     }
 
     // #endregion
@@ -1416,12 +502,12 @@ export class CustomModifiersManager {
             for (var i = 0; i < types.length; i++) {
                 const type = types[i];
 
-                const stackingEffect = this.stackingEffects.getObjectByID(`${ModConstants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`);
+                const stackingEffect = this.stackingEffects.getObjectByID(`${ModConstants.MOD_NAMESPACE_NAME}:${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`);
                 if (stackingEffect) {
                     this.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect] = stackingEffect;
                 }
 
-                const traitApplyingAttack = this.specialAttacks.getObjectByID(`${ModConstants.MOD_NAMESPACE}:${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_ATTACK_ID_SUFFIX}`);
+                const traitApplyingAttack = this.specialAttacks.getObjectByID(`${ModConstants.MOD_NAMESPACE_NAME}:${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_ATTACK_ID_SUFFIX}`);
                 if (traitApplyingAttack) {
                     this.customModifiersInMelvor.specialAttacks[type.effectPropertyObjectNames.traitApplicationCustomModifierEffectAttack] = traitApplyingAttack;
                 }
@@ -1429,93 +515,93 @@ export class CustomModifiersManager {
         });
     }
 
-    /**
-     *
-     */
-    private patchCombatModifiersReset() {
-        /**
-         * This method is called during initialization of both player and enemies, as quick safety measure for a "clean state" before setting everything up. (to avoid undefined/null/nan)
-         * However, as we do not actually add our properties to Melvor's definition of the class, the dynamic build up doesn't include our properties,
-         * so we handle those ourselves. Should in theory take care of all instances, so including cases such as area modifiers
-         *
-         * REMARK: We don't have to do the same for player modifiers actually, as those are either initialized as 0 by default,
-         * or "getSkillModifierValue" parses undefined to 0 anyway
-         */
-        this.context.patch(CombatModifiers, "reset").after(function () {
-            this.increasedChanceToReduceAttackDamageToZero ??= 0;
-            this.decreasedChanceToReduceAttackDamageToZero ??= 0;
-            this.increasedDamageFlatWhileTargetHasMaxHP ??= 0;
-            this.decreasedDamageFlatWhileTargetHasMaxHP ??= 0;
-            this.increasedDamagePercentWhileTargetHasMaxHP ??= 0;
-            this.decreasedDamagePercentWhileTargetHasMaxHP ??= 0;
-            this.increasedDamageFlatIgnoringDamageReduction ??= 0;
-            this.decreasedDamageFlatIgnoringDamageReduction ??= 0;
-            this.increasedGlobalDamagePreventionThreshold ??= 0;
-            this.decreasedGlobalDamagePreventionThreshold ??= 0;
-            this.increasedDamagePreventionThreshold ??= 0;
-            this.decreasedDamagePreventionThreshold ??= 0;
-            this.increasedBarrierDamagePreventionThreshold ??= 0;
-            this.decreasedBarrierDamagePreventionThreshold ??= 0;
+    ///**
+    // * TODO: Presumably not required anymore
+    // */
+    //private patchCombatModifiersReset() {
+    //    /**
+    //     * This method is called during initialization of both player and enemies, as quick safety measure for a "clean state" before setting everything up. (to avoid undefined/null/nan)
+    //     * However, as we do not actually add our properties to Melvor's definition of the class, the dynamic build up doesn't include our properties,
+    //     * so we handle those ourselves. Should in theory take care of all instances, so including cases such as area modifiers
+    //     *
+    //     * REMARK: We don't have to do the same for player modifiers actually, as those are either initialized as 0 by default,
+    //     * or "getSkillModifierValue" parses undefined to 0 anyway
+    //     */
+    //    this.context.patch(CombatModifiers, "reset").after(function () {
+    //        this.increasedChanceToReduceAttackDamageToZero ??= 0;
+    //        this.decreasedChanceToReduceAttackDamageToZero ??= 0;
+    //        this.increasedDamageFlatWhileTargetHasMaxHP ??= 0;
+    //        this.decreasedDamageFlatWhileTargetHasMaxHP ??= 0;
+    //        this.increasedDamagePercentWhileTargetHasMaxHP ??= 0;
+    //        this.decreasedDamagePercentWhileTargetHasMaxHP ??= 0;
+    //        this.increasedDamageFlatIgnoringDamageReduction ??= 0;
+    //        this.decreasedDamageFlatIgnoringDamageReduction ??= 0;
+    //        this.increasedGlobalDamagePreventionThreshold ??= 0;
+    //        this.decreasedGlobalDamagePreventionThreshold ??= 0;
+    //        this.increasedDamagePreventionThreshold ??= 0;
+    //        this.decreasedDamagePreventionThreshold ??= 0;
+    //        this.increasedBarrierDamagePreventionThreshold ??= 0;
+    //        this.decreasedBarrierDamagePreventionThreshold ??= 0;
 
-            this.increasedChanceToApplySlowOnSpawn ??= 0;
-            this.decreasedChanceToApplySlowOnSpawn ??= 0;
-            this.increasedChanceToApplyStunOnSpawn ??= 0;
-            this.decreasedChanceToApplyStunOnSpawn ??= 0;
-            this.applyStunOnSpawn ??= 0;
-            this.increasedChanceToApplyPoisonOnSpawn ??= 0;
-            this.decreasedChanceToApplyPoisonOnSpawn ??= 0;
-            this.increasedChanceToApplyDeadlyPoisonOnSpawn ??= 0;
-            this.decreasedChanceToApplyDeadlyPoisonOnSpawn ??= 0;
-            this.increasedChanceToApplyAfflictionOnSpawn ??= 0;
-            this.decreasedChanceToApplyAfflictionOnSpawn ??= 0;
-            this.applyAfflictionOnSpawn ??= 0;
-            this.increasedChanceToApplyBleedOnSpawn ??= 0;
-            this.decreasedChanceToApplyBleedOnSpawn ??= 0;
-            this.increasedChanceToApplyBurnOnSpawn ??= 0;
-            this.decreasedChanceToApplyBurnOnSpawn ??= 0;
-            this.increasedChanceToApplyFreezeOnSpawn ??= 0;
-            this.decreasedChanceToApplyFreezeOnSpawn ??= 0;
-            this.applyFreezeOnSpawn ??= 0;
-            this.increasedChanceToApplyFrostburnOnSpawn ??= 0;
-            this.decreasedChanceToApplyFrostburnOnSpawn ??= 0;
-            this.increasedChanceToApplyShockOnSpawn ??= 0;
-            this.decreasedChanceToApplyShockOnSpawn ??= 0;
-            this.applyShockOnSpawn ??= 0;
-            this.increasedChanceToApplySleepOnSpawn ??= 0;
-            this.decreasedChanceToApplySleepOnSpawn ??= 0;
-            this.applySleepOnSpawn ??= 0;
+    //        this.increasedChanceToApplySlowOnSpawn ??= 0;
+    //        this.decreasedChanceToApplySlowOnSpawn ??= 0;
+    //        this.increasedChanceToApplyStunOnSpawn ??= 0;
+    //        this.decreasedChanceToApplyStunOnSpawn ??= 0;
+    //        this.applyStunOnSpawn ??= 0;
+    //        this.increasedChanceToApplyPoisonOnSpawn ??= 0;
+    //        this.decreasedChanceToApplyPoisonOnSpawn ??= 0;
+    //        this.increasedChanceToApplyDeadlyPoisonOnSpawn ??= 0;
+    //        this.decreasedChanceToApplyDeadlyPoisonOnSpawn ??= 0;
+    //        this.increasedChanceToApplyAfflictionOnSpawn ??= 0;
+    //        this.decreasedChanceToApplyAfflictionOnSpawn ??= 0;
+    //        this.applyAfflictionOnSpawn ??= 0;
+    //        this.increasedChanceToApplyBleedOnSpawn ??= 0;
+    //        this.decreasedChanceToApplyBleedOnSpawn ??= 0;
+    //        this.increasedChanceToApplyBurnOnSpawn ??= 0;
+    //        this.decreasedChanceToApplyBurnOnSpawn ??= 0;
+    //        this.increasedChanceToApplyFreezeOnSpawn ??= 0;
+    //        this.decreasedChanceToApplyFreezeOnSpawn ??= 0;
+    //        this.applyFreezeOnSpawn ??= 0;
+    //        this.increasedChanceToApplyFrostburnOnSpawn ??= 0;
+    //        this.decreasedChanceToApplyFrostburnOnSpawn ??= 0;
+    //        this.increasedChanceToApplyShockOnSpawn ??= 0;
+    //        this.decreasedChanceToApplyShockOnSpawn ??= 0;
+    //        this.applyShockOnSpawn ??= 0;
+    //        this.increasedChanceToApplySleepOnSpawn ??= 0;
+    //        this.decreasedChanceToApplySleepOnSpawn ??= 0;
+    //        this.applySleepOnSpawn ??= 0;
 
-            this.increasedChanceToApplyBleed ??= 0;
-            this.decreasedChanceToApplyBleed ??= 0;
+    //        this.increasedChanceToApplyBleed ??= 0;
+    //        this.decreasedChanceToApplyBleed ??= 0;
 
-            this.deathMark ??= 0;
-            this.increasedDeathMarkOnHit ??= 0;
-            this.increasedChanceToApplyStackOfDeathMark ??= 0;
-            this.decreasedChanceToApplyStackOfDeathMark ??= 0;
-            this.increasedDeathMarkImmunity ??= 0;
-            this.decreasedDeathMarkImmunity ??= 0;
-            this.applyDeathMarkOnSpawn ??= 0;
+    //        this.deathMark ??= 0;
+    //        this.increasedDeathMarkOnHit ??= 0;
+    //        this.increasedChanceToApplyStackOfDeathMark ??= 0;
+    //        this.decreasedChanceToApplyStackOfDeathMark ??= 0;
+    //        this.increasedDeathMarkImmunity ??= 0;
+    //        this.decreasedDeathMarkImmunity ??= 0;
+    //        this.applyDeathMarkOnSpawn ??= 0;
 
-            this.increasedDamageTakenFromAirSpells ??= 0;
-            this.decreasedDamageTakenFromAirSpells ??= 0;
-            this.increasedDamageTakenFromWaterSpells ??= 0;
-            this.decreasedDamageTakenFromWaterSpells ??= 0;
-            this.increasedDamageTakenFromEarthSpells ??= 0;
-            this.decreasedDamageTakenFromEarthSpells ??= 0;
-            this.increasedDamageTakenFromFireSpells ??= 0;
-            this.decreasedDamageTakenFromFireSpells ??= 0;
+    //        this.increasedDamageTakenFromAirSpells ??= 0;
+    //        this.decreasedDamageTakenFromAirSpells ??= 0;
+    //        this.increasedDamageTakenFromWaterSpells ??= 0;
+    //        this.decreasedDamageTakenFromWaterSpells ??= 0;
+    //        this.increasedDamageTakenFromEarthSpells ??= 0;
+    //        this.decreasedDamageTakenFromEarthSpells ??= 0;
+    //        this.increasedDamageTakenFromFireSpells ??= 0;
+    //        this.decreasedDamageTakenFromFireSpells ??= 0;
 
-            // Ensure 0 instead of undefined for monster type related modifiers as well
-            const types = MonsterTypeManager.getActiveTypesAsArray();
-            for (var i = 0; i < types.length; i++) {
-                const type = types[i];
-                Object.entries(type.modifierPropertyNames).forEach(([key, value]) => {
-                    // @ts-ignore
-                    this[value] ??= 0;
-                });
-            }
-        });
-    }
+    //        // Ensure 0 instead of undefined for monster type related modifiers as well
+    //        const types = MonsterTypeManager.getActiveTypesAsArray();
+    //        for (var i = 0; i < types.length; i++) {
+    //            const type = types[i];
+    //            Object.entries(type.modifierPropertyNames).forEach(([key, value]) => {
+    //                // @ts-ignore
+    //                this[value] ??= 0;
+    //            });
+    //        }
+    //    });
+    //}
 
     /**
      * On spawn, applies booleans on entity, so we don't have to check an array every time

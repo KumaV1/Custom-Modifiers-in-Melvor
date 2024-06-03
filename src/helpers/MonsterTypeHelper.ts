@@ -70,27 +70,103 @@ export class MonsterTypeHelper {
      * @param modifierName
      * @returns
      */
-    public static createModifierDataObject(type: MonsterTypeDefinition, modifierType: MonsterTypeModifierType, modifierName: string) {
+    //public static createModifierDataObject(type: MonsterTypeDefinition, modifierType: MonsterTypeModifierType, modifierName: string) {
+    //    // First, create the default state of the object to create
+    //    let modifierObject = {
+    //        get langDescription() {
+    //            return getLangString(`MODIFIER_DATA_${modifierName}`);
+    //        },
+    //        description: '',
+    //        isSkill: false,
+    //        isNegative: false,
+    //        tags: ['combat']
+    //    };
+
+    //    // Set up an english description (mainly for mod synergy support)
+    //    // Actually rendered text uses the translation pipeline, so grammar isn't optimized here
+    //    modifierObject.description = modifierType === MonsterTypeModifierType.TraitApplied
+    //        ? languages.en[`MODIFIER_DATA_MonsterTypeTraitApplied`]
+    //        // @ts-ignore Ignore implicit any error
+    //        : languages.en[`MODIFIER_DATA_${modifierType}AgainstMonsterType`];
+    //    modifierObject.description = modifierObject.description?.replace("${monsterType}", type.singularName) ?? '';
+
+    //    // Modify negative flag
+    //    switch (modifierType) {
+    //        case MonsterTypeModifierType.DecreasedDamage:
+    //        case MonsterTypeModifierType.IncreasedDamageTaken:
+    //        case MonsterTypeModifierType.DecreasedMaxHitPercent:
+    //        case MonsterTypeModifierType.DecreasedMaxHitFlat:
+    //        case MonsterTypeModifierType.DecreasedMinHitBasedOnMaxHit:
+    //        case MonsterTypeModifierType.DecreasedFlatMinHit:
+    //        case MonsterTypeModifierType.DecreasedGlobalAccuracy:
+    //        case MonsterTypeModifierType.DecreasedDamageReduction:
+    //        case MonsterTypeModifierType.DecreasedChanceToApplyTraitInfiniteOnSpawn:
+    //        case MonsterTypeModifierType.DecreasedChanceToApplyTrait:
+    //            modifierObject.isNegative = true;
+    //            break;
+    //        default:
+    //    }
+
+    //    // Modify value modifier
+    //    switch (modifierType) {
+    //        case MonsterTypeModifierType.IncreasedMaxHitFlat:
+    //        case MonsterTypeModifierType.DecreasedMaxHitFlat:
+    //        case MonsterTypeModifierType.IncreasedFlatMinHit:
+    //        case MonsterTypeModifierType.DecreasedFlatMinHit:
+    //            // @ts-ignore Ignore implicit any error
+    //            modifierObject["modifyValue"] = multiplyByNumberMultiplier;
+    //            break;
+    //        default:
+    //    }
+
+    //    return modifierObject;
+    //}
+
+    /**
+     * Creates the modifier data object, which is used to actually register a modifier to the game
+     * @param type
+     * @param modifierType
+     * @param modifierName
+     * @returns
+     */
+    public static createModifierDataObject(type: MonsterTypeDefinition, modifierType: MonsterTypeModifierType, modifierName: string): ModifierData {
         // First, create the default state of the object to create
         let modifierObject = {
-            get langDescription() {
-                return getLangString(`MODIFIER_DATA_${modifierName}`);
-            },
-            description: '',
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
+            id: modifierName,
+            inverted: false, // default, may be overwritten
+            isCombat: true,
+            allowEnemy: true,
+            allowedScopes: [
+                {
+                    scopes: {}, // for now, only a global scope
+                    // skip scope source, as not relevant for monster type modifiers (unless something like increased spell damage against undead is added :D *cough* crumble undead *cough*)
+                    descriptions: [
+                        {
+                            // Set up an english description (mainly for mod synergy support)
+                            // Actually rendered text uses the translation pipeline, so grammar isn't optimized here
+                            text: (modifierType === MonsterTypeModifierType.TraitApplied
+                                ? languages.en[`MODIFIER_DATA_MonsterTypeTraitApplied`]
+                                // @ts-ignore Ignore implicit any error
+                                : languages.en[`MODIFIER_DATA_${modifierType}AgainstMonsterType`])
+                                ?.replace("${monsterType}", type.singularName)
+                                ?? '',
+                            lang: `MODIFIER_DATA_${modifierName}`,
+                            // TODO: above, below and include sign are ignored for now, refactor it later
+                            // TODO: Check how "inverted" is handled here, whether it needs to match the above object's property
+                            // scope is also not included, as currently only global scoping is implemented
+                        }
+                    ] as ModifierDescriptionData[]
+                    //posAliases: [] as ModifierAliasData[], // TODO: merge modifiers together, actually making use of aliases
+                    //negAliases: [] as ModifierAliasData[] // TODO: merge modifiers together, actually making use of aliases
+                }
+            ] as ModifierScopingData[]
+        } as ModifierData;
 
-        // Set up an english description (mainly for mod synergy support)
+
+        // Set up an english descriptions (mainly for mod synergy support)
         // Actually rendered text uses the translation pipeline, so grammar isn't optimized here
-        modifierObject.description = modifierType === MonsterTypeModifierType.TraitApplied
-            ? languages.en[`MODIFIER_DATA_MonsterTypeTraitApplied`]
-            // @ts-ignore Ignore implicit any error
-            : languages.en[`MODIFIER_DATA_${modifierType}AgainstMonsterType`];
-        modifierObject.description = modifierObject.description?.replace("${monsterType}", type.singularName) ?? '';
 
-        // Modify negative flag
+        // Some modifiers may have a positive value, but result in negative effects
         switch (modifierType) {
             case MonsterTypeModifierType.DecreasedDamage:
             case MonsterTypeModifierType.IncreasedDamageTaken:
@@ -102,7 +178,7 @@ export class MonsterTypeHelper {
             case MonsterTypeModifierType.DecreasedDamageReduction:
             case MonsterTypeModifierType.DecreasedChanceToApplyTraitInfiniteOnSpawn:
             case MonsterTypeModifierType.DecreasedChanceToApplyTrait:
-                modifierObject.isNegative = true;
+                modifierObject.inverted = true;
                 break;
             default:
         }
@@ -130,7 +206,7 @@ export class MonsterTypeHelper {
     public static createTraitStackingEffectGamePackage(type: MonsterTypeDefinition): GameDataPackage {
         return {
             "$schema": ModConstants.SCHEMA,
-            "namespace": ModConstants.MOD_NAMESPACE,
+            "namespace": ModConstants.MOD_NAMESPACE_NAME,
             "data": {
                 "stackingEffects": [MonsterTypeHelper.createTraitStackingEffectDataObject(type)]
             }
@@ -175,7 +251,7 @@ export class MonsterTypeHelper {
     public static createTraitCustomModifierEffectAttackGamePackage(type: MonsterTypeDefinition, customEffectData: CustomEffectData): GameDataPackage {
         return {
             "$schema": ModConstants.SCHEMA,
-            "namespace": ModConstants.MOD_NAMESPACE,
+            "namespace": ModConstants.MOD_NAMESPACE_NAME,
             "data": {
                 "attacks": [MonsterTypeHelper.createTraitCustomEffectAttackDataObject(type, customEffectData)]
             }
