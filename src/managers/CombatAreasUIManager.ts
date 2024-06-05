@@ -230,8 +230,10 @@ export class CombatAreasUIManager {
      */
     private static evaluateModifierUIImpactIndicatorDisplay(): void {
         if (game.combat.fightInProgress) {
-            const requireDisplay = (game.combat.player.modifiers.increasedChanceToReduceAttackDamageToZero - game.combat.player.modifiers.decreasedChanceToReduceAttackDamageToZero) > 0
-                || (game.combat.enemy.modifiers.increasedChanceToReduceAttackDamageToZero - game.combat.enemy.modifiers.decreasedChanceToReduceAttackDamageToZero) > 0;
+            const requireDisplay = game.combat.player.modifiers.chanceToReduceAttackDamageToZero > 0
+                || game.combat.enemy.modifiers.chanceToReduceAttackDamageToZero > 0;
+        //    const requireDisplay = (game.combat.player.modifiers.increasedChanceToReduceAttackDamageToZero - game.combat.player.modifiers.decreasedChanceToReduceAttackDamageToZero) > 0
+        //        || (game.combat.enemy.modifiers.increasedChanceToReduceAttackDamageToZero - game.combat.enemy.modifiers.decreasedChanceToReduceAttackDamageToZero) > 0;
             if (requireDisplay) {
                 showElement(CombatAreasUIManager._modifierUIImpactIndicatorElement);
             } else {

@@ -27,31 +27,48 @@ export class MonsterTypeHelper {
      */
     public static createModifierPropertyNames(typeSingularName: string, typePluralName: string): MonsterTypeModifierPropertyNames {
         const typeSingularNameLower = `${typeSingularName[0].toLowerCase()}${typeSingularName.substring(1)}`;
+
         return {
             traitApplied: `${typeSingularNameLower}TraitApplied`,
-            increasedDamage: `increasedDamageAgainst${typePluralName}`,
-            decreasedDamage: `decreasedDamageAgainst${typePluralName}`,
-            increasedDamageTaken: `increasedDamageTakenFrom${typePluralName}`,
-            decreasedDamageTaken: `decreasedDamageTakenFrom${typePluralName}`,
-            increasedMaxHitPercent: `increasedMaxHitPercentAgainst${typePluralName}`,
-            decreasedMaxHitPercent: `decreasedMaxHitPercentAgainst${typePluralName}`,
-            increasedMaxHitFlat: `increasedMaxHitFlatAgainst${typePluralName}`,
-            decreasedMaxHitFlat: `decreasedMaxHitFlatAgainst${typePluralName}`,
-            increasedMinHitBasedOnMaxHit: `increasedMinHitBasedOnMaxHitAgainst${typePluralName}`,
-            decreasedMinHitBasedOnMaxHit: `decreasedMinHitBasedOnMaxHitAgainst${typePluralName}`,
-            increasedFlatMinHit: `increasedFlatMinHitAgainst${typePluralName}`,
-            decreasedFlatMinHit: `decreasedFlatMinHitAgainst${typePluralName}`,
-            increasedGlobalAccuracy: `increasedGlobalAccuracyAgainst${typePluralName}`,
-            decreasedGlobalAccuracy: `decreasedGlobalAccuracyAgainst${typePluralName}`,
-            increasedDamageReduction: `increasedDamageReductionAgainst${typePluralName}`,
-            decreasedDamageReduction: `decreasedDamageReductionAgainst${typePluralName}`,
-            increasedChanceToApplyTraitInfiniteOnSpawn: `increasedChanceToApply${typeSingularName}TraitInfiniteOnSpawn`,
-            decreasedChanceToApplyTraitInfiniteOnSpawn: `decreasedChanceToApply${typeSingularName}TraitInfiniteOnSpawn`,
+            damage: `damageAgainst${typePluralName}`,
+            damageTaken: `damageTakenFrom${typePluralName}`,
+            maxHitPercent: `increasedMaxHitPercentAgainst${typePluralName}`,
+            maxHitFlat: `increasedMaxHitFlatAgainst${typePluralName}`,
+            minHitBasedOnMaxHit: `increasedMinHitBasedOnMaxHitAgainst${typePluralName}`,
+            flatMinHit: `increasedFlatMinHitAgainst${typePluralName}`,
+            accuracyRating: `increasedGlobalAccuracyAgainst${typePluralName}`,
+            flatResistance: `increasedDamageReductionAgainst${typePluralName}`,
+            chanceToApplyTraitInfiniteOnSpawn: `increasedChanceToApply${typeSingularName}TraitInfiniteOnSpawn`,
             applyTraitTurnsOnSpawn: `apply${typeSingularName}TraitTurnsOnSpawn`,
-            increasedChanceToApplyTrait: `increasedChanceToApply${typeSingularName}Trait`,
-            decreasedChanceToApplyTrait: `decreasedChanceToApply${typeSingularName}Trait`,
+            chanceToApplyTrait: `increasedChanceToApply${typeSingularName}Trait`,
             applyTraitTurns: `apply${typeSingularName}TraitTurns`
-        };
+        }
+
+        //return {
+        //    traitApplied: `${typeSingularNameLower}TraitApplied`,
+        //    increasedDamage: `increasedDamageAgainst${typePluralName}`,
+        //    decreasedDamage: `decreasedDamageAgainst${typePluralName}`,
+        //    increasedDamageTaken: `increasedDamageTakenFrom${typePluralName}`,
+        //    decreasedDamageTaken: `decreasedDamageTakenFrom${typePluralName}`,
+        //    increasedMaxHitPercent: `increasedMaxHitPercentAgainst${typePluralName}`,
+        //    decreasedMaxHitPercent: `decreasedMaxHitPercentAgainst${typePluralName}`,
+        //    increasedMaxHitFlat: `increasedMaxHitFlatAgainst${typePluralName}`,
+        //    decreasedMaxHitFlat: `decreasedMaxHitFlatAgainst${typePluralName}`,
+        //    increasedMinHitBasedOnMaxHit: `increasedMinHitBasedOnMaxHitAgainst${typePluralName}`,
+        //    decreasedMinHitBasedOnMaxHit: `decreasedMinHitBasedOnMaxHitAgainst${typePluralName}`,
+        //    increasedFlatMinHit: `increasedFlatMinHitAgainst${typePluralName}`,
+        //    decreasedFlatMinHit: `decreasedFlatMinHitAgainst${typePluralName}`,
+        //    increasedGlobalAccuracy: `increasedGlobalAccuracyAgainst${typePluralName}`,
+        //    decreasedGlobalAccuracy: `decreasedGlobalAccuracyAgainst${typePluralName}`,
+        //    increasedDamageReduction: `increasedDamageReductionAgainst${typePluralName}`,
+        //    decreasedDamageReduction: `decreasedDamageReductionAgainst${typePluralName}`,
+        //    increasedChanceToApplyTraitInfiniteOnSpawn: `increasedChanceToApply${typeSingularName}TraitInfiniteOnSpawn`,
+        //    decreasedChanceToApplyTraitInfiniteOnSpawn: `decreasedChanceToApply${typeSingularName}TraitInfiniteOnSpawn`,
+        //    applyTraitTurnsOnSpawn: `apply${typeSingularName}TraitTurnsOnSpawn`,
+        //    increasedChanceToApplyTrait: `increasedChanceToApply${typeSingularName}Trait`,
+        //    decreasedChanceToApplyTrait: `decreasedChanceToApply${typeSingularName}Trait`,
+        //    applyTraitTurns: `apply${typeSingularName}TraitTurns`
+        //};
     }
 
     public static createEffectPropertyNames(typeSingularName: string): MonsterTypeEffectObjectNames {
@@ -168,16 +185,7 @@ export class MonsterTypeHelper {
 
         // Some modifiers may have a positive value, but result in negative effects
         switch (modifierType) {
-            case MonsterTypeModifierType.DecreasedDamage:
-            case MonsterTypeModifierType.IncreasedDamageTaken:
-            case MonsterTypeModifierType.DecreasedMaxHitPercent:
-            case MonsterTypeModifierType.DecreasedMaxHitFlat:
-            case MonsterTypeModifierType.DecreasedMinHitBasedOnMaxHit:
-            case MonsterTypeModifierType.DecreasedFlatMinHit:
-            case MonsterTypeModifierType.DecreasedGlobalAccuracy:
-            case MonsterTypeModifierType.DecreasedDamageReduction:
-            case MonsterTypeModifierType.DecreasedChanceToApplyTraitInfiniteOnSpawn:
-            case MonsterTypeModifierType.DecreasedChanceToApplyTrait:
+            case MonsterTypeModifierType.DamageTaken:
                 modifierObject.inverted = true;
                 break;
             default:
@@ -185,10 +193,8 @@ export class MonsterTypeHelper {
 
         // Modify value modifier
         switch (modifierType) {
-            case MonsterTypeModifierType.IncreasedMaxHitFlat:
-            case MonsterTypeModifierType.DecreasedMaxHitFlat:
-            case MonsterTypeModifierType.IncreasedFlatMinHit:
-            case MonsterTypeModifierType.DecreasedFlatMinHit:
+            case MonsterTypeModifierType.MaxHitFlat:
+            case MonsterTypeModifierType.FlatMinHit:
                 // @ts-ignore Ignore implicit any error
                 modifierObject["modifyValue"] = multiplyByNumberMultiplier;
                 break;

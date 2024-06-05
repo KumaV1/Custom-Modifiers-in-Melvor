@@ -75,30 +75,46 @@ export class TranslationManager {
             loadedLangJson[`COMBAT_MISC_${type.singularName}_Trait_Stacking_Effect`] = loadedLangJson["COMBAT_MISC_Monster_Type_Trait_Stacking_Effect"].replace("${monsterType}", typeSingularName);
 
             loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.traitApplied}`] = loadedLangJson["MODIFIER_DATA_MonsterTypeTraitApplied"].replace("${monsterType}", typeSingularName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedDamage}`] = loadedLangJson["MODIFIER_DATA_increasedDamageAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedDamage}`] = loadedLangJson["MODIFIER_DATA_decreasedDamageAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedDamageTaken}`] = loadedLangJson["MODIFIER_DATA_increasedDamageTakenFromMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedDamageTaken}`] = loadedLangJson["MODIFIER_DATA_decreasedDamageTakenFromMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedMaxHitPercent}`] = loadedLangJson["MODIFIER_DATA_increasedMaxHitPercentAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedMaxHitPercent}`] = loadedLangJson["MODIFIER_DATA_decreasedMaxHitPercentAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedMaxHitFlat}`] = loadedLangJson["MODIFIER_DATA_increasedMaxHitFlatAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedMaxHitFlat}`] = loadedLangJson["MODIFIER_DATA_decreasedMaxHitFlatAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedMinHitBasedOnMaxHit}`] = loadedLangJson["MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedMinHitBasedOnMaxHit}`] = loadedLangJson["MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedFlatMinHit}`] = loadedLangJson["MODIFIER_DATA_increasedFlatMinHitAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedFlatMinHit}`] = loadedLangJson["MODIFIER_DATA_decreasedFlatMinHitAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedGlobalAccuracy}`] = loadedLangJson["MODIFIER_DATA_increasedGlobalAccuracyAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedGlobalAccuracy}`] = loadedLangJson["MODIFIER_DATA_decreasedGlobalAccuracyAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedDamageReduction}`] = loadedLangJson["MODIFIER_DATA_increasedDamageReductionAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedDamageReduction}`] = loadedLangJson["MODIFIER_DATA_decreasedDamageReductionAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.damage}`] = loadedLangJson["MODIFIER_DATA_damageAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.damageTaken}`] = loadedLangJson["MODIFIER_DATA_damageTakenFromMonsterType"].replace("${monsterType}", typePluralName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.maxHitPercent}`] = loadedLangJson["MODIFIER_DATA_maxHitPercentAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.maxHitFlat}`] = loadedLangJson["MODIFIER_DATA_maxHitFlatAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.minHitBasedOnMaxHit}`] = loadedLangJson["MODIFIER_DATA_minHitBasedOnMaxHitAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.flatMinHit}`] = loadedLangJson["MODIFIER_DATA_flatMinHitAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.accuracyRating}`] = loadedLangJson["MODIFIER_DATA_accuracyRatingAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.flatResistance}`] = loadedLangJson["MODIFIER_DATA_flatResistanceAgainstMonsterType"].replace("${monsterType}", typePluralName);
 
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedChanceToApplyTraitInfiniteOnSpawn}`] = loadedLangJson["MODIFIER_DATA_increasedChanceToApplyMonsterTypeTraitInfiniteOnSpawn"].replace("${monsterType}", typeSingularName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedChanceToApplyTraitInfiniteOnSpawn}`] = loadedLangJson["MODIFIER_DATA_decreasedChanceToApplyMonsterTypeTraitInfiniteOnSpawn"].replace("${monsterType}", typeSingularName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.chanceToApplyTraitInfiniteOnSpawn}`] = loadedLangJson["MODIFIER_DATA_chanceToApplyMonsterTypeTraitInfiniteOnSpawn"].replace("${monsterType}", typeSingularName);
             loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.applyTraitTurnsOnSpawn}`] = loadedLangJson["MODIFIER_DATA_applyMonserTypeTraitTurnsOnSpawn"].replace("${monsterType}", typeSingularName);
 
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedChanceToApplyTrait}`] = loadedLangJson["MODIFIER_DATA_increasedChanceToApplyMonsterTypeTrait"].replace("${monsterType}", typeSingularName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedChanceToApplyTrait}`] = loadedLangJson["MODIFIER_DATA_decreasedChanceToApplyMonsterTypeTrait"].replace("${monsterType}", typeSingularName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.chanceToApplyTrait}`] = loadedLangJson["MODIFIER_DATA_chanceToApplyMonsterTypeTrait"].replace("${monsterType}", typeSingularName);
             loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.applyTraitTurns}`] = loadedLangJson["MODIFIER_DATA_applyMonsterTypeTraitTurns"].replace("${monsterType}", typeSingularName);
+
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.traitApplied}`] = loadedLangJson["MODIFIER_DATA_MonsterTypeTraitApplied"].replace("${monsterType}", typeSingularName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedDamage}`] = loadedLangJson["MODIFIER_DATA_increasedDamageAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedDamage}`] = loadedLangJson["MODIFIER_DATA_decreasedDamageAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedDamageTaken}`] = loadedLangJson["MODIFIER_DATA_increasedDamageTakenFromMonsterType"].replace("${monsterType}", typePluralName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedDamageTaken}`] = loadedLangJson["MODIFIER_DATA_decreasedDamageTakenFromMonsterType"].replace("${monsterType}", typePluralName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedMaxHitPercent}`] = loadedLangJson["MODIFIER_DATA_increasedMaxHitPercentAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedMaxHitPercent}`] = loadedLangJson["MODIFIER_DATA_decreasedMaxHitPercentAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedMaxHitFlat}`] = loadedLangJson["MODIFIER_DATA_increasedMaxHitFlatAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedMaxHitFlat}`] = loadedLangJson["MODIFIER_DATA_decreasedMaxHitFlatAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedMinHitBasedOnMaxHit}`] = loadedLangJson["MODIFIER_DATA_increasedMinHitBasedOnMaxHitAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedMinHitBasedOnMaxHit}`] = loadedLangJson["MODIFIER_DATA_decreasedMinHitBasedOnMaxHitAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedFlatMinHit}`] = loadedLangJson["MODIFIER_DATA_increasedFlatMinHitAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedFlatMinHit}`] = loadedLangJson["MODIFIER_DATA_decreasedFlatMinHitAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedGlobalAccuracy}`] = loadedLangJson["MODIFIER_DATA_increasedGlobalAccuracyAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedGlobalAccuracy}`] = loadedLangJson["MODIFIER_DATA_decreasedGlobalAccuracyAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedDamageReduction}`] = loadedLangJson["MODIFIER_DATA_increasedDamageReductionAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedDamageReduction}`] = loadedLangJson["MODIFIER_DATA_decreasedDamageReductionAgainstMonsterType"].replace("${monsterType}", typePluralName);
+
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedChanceToApplyTraitInfiniteOnSpawn}`] = loadedLangJson["MODIFIER_DATA_increasedChanceToApplyMonsterTypeTraitInfiniteOnSpawn"].replace("${monsterType}", typeSingularName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedChanceToApplyTraitInfiniteOnSpawn}`] = loadedLangJson["MODIFIER_DATA_decreasedChanceToApplyMonsterTypeTraitInfiniteOnSpawn"].replace("${monsterType}", typeSingularName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.applyTraitTurnsOnSpawn}`] = loadedLangJson["MODIFIER_DATA_applyMonserTypeTraitTurnsOnSpawn"].replace("${monsterType}", typeSingularName);
+
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedChanceToApplyTrait}`] = loadedLangJson["MODIFIER_DATA_increasedChanceToApplyMonsterTypeTrait"].replace("${monsterType}", typeSingularName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.decreasedChanceToApplyTrait}`] = loadedLangJson["MODIFIER_DATA_decreasedChanceToApplyMonsterTypeTrait"].replace("${monsterType}", typeSingularName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.applyTraitTurns}`] = loadedLangJson["MODIFIER_DATA_applyMonsterTypeTraitTurns"].replace("${monsterType}", typeSingularName);
         }
     }
 

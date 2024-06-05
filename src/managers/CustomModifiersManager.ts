@@ -113,7 +113,7 @@ export class CustomModifiersManager {
             modifiers.push(obj);
         });
 
-        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
+        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
     }
 
     // #region Modifier Registration
@@ -122,35 +122,74 @@ export class CustomModifiersManager {
     private registerSkillModifiers() {
         let modifiers = [] as ModifierData[];
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('increasedGlobalSkillXPPerLevel'));
+        modifiers.push(CustomModifiersRegistrationHelper.createMultiScopeSkillingModifierData(
+            'skillXPPerLevel',
+            CustomModifiersRegistrationHelper.createDefaultModifierScopingDataArray(
+                'skillXPPerLevel',
+                [
+                    {
+                        scopes: {},
+                        posAlias: 'increasedGlobalSkillXPPerLevel',
+                        negAlias: 'decreasedGlobalSkillXPPerLevel'
+                    },
+                    {
+                        scopes: { skill: true },
+                        posAlias: 'increasedSkillXPPerSkillLevel',
+                        negAlias: 'decreasedSkillXPPerSkillLevel'
+                    }
+                ]
+            ),
+            false
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('decreasedGlobalSkillXPPerLevel', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createMultiScopeSkillingModifierData(
+            'flatSkillXPPerLevel',
+            CustomModifiersRegistrationHelper.createDefaultModifierScopingDataArray(
+                'flatSkillXPPerLevel',
+                [
+                    {
+                        scopes: {},
+                        posAlias: 'increasedFlatGlobalSkillXPPerSkillLevel',
+                        negAlias: 'decreasedFlatGlobalSkillXPPerSkillLevel'
+                    },
+                    {
+                        scopes: { skill: true },
+                        posAlias: 'increasedFlatSkillXPPerSkillLevel',
+                        negAlias: 'decreasedFlatSkillXPPerSkillLevel'
+                    }
+                ]
+            ),
+            false
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('increasedSkillXPPerSkillLevel'));
+        modifiers.push(CustomModifiersRegistrationHelper.createMultiScopeSkillingModifierData(
+            'flatSkillXP',
+            CustomModifiersRegistrationHelper.createDefaultModifierScopingDataArray(
+                'flatSkillXP',
+                [
+                    {
+                        scopes: {},
+                        posAlias: 'increasedFlatGlobalSkillXP',
+                        negAlias: 'decreasedFlatGlobalSkillXP'
+                    },
+                    {
+                        scopes: { skill: true },
+                        posAlias: 'increasedFlatSkillXP',
+                        negAlias: 'decreasedFlatSkillXP'
+                    }
+                ]
+            ),
+            false
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('decreasedSkillXPPerSkillLevel', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData(
+            'thievingDamagePreventionThreshold',
+            false,
+            ['increasedThievingDamagePreventionThreshold'],
+            ['decreasedThievingDamagePreventionThreshold']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('increasedFlatGlobalSkillXP'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('decreasedFlatGlobalSkillXP', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('increasedFlatSkillXP'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('decreasedFlatSkillXP', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('increasedFlatGlobalSkillXPPerSkillLevel'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('decreasedFlatGlobalSkillXPPerSkillLevel', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('increasedFlatSkillXPPerSkillLevel'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('decreasedFlatSkillXPPerSkillLevel', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('increasedThievingDamagePreventionThreshold'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData('decreasedThievingDamagePreventionThreshold', true));
-
-        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
+        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
     }
 
     /**
@@ -158,6 +197,8 @@ export class CustomModifiersManager {
      */
     private registerSpawnModifiers() {
         let modifiers = [] as ModifierData[];
+
+        // TODO: All these will be on "Battle Start" (or whatever the identifier is) combat effects on corresponding items, I guess
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToApplySlowOnSpawn'));
 
@@ -213,7 +254,7 @@ export class CustomModifiersManager {
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('applySleepOnSpawn'));
 
-        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
+        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
     }
 
     /**
@@ -226,7 +267,7 @@ export class CustomModifiersManager {
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplyBleed', true));
 
-        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
+        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
     }
 
     /**
@@ -243,156 +284,211 @@ export class CustomModifiersManager {
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplyStackOfDeathMark', true));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDeathMarkImmunity'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDeathMarkImmunity')); // melvorD:effectIgnoreChance
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDeathMarkImmunity', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDeathMarkImmunity', true)); // melvorD:effectIgnoreChance
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('applyDeathMarkOnSpawn'));
 
-        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
+        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
     }
 
     private registerCombatAreaModifiers() {
         let modifiers = [] as ModifierData[];
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitPercentToCombatAreaMonsters'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'maxHitPercentToCombatAreaMonsters',
+            false,
+            ['increasedMaxHitPercentToCombatAreaMonsters'],
+            ['decreasedMaxHitPercentToCombatAreaMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitPercentToCombatAreaMonsters', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'maxHitFlatToCombatAreaMonsters',
+            false,
+            ['increasedMaxHitFlatToCombatAreaMonsters'],
+            ['decreasedMaxHitFlatToCombatAreaMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitFlatToCombatAreaMonsters'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'flatMinHitToCombatAreaMonsters',
+            false,
+            ['increasedFlatMinHitToCombatAreaMonsters'],
+            ['decreasedFlatMinHitToCombatAreaMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitFlatToCombatAreaMonsters', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'minHitBasedOnMaxHitToCombatAreaMonsters',
+            false,
+            ['increasedMinHitBasedOnMaxHitToCombatAreaMonsters'],
+            ['decreasedMinHitBasedOnMaxHitToCombatAreaMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedFlatMinHitToCombatAreaMonsters'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'accuracyRatingAgainstCombatAreaMonsters',
+            false,
+            ['increasedGlobalAccuracyAgainstCombatAreaMonsters'],
+            ['decreasedGlobalAccuracyAgainstCombatAreaMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedFlatMinHitToCombatAreaMonsters', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'flatResistanceAgainstCombatAreaMonsters',
+            false,
+            ['increasedDamageReductionAgainstCombatAreaMonsters'],
+            ['decreasedDamageReductionAgainstCombatAreaMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMinHitBasedOnMaxHitToCombatAreaMonsters'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMinHitBasedOnMaxHitToCombatAreaMonsters', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedGlobalAccuracyAgainstCombatAreaMonsters'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedGlobalAccuracyAgainstCombatAreaMonsters', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageReductionAgainstCombatAreaMonsters'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageReductionAgainstCombatAreaMonsters', true));
-
-        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
+        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
     }
 
     private registerSlayerAreaModifiers() {
         let modifiers = [] as ModifierData[];
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitPercentToSlayerAreaMonsters'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'maxHitPercentToSlayerAreaMonsters',
+            false,
+            ['increasedMaxHitPercentToSlayerAreaMonsters'],
+            ['decreasedMaxHitPercentToSlayerAreaMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitPercentToSlayerAreaMonsters', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'maxHitFlatToSlayerAreaMonsters',
+            false,
+            ['increasedMaxHitFlatToSlayerAreaMonsters'],
+            ['decreasedMaxHitFlatToSlayerAreaMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitFlatToSlayerAreaMonsters'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'flatMinHitToSlayerAreaMonsters',
+            false,
+            ['increasedFlatMinHitToSlayerAreaMonsters'],
+            ['decreasedFlatMinHitToSlayerAreaMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitFlatToSlayerAreaMonsters', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'minHitBasedOnMaxHitToSlayerAreaMonsters',
+            false,
+            ['increasedMinHitBasedOnMaxHitToSlayerAreaMonsters'],
+            ['decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedFlatMinHitToSlayerAreaMonsters'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'accuracyRatingAgainstSlayerAreaMonsters',
+            false,
+            ['increasedGlobalAccuracyAgainstSlayerAreaMonsters'],
+            ['decreasedGlobalAccuracyAgainstSlayerAreaMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedFlatMinHitToSlayerAreaMonsters', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'flatResistanceAgainstSlayerAreaMonsters',
+            false,
+            ['increasedDamageReductionAgainstSlayerAreaMonsters'],
+            ['decreasedDamageReductionAgainstSlayerAreaMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMinHitBasedOnMaxHitToSlayerAreaMonsters'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedGlobalAccuracyAgainstSlayerAreaMonsters'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedGlobalAccuracyAgainstSlayerAreaMonsters', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageReductionAgainstSlayerAreaMonsters'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageReductionAgainstSlayerAreaMonsters', true));
-
-        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
+        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
     }
 
     private registerDungeonModifiers() {
         let modifiers = [] as ModifierData[];
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitPercentToDungeonMonsters'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'maxHitPercentToDungeonMonsters',
+            false,
+            ['increasedMaxHitPercentToDungeonMonsters'],
+            ['decreasedMaxHitPercentToDungeonMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitPercentToDungeonMonsters', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'maxHitFlatToDungeonMonsters',
+            false,
+            ['increasedMaxHitFlatToDungeonMonsters'],
+            ['decreasedMaxHitFlatToDungeonMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitFlatToDungeonMonsters'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'flatMinHitToDungeonMonsters',
+            false,
+            ['increasedFlatMinHitToDungeonMonsters'],
+            ['decreasedFlatMinHitToDungeonMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitFlatToDungeonMonsters', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'minHitBasedOnMaxHitToDungeonMonsters',
+            false,
+            ['increasedMinHitBasedOnMaxHitToDungeonMonsters'],
+            ['decreasedMinHitBasedOnMaxHitToDungeonMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedFlatMinHitToDungeonMonsters'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'accuracyRatingAgainstDungeonMonsters',
+            false,
+            ['increasedGlobalAccuracyAgainstDungeonMonsters'],
+            ['decreasedGlobalAccuracyAgainstDungeonMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedFlatMinHitToDungeonMonsters', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'flatResistanceAgainstDungeonMonsters',
+            false,
+            ['increasedDamageReductionAgainstDungeonMonsters'],
+            ['decreasedDamageReductionAgainstDungeonMonsters']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMinHitBasedOnMaxHitToDungeonMonsters'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMinHitBasedOnMaxHitToDungeonMonsters', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedGlobalAccuracyAgainstDungeonMonsters'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedGlobalAccuracyAgainstDungeonMonsters', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageReductionAgainstDungeonMonsters'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageReductionAgainstDungeonMonsters', true));
-
-        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
+        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
     }
 
     private registerSlayerTaskModifiers() {
+        // Add modifiers
         let modifiers = [] as ModifierData[];
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitPercentToSlayerTasks'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'maxHitPercentToSlayerTasks',
+            false,
+            ['increasedMaxHitPercentToSlayerTasks'],
+            ['decreasedMaxHitPercentToSlayerTasks']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitPercentToSlayerTasks', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'maxHitFlatToSlayerTasks',
+            false,
+            ['increasedMaxHitFlatToSlayerTasks'],
+            ['decreasedMaxHitFlatToSlayerTasks']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitFlatToSlayerTasks'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'minHitBasedOnMaxHitToSlayerTasks',
+            false,
+            ['increasedFlatMinHitToSlayerTasks'],
+            ['decreasedFlatMinHitToSlayerTasks']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitFlatToSlayerTasks', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'flatMinHitToSlayerTasks',
+            false,
+            ['increasedMinHitBasedOnMaxHitToSlayerTasks'],
+            ['decreasedMinHitBasedOnMaxHitToSlayerTasks']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedFlatMinHitToSlayerTasks'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'accuracyRatingAgainstSlayerTasks',
+            false,
+            ['increasedGlobalAccuracyAgainstSlayerTasks'],
+            ['decreasedGlobalAccuracyAgainstSlayerTasks']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedFlatMinHitToSlayerTasks', true));
+        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMinHitBasedOnMaxHitToSlayerTasks'));
+        // Add modifications to pre-existing modifiers
+        let modifierModifications = [] as ModifierModificationData[];
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMinHitBasedOnMaxHitToSlayerTasks', true));
+        modifierModifications.push(CustomModifiersRegistrationHelper.createModifierModificationData(
+            ModifierIDs.flatResistanceAgainstSlayerTasks,
+            undefined,
+            undefined,
+            ['decreasedDamageReductionAgainstSlayerTasks']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedGlobalAccuracyAgainstSlayerTasks'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedGlobalAccuracyAgainstSlayerTasks', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageReductionAgainstSlayerTasks', true));
-
-        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
-    }
-
-    /**
-     *
-     */
-    private registerSpellModifiers() {
-        let modifiers = [] as ModifierData[];
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageTakenFromAirSpells'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageTakenFromAirSpells', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageTakenFromWaterSpells'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageTakenFromWaterSpells', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageTakenFromEarthSpells'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageTakenFromEarthSpells', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageTakenFromFireSpells'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageTakenFromFireSpells', true));
-
-        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
+        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierModificationDataPackage(modifierModifications));
     }
 
     /**
@@ -401,60 +497,152 @@ export class CustomModifiersManager {
     private registerBossModifiers() {
         let modifiers = [] as ModifierData[];
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitPercentAgainstBosses'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'maxHitPercentAgainstBosses',
+            false,
+            ['increasedMaxHitPercentAgainstBosses'],
+            ['decreasedMaxHitPercentAgainstBosses']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitPercentAgainstBosses', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'maxHitFlatAgainstBosses',
+            false,
+            ['increasedMaxHitFlatAgainstBosses'],
+            ['decreasedMaxHitFlatAgainstBosses']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMaxHitFlatAgainstBosses'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'flatMinHitAgainstBosses',
+            false,
+            ['increasedFlatMinHitAgainstBosses'],
+            ['decreasedFlatMinHitAgainstBosses']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMaxHitFlatAgainstBosses', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'minHitBasedOnMaxHitAgainstBosses',
+            false,
+            ['increasedMinHitBasedOnMaxHitAgainstBosses'],
+            ['decreasedMinHitBasedOnMaxHitAgainstBosses']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedFlatMinHitAgainstBosses'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'accuracyRatingAgainstBosses',
+            false,
+            ['increasedGlobalAccuracyAgainstBosses'],
+            ['decreasedGlobalAccuracyAgainstBosses']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedFlatMinHitAgainstBosses', true));
+        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
+    }
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedMinHitBasedOnMaxHitAgainstBosses'));
+    /**
+     *
+     */
+    private registerSpellModifiers() {
+        let modifierModifications = [] as ModifierModificationData[];
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedMinHitBasedOnMaxHitAgainstBosses', true));
+        modifierModifications.push(CustomModifiersRegistrationHelper.createModifierModificationData(
+            ModifierIDs.damageTaken,
+            { subcategory: true },
+            [
+                {
+                    text: '${value}% Damage taken when attacked by ${subcategoryName} Spells',
+                    lang: 'MODIFIER_DATA_damageTakenSubcategory'
+                }
+            ],
+            [
+                {
+                    key: 'increasedDamageTakenFromAirSpells',
+                    subcategoryID: SpellCategoryIDs.Air
+                },
+                {
+                    key: 'increasedDamageTakenFromWaterSpells',
+                    subcategoryID: SpellCategoryIDs.Water
+                },
+                {
+                    key: 'increasedDamageTakenFromEarthSpells',
+                    subcategoryID: SpellCategoryIDs.Earth
+                },
+                {
+                    key: 'increasedDamageTakenFromFireSpells',
+                    subcategoryID: SpellCategoryIDs.Fire
+                }
+            ],
+            [
+                {
+                    key: 'decreasedDamageTakenFromAirSpells',
+                    subcategoryID: SpellCategoryIDs.Air
+                },
+                {
+                    key: 'decreasedDamageTakenFromWaterSpells',
+                    subcategoryID: SpellCategoryIDs.Water
+                },
+                {
+                    key: 'decreasedDamageTakenFromEarthSpells',
+                    subcategoryID: SpellCategoryIDs.Earth
+                },
+                {
+                    key: 'decreasedDamageTakenFromFireSpells',
+                    subcategoryID: SpellCategoryIDs.Fire
+                }
+            ]
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedGlobalAccuracyAgainstBosses'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedGlobalAccuracyAgainstBosses', true));
-
-        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
+        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierModificationDataPackage(modifierModifications));
     }
 
     /** Modifiers that don't fit any of the previous groups */
     private registerGeneralModifiers() {
         let modifiers = [] as ModifierData[];
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToReduceAttackDamageToZero'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'chanceToReduceAttackDamageToZero',
+            false,
+            ['increasedChanceToReduceAttackDamageToZero'],
+            ['decreasedChanceToReduceAttackDamageToZero']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToReduceAttackDamageToZero', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'damageFlatWhileTargetHasMaxHP',
+            false,
+            ['increasedDamageFlatWhileTargetHasMaxHP'],
+            ['decreasedDamageFlatWhileTargetHasMaxHP']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageFlatWhileTargetHasMaxHP'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'damagePercentWhileTargetHasMaxHP',
+            false,
+            ['increasedDamagePercentWhileTargetHasMaxHP'],
+            ['decreasedDamagePercentWhileTargetHasMaxHP']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageFlatWhileTargetHasMaxHP', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'damageFlatIgnoringResistance',
+            false,
+            ['increasedDamageFlatIgnoringDamageReduction'],
+            ['decreasedDamageFlatIgnoringDamageReduction']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamagePercentWhileTargetHasMaxHP'));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'damagePreventionThreshold',
+            false,
+            ['increasedGlobalDamagePreventionThreshold'],
+            ['decreasedGlobalDamagePreventionThreshold']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamagePercentWhileTargetHasMaxHP', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'combatDamagePreventionThreshold',
+            false,
+            ['increasedDamagePreventionThreshold'],
+            ['decreasedDamagePreventionThreshold']
+        ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamageFlatIgnoringDamageReduction'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamageFlatIgnoringDamageReduction', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedGlobalDamagePreventionThreshold'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedGlobalDamagePreventionThreshold', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDamagePreventionThreshold'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDamagePreventionThreshold', true));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedBarrierDamagePreventionThreshold'));
-
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedBarrierDamagePreventionThreshold', true));
+        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+            'combatBarrierDamagePreventionThreshold',
+            false,
+            ['increasedBarrierDamagePreventionThreshold'],
+            ['decreasedBarrierDamagePreventionThreshold']
+        ));
 
         game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
     }
@@ -471,16 +659,16 @@ export class CustomModifiersManager {
          * Add percentage-based xp modifiers
          */
         // @ts-ignore You can actually patch base classes no problem
-        this.context.patch(Skill, "getXPModifier").after(function (currentAmount) {
-            return currentAmount += CustomModifiersCalculationHelper.getPercentagetXpModification(this);
+        this.context.patch(Skill, "getXPModifier").after(function (returnValue: number, action?: NamedObject) {
+            return returnValue += CustomModifiersCalculationHelper.getPercentagetXpModification(this, action);
         });
 
         /**
          * Add flat xp modifiers
          */
         // @ts-ignore You can actually patch base classes no problem
-        this.context.patch(Skill, "modifyXP").after(function (currentAmount) {
-            return currentAmount += CustomModifiersCalculationHelper.getFlatXpModification(this);
+        this.context.patch(Skill, "modifyXP").after(function (returnValue, amount: number, action?: NamedObject) {
+            return returnValue += CustomModifiersCalculationHelper.getFlatXpModification(this, action);
         });
     }
 
@@ -705,9 +893,12 @@ export class CustomModifiersManager {
                 const type = types[i];
 
                 const applyTraitInfinite = rollPercentage(
-                    this.modifiers[type.modifierPropertyNames.increasedChanceToApplyTraitInfiniteOnSpawn]
-                    - this.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTraitInfiniteOnSpawn]
+                    this.modifiers[type.modifierPropertyNames.chanceToApplyTraitInfiniteOnSpawn]
                 );
+                //const applyTraitInfinite = rollPercentage(
+                //    this.modifiers[type.modifierPropertyNames.increasedChanceToApplyTraitInfiniteOnSpawn]
+                //    - this.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTraitInfiniteOnSpawn]
+                //);
                 if (applyTraitInfinite) {
                     const effectData: CustomEffectData = game.customModifiersInMelvor.customModifierEffects[type.effectPropertyObjectNames.traitApplicationCustomModifierEffect];
                     this.applyModifierEffect(effectData, this.target, game.customModifiersInMelvor.specialAttacks[type.effectPropertyObjectNames.traitApplicationCustomModifierEffectAttack]);
@@ -753,6 +944,7 @@ export class CustomModifiersManager {
                         }
 
                         // Flat out set hp to zero
+                        // TODO: Presumably have to go with `damage`(or a method before, should be easy to do with pure damage ignoring resistance ?), so rebirth chance has a chance to proc
                         this.hitpoints = 0;
                     }
                 }
@@ -805,9 +997,12 @@ export class CustomModifiersManager {
             // @ts-ignore - collection keys
             let turns = entity.modifiers[type.modifierPropertyNames.applyTraitTurns];
             // @ts-ignore - collection keys
-            if (rollPercentage(entity.modifiers[type.modifierPropertyNames.increasedChanceToApplyTrait] - entity.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTrait])) {
+            if (rollPercentage(entity.modifiers[type.modifierPropertyNames.chanceToApplyTrait])) {
                 turns++;
             }
+            //if (rollPercentage(entity.modifiers[type.modifierPropertyNames.increasedChanceToApplyTrait] - entity.modifiers[type.modifierPropertyNames.decreasedChanceToApplyTrait])) {
+            //    turns++;
+            //}
 
             if (turns > 0) {
                 entity.applyStackingEffect(entity.game.customModifiersInMelvor.stackingEffects[type.effectPropertyObjectNames.traitApplicationStackingEffect], entity.target, turns);
@@ -951,10 +1146,14 @@ export class CustomModifiersManager {
         this.context.patch(Player, "damage").before(function (amount: number, source: SplashType, thieving?: boolean | undefined) {
             // Thieving
             if (thieving) {
-                const threshold: number = numberMultiplier * (this.modifiers.increasedGlobalDamagePreventionThreshold
-                    - this.modifiers.decreasedGlobalDamagePreventionThreshold
-                    + this.modifiers.increasedThievingDamagePreventionThreshold
-                    - this.modifiers.decreasedThievingDamagePreventionThreshold);
+                const threshold: number = numberMultiplier * (
+                    this.modifiers.damagePreventionThreshold
+                    + this.modifiers.thievingDamagePreventionThreshold
+                );
+            //    const threshold: number = numberMultiplier * (this.modifiers.increasedGlobalDamagePreventionThreshold
+            //        - this.modifiers.decreasedGlobalDamagePreventionThreshold
+            //        + this.modifiers.increasedThievingDamagePreventionThreshold
+            //        - this.modifiers.decreasedThievingDamagePreventionThreshold);
 
                 return threshold > 0 && amount < threshold
                     ? [0, source, thieving]
@@ -998,20 +1197,28 @@ export class CustomModifiersManager {
         // If barrier is active, and the damage source is capable of dealing damage to it,
         // then we have to evaluate the barrier modifiers
         if (entity.isBarrierActive && canDamageBarrier) {
-            const threshold = numberMultiplier * (entity.modifiers.increasedGlobalDamagePreventionThreshold
-                - entity.modifiers.decreasedGlobalDamagePreventionThreshold
-                + entity.modifiers.increasedBarrierDamagePreventionThreshold
-                - entity.modifiers.decreasedBarrierDamagePreventionThreshold);
+            const threshold = numberMultiplier * (
+                entity.modifiers.damagePreventionThreshold
+                + entity.modifiers.combatBarrierDamagePreventionThreshold
+            );
+            //const threshold = numberMultiplier * (entity.modifiers.increasedGlobalDamagePreventionThreshold
+            //    - entity.modifiers.decreasedGlobalDamagePreventionThreshold
+            //    + entity.modifiers.increasedBarrierDamagePreventionThreshold
+            //    - entity.modifiers.decreasedBarrierDamagePreventionThreshold);
             if (threshold > 0 && amount < threshold) {
                 return true;
             }
         }
 
         // Otherwise, no barrier is active, so we evaluate the non-barrier modifiers
-        const threshold = numberMultiplier * (entity.modifiers.increasedGlobalDamagePreventionThreshold
-            - entity.modifiers.decreasedGlobalDamagePreventionThreshold
-            + entity.modifiers.increasedDamagePreventionThreshold
-            - entity.modifiers.decreasedDamagePreventionThreshold);
+        const threshold = numberMultiplier * (
+            entity.modifiers.damagePreventionThreshold
+            + entity.modifiers.combatDamagePreventionThreshold
+        );
+        //const threshold = numberMultiplier * (entity.modifiers.increasedGlobalDamagePreventionThreshold
+        //    - entity.modifiers.decreasedGlobalDamagePreventionThreshold
+        //    + entity.modifiers.increasedDamagePreventionThreshold
+        //    - entity.modifiers.decreasedDamagePreventionThreshold);
         if (threshold > 0 && amount < threshold) {
             return true;
         }
@@ -1028,10 +1235,14 @@ export class CustomModifiersManager {
         // Build new function logic
         let newFunc = function (damage: number): void {
             // Check the modifiers that may change how the original logic is supposed to behave
-            const threshold: number = numberMultiplier * (game.modifiers.increasedGlobalDamagePreventionThreshold
-                - game.modifiers.decreasedGlobalDamagePreventionThreshold
-                + game.modifiers.increasedThievingDamagePreventionThreshold
-                - game.modifiers.decreasedThievingDamagePreventionThreshold);
+            const threshold: number = numberMultiplier * (
+                game.modifiers.damagePreventionThreshold
+                + game.modifiers.thievingDamagePreventionThreshold
+            );
+            //const threshold: number = numberMultiplier * (game.modifiers.increasedGlobalDamagePreventionThreshold
+            //    - game.modifiers.decreasedGlobalDamagePreventionThreshold
+            //    + game.modifiers.increasedThievingDamagePreventionThreshold
+            //    - game.modifiers.decreasedThievingDamagePreventionThreshold);
 
             // Call the original logic, with its expected parameter possibly changed
             if (threshold > 0 && damage < threshold) {

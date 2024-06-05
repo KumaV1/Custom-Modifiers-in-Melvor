@@ -1,82 +1,46 @@
 declare global {
     declare interface PlayerModifierTable {
-        readonly increasedMaxHitPercentToCombatAreaMonsters: number;
-        readonly decreasedMaxHitPercentToCombatAreaMonsters: number;
-        readonly increasedMaxHitFlatToCombatAreaMonsters: number;
-        readonly decreasedMaxHitFlatToCombatAreaMonsters: number;
-        readonly increasedMinHitBasedOnMaxHitToCombatAreaMonsters: number;
-        readonly decreasedMinHitBasedOnMaxHitToCombatAreaMonsters: number;
-        readonly increasedFlatMinHitToCombatAreaMonsters: number;
-        readonly decreasedFlatMinHitToCombatAreaMonsters: number;
-        readonly increasedGlobalAccuracyAgainstCombatAreaMonsters: number;
-        readonly decreasedGlobalAccuracyAgainstCombatAreaMonsters: number;
-        readonly increasedDamageReductionAgainstCombatAreaMonsters: number;
-        readonly decreasedDamageReductionAgainstCombatAreaMonsters: number;
+        readonly maxHitPercentToCombatAreaMonsters: number;
+        readonly maxHitFlatToCombatAreaMonsters: number;
+        readonly flatMinHitToCombatAreaMonsters: number;
+        readonly minHitBasedOnMaxHitToCombatAreaMonsters: number;
+        readonly accuracyRatingAgainstCombatAreaMonsters: number;
+        readonly flatResistanceAgainstCombatAreaMonsters: number; // TODO: Will require rewrite of modifier texts btw
 
-        readonly increasedMaxHitPercentToSlayerAreaMonsters: number;
-        readonly decreasedMaxHitPercentToSlayerAreaMonsters: number;
-        readonly increasedMaxHitFlatToSlayerAreaMonsters: number;
-        readonly decreasedMaxHitFlatToSlayerAreaMonsters: number;
-        readonly increasedMinHitBasedOnMaxHitToSlayerAreaMonsters: number;
-        readonly decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters: number;
-        readonly increasedFlatMinHitToSlayerAreaMonsters: number;
-        readonly decreasedFlatMinHitToSlayerAreaMonsters: number;
-        readonly increasedGlobalAccuracyAgainstSlayerAreaMonsters: number;
-        readonly decreasedGlobalAccuracyAgainstSlayerAreaMonsters: number;
-        readonly increasedDamageReductionAgainstSlayerAreaMonsters: number;
-        readonly decreasedDamageReductionAgainstSlayerAreaMonsters: number;
+        readonly maxHitPercentToSlayerAreaMonsters: number;
+        readonly maxHitFlatToSlayerAreaMonsters: number;
+        readonly flatMinHitToSlayerAreaMonsters: number;
+        readonly minHitBasedOnMaxHitToSlayerAreaMonsters: number;
+        readonly accuracyRatingAgainstSlayerAreaMonsters: number;
+        readonly flatResistanceAgainstSlayerAreaMonsters: number;
 
-        readonly increasedMaxHitPercentToDungeonMonsters: number;
-        readonly decreasedMaxHitPercentToDungeonMonsters: number;
-        readonly increasedMaxHitFlatToDungeonMonsters: number;
-        readonly decreasedMaxHitFlatToDungeonMonsters: number;
-        readonly increasedMinHitBasedOnMaxHitToDungeonMonsters: number;
-        readonly decreasedMinHitBasedOnMaxHitToDungeonMonsters: number;
-        readonly increasedFlatMinHitToDungeonMonsters: number;
-        readonly decreasedFlatMinHitToDungeonMonsters: number;
-        readonly increasedGlobalAccuracyAgainstDungeonMonsters: number;
-        readonly decreasedGlobalAccuracyAgainstDungeonMonsters: number;
-        readonly increasedDamageReductionAgainstDungeonMonsters: number;
-        readonly decreasedDamageReductionAgainstDungeonMonsters: number;
+        readonly maxHitPercentToDungeonMonsters: number;
+        readonly maxHitFlatToDungeonMonsters: number;
+        readonly flatMinHitToDungeonMonsters: number;
+        readonly minHitBasedOnMaxHitToDungeonMonsters: number;
+        readonly accuracyRatingAgainstDungeonMonsters: number;
+        readonly flatResistanceAgainstDungeonMonsters: number;
 
-        readonly increasedMaxHitPercentToSlayerTasks: number;
-        readonly decreasedMaxHitPercentToSlayerTasks: number;
-        readonly increasedMaxHitFlatToSlayerTasks: number;
-        readonly decreasedMaxHitFlatToSlayerTasks: number;
-        readonly increasedMinHitBasedOnMaxHitToSlayerTasks: number;
-        readonly decreasedMinHitBasedOnMaxHitToSlayerTasks: number;
-        readonly increasedFlatMinHitToSlayerTasks: number;
-        readonly decreasedFlatMinHitToSlayerTasks: number;
-        readonly increasedGlobalAccuracyAgainstSlayerTasks: number;
-        readonly decreasedGlobalAccuracyAgainstSlayerTasks: number;
-        readonly decreasedDamageReductionAgainstSlayerTasks: number;
+        readonly maxHitPercentToSlayerTasks: number;
+        readonly maxHitFlatToSlayerTasks: number;
+        readonly minHitBasedOnMaxHitToSlayerTasks: number;
+        readonly flatMinHitToSlayerTasks: number;
+        readonly accuracyRatingAgainstSlayerTasks: number;
 
-        readonly increasedMaxHitPercentAgainstBosses: number;
-        readonly decreasedMaxHitPercentAgainstBosses: number;
-        readonly increasedMaxHitFlatAgainstBosses: number;
-        readonly decreasedMaxHitFlatAgainstBosses: number;
-        readonly increasedMinHitBasedOnMaxHitAgainstBosses: number;
-        readonly decreasedMinHitBasedOnMaxHitAgainstBosses: number;
-        readonly increasedFlatMinHitAgainstBosses: number;
-        readonly decreasedFlatMinHitAgainstBosses: number;
-        readonly increasedGlobalAccuracyAgainstBosses: number;
-        readonly decreasedGlobalAccuracyAgainstBosses: number;
+        readonly maxHitPercentAgainstBosses: number;
+        readonly maxHitFlatAgainstBosses: number;
+        readonly flatMinHitAgainstBosses: number;
+        readonly minHitBasedOnMaxHitAgainstBosses: number;
+        readonly accuracyRatingAgainstBosses: number;
 
-        readonly increasedThievingDamagePreventionThreshold: number;
-        readonly decreasedThievingDamagePreventionThreshold: number;
+        readonly thievingDamagePreventionThreshold: number; // TODO: Check whether damage prevention threshold can be scoped (probably not)
 
         /** Percentage */
-        readonly increasedGlobalSkillXPPerLevel: number;
-        /** Percentage */
-        readonly decreasedGlobalSkillXPPerLevel: number;
-        /** Increases total xp gain for all skills (so unaffected by xp multipliers!) */
-        readonly increasedFlatGlobalSkillXP: number;
-        /** Decreases total xp gain for all skills (so unaffected by xp multipliers!) */
-        readonly decreasedFlatGlobalSkillXP: number;
-        /** Increases total xp gain for all skills (so unaffected by xp multipliers!) */
-        readonly increasedFlatGlobalSkillXPPerSkillLevel: number;
-        /** Decreases total xp gain for all skills (so unaffected by xp multipliers!) */
-        readonly decreasedFlatGlobalSkillXPPerSkillLevel: number
+        readonly skillXPPerLevel: number;
+        /** Increases total xp gain for all skills (so unaffected by xp multipliers, except for halving!) */
+        readonly flatSkillXPPerLevel: number;
+        /** Increases total xp gain for all skills (so unaffected by xp multipliers, except for halving!) */
+        readonly flatSkillXP: number;
     }
 }
 

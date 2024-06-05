@@ -79,6 +79,8 @@
     Monster_Type_Overview_Inactive_Types_Affected_By_Mod_Settings: "Can't become active due to selection in mod settings",
 
     // ### Modifiers
+
+    // ### Modifiers | DEPRACATED NAMES
     // #### Directly affecting damage dealt
     MODIFIER_DATA_increasedChanceToReduceAttackDamageToZero: '+${value}% chance (MAX: 90%) to reduce damage taken from an attack to 0 (still treated as being hit and does not affect calculation of on-hit-effects like damage-over-time)',
     MODIFIER_DATA_decreasedChanceToReduceAttackDamageToZero: '-${value}% chance (MAX: 90%) to reduce damage taken from an attack to 0 (still treated as being hit and does not affect calculation of on-hit-effects like damage-over-time)',
