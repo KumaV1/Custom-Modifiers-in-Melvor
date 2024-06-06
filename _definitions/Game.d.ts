@@ -13,9 +13,9 @@ declare global {
 
     interface Game {
         customModifiersInMelvor: {
-            stackingEffects: CmimStackingEffectCollection
-            customModifierEffects: CmimCustomModifierEffectCollection
-            specialAttacks: CmimSpecialAttackCollection,
+            //stackingEffects: CmimStackingEffectCollection
+            //customModifierEffects: CmimCustomModifierEffectCollection
+            //specialAttacks: CmimSpecialAttackCollection,
             originalFunctions: {
                 utils: {
                     stunNotify(damage: number): void

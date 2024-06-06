@@ -1,7 +1,10 @@
 import { ModConstants } from "../constants/ModConstants";
 import { languages } from "../languages";
 
-/** A helper to make it easier registering new modifiers code-side (such as the dynamically build monster type related modifiers) */
+/**
+ * A helper to make it easier registering new modifiers code-side (such as the dynamically build monster type related modifiers)
+ * Also effects...
+ * */
 export class CustomModifiersRegistrationHelper {
     //public static createModifierDataObject(): ModifierData {
     //    return null;
@@ -32,13 +35,24 @@ export class CustomModifiersRegistrationHelper {
         //obj.tableID // can't say much here, I don't know anything about combat tables yet (but I guess it's basically a list of pre-defined effects?)
     }
 
+    public static createCombatEffectsDataPackage(templates: CombatEffectTemplateData[], effects: AnyCombatEffectData[]): GameDataPackage {
+        return {
+            "$schema": ModConstants.SCHEMA,
+            "namespace": ModConstants.MOD_NAMESPACE_NAME,
+            "data": {
+                combatEffectTemplates: templates,
+                combatEffects: effects
+            }
+        };
+    }
+
     /**
      *
      * @param modifierName
      * @param inverted whether a positive value actually has a negative impact (and vice versa)
      */
-    public static createGlobalScopeCharacterCombatModifierData(modifierName: string, inverted?: boolean, posAliases?: ModifierAliasData[] | string[], negAliases?: ModifierAliasData[] | string[]): ModifierData {
-        return CustomModifiersRegistrationHelper.createModifierData(modifierName, true, true, inverted, posAliases, negAliases);
+    public static createGlobalScopeCharacterCombatModifierData(modifierName: string, inverted?: boolean, posAlias?: string, negAlias?: string): ModifierData {
+        return CustomModifiersRegistrationHelper.createModifierData(modifierName, true, true, [CustomModifiersRegistrationHelper.createDefaultModifierGlobalScope(modifierName, posAlias, negAlias)], inverted);
     }
 
     /**
@@ -47,7 +61,7 @@ export class CustomModifiersRegistrationHelper {
      * @param inverted whether a positive value actually has a negative impact (and vice versa)
      */
     public static createGlobalScopePlayerCombatModifierData(modifierName: string, inverted?: boolean): ModifierData {
-        return CustomModifiersRegistrationHelper.createModifierData(modifierName, true, false, inverted);
+        return CustomModifiersRegistrationHelper.createModifierData(modifierName, true, false, [CustomModifiersRegistrationHelper.createDefaultModifierGlobalScope(modifierName)], inverted);
     }
 
     /**
@@ -56,12 +70,12 @@ export class CustomModifiersRegistrationHelper {
      * @param inverted
      * @returns
      */
-    public static createGlobalScopeSkillingModifierData(modifierName: string, inverted?: boolean, posAliases?: ModifierAliasData[] | string[], negAliases?: ModifierAliasData[] | string[]): ModifierData {
-        return CustomModifiersRegistrationHelper.createModifierData(modifierName, false, false, inverted, posAliases, negAliases);
+    public static createGlobalScopeSkillingModifierData(modifierName: string, inverted?: boolean, posAlias?: string, negAlias?: string): ModifierData {
+        return CustomModifiersRegistrationHelper.createModifierData(modifierName, false, false, [CustomModifiersRegistrationHelper.createDefaultModifierGlobalScope(modifierName, posAlias, negAlias)], inverted);
     }
 
     public static createMultiScopeSkillingModifierData(modifierName: string, scopes: ModifierScopingData[], inverted?: boolean): ModifierData {
-
+        return CustomModifiersRegistrationHelper.createModifierData(modifierName, false, false, scopes, inverted);
     }
 
     /**
@@ -191,40 +205,58 @@ export class CustomModifiersRegistrationHelper {
      * @param allowEnemy
      * @param inverted
      */
-    private static createModifierData(modifierName: string, isCombat: boolean, allowEnemy: boolean, inverted?: boolean, posAliases?: ModifierAliasData[] | string[], negAliases?: ModifierAliasData[] | string[]): ModifierData {
+    private static createModifierData(modifierName: string, isCombat: boolean, allowEnemy: boolean, scopes: ModifierScopingData[], inverted?: boolean): ModifierData {
         let obj = {
             id: modifierName,
             inverted: inverted,
             isCombat: isCombat,
             allowEnemy: allowEnemy,
-            allowedScopes: [
-                {
-                    scopes: {},
-                    descriptions: [CustomModifiersRegistrationHelper.createDefaultModifierDescription(modifierName)]
-                }
-            ] as ModifierScopingData[]
+            allowedScopes: scopes
+            //allowedScopes: [
+            //    {
+            //        scopes: {},
+            //        descriptions: [CustomModifiersRegistrationHelper.createDefaultModifierDescription(modifierName)]
+            //    }
+            //] as ModifierScopingData[]
+        };
+
+        //if (posAliases !== undefined) {
+        //    for (var i = 0; i < posAliases.length; i++) {
+        //        const alias = posAliases[i];
+        //        obj.allowedScopes[0].posAliases?.push(
+        //            typeof (alias) === 'string'
+        //                ? CustomModifiersRegistrationHelper.createDefaultModifierAlias(alias)
+        //                : alias
+        //        );
+        //    }
+        //}
+
+        //if (negAliases !== undefined) {
+        //    for (var i = 0; i < negAliases.length; i++) {
+        //        const alias = negAliases[i];
+        //        obj.allowedScopes[0].negAliases?.push(
+        //            typeof (alias) === 'string'
+        //                ? CustomModifiersRegistrationHelper.createDefaultModifierAlias(alias)
+        //                : alias
+        //        );
+        //    }
+        //}
+
+        return obj;
+    }
+
+    private static createDefaultModifierGlobalScope(modifierName: string, posAlias?: string, negAlias?: string): ModifierScopingData {
+        let obj = {
+            scopes: {},
+            descriptions: [CustomModifiersRegistrationHelper.createDefaultModifierDescription(modifierName)]
+        } as ModifierScopingData;
+
+        if (posAlias !== undefined) {
+            obj.posAliases = [CustomModifiersRegistrationHelper.createDefaultModifierAlias(posAlias)]
         }
 
-        if (posAliases !== undefined) {
-            for (var i = 0; i < posAliases.length; i++) {
-                const alias = posAliases[i];
-                obj.allowedScopes[0].posAliases?.push(
-                    typeof (alias) === 'string'
-                        ? CustomModifiersRegistrationHelper.createDefaultModifierAlias(alias)
-                        : alias
-                );
-            }
-        }
-
-        if (negAliases !== undefined) {
-            for (var i = 0; i < negAliases.length; i++) {
-                const alias = negAliases[i];
-                obj.allowedScopes[0].negAliases?.push(
-                    typeof (alias) === 'string'
-                        ? CustomModifiersRegistrationHelper.createDefaultModifierAlias(alias)
-                        : alias
-                );
-            }
+        if (negAlias !== undefined) {
+            obj.negAliases = [CustomModifiersRegistrationHelper.createDefaultModifierAlias(negAlias)]
         }
 
         return obj;

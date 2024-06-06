@@ -205,16 +205,102 @@ export class MonsterTypeHelper {
     }
 
     /**
+     * Creates a data object by which to register an effect that can be used to forcibly apply a certain monster type to a character
+     * TODO: Check between stacking vs. static vs. whatever may also be relevant
+     * TODO 2: Aside from templates, I will also need to add "static(?)" and "stacking" effects ready-to-go, as those Ids may be serialized to a save file and would brick them, if missing
      *
+     * Note: Using this base template in addition to something like `melvorD:StaticSelfCountingModifier`, `melvorD:StaticNonCountingModifier` and such should allow mods to define any kind of effect easily, without needing much custom work
      * @param type
-     * @returns
      */
-    public static createTraitStackingEffectGamePackage(type: MonsterTypeDefinition): GameDataPackage {
+    public static createTraitEffectTemplateData(type: MonsterTypeDefinition): CombatEffectTemplateData {
+        // Compiler sugar, already defining a proper object to set the trait modifier
+        let effectModifiers = {} as ModifierValuesRecordData;
+        effectModifiers[`${type.modifierPropertyNames.traitApplied}`] = 1;
+
+        return {
+            id: `${type.singularName}_Trait_Effect_Base`,
+            description: 'A base template to apply most of the data consistent for any such effect. Main definition still left will be the behaviour',
+            baseTemplates: [] as string[], // 'melvorD:StackingModifiers' maybe? Will have to see what templates there are, but I generally any value > 0 should be treated the same, so a static value is fine, but things like whether the effect can be renewed may have to be defined, though will ultimately be overridable by other mods, as far as I understand
+            baseEffectData: {
+                name: `${type.singularName} Trait`,
+                nameLang: `MONSTER_TYPE_TRAIT_EFFECT_NAME_${type.singularName}`,
+                media: type.iconResourceUrl,
+                turnText: 'statGroup.stacks', // or maybe something else, presumably depends on the type of effect (stacking, static, etc.)
+                tooltipSpans: [
+                    {
+                        type: 'LangString',
+                        langID: `MONSTER_TYPE_TRAIT_EFFECT_DESCRIPTION_${type.singularName}`
+                    } as CombatEffectLangTTSpanData
+                ],
+                target: 'Target',
+                statGroups: [
+                    {
+                        name: 'debuff',
+                        modifiers: effectModifiers
+                    } as CombatEffectStatGroupData
+                ],
+                effectGroups: [
+                    `${ModConstants.MOD_NAMESPACE_NAME}:Trait_Application_Effect`
+                ]
+                // May need to add stat groups and/or behaviours, unless a base template takes care of it, I guess
+            } as BaseCombatEffectData // base templates -> this object -> a mod's effect using this template and further overriding properties, so shouldn't be to problematic here, as it's ultimately just a template, not meant to be used as is (at least not without modifications)
+        } as CombatEffectTemplateData;
+    }
+
+    /**
+     * Primarily exists for backwards compatibility
+     * @param type
+     */
+    public static createTraitStaticEffectData(type: MonsterTypeDefinition): TemplatedCombatEffectData {
+        return {
+            id: `${type.singularName}_Trait_Static_Effect`, // follows naming of stacking, but generally didn't have ids before
+            templateID: `${ModConstants.MOD_NAMESPACE_NAME}:${type.singularName}_Trait_Effect_Base`,
+            behaviours: [ // mimics behaviour of 'StaticModifiers' combat effect template
+                {
+                    type: 'ModifyStats',
+                    statGroupName: 'debuff', // as defined in 'createTraitEffectTemplateData'
+                    operations: 1,
+                    triggersOn: [
+                        {
+                            type: 'EffectApplied'
+                        } as EffectAppliedTriggerData
+                    ]
+                }
+            ]
+        } as TemplatedCombatEffectData;
+    }
+
+    /**
+     * Primarily exists for backwards compatibility
+     * @param type
+     */
+    public static createTraitStackingEffectData(type: MonsterTypeDefinition): TemplatedCombatEffectData {
+        return {
+            id: `${type.singularName}_Trait_Stacking_Effect`, // same as before rewrite
+            templateID: `${ModConstants.MOD_NAMESPACE_NAME}:${type.singularName}_Trait_Effect_Base`,
+            behaviours: [ // mimics behaviour of 'StaticModifiers' combat effect template
+                {
+                    type: 'ModifyStats',
+                    statGroupName: 'debuff', // as defined in 'createTraitEffectTemplateData'
+                    operations: 1,
+                    triggersOn: [
+                        {
+                            type: 'EffectApplied'
+                        } as EffectAppliedTriggerData
+                    ]
+                }
+            ]
+        } as TemplatedCombatEffectData;
+    }
+
+    public static createMonsterTypeDataPackage(modifiers: ModifierData[], combatEffectTemplates: CombatEffectTemplateData[], combatEffects: AnyCombatEffectData[]): GameDataPackage {
         return {
             "$schema": ModConstants.SCHEMA,
             "namespace": ModConstants.MOD_NAMESPACE_NAME,
             "data": {
-                "stackingEffects": [MonsterTypeHelper.createTraitStackingEffectDataObject(type)]
+                "modifiers": modifiers,
+                combatEffectTemplates: combatEffectTemplates,
+                combatEffects: combatEffects
             }
         }
     }
@@ -224,99 +310,118 @@ export class MonsterTypeHelper {
      * @param type
      * @returns
      */
-    private static createTraitStackingEffectDataObject(type: MonsterTypeDefinition): StackingEffectData {
-        let obj: StackingEffectData = {
-            id: `${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`,
-            stacksToAdd: 1,
-            maxStacks: 99,
-            name: `${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_NAME_SUFFIX}`,
-            langName: {
-                category: ModifierConstants.TRAIT_STACKING_EFFECT_LANGUAGE_CATEGORY,
-                id: `${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`
-            },
-            media: type.iconResourceUrl,
-            modifiers: {
+    //public static createTraitStackingEffectGamePackage(type: MonsterTypeDefinition): GameDataPackage {
+    //    return {
+    //        "$schema": ModConstants.SCHEMA,
+    //        "namespace": ModConstants.MOD_NAMESPACE_NAME,
+    //        "data": {
+    //            "stackingEffects": [MonsterTypeHelper.createTraitStackingEffectDataObject(type)]
+    //        }
+    //    }
+    //}
 
-            }
-        };
+    /**
+     *
+     * @param type
+     * @returns
+     */
+    //private static createTraitStackingEffectDataObject(type: MonsterTypeDefinition): StackingEffectData {
+    //    let obj: StackingEffectData = {
+    //        id: `${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`,
+    //        stacksToAdd: 1,
+    //        maxStacks: 99,
+    //        name: `${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_NAME_SUFFIX}`,
+    //        langName: {
+    //            category: ModifierConstants.TRAIT_STACKING_EFFECT_LANGUAGE_CATEGORY,
+    //            id: `${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`
+    //        },
+    //        media: type.iconResourceUrl,
+    //        modifiers: {
 
-        // @ts-ignore Ignore implicit any error
-        obj.modifiers[type.modifierPropertyNames.traitApplied] = 1;
+    //        }
+    //    };
 
-        return obj;
-    }
+    //    // @ts-ignore Ignore implicit any error
+    //    obj.modifiers[type.modifierPropertyNames.traitApplied] = 1;
+
+    //    return obj;
+    //}
 
     /**
      * Custom effects that aren't specifically defined to be an exception to the rule (see "saveWriter.writeEffect"),
      * must be identifiable through an Id, in order to be serializable to game character save file.
      *
      * This method takes care of creating a registerable package for said effect
+     *
+     * TODO: Is this still needed?
      * @param type
      * @returns
      */
-    public static createTraitCustomModifierEffectAttackGamePackage(type: MonsterTypeDefinition, customEffectData: CustomEffectData): GameDataPackage {
-        return {
-            "$schema": ModConstants.SCHEMA,
-            "namespace": ModConstants.MOD_NAMESPACE_NAME,
-            "data": {
-                "attacks": [MonsterTypeHelper.createTraitCustomEffectAttackDataObject(type, customEffectData)]
-            }
-        }
-    }
+    //public static createTraitCustomModifierEffectAttackGamePackage(type: MonsterTypeDefinition, customEffectData: CustomEffectData): GameDataPackage {
+    //    return {
+    //        "$schema": ModConstants.SCHEMA,
+    //        "namespace": ModConstants.MOD_NAMESPACE_NAME,
+    //        "data": {
+    //            "attacks": [MonsterTypeHelper.createTraitCustomEffectAttackDataObject(type, customEffectData)]
+    //        }
+    //    }
+    //}
+
+    /**
+     *
+     *
+     * TODO: Is this still needed?
+     * @param type
+     * @returns
+     */
+    //private static createTraitCustomEffectAttackDataObject(type: MonsterTypeDefinition, customEffectData: CustomEffectData): AttackData {
+    //    let attack: AttackData = {
+    //        id: `${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_ATTACK_ID_SUFFIX}`,
+    //        defaultChance: 0, // only used for manual triggering, so irrelevant
+    //        damage: [{
+    //            damageType: "Normal",
+    //            amplitude: 0
+    //        }], // we only define a preHitEffect, this shouldn't deal any damage
+    //        prehitEffects: [customEffectData],
+    //        onhitEffects: [],
+    //        cantMiss: false,
+    //        attackCount: 1,
+    //        attackInterval: -1,
+    //        lifesteal: 0,
+    //        name: "Trait application",
+    //        description: "Performs a non-damaging, pre-hit-effect-only attack that applies the given trait"
+    //    }
+
+    //    return attack;
+    //}
 
     /**
      *
      * @param type
      * @returns
      */
-    private static createTraitCustomEffectAttackDataObject(type: MonsterTypeDefinition, customEffectData: CustomEffectData): AttackData {
-        let attack: AttackData = {
-            id: `${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_ATTACK_ID_SUFFIX}`,
-            defaultChance: 0, // only used for manual triggering, so irrelevant
-            damage: [{
-                damageType: "Normal",
-                amplitude: 0
-            }], // we only define a preHitEffect, this shouldn't deal any damage
-            prehitEffects: [customEffectData],
-            onhitEffects: [],
-            cantMiss: false,
-            attackCount: 1,
-            attackInterval: -1,
-            lifesteal: 0,
-            name: "Trait application",
-            description: "Performs a non-damaging, pre-hit-effect-only attack that applies the given trait"
-        }
+    //public static createTraitCustomEffectDataInfiniteObject(type: MonsterTypeDefinition): CustomEffectData {
+    //    const obj: CustomEffectData = {
+    //        effectType: "Custom",
+    //        type: 'Modifier',
+    //        maxStacks: 1,
+    //        stacksToAdd: 1,
+    //        turns: Infinity,
+    //        character: "Target",
+    //        countsOn: "Target",
+    //        media: type.iconResourceUrl,
+    //        name: `${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_NAME_SUFFIX}`,
+    //        langName: `${ModifierConstants.TRAIT_CUSTOM_EFFECT_LANGUAGE_CATEGORY}_${type.singularName}_Trait_Modifier_Effect`,
+    //        modifiers: {
 
-        return attack;
-    }
+    //        }
+    //    };
 
-    /**
-     *
-     * @param type
-     * @returns
-     */
-    public static createTraitCustomEffectDataInfiniteObject(type: MonsterTypeDefinition): CustomEffectData {
-        const obj: CustomEffectData = {
-            effectType: "Custom",
-            type: 'Modifier',
-            maxStacks: 1,
-            stacksToAdd: 1,
-            turns: Infinity,
-            character: "Target",
-            countsOn: "Target",
-            media: type.iconResourceUrl,
-            name: `${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_NAME_SUFFIX}`,
-            langName: `${ModifierConstants.TRAIT_CUSTOM_EFFECT_LANGUAGE_CATEGORY}_${type.singularName}_Trait_Modifier_Effect`,
-            modifiers: {
+    //    // @ts-ignore Ignore implicit any error
+    //    obj.modifiers[type.modifierPropertyNames.traitApplied] = 1;
 
-            }
-        };
-
-        // @ts-ignore Ignore implicit any error
-        obj.modifiers[type.modifierPropertyNames.traitApplied] = 1;
-
-        return obj;
-    }
+    //    return obj;
+    //}
 
     /**
      * Whether the given entity should be treated as the given type,
