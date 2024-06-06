@@ -164,4 +164,21 @@ export class TranslationManager {
             ? translation
             : fallback;
     }
+
+    /**
+     * Gets the translation for the key, while returning the fallback, if an entry coudn't be found (instead of returning "UNDEFINED TRANSLATION")
+     * @param key the key of the localization entry to retrieve
+     * @param fallback the value to return, if a localization entry can't be found
+     * @param includeNamespace whether the mod's namespace should be prefixed before the key
+     * @returns
+     */
+    public static getTemplateTranslationOrFallback(key: string, templateData: StringDictionary<string>, fallback: string, includeNamespace: boolean = false): string {
+        const translation = includeNamespace
+            ? loadedLangJson[`${ModConstants.MOD_NAMESPACE_NAME}_${key}`]
+            : loadedLangJson[key];
+        //console.log(`translationManager | getTranslationOrFallback | key: ${key} | fallback: ${fallback} | key result: ${translation}`);
+        return translation !== undefined && translation !== ''
+            ? templateLangString(key, templateData)
+            : templateString(fallback, templateData);
+    }
 }

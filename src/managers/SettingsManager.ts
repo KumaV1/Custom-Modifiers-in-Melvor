@@ -35,11 +35,12 @@ export class SettingsManager {
                 hint: TranslationManager.getLangString("Settings_Setting_Hint_Enable_Boss_Indicators", true),
                 default: true,
                 onChange(value: boolean, previousValue: boolean): void {
-                    CombatAreasUIManager.rebuildCombatAreaMonsterTypeIndicators(
-                        value,
-                        SettingsManager.getEnableActiveMonsterTypeIndicators,
-                        SettingsManager.getEnableInactiveMonsterTypeIndicators
-                    );
+                    CombatAreasUIManager.rebuildCombatAreaMonsterTypeIndicators();
+                    //    (
+                    //    value,
+                    //    SettingsManager.getEnableActiveMonsterTypeIndicators,
+                    //    SettingsManager.getEnableInactiveMonsterTypeIndicators
+                    //);
                 }
             } as Modding.Settings.SwitchConfig,
             {
@@ -49,11 +50,12 @@ export class SettingsManager {
                 hint: TranslationManager.getLangString("Settings_Setting_Hint_Enable_Active_Monster_Type_Indicators", true),
                 default: true,
                 onChange(value: boolean, previousValue: boolean): void {
-                    CombatAreasUIManager.rebuildCombatAreaMonsterTypeIndicators(
-                        SettingsManager.getEnableBossIndicators,
-                        value,
-                        SettingsManager.getEnableInactiveMonsterTypeIndicators
-                    );
+                    CombatAreasUIManager.rebuildCombatAreaMonsterTypeIndicators();
+                    //(
+                    //    SettingsManager.getEnableBossIndicators,
+                    //    value,
+                    //    SettingsManager.getEnableInactiveMonsterTypeIndicators
+                    //);
                 }
             } as Modding.Settings.SwitchConfig,
             {
@@ -63,11 +65,12 @@ export class SettingsManager {
                 hint: TranslationManager.getLangString("Settings_Setting_Hint_Enable_Inactive_Monster_Type_Indicators", true),
                 default: true,
                 onChange(value: boolean, previousValue: boolean): void {
-                    CombatAreasUIManager.rebuildCombatAreaMonsterTypeIndicators(
-                        SettingsManager.getEnableBossIndicators,
-                        SettingsManager.getEnableActiveMonsterTypeIndicators,
-                        value
-                    );
+                    CombatAreasUIManager.rebuildCombatAreaMonsterTypeIndicators();
+                    //(
+                    //    SettingsManager.getEnableBossIndicators,
+                    //    SettingsManager.getEnableActiveMonsterTypeIndicators,
+                    //    value
+                    //);
                 }
             } as Modding.Settings.SwitchConfig,
         ]);

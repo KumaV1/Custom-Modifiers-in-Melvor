@@ -1,8 +1,79 @@
 import { ModConstants } from "../constants/ModConstants";
 import { MonsterTypeDefinition } from "../models/monsterTyping/MonsterTypeDefinition";
 import { TranslationManager } from "../managers/TranslationManager";
+import { SettingsManager } from "../managers/SettingsManager";
+import { MonsterTypeManager } from "../managers/MonsterTypeManager";
+import { MonsterTypeCombatAreasIndicatorDefinition } from "../models/monsterTyping/MonsterTypeCombatAreasIndicatorDefinition";
+import { CmimUtils } from "../Utils";
 
 export class CombatAreasUIHelper {
+
+    public static createBadgeContainer(): HTMLDivElement {
+        let el = document.createElement('div');
+        el.classList.add(ModConstants.COMBAT_AREAS_BADGE_CONTAINER_CLASS);
+
+        return el;
+    }
+
+    public static createIndicatorBadges(monster: Monster): HTMLElement[] {
+        let badges = [] as HTMLElement[];
+
+        // Build and add boss indicator
+        if (SettingsManager.getEnableBossIndicators) {
+            badges.push(CombatAreasUIHelper.createCombatAreaBossIndicatorBadge());
+        }
+
+        // Evaluate monster types
+        let indicatorDefinitions = CombatAreasUIHelper.getMonsterTypeIndicatorDefinitions();
+
+        // Create indicators for monster types
+        for (var i = 0; i < indicatorDefinitions.length; i++) {
+            const definition = indicatorDefinitions[i];
+            if (MonsterTypeManager.monsterIsOfType(monster, definition.type.singularName)) {
+                badges.push(CombatAreasUIHelper.createCombatAreaIndicatorBadge(definition.type, definition.active, 1, false));
+            }
+        }
+
+        return badges;
+    }
+
+    /**
+     * Creates a collection of indicator badges, with the number of matching entries added to the badge
+     * @param monsters
+     */
+    public static createIndicatorBadgesForList(monsters: Monster[]): HTMLElement[] {
+        let badges = [] as HTMLElement[];
+
+        if (SettingsManager.getEnableBossIndicators) {
+            let bossCount = 0;
+            monsters.forEach(function (value: Monster) {
+                if (value.isBoss) {
+                    bossCount++;
+                }
+            });
+            if (bossCount > 1) { // only called for certain area types, where it's expected that the final monster is a boss, so this info is only relevant if there are actually more inside
+                badges.push(CombatAreasUIHelper.createCombatAreaBossIndicatorBadge(bossCount));
+            }
+        }
+
+        let indicatorDefinitions = CombatAreasUIHelper.getMonsterTypeIndicatorDefinitions();
+        for (var i = 0; i < length; i++) {
+            const definition = indicatorDefinitions[i];
+            let count: number = 0;
+
+            monsters.forEach(function (value: Monster) {
+                if (MonsterTypeManager.monsterIsOfType(value, definition.type.singularName)) {
+                    count++;
+                }
+            });
+
+            if (count > 0) {
+                badges.push(CombatAreasUIHelper.createCombatAreaIndicatorBadge(definition.type, definition.active, count, true));
+            }
+        }
+
+        return badges;
+    }
 
     /**
      * Create a badge html element to communicate info regarding allocation of the given monster type
@@ -30,17 +101,30 @@ export class CombatAreasUIHelper {
     }
     /**
      * Creates a br with class(es), which are used before/after badges at times and should also be targetable through defined classes
+     * @param optionally provide an information about how many bosses the text should mention
      * @returns
      */
-    public static createCombatAreaBossIndicatorBadge(): HTMLElement {
+    public static createCombatAreaBossIndicatorBadge(count?: number): HTMLElement {
         let badgeEl = document.createElement('span');
         badgeEl.classList.add('badge', 'bage-pill', 'mr-1', 'badge-success', ModConstants.COMBAT_AREAS_INDICATOR_BADGE_CLASS);
 
-        badgeEl.innerHTML = TranslationManager.getTranslationOrFallback(
-            'Combat_Area_Boss_Indicator',
-            'Boss',
-            true
-        );
+        if (count !== undefined && count > 1) {
+            badgeEl.innerHTML = TranslationManager.getTemplateTranslationOrFallback(
+                'Combat_Area_Bosses_Indicator',
+                { count: formatNumber(count) },
+                `${count} Bosses`,
+                true
+            );
+            templateLangString
+        }
+
+        else {
+            badgeEl.innerHTML = TranslationManager.getTranslationOrFallback(
+                'Combat_Area_Boss_Indicator',
+                'Boss',
+                true
+            );
+        }
 
         return badgeEl;
     }
@@ -70,5 +154,31 @@ export class CombatAreasUIHelper {
         containerEl.innerHTML = `<div class="col-12"><div class="block block-rounded block-link-pop border-top border-warning border-4x bg-combat-dark p-3"><h5 class="mb-1">${headline}</h5><span class="font-w400">${text}</span><br><span class="font-w400 text-info">${hint}</span></div></div>`;
 
         return containerEl;
+    }
+
+    /**
+     * Creates a list of relevant monster type indicator definitions
+     * @returns
+     */
+    private static getMonsterTypeIndicatorDefinitions(): MonsterTypeCombatAreasIndicatorDefinition[]  {
+        let indicatorDefinitions: MonsterTypeCombatAreasIndicatorDefinition[] = [];
+
+        if (SettingsManager.getEnableActiveMonsterTypeIndicators) {
+            const activeTypes = MonsterTypeManager.getActiveTypesAsArray();
+            for (var i = 0; i < activeTypes.length; i++) {
+                indicatorDefinitions.push(new MonsterTypeCombatAreasIndicatorDefinition(activeTypes[i], true));
+            }
+        }
+
+        if (SettingsManager.getEnableInactiveMonsterTypeIndicators) {
+            const inactiveTypes = MonsterTypeManager.getInactiveTypesAsArray();
+            for (var i = 0; i < inactiveTypes.length; i++) {
+                indicatorDefinitions.push(new MonsterTypeCombatAreasIndicatorDefinition(inactiveTypes[i], false));
+            }
+        }
+
+        CmimUtils.orderAlphabetically(indicatorDefinitions, "translatedTypeSingularName"); // Order them alphabetically
+
+        return indicatorDefinitions;
     }
 }

@@ -9,6 +9,74 @@ export class CombatAreasUIManager {
     private static _modifierUIImpactIndicatorElement: HTMLElement;
 
     /**
+     * Patches multiple html element classes, to inject additional elements
+     * @param ctx
+     */
+    public static patch(ctx: Modding.ModContext): void {
+        // TODO: Add "update" methods to those elements, so as to not force two renderings because of settings
+
+
+        /**
+         * Patches row element creation for combat/slayer areas
+         */
+        //ctx.patch(MonsterSelectTableRowElement, 'setRow').after(function (returnValue: void, monster: Monster, area: AnyCombatArea) {
+        //    // Build children (anew)
+        //    let badges = CombatAreasUIHelper.createIndicatorBadges(monster);
+
+        //    // Add elements to container
+        //    let elements = this.attackType.parentElement?.getElementsByClassName(ModConstants.COMBAT_AREAS_BADGE_CONTAINER_CLASS);
+
+        //    if (elements !== undefined && elements.length > 0) {
+        //        let badgeContainerElement = elements[0];
+        //        badgeContainerElement.replaceChildren(); // no replacement provided, so just clears them
+
+        //        badges.forEach(function (value) {
+        //            badgeContainerElement.appendChild(value);
+        //        });
+        //    }
+        //    else {
+        //        let badgeContainerElement = CombatAreasUIHelper.createBadgeContainer();
+        //        this.attackType.parentElement!.insertBefore(badgeContainerElement, this.attackType);
+
+        //        badges.forEach(function (value) {
+        //            badgeContainerElement.appendChild(value);
+        //        });
+        //    }
+        //});
+
+        //// Method only called for dungeons; alternatively could have patched 'setArea' instead and make a type check instead
+        //ctx.patch(CombatAreaMenuElement, 'setArea').after(function (returnValue: void, area: AnyCombatArea) {
+        //    // This patch is only to deal with areas that don't let you directly fight a single specific monster
+        //    if (!(area instanceof Dungeon || area instanceof Stronghold)) {
+        //        return;
+        //    }
+
+        //    // Build children (anew)
+        //    let badges = CombatAreasUIHelper.createIndicatorBadgesForList(area.monsters);
+
+        //    // Add elements to container
+        //    let elements = this.monsterCount.parentElement?.getElementsByClassName(ModConstants.COMBAT_AREAS_BADGE_CONTAINER_CLASS);
+
+        //    if (elements !== undefined && elements.length > 0) {
+        //        let badgeContainerElement = elements[0];
+        //        badgeContainerElement.replaceChildren(); // no replacement provided, so just clears them
+
+        //        badges.forEach(function (value) {
+        //            badgeContainerElement.appendChild(value);
+        //        });
+        //    }
+        //    else {
+        //        let badgeContainerElement = CombatAreasUIHelper.createBadgeContainer();
+        //        this.monsterCount.parentElement!.insertBefore(badgeContainerElement, this.monsterCount);
+
+        //        badges.forEach(function (value) {
+        //            badgeContainerElement.appendChild(value);
+        //        });
+        //    }
+        //});
+    }
+
+    /**
      * Patches the display of a warning message,
      * to indicate if modifiers are active that may cause wrong information in the UI
      * @param ctx
@@ -40,11 +108,17 @@ export class CombatAreasUIManager {
      */
     public static initCombatAreasIndicators(ctx: Modding.ModContext): void {
         ctx.onInterfaceReady(function () {
-            CombatAreasUIManager.buildCombatAreasIndicators(
-                SettingsManager.getEnableBossIndicators,
-                SettingsManager.getEnableActiveMonsterTypeIndicators,
-                SettingsManager.getEnableInactiveMonsterTypeIndicators
-            );
+            combatAreaMenus.all.forEach((camValue: CombatAreaMenu, camKey: CombatAreaCategory) => {
+                // If first element is of type dungeon (any form, so AbyssDepth count too for example), then do process 1
+                // Otherwise it's a combat area like combat and slayer areas, so go with process 2 instead
+
+                CombatAreasUIManager.renderIndicatorBadges(camValue);
+            });
+            //CombatAreasUIManager.buildCombatAreasIndicators(
+            //    SettingsManager.getEnableBossIndicators,
+            //    SettingsManager.getEnableActiveMonsterTypeIndicators,
+            //    SettingsManager.getEnableInactiveMonsterTypeIndicators
+            //);
         });
     }
 
@@ -54,14 +128,21 @@ export class CombatAreasUIManager {
      * @param inactiveEnabled whether to display active badges (provided as parameter, in case this is called during settings change)
      * @returns
      */
-    public static rebuildCombatAreaMonsterTypeIndicators(bossEnabled: boolean, activeEnabled: boolean, inactiveEnabled: boolean): void {
-        // Delete all existing
-        const container = document.getElementById(ModConstants.COMBAT_CONTAINER_ELEMENT_ID);
-        CmimUtils.removeElementsByClass(ModConstants.COMBAT_AREAS_INDICATOR_BADGE_CLASS, container);
-        CmimUtils.removeElementsByClass(ModConstants.COMBAT_AREAS_INDICATOR_BADGE_BR_CLASS, container);
+    public static rebuildCombatAreaMonsterTypeIndicators(): void {
+        combatAreaMenus.all.forEach((camValue: CombatAreaMenu, camKey: CombatAreaCategory) => {
+            // If first element is of type dungeon (any form, so AbyssDepth count too for example), then do process 1
+            // Otherwise it's a combat area like combat and slayer areas, so go with process 2 instead
 
-        // Rebuild anew, repeating "init" just not in a lifecycle hook
-        CombatAreasUIManager.buildCombatAreasIndicators(bossEnabled, activeEnabled, inactiveEnabled);
+            CombatAreasUIManager.renderIndicatorBadges(camValue);
+        });
+
+        //// Delete all existing
+        //const container = document.getElementById(ModConstants.COMBAT_CONTAINER_ELEMENT_ID);
+        //CmimUtils.removeElementsByClass(ModConstants.COMBAT_AREAS_INDICATOR_BADGE_CLASS, container);
+        //CmimUtils.removeElementsByClass(ModConstants.COMBAT_AREAS_INDICATOR_BADGE_BR_CLASS, container);
+
+        //// Rebuild anew, repeating "init" just not in a lifecycle hook
+        //CombatAreasUIManager.buildCombatAreasIndicators(bossEnabled, activeEnabled, inactiveEnabled);
     }
 
     /**
@@ -71,158 +152,160 @@ export class CombatAreasUIManager {
      * @param inactiveEnabled whether to display active badges (provided as parameter, in case this is called during settings change)
      * @returns
      */
-    private static buildCombatAreasIndicators(bossEnabled: boolean, activeEnabled: boolean, inactiveEnabled: boolean): void {
-        // Get types to iterate
-        let indicatorDefinitions: MonsterTypeCombatAreasIndicatorDefinition[] = [];
-        if (activeEnabled) {
-            const activeTypes = MonsterTypeManager.getActiveTypesAsArray();
-            for (var i = 0; i < activeTypes.length; i++) {
-                indicatorDefinitions.push(new MonsterTypeCombatAreasIndicatorDefinition(activeTypes[i], true));
-            }
-        }
-        if (inactiveEnabled) {
-            const inactiveTypes = MonsterTypeManager.getInactiveTypesAsArray();
-            for (var i = 0; i < inactiveTypes.length; i++) {
-                indicatorDefinitions.push(new MonsterTypeCombatAreasIndicatorDefinition(inactiveTypes[i], false));
-            }
-        }
+    //private static buildCombatAreasIndicators(bossEnabled: boolean, activeEnabled: boolean, inactiveEnabled: boolean): void {
+    //    // Get types to iterate
+    //    let indicatorDefinitions: MonsterTypeCombatAreasIndicatorDefinition[] = [];
+    //    if (activeEnabled) {
+    //        const activeTypes = MonsterTypeManager.getActiveTypesAsArray();
+    //        for (var i = 0; i < activeTypes.length; i++) {
+    //            indicatorDefinitions.push(new MonsterTypeCombatAreasIndicatorDefinition(activeTypes[i], true));
+    //        }
+    //    }
+    //    if (inactiveEnabled) {
+    //        const inactiveTypes = MonsterTypeManager.getInactiveTypesAsArray();
+    //        for (var i = 0; i < inactiveTypes.length; i++) {
+    //            indicatorDefinitions.push(new MonsterTypeCombatAreasIndicatorDefinition(inactiveTypes[i], false));
+    //        }
+    //    }
 
-        if (!bossEnabled && indicatorDefinitions.length === 0) {
-            return;
-        }
+    //    if (!bossEnabled && indicatorDefinitions.length === 0) {
+    //        return;
+    //    }
 
-        // Order them alphabetically
-        CmimUtils.orderAlphabetically(indicatorDefinitions, "translatedTypeSingularName");
+    //    // Order them alphabetically
+    //    CmimUtils.orderAlphabetically(indicatorDefinitions, "translatedTypeSingularName");
 
-        try {
-            // Add badges to combat area monsters
-            const combatAreasContainer = document.getElementById('combat-select-area-Combat');
-            if (combatAreasContainer !== undefined && combatAreasContainer !== null) {
-                for (var i = 0; i < combatAreasContainer.children.length; i++) {
-                    const combatArea = game.combatAreaDisplayOrder[i];
-                    const monsterListElement: HTMLElement = combatAreasContainer
-                        .getElementsByTagName("monster-select-table")[i]
-                        .getElementsByTagName("tbody")[0];
+    //    try {
+    //        // Add badges to combat area monsters
+    //        const combatAreasContainer = document.getElementById('combat-select-area-Combat');
+    //        if (combatAreasContainer !== undefined && combatAreasContainer !== null) {
+    //            for (var i = 0; i < combatAreasContainer.children.length; i++) {
+    //                const combatArea = game.combatAreaDisplayOrder[i];
+    //                const monsterListElement: HTMLElement = combatAreasContainer
+    //                    .getElementsByTagName("monster-select-table")[i]
+    //                    .getElementsByTagName("tbody")[0];
 
-                    for (var j = 0; j < combatArea.monsters.length; j++) {
-                        const monster: Monster = combatArea.monsters[j];
+    //                for (var j = 0; j < combatArea.monsters.length; j++) {
+    //                    const monster: Monster = combatArea.monsters[j];
 
-                        // Generate list
-                        let ui: HTMLElement[] = [];
+    //                    // Generate list
+    //                    let ui: HTMLElement[] = [];
 
-                        if (bossEnabled && monster.isBoss) {
-                            ui.push(CombatAreasUIHelper.createCombatAreaBossIndicatorBadge());
-                        }
+    //                    if (bossEnabled && monster.isBoss) {
+    //                        ui.push(CombatAreasUIHelper.createCombatAreaBossIndicatorBadge());
+    //                    }
 
-                        for (var k = 0; k < indicatorDefinitions.length; k++) {
-                            const definition = indicatorDefinitions[k];
-                            if (MonsterTypeManager.monsterIsOfType(monster, definition.type.singularName)) {
-                                ui.push(CombatAreasUIHelper.createCombatAreaIndicatorBadge(definition.type, definition.active, 1, false));
-                            }
-                        }
+    //                    for (var k = 0; k < indicatorDefinitions.length; k++) {
+    //                        const definition = indicatorDefinitions[k];
+    //                        if (MonsterTypeManager.monsterIsOfType(monster, definition.type.singularName)) {
+    //                            ui.push(CombatAreasUIHelper.createCombatAreaIndicatorBadge(definition.type, definition.active, 1, false));
+    //                        }
+    //                    }
 
-                        // If we injected at least one badge, we also want to add a linebreak
-                        // Added here at the end, as injecting it at the start of an element's innerhtml doesn't work (at least not via insertBefore)
-                        if (ui.length > 0) {
-                            ui.push(CombatAreasUIHelper.createCombatAreaIndicatorBadgeBr());
-                        }
+    //                    // If we injected at least one badge, we also want to add a linebreak
+    //                    // Added here at the end, as injecting it at the start of an element's innerhtml doesn't work (at least not via insertBefore)
+    //                    if (ui.length > 0) {
+    //                        ui.push(CombatAreasUIHelper.createCombatAreaIndicatorBadgeBr());
+    //                    }
 
-                        // Inject badges into first td-element, placing it above the monster's name
-                        const monsterListEntryElement = monsterListElement.children[j];
-                        let monsterListEntryTdElement = monsterListEntryElement.getElementsByTagName("td")[0];
-                        for (var k = ui.length - 1; k >= 0; k--) {
-                            monsterListEntryTdElement.insertBefore(ui[k], monsterListEntryTdElement.children[0]);
-                        }
-                    }
-                }
-            }
+    //                    // Inject badges into first td-element, placing it above the monster's name
+    //                    const monsterListEntryElement = monsterListElement.children[j];
+    //                    let monsterListEntryTdElement = monsterListEntryElement.getElementsByTagName("td")[0];
+    //                    for (var k = ui.length - 1; k >= 0; k--) {
+    //                        monsterListEntryTdElement.insertBefore(ui[k], monsterListEntryTdElement.children[0]);
+    //                    }
+    //                }
+    //            }
+    //        }
 
-            // Add badges to slayer monsters
-            const slayerAreasContainer = document.getElementById('combat-select-area-Slayer');
-            if (slayerAreasContainer !== undefined && slayerAreasContainer !== null) {
-                for (var i = 0; i < slayerAreasContainer.children.length; i++) {
-                    const slayerArea = game.slayerAreaDisplayOrder[i];
-                    const monsterListElement: HTMLElement = slayerAreasContainer
-                        .getElementsByTagName("monster-select-table")[i]
-                        .getElementsByTagName("tbody")[0];
+    //        // Add badges to slayer monsters
+    //        const slayerAreasContainer = document.getElementById('combat-select-area-Slayer');
+    //        if (slayerAreasContainer !== undefined && slayerAreasContainer !== null) {
+    //            for (var i = 0; i < slayerAreasContainer.children.length; i++) {
+    //                const slayerArea = game.slayerAreaDisplayOrder[i];
+    //                const monsterListElement: HTMLElement = slayerAreasContainer
+    //                    .getElementsByTagName("monster-select-table")[i]
+    //                    .getElementsByTagName("tbody")[0];
 
-                    for (var j = 0; j < slayerArea.monsters.length; j++) {
-                        const monster: Monster = slayerArea.monsters[j];
+    //                for (var j = 0; j < slayerArea.monsters.length; j++) {
+    //                    const monster: Monster = slayerArea.monsters[j];
 
-                        // Generate list
-                        let ui: HTMLElement[] = [];
+    //                    // Generate list
+    //                    let ui: HTMLElement[] = [];
 
-                        if (bossEnabled && monster.isBoss) {
-                            ui.push(CombatAreasUIHelper.createCombatAreaBossIndicatorBadge());
-                        }
+    //                    if (bossEnabled && monster.isBoss) {
+    //                        ui.push(CombatAreasUIHelper.createCombatAreaBossIndicatorBadge());
+    //                    }
 
-                        for (var k = 0; k < indicatorDefinitions.length; k++) {
-                            const definition = indicatorDefinitions[k];
-                            if (MonsterTypeManager.monsterIsOfType(monster, definition.type.singularName)) {
-                                ui.push(CombatAreasUIHelper.createCombatAreaIndicatorBadge(definition.type, definition.active, 1, false));
-                            }
-                        }
+    //                    for (var k = 0; k < indicatorDefinitions.length; k++) {
+    //                        const definition = indicatorDefinitions[k];
+    //                        if (MonsterTypeManager.monsterIsOfType(monster, definition.type.singularName)) {
+    //                            ui.push(CombatAreasUIHelper.createCombatAreaIndicatorBadge(definition.type, definition.active, 1, false));
+    //                        }
+    //                    }
 
-                        // If we injected at least one badge, we also want to add a linebreak
-                        if (ui.length > 0) {
-                            ui.push(CombatAreasUIHelper.createCombatAreaIndicatorBadgeBr());
-                        }
+    //                    // If we injected at least one badge, we also want to add a linebreak
+    //                    if (ui.length > 0) {
+    //                        ui.push(CombatAreasUIHelper.createCombatAreaIndicatorBadgeBr());
+    //                    }
 
-                        // Inject badges into first td-element, placing it above the monster's name
-                        const monsterListEntryElement = monsterListElement.children[j];
-                        let monsterListEntryTdElement = monsterListEntryElement.getElementsByTagName("td")[0];
-                        for (var k = ui.length - 1; k >= 0; k--) {
-                            monsterListEntryTdElement.insertBefore(ui[k], monsterListEntryTdElement.children[0]);
-                        }
-                    }
-                }
-            }
+    //                    // Inject badges into first td-element, placing it above the monster's name
+    //                    const monsterListEntryElement = monsterListElement.children[j];
+    //                    let monsterListEntryTdElement = monsterListEntryElement.getElementsByTagName("td")[0];
+    //                    for (var k = ui.length - 1; k >= 0; k--) {
+    //                        monsterListEntryTdElement.insertBefore(ui[k], monsterListEntryTdElement.children[0]);
+    //                    }
+    //                }
+    //            }
+    //        }
 
-            // Add badges to dungeons
-            const dungeonsContainer = document.getElementById('combat-select-area-Dungeon');
-            if (dungeonsContainer !== undefined && dungeonsContainer !== null) {
-                for (var i = 0; i < dungeonsContainer.children.length; i++) {
-                    const dungeon = game.dungeonDisplayOrder[i];
-                    const dungeonMediaBodyElement = dungeonsContainer
-                        .getElementsByTagName("combat-area-menu")[i]
-                        .children[0]
-                        .children[3]
-                        .children[2];
+    //        // Add badges to dungeons
+    //        const dungeonsContainer = document.getElementById('combat-select-area-Dungeon');
+    //        if (dungeonsContainer !== undefined && dungeonsContainer !== null) {
+    //            for (var i = 0; i < dungeonsContainer.children.length; i++) {
+    //                const dungeon = game.dungeonDisplayOrder[i];
+    //                const dungeonMediaBodyElement = dungeonsContainer
+    //                    .getElementsByTagName("combat-area-menu")[i]
+    //                    .children[0]
+    //                    .children[3]
+    //                    .children[2];
 
-                    // Generate list
-                    let ui: HTMLElement[] = [];
-                    for (var j = 0; j < indicatorDefinitions.length; j++) {
-                        const definition = indicatorDefinitions[j];
-                        let count: number = 0;
+    //                // Generate list
+    //                let ui: HTMLElement[] = [];
+    //                for (var j = 0; j < indicatorDefinitions.length; j++) {
+    //                    const definition = indicatorDefinitions[j];
+    //                    let count: number = 0;
 
-                        dungeon.monsters.forEach(function (value: Monster) {
-                            if (MonsterTypeManager.monsterIsOfType(value, definition.type.singularName)) {
-                                count++;
-                            }
-                        });
+    //                    dungeon.monsters.forEach(function (value: Monster) {
+    //                        if (MonsterTypeManager.monsterIsOfType(value, definition.type.singularName)) {
+    //                            count++;
+    //                        }
+    //                    });
 
-                        if (count > 0) {
-                            ui.push(CombatAreasUIHelper.createCombatAreaIndicatorBadge(definition.type, definition.active, count, true));
-                        }
-                    }
+    //                    if (count > 0) {
+    //                        ui.push(CombatAreasUIHelper.createCombatAreaIndicatorBadge(definition.type, definition.active, count, true));
+    //                    }
+    //                }
 
-                    // Inject badges into first td-element, placing it above the monster's name
-                    if (ui.length > 0) {
-                        const dungeonMediaBodyInjectTargetElement = dungeonMediaBodyElement.children[1];
+    //                // Inject badges into first td-element, placing it above the monster's name
+    //                if (ui.length > 0) {
+    //                    const dungeonMediaBodyInjectTargetElement = dungeonMediaBodyElement.children[1];
 
-                        // Start of with a line break
-                        dungeonMediaBodyInjectTargetElement.appendChild(CombatAreasUIHelper.createCombatAreaIndicatorBadgeBr());
+    //                    // Start of with a line break
+    //                    dungeonMediaBodyInjectTargetElement.appendChild(CombatAreasUIHelper.createCombatAreaIndicatorBadgeBr());
 
-                        for (var k = 0; k < ui.length; k++) {
-                            dungeonMediaBodyInjectTargetElement.appendChild(ui[k]);
-                        }
-                    }
-                }
-            }
-        } catch (e) {
-            CmimUtils.warn(`Couldn't generate boss and/or monster type badges: Reason: ${e}`);
-        }
-    }
+    //                    for (var k = 0; k < ui.length; k++) {
+    //                        dungeonMediaBodyInjectTargetElement.appendChild(ui[k]);
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    } catch (e) {
+    //        CmimUtils.warn(`Couldn't generate boss and/or monster type badges: Reason: ${e}`);
+    //    }
+    //}
+
+
 
     /**
      * Re-evaluate whether the indicator container has to be displayed or not,
@@ -238,6 +321,72 @@ export class CombatAreasUIManager {
                 showElement(CombatAreasUIManager._modifierUIImpactIndicatorElement);
             } else {
                 hideElement(CombatAreasUIManager._modifierUIImpactIndicatorElement);
+            }
+        }
+    }
+
+    private static renderIndicatorBadges(cam: CombatAreaMenu): void {
+        if (cam.areas.length > 0) {
+            const firstArea = cam.areas[0];
+
+            // Areas that do not allow starting a fight with one specific monster
+            if (firstArea instanceof Dungeon || firstArea instanceof Stronghold) {
+                cam.menuElems.forEach((menuElement: CombatAreaMenuElement, area: AnyCombatArea) => {
+                    // Build children (anew)
+                    let badges = CombatAreasUIHelper.createIndicatorBadgesForList(area.monsters);
+
+                    // Add elements to container
+                    let elements = menuElement.monsterCount.parentElement?.getElementsByClassName(ModConstants.COMBAT_AREAS_BADGE_CONTAINER_CLASS);
+
+                    if (elements !== undefined && elements.length > 0) {
+                        let badgeContainerElement = elements[0];
+                        badgeContainerElement.replaceChildren(); // no replacement provided, so just clears them
+
+                        badges.forEach(function (value) {
+                            badgeContainerElement.appendChild(value);
+                        });
+                    }
+                    else {
+                        let badgeContainerElement = CombatAreasUIHelper.createBadgeContainer();
+                        menuElement.monsterCount.parentElement!.insertBefore(badgeContainerElement, menuElement.monsterCount);
+
+                        badges.forEach(function (value) {
+                            badgeContainerElement.appendChild(value);
+                        });
+                    }
+                });
+            }
+
+            // Areas that do allow starting a fight with one specific monster
+            else {
+                cam.menuElems.forEach((menuElement: CombatAreaMenuElement, area: AnyCombatArea) => {
+                    // TODO: For each row
+                    const rowElement = {} as MonsterSelectTableRowElement;
+                    const rowMonster = {} as Monster;
+
+                    // Build children (anew)
+                    let badges = CombatAreasUIHelper.createIndicatorBadges(rowMonster);
+
+                    // Add elements to container
+                    let elements = rowElement.attackType.parentElement?.getElementsByClassName(ModConstants.COMBAT_AREAS_BADGE_CONTAINER_CLASS);
+
+                    if (elements !== undefined && elements.length > 0) {
+                        let badgeContainerElement = elements[0];
+                        badgeContainerElement.replaceChildren(); // no replacement provided, so just clears them
+
+                        badges.forEach(function (value) {
+                            badgeContainerElement.appendChild(value);
+                        });
+                    }
+                    else {
+                        let badgeContainerElement = CombatAreasUIHelper.createBadgeContainer();
+                        rowElement.attackType.parentElement!.insertBefore(badgeContainerElement, rowElement.attackType);
+
+                        badges.forEach(function (value) {
+                            badgeContainerElement.appendChild(value);
+                        });
+                    }
+                });
             }
         }
     }
