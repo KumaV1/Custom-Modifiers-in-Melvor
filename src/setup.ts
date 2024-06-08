@@ -25,10 +25,14 @@ import '../assets/Invoke_Death.png'
 import '../assets/Generic_Monster_Type_Icon.png'
 
 import './ui/settings.css'
+import { CmimUtils } from './Utils';
 // #endregion
 
 export async function setup(ctx: Modding.ModContext) {
     // logLifecycleHookStarts(ctx);
+
+    // Register our GameData
+    await ctx.gameData.addPackage(ModData);
 
     initGameObjectDataWrapper();
     initApiEndpoints(ctx);
@@ -40,8 +44,6 @@ export async function setup(ctx: Modding.ModContext) {
     initCombatUIIndicators(ctx);
     initOverviewContainer(ctx);
 
-    // Register our GameData
-    await ctx.gameData.addPackage(ModData);
     // @ts-ignore
     //await ctx.gameData.addPackage(ModTestData);
 
@@ -51,19 +53,19 @@ export async function setup(ctx: Modding.ModContext) {
 
 function logLifecycleHookStarts(ctx: Modding.ModContext) {
     ctx.onModsLoaded(function () {
-        console.log("===== onModsLoaded =====");
+        CmimUtils.log("===== onModsLoaded =====");
     });
     ctx.onCharacterSelectionLoaded(function () {
-        console.log("===== onCharacterSelectionLoaded =====");
+        CmimUtils.log("===== onCharacterSelectionLoaded =====");
     });
     ctx.onInterfaceAvailable(function () {
-        console.log("===== onInterfaceAvailable =====");
+        CmimUtils.log("===== onInterfaceAvailable =====");
     });
     ctx.onCharacterLoaded(function () {
-        console.log("===== onCharacterLoaded =====");
+        CmimUtils.log("===== onCharacterLoaded =====");
     });
     ctx.onInterfaceReady(function () {
-        console.log("===== onInterfaceReady =====");
+        CmimUtils.log("===== onInterfaceReady =====");
     });
 }
 
@@ -183,6 +185,7 @@ function initModCompatibility(ctx: Modding.ModContext) {
  * @param ctx
  */
 function initCombatUIIndicators(ctx: Modding.ModContext) {
+    CombatAreasUIManager.patch(ctx);
     CombatAreasUIManager.initModifierUIImpactIndicator(ctx);
     CombatAreasUIManager.initCombatAreasIndicators(ctx);
 }

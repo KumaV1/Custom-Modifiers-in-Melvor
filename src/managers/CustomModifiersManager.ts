@@ -28,7 +28,7 @@ export class CustomModifiersManager {
         this.registerSkillModifiers();
         //this.registerSpawnModifiers();
         //this.registerOnHitModifiers();
-        this.registerDeathMarkModifiers();
+        //this.registerDeathMarkModifiers();
         this.registerCombatAreaModifiers();
         this.registerSlayerAreaModifiers();
         this.registerDungeonModifiers();
@@ -88,7 +88,11 @@ export class CustomModifiersManager {
 
             // Create combat effect template and static and stacking variants
             combatEffectTemplates.push(MonsterTypeHelper.createTraitEffectTemplateData(type));
+            combatEffectTemplates.push(MonsterTypeHelper.createTraitStaticEffectTemplateData(type));
+            combatEffectTemplates.push(MonsterTypeHelper.createTraitStaticNonCountingEffectTemplateData(type));
+            combatEffectTemplates.push(MonsterTypeHelper.createTraitStackingEffectTemplateData(type));
             combatEffects.push(MonsterTypeHelper.createTraitStaticEffectData(type));
+            combatEffects.push(MonsterTypeHelper.createTraitStaticNonCountingEffectData(type));
             combatEffects.push(MonsterTypeHelper.createTraitStackingEffectData(type));
 
             // Create and register custom effect and stacking effect data
@@ -116,7 +120,10 @@ export class CustomModifiersManager {
         }
 
         const dataPackage = MonsterTypeHelper.createMonsterTypeDataPackage(modifiers, combatEffectTemplates, combatEffects);
-        game.registerDataPackage(dataPackage);
+        CmimUtils.log("=== CustomModifiersManager.registerMonsterTypes ===");
+        CmimUtils.logObj(types);
+        CmimUtils.logObj(dataPackage);
+        CmimUtils.registerDataPackage(dataPackage);
     }
 
     /**
@@ -138,7 +145,11 @@ export class CustomModifiersManager {
             modifiers.push(obj);
         });
 
-        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
+        const dataPackage = CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers);
+        CmimUtils.log("=== CustomModifiersManager.registerMonsterTypes ===");
+        CmimUtils.logObj(type);
+        CmimUtils.logObj(dataPackage);
+        CmimUtils.registerDataPackage(dataPackage);
     }
 
     // #region Modifier Registration
@@ -214,7 +225,10 @@ export class CustomModifiersManager {
             'decreasedThievingDamagePreventionThreshold'
         ));
 
-        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
+        const dataPackage = CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers);
+        CmimUtils.log("=== CustomModifiersManager.registerSkillModifiers ===");
+        CmimUtils.logObj(dataPackage);
+        CmimUtils.registerDataPackage(dataPackage);
     }
 
     /**
@@ -298,25 +312,35 @@ export class CustomModifiersManager {
     /**
      *
      */
-    private registerDeathMarkModifiers() {
-        let modifiers = [] as ModifierData[];
+    //private registerDeathMarkModifiers() {
+    //    let modifiers = [] as ModifierData[];
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('deathMark'));
+    //    modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('deathMark')); // TODO: Rename to "deathMarked"? Alternatively, add separate one. Basically, aside from a "Stacking" effect, there could be a static one, and I'm not sure if the latter also works with "stacks". Will have to check how to best implement the check for the effect then, as I can't just go by Id. Maybe not go with "Stacking" at all, will depend on what combat effect behaviours there are, regarding counting up stacks - and according to that this modifier as well
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDeathMarkOnHit'));
+    //    //modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDeathMarkOnHit'));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToApplyStackOfDeathMark'));
+    //    //modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedChanceToApplyStackOfDeathMark'));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplyStackOfDeathMark', true));
+    //    //modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedChanceToApplyStackOfDeathMark', true));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDeathMarkImmunity')); // melvorD:effectIgnoreChance
+    //    modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
+    //        'deathMarkImmunity',
+    //        false,
+    //        'increasedDeathMarkImmunity',
+    //        'decreasedDeathMarkImmunity'
+    //    ));
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDeathMarkImmunity', true)); // melvorD:effectIgnoreChance
+    //    //modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('increasedDeathMarkImmunity')); // melvorD:effectIgnoreChance
 
-        modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('applyDeathMarkOnSpawn'));
+    //    //modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('decreasedDeathMarkImmunity', true)); // melvorD:effectIgnoreChance
 
-        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
-    }
+    //    //modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData('applyDeathMarkOnSpawn'));
+
+    //    const dataPackage = CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers);
+    //    CmimUtils.log("=== CustomModifiersManager.registerDeathMarkModifiers ===");
+    //    CmimUtils.logObj(dataPackage);
+    //    CmimUtils.registerDataPackage(dataPackage);
+    //}
 
     private registerCombatAreaModifiers() {
         let modifiers = [] as ModifierData[];
@@ -363,7 +387,10 @@ export class CustomModifiersManager {
             'decreasedDamageReductionAgainstCombatAreaMonsters'
         ));
 
-        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
+        const dataPackage = CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers);
+        CmimUtils.log("=== CustomModifiersManager.registerCombatAreaModifiers ===");
+        CmimUtils.logObj(dataPackage);
+        CmimUtils.registerDataPackage(dataPackage);
     }
 
     private registerSlayerAreaModifiers() {
@@ -411,7 +438,10 @@ export class CustomModifiersManager {
             'decreasedDamageReductionAgainstSlayerAreaMonsters'
         ));
 
-        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
+        const dataPackage = CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers);
+        CmimUtils.log("=== CustomModifiersManager.registerSlayerAreaModifiers ===");
+        CmimUtils.logObj(dataPackage);
+        CmimUtils.registerDataPackage(dataPackage);
     }
 
     private registerDungeonModifiers() {
@@ -459,7 +489,10 @@ export class CustomModifiersManager {
             'decreasedDamageReductionAgainstDungeonMonsters'
         ));
 
-        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
+        const dataPackage = CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers);
+        CmimUtils.log("=== CustomModifiersManager.registerDungeonModifiers ===");
+        CmimUtils.logObj(dataPackage);
+        CmimUtils.registerDataPackage(dataPackage);
     }
 
     private registerSlayerTaskModifiers() {
@@ -501,7 +534,10 @@ export class CustomModifiersManager {
             'decreasedGlobalAccuracyAgainstSlayerTasks'
         ));
 
-        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
+        const dataPackage = CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers);
+        CmimUtils.log("=== CustomModifiersManager.registerSlayerTaskModifiers (data) ===");
+        CmimUtils.logObj(dataPackage);
+        CmimUtils.registerDataPackage(dataPackage);
 
         // Add modifications to pre-existing modifiers
         let modifierModifications = [] as ModifierModificationData[];
@@ -510,10 +546,14 @@ export class CustomModifiersManager {
             ModifierIDs.flatResistanceAgainstSlayerTasks,
             undefined,
             undefined,
+            undefined,
             ['decreasedDamageReductionAgainstSlayerTasks']
         ));
 
-        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierModificationDataPackage(modifierModifications));
+        const modificationDataPackage = CustomModifiersRegistrationHelper.createModifierModificationDataPackage(modifierModifications);
+        CmimUtils.log("=== CustomModifiersManager.registerSlayerTaskModifiers (data modification) ===");
+        CmimUtils.logObj(modificationDataPackage);
+        CmimUtils.registerDataPackage(modificationDataPackage);
     }
 
     /**
@@ -557,22 +597,25 @@ export class CustomModifiersManager {
             'decreasedGlobalAccuracyAgainstBosses'
         ));
 
-        game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers));
+        const dataPackage = CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers);
+        CmimUtils.log("=== CustomModifiersManager.registerBossModifiers ===");
+        CmimUtils.logObj(dataPackage);
+        CmimUtils.registerDataPackage(dataPackage);
     }
 
     /**
-     * Not needed anymore, just use `magicMaxHit` ('damageTaken' unfortunately doesn't take the subcategory scope into account) and set it as 'enemyModifier' on a monster's passive
+     * Not needed anymore, as even aliases are irrelevant, considering the v1.3 would brick a mod anyway, so they may as well fix the modifier they use
      */
     //private registerSpellModifiers() {
     //    let modifierModifications = [] as ModifierModificationData[];
 
     //    modifierModifications.push(CustomModifiersRegistrationHelper.createModifierModificationData(
-    //        ModifierIDs.damageTaken,
+    //        ModifierIDs.magicMaxHit,
     //        { subcategory: true },
     //        [
     //            {
     //                text: '${value}% Damage taken when attacked by ${subcategoryName} Spells',
-    //                lang: 'MODIFIER_DATA_damageTakenSubcategory'
+    //                lang: 'MODIFIER_DATA_increasedDamageTakenFromSubcategory'
     //            }
     //        ],
     //        [
@@ -613,7 +656,10 @@ export class CustomModifiersManager {
     //        ]
     //    ));
 
-    //    game.registerDataPackage(CustomModifiersRegistrationHelper.createModifierModificationDataPackage(modifierModifications));
+    //    const modificationDataPackage = CustomModifiersRegistrationHelper.createModifierModificationDataPackage(modifierModifications);
+    //    CmimUtils.log("=== CustomModifiersManager.registerSpellModifiers ===");
+    //    CmimUtils.logObj(modificationDataPackage);
+    //    game.registerDataPackage(modificationDataPackage);
     //}
 
     /** Modifiers that don't fit any of the previous groups */
@@ -669,7 +715,10 @@ export class CustomModifiersManager {
             'decreasedBarrierDamagePreventionThreshold'
         ));
 
-        game.registerModifiers(ModConstants.MOD_NAMESPACE_DATA, modifiers);
+        const dataPackage = CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers);
+        CmimUtils.log("=== CustomModifiersManager.registerGeneralModifiers ===");
+        CmimUtils.logObj(dataPackage);
+        CmimUtils.registerDataPackage(dataPackage);
     }
 
     // #endregion

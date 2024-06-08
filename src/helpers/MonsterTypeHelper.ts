@@ -31,17 +31,17 @@ export class MonsterTypeHelper {
         return {
             traitApplied: `${typeSingularNameLower}TraitApplied`,
             damage: `damageAgainst${typePluralName}`,
-            damageTaken: `damageTakenFrom${typePluralName}`,
-            maxHitPercent: `increasedMaxHitPercentAgainst${typePluralName}`,
-            maxHitFlat: `increasedMaxHitFlatAgainst${typePluralName}`,
-            minHitBasedOnMaxHit: `increasedMinHitBasedOnMaxHitAgainst${typePluralName}`,
-            flatMinHit: `increasedFlatMinHitAgainst${typePluralName}`,
-            accuracyRating: `increasedGlobalAccuracyAgainst${typePluralName}`,
-            flatResistance: `increasedDamageReductionAgainst${typePluralName}`,
-            chanceToApplyTraitInfiniteOnSpawn: `increasedChanceToApply${typeSingularName}TraitInfiniteOnSpawn`,
-            applyTraitTurnsOnSpawn: `apply${typeSingularName}TraitTurnsOnSpawn`,
-            chanceToApplyTrait: `increasedChanceToApply${typeSingularName}Trait`,
-            applyTraitTurns: `apply${typeSingularName}TraitTurns`
+            damageTaken: `damageTakenFrom${typePluralName}`, // TODO: Can arguably be removed by using "damage" as "enemyModifier" where applicable
+            maxHitPercent: `maxHitPercentAgainst${typePluralName}`,
+            maxHitFlat: `maxHitFlatAgainst${typePluralName}`,
+            minHitBasedOnMaxHit: `minHitBasedOnMaxHitAgainst${typePluralName}`,
+            flatMinHit: `flatMinHitAgainst${typePluralName}`,
+            accuracyRating: `accuracyRatingAgainst${typePluralName}`,
+            flatResistance: `flatResistanceAgainst${typePluralName}`
+            //chanceToApplyTraitInfiniteOnSpawn: `increasedChanceToApply${typeSingularName}TraitInfiniteOnSpawn`,
+            //applyTraitTurnsOnSpawn: `apply${typeSingularName}TraitTurnsOnSpawn`,
+            //chanceToApplyTrait: `chanceToApply${typeSingularName}Trait`,
+            //applyTraitTurns: `apply${typeSingularName}TraitTurns`
         }
 
         //return {
@@ -196,7 +196,7 @@ export class MonsterTypeHelper {
             case MonsterTypeModifierType.MaxHitFlat:
             case MonsterTypeModifierType.FlatMinHit:
                 // @ts-ignore Ignore implicit any error
-                modifierObject["modifyValue"] = multiplyByNumberMultiplier;
+                modifierObject["modifyValue"] = 'value*hpMultiplier';
                 break;
             default:
         }
@@ -215,36 +215,107 @@ export class MonsterTypeHelper {
     public static createTraitEffectTemplateData(type: MonsterTypeDefinition): CombatEffectTemplateData {
         // Compiler sugar, already defining a proper object to set the trait modifier
         let effectModifiers = {} as ModifierValuesRecordData;
-        effectModifiers[`${type.modifierPropertyNames.traitApplied}`] = 1;
+        effectModifiers[`${ModConstants.MOD_NAMESPACE_NAME}:${type.modifierPropertyNames.traitApplied}`] = 1;
 
         return {
             id: `${type.singularName}_Trait_Effect_Base`,
-            description: 'A base template to apply most of the data consistent for any such effect. Main definition still left will be the behaviour',
+            description: 'A base template to apply some consistent data for any such effect',
             baseTemplates: [] as string[], // 'melvorD:StackingModifiers' maybe? Will have to see what templates there are, but I generally any value > 0 should be treated the same, so a static value is fine, but things like whether the effect can be renewed may have to be defined, though will ultimately be overridable by other mods, as far as I understand
             baseEffectData: {
                 name: `${type.singularName} Trait`,
                 nameLang: `MONSTER_TYPE_TRAIT_EFFECT_NAME_${type.singularName}`,
                 media: type.iconResourceUrl,
-                turnText: 'statGroup.stacks', // or maybe something else, presumably depends on the type of effect (stacking, static, etc.)
-                tooltipSpans: [
-                    {
-                        type: 'LangString',
-                        langID: `MONSTER_TYPE_TRAIT_EFFECT_DESCRIPTION_${type.singularName}`
-                    } as CombatEffectLangTTSpanData
-                ],
+                //turnText: 'Test Turn Text', // or maybe something else, presumably depends on the type of effect (stacking, static, etc.)
+                //tooltipSpans: [
+                //    {
+                //        type: 'LangString',
+                //        langID: `MONSTER_TYPE_TRAIT_EFFECT_DESCRIPTION_${type.singularName}`
+                //    } as CombatEffectLangTTSpanData
+                //],
                 target: 'Target',
                 statGroups: [
                     {
-                        name: 'debuff',
+                        name: 'stacks',
                         modifiers: effectModifiers
                     } as CombatEffectStatGroupData
                 ],
                 effectGroups: [
-                    `${ModConstants.MOD_NAMESPACE_NAME}:Trait_Application_Effect`
+                    `${ModConstants.MOD_NAMESPACE_NAME}:MonsterTypeTraitApplication`
                 ]
                 // May need to add stat groups and/or behaviours, unless a base template takes care of it, I guess
             } as BaseCombatEffectData // base templates -> this object -> a mod's effect using this template and further overriding properties, so shouldn't be to problematic here, as it's ultimately just a template, not meant to be used as is (at least not without modifications)
         } as CombatEffectTemplateData;
+    }
+
+    public static createTraitStaticEffectTemplateData(type: MonsterTypeDefinition): CombatEffectTemplateData {
+        return {
+            id: `${type.singularName}_Trait_Static_Effect_Base`,
+            baseTemplates: [
+                CombatEffectTemplateIDs.StaticSelfCountingModifier,
+                `${ModConstants.MOD_NAMESPACE_NAME}:${type.singularName}_Trait_Effect_Base`
+            ] as string[], // 'melvorD:StackingModifiers' maybe? Will have to see what templates there are, but I generally any value > 0 should be treated the same, so a static value is fine, but things like whether the effect can be renewed may have to be defined, though will ultimately be overridable by other mods, as far as I understand
+            baseEffectData: {
+                parameters: [
+                    {
+                        name: 'turns',
+                        initialValue: 1 // custom effects/implementations can override this, if they want the effect to stay longer
+                    }
+                ] as CombatEffectParameter[],
+            }
+        }
+    }
+
+    public static createTraitStaticNonCountingEffectTemplateData(type: MonsterTypeDefinition): CombatEffectTemplateData {
+        return {
+            id: `${type.singularName}_Trait_Static_Non_Counting_Effect_Base`,
+            baseTemplates: [
+                CombatEffectTemplateIDs.StaticNonCountingModifier,
+                `${ModConstants.MOD_NAMESPACE_NAME}:${type.singularName}_Trait_Effect_Base`
+            ] as string[], // 'melvorD:StackingModifiers' maybe? Will have to see what templates there are, but I generally any value > 0 should be treated the same, so a static value is fine, but things like whether the effect can be renewed may have to be defined, though will ultimately be overridable by other mods, as far as I understand
+            baseEffectData: {
+
+            }
+        }
+    }
+
+    public static createTraitStackingEffectTemplateData(type: MonsterTypeDefinition): CombatEffectTemplateData {
+        return {
+            id: `${type.singularName}_Trait_Stacking_Effect_Base`,
+            baseTemplates: [
+                CombatEffectTemplateIDs.StackingSelfCountingModifier,
+                `${ModConstants.MOD_NAMESPACE_NAME}:${type.singularName}_Trait_Effect_Base`
+            ] as string[], // 'melvorD:StackingModifiers' maybe? Will have to see what templates there are, but I generally any value > 0 should be treated the same, so a static value is fine, but things like whether the effect can be renewed may have to be defined, though will ultimately be overridable by other mods, as far as I understand
+            baseEffectData: {
+                parameters: [
+                    {
+                        name: 'turns',
+                        initialValue: 1 // custom effects/implementations can override this, if they want the effect to stay longer
+                    },
+                    {
+                        name: 'initialStacks',
+                        initialValue: 1
+                    },
+                    {
+                        name: 'stacksToAdd',
+                        initialValue: 1
+                    },
+                    {
+                        name: 'maxStacks',
+                        initialValue: Infinity
+                    }
+                ] as CombatEffectParameter[],
+                //parameters: [
+                //    {
+                //        name: 'initialStacks',
+                //        initialValue: 1 // custom effects/implementations can override this, if they want the effect to stay longer
+                //    },
+                //    {
+                //        name: 'maxStacks',
+                //        initialValue: 1 // custom effects/implementations can override this, if they want the effect to stay longer
+                //    }
+                //]
+            }
+        }
     }
 
     /**
@@ -254,19 +325,32 @@ export class MonsterTypeHelper {
     public static createTraitStaticEffectData(type: MonsterTypeDefinition): TemplatedCombatEffectData {
         return {
             id: `${type.singularName}_Trait_Static_Effect`, // follows naming of stacking, but generally didn't have ids before
-            templateID: `${ModConstants.MOD_NAMESPACE_NAME}:${type.singularName}_Trait_Effect_Base`,
-            behaviours: [ // mimics behaviour of 'StaticModifiers' combat effect template
-                {
-                    type: 'ModifyStats',
-                    statGroupName: 'debuff', // as defined in 'createTraitEffectTemplateData'
-                    operations: 1,
-                    triggersOn: [
-                        {
-                            type: 'EffectApplied'
-                        } as EffectAppliedTriggerData
-                    ]
-                }
-            ]
+            templateID: `${ModConstants.MOD_NAMESPACE_NAME}:${type.singularName}_Trait_Static_Effect_Base`,
+            //turnText: 'statGroup.debuff',
+            //descriptionTemplateData: {
+            //    statGroups: {
+            //        '': 'stacks'
+            //    }
+            //} as CombatEffectDescriptionTemplateDataData,
+            //behaviours: [ // mimics behaviour of 'StaticModifiers' combat effect template
+            //    {
+            //        type: 'ModifyStats',
+            //        statGroupName: 'stacks', // as defined in 'createTraitEffectTemplateData'
+            //        operations: 1,
+            //        triggersOn: [
+            //            {
+            //                type: 'EffectApplied'
+            //            } as EffectAppliedTriggerData
+            //        ]
+            //    }
+            //]
+        } as TemplatedCombatEffectData;
+    }
+
+    public static createTraitStaticNonCountingEffectData(type: MonsterTypeDefinition): TemplatedCombatEffectData {
+        return {
+            id: `${type.singularName}_Trait_Static_Non_Counting_Effect`, // follows naming of stacking, but generally didn't have ids before
+            templateID: `${ModConstants.MOD_NAMESPACE_NAME}:${type.singularName}_Trait_Static_Non_Counting_Effect_Base`,
         } as TemplatedCombatEffectData;
     }
 
@@ -277,28 +361,36 @@ export class MonsterTypeHelper {
     public static createTraitStackingEffectData(type: MonsterTypeDefinition): TemplatedCombatEffectData {
         return {
             id: `${type.singularName}_Trait_Stacking_Effect`, // same as before rewrite
-            templateID: `${ModConstants.MOD_NAMESPACE_NAME}:${type.singularName}_Trait_Effect_Base`,
-            behaviours: [ // mimics behaviour of 'StaticModifiers' combat effect template
-                {
-                    type: 'ModifyStats',
-                    statGroupName: 'debuff', // as defined in 'createTraitEffectTemplateData'
-                    operations: 1,
-                    triggersOn: [
-                        {
-                            type: 'EffectApplied'
-                        } as EffectAppliedTriggerData
-                    ]
-                }
-            ]
+            templateID: `${ModConstants.MOD_NAMESPACE_NAME}:${type.singularName}_Trait_Stacking_Effect_Base`,
+            //turnText: 'statGroup.debuff',
+            //behaviours: [ // mimics behaviour of 'StaticModifiers' combat effect template
+            //    {
+            //        type: 'ModifyStats',
+            //        statGroupName: 'debuff', // as defined in 'createTraitEffectTemplateData'
+            //        operations: 1,
+            //        triggersOn: [
+            //            {
+            //                type: 'EffectApplied'
+            //            } as EffectAppliedTriggerData
+            //        ]
+            //    }
+            //]
         } as TemplatedCombatEffectData;
     }
 
+    /**
+     *
+     * @param modifiers
+     * @param combatEffectTemplates
+     * @param combatEffects
+     * @returns
+     */
     public static createMonsterTypeDataPackage(modifiers: ModifierData[], combatEffectTemplates: CombatEffectTemplateData[], combatEffects: AnyCombatEffectData[]): GameDataPackage {
         return {
             "$schema": ModConstants.SCHEMA,
-            "namespace": ModConstants.MOD_NAMESPACE_NAME,
-            "data": {
-                "modifiers": modifiers,
+            namespace: ModConstants.MOD_NAMESPACE_NAME,
+            data: {
+                modifiers: modifiers,
                 combatEffectTemplates: combatEffectTemplates,
                 combatEffects: combatEffects
             }

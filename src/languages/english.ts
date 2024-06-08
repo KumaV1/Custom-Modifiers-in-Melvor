@@ -1,4 +1,19 @@
 ﻿export const en = {
+    // ### POST-ItA only
+
+    EFFECT_GROUP_MonsterTypeTraitApplication: 'Monster type trait affected (EN)',
+
+    MODIFIER_DATA_damageAgainstMonsterType: "${value}% Damage To ${monsterType}",
+    MODIFIER_DATA_damageTakenFromMonsterType: "${value}% Damage taken from ${monsterType}",
+    MODIFIER_DATA_maxHitPercentAgainstMonsterType: "${value}% Max Hit when fighting ${monsterType}",
+    MODIFIER_DATA_maxHitFlatAgainstMonsterType: "${value} Max Hit when fighting ${monsterType}",
+    MODIFIER_DATA_minHitBasedOnMaxHitAgainstMonsterType: "${value}% Minimum Hit when fighting ${monsterType}",
+    MODIFIER_DATA_flatMinHitAgainstMonsterType: "${value} Minimum Hit when fighting ${monsterType}",
+    MODIFIER_DATA_accuracyRatingAgainstMonsterType: '${value}% Accuracy Rating when fighting ${monsterType}',
+    MODIFIER_DATA_flatResistanceAgainstMonsterType: '${value}% Flat Resistance when fighting ${monsterType}',
+
+    // ### PRE-IA
+
     Combat_Modifier_UI_Impact_Indicator_Headline: 'Cmim-Mod warning',
     Combat_Modifier_UI_Impact_Indicator_Text: "At least one combatant is currently benefitting from a modifier that provides a chance to reduce the damage taken to 0. Due to how/where that modifier had to be implemented, it's possible that damage displays (e.g. max hit) may wrongly render as 0, even for enemies that are too strong for that to be realistically possible.",
     Combat_Modifier_UI_Impact_Indicator_Hint: 'This warning can be toggled off in the mod settings',

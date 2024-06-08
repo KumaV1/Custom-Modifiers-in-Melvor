@@ -4,76 +4,78 @@ import { ModConstants } from "../constants/ModConstants";
 import { MonsterTypeCombatAreasIndicatorDefinition } from "../models/monsterTyping/MonsterTypeCombatAreasIndicatorDefinition";
 import { MonsterTypeManager } from "../managers/MonsterTypeManager";
 import { SettingsManager } from "../managers/SettingsManager";
+import { CombatAreasIndicatorBadgeContainer } from "../models/combatAreaUi/CombatAreasIndicatorBadgeContainer";
+import { CombatAreasIndicatorBadgesVisibilityConfiguration } from "../models/combatAreaUi/CombatAreasIndicatorBadgesVisibilityConfiguration";
 
 export class CombatAreasUIManager {
     private static _modifierUIImpactIndicatorElement: HTMLElement;
 
+    private static _badgeContainers: CombatAreasIndicatorBadgeContainer[] = [];
+
     /**
      * Patches multiple html element classes, to inject additional elements
+     * TODO: Patches do not take into account, that other mods may add their monster types, so the logic may need to be moved into lifecycle hook, depending on whether the methods are actually called
      * @param ctx
      */
     public static patch(ctx: Modding.ModContext): void {
-        // TODO: Add "update" methods to those elements, so as to not force two renderings because of settings
+        /**
+         * Patch into row creation (apparently, 'MonsterSelectTableRowElement.setRow' isn't actually called... unfortunate, would have been a better place to patch into)
+         */
+        ctx.patch(MonsterSelectTableElement, 'createRow').after(function (returnValue: void, monster: Monster, area: AnyCombatArea) {
+            CmimUtils.log(`=== MonsterSelectTableElement.createRow | ${monster.id} | ${area.id} ===`);
+            const rowElement = this.tableBody.lastElementChild;
+            const tdElements = rowElement?.getElementsByTagName('td');
+            if (tdElements === undefined || tdElements === null || tdElements.length === 0) {
+                CmimUtils.log('this.tableBody does not have any td element');
+                return;
+            }
 
+            const badgeContainer = new CombatAreasIndicatorBadgeContainer(
+                CombatAreasUIHelper.createBadgeContainer(),
+                [monster]
+            );
+            CmimUtils.logObj(badgeContainer);
+            CombatAreasUIManager._badgeContainers.push(badgeContainer);
+
+            const infoContainer = tdElements[0];
+            infoContainer.insertBefore(badgeContainer.element, infoContainer.childNodes[0]);
+        });
 
         /**
-         * Patches row element creation for combat/slayer areas
+         * Patches into row element creation for combat/slayer areas
          */
         //ctx.patch(MonsterSelectTableRowElement, 'setRow').after(function (returnValue: void, monster: Monster, area: AnyCombatArea) {
-        //    // Build children (anew)
-        //    let badges = CombatAreasUIHelper.createIndicatorBadges(monster);
+        //    // Add an invisible container with its badges
+        //    CmimUtils.log(`=== MonsterSelectTableRowElement.setRow | ${monster.id} ===`);
+        //    const badgeContainer = new CombatAreasIndicatorBadgeContainer(
+        //        CombatAreasUIHelper.createBadgeContainer(),
+        //        [monster]
+        //    );
+        //    CmimUtils.logObj(badgeContainer);
 
-        //    // Add elements to container
-        //    let elements = this.attackType.parentElement?.getElementsByClassName(ModConstants.COMBAT_AREAS_BADGE_CONTAINER_CLASS);
-
-        //    if (elements !== undefined && elements.length > 0) {
-        //        let badgeContainerElement = elements[0];
-        //        badgeContainerElement.replaceChildren(); // no replacement provided, so just clears them
-
-        //        badges.forEach(function (value) {
-        //            badgeContainerElement.appendChild(value);
-        //        });
-        //    }
-        //    else {
-        //        let badgeContainerElement = CombatAreasUIHelper.createBadgeContainer();
-        //        this.attackType.parentElement!.insertBefore(badgeContainerElement, this.attackType);
-
-        //        badges.forEach(function (value) {
-        //            badgeContainerElement.appendChild(value);
-        //        });
-        //    }
+        //    this.attackType.parentElement!.insertBefore(badgeContainer.element, this.attackType);
         //});
 
-        //// Method only called for dungeons; alternatively could have patched 'setArea' instead and make a type check instead
-        //ctx.patch(CombatAreaMenuElement, 'setArea').after(function (returnValue: void, area: AnyCombatArea) {
-        //    // This patch is only to deal with areas that don't let you directly fight a single specific monster
-        //    if (!(area instanceof Dungeon || area instanceof Stronghold)) {
-        //        return;
-        //    }
+        /** Patches into creation of overall menu elements for other areas, where you can't select a single specifi monster */
+        ctx.patch(CombatAreaMenuElement, 'setArea').after(function (returnValue: void, area: AnyCombatArea) {
+            // This patch is only to deal with areas that don't let you directly fight a single specific monster
+            if (!(area instanceof Dungeon || area instanceof Stronghold)) {
+                return;
+            }
 
-        //    // Build children (anew)
-        //    let badges = CombatAreasUIHelper.createIndicatorBadgesForList(area.monsters);
+            // Add an invisible container with its badges
+            CmimUtils.log(`=== CombatAreaMenuElement.setArea (dungeon/stronghold) | ${area.id} ===`);
+            const badgeContainer = new CombatAreasIndicatorBadgeContainer(
+                CombatAreasUIHelper.createBadgeContainer(),
+                area.monsters
+            );
+            CmimUtils.logObj(badgeContainer);
+            CombatAreasUIManager._badgeContainers.push(badgeContainer);
 
-        //    // Add elements to container
-        //    let elements = this.monsterCount.parentElement?.getElementsByClassName(ModConstants.COMBAT_AREAS_BADGE_CONTAINER_CLASS);
+            this.monsterCount.parentElement!.insertBefore(badgeContainer.element, this.monsterCount);
+        });
 
-        //    if (elements !== undefined && elements.length > 0) {
-        //        let badgeContainerElement = elements[0];
-        //        badgeContainerElement.replaceChildren(); // no replacement provided, so just clears them
 
-        //        badges.forEach(function (value) {
-        //            badgeContainerElement.appendChild(value);
-        //        });
-        //    }
-        //    else {
-        //        let badgeContainerElement = CombatAreasUIHelper.createBadgeContainer();
-        //        this.monsterCount.parentElement!.insertBefore(badgeContainerElement, this.monsterCount);
-
-        //        badges.forEach(function (value) {
-        //            badgeContainerElement.appendChild(value);
-        //        });
-        //    }
-        //});
     }
 
     /**
@@ -88,6 +90,7 @@ export class CombatAreasUIManager {
                 const containerEl = CombatAreasUIHelper.createModifierUIImpactIndicator();
                 CombatAreasUIManager._modifierUIImpactIndicatorElement = containerEl;
 
+                document.getElementsByTagName
                 const siblingEl = document.getElementById('combat-select-area-Dungeon');
                 if (siblingEl !== undefined && siblingEl !== null) {
                     siblingEl.insertAdjacentElement("afterend", containerEl);
@@ -108,17 +111,25 @@ export class CombatAreasUIManager {
      */
     public static initCombatAreasIndicators(ctx: Modding.ModContext): void {
         ctx.onInterfaceReady(function () {
-            combatAreaMenus.all.forEach((camValue: CombatAreaMenu, camKey: CombatAreaCategory) => {
-                // If first element is of type dungeon (any form, so AbyssDepth count too for example), then do process 1
-                // Otherwise it's a combat area like combat and slayer areas, so go with process 2 instead
+            //combatAreaMenus.all.forEach((camValue: CombatAreaMenu, camKey: CombatAreaCategory) => {
+            //    // If first element is of type dungeon (any form, so AbyssDepth count too for example), then do process 1
+            //    // Otherwise it's a combat area like combat and slayer areas, so go with process 2 instead
 
-                CombatAreasUIManager.renderIndicatorBadges(camValue);
-            });
+            //    CombatAreasUIManager.renderIndicatorBadges(camValue);
+            //});
             //CombatAreasUIManager.buildCombatAreasIndicators(
             //    SettingsManager.getEnableBossIndicators,
             //    SettingsManager.getEnableActiveMonsterTypeIndicators,
             //    SettingsManager.getEnableInactiveMonsterTypeIndicators
             //);
+
+            const visibilityConfig = {
+                showBoss: SettingsManager.getEnableBossIndicators,
+                showActiveMonsterTypes: SettingsManager.getEnableActiveMonsterTypeIndicators,
+                showInactiveMonsterTypes: SettingsManager.getEnableInactiveMonsterTypeIndicators
+            } as CombatAreasIndicatorBadgesVisibilityConfiguration;
+
+            CombatAreasUIManager.toggleCombatAreaMonsterTypeIndicators(visibilityConfig);
         });
     }
 
@@ -128,13 +139,19 @@ export class CombatAreasUIManager {
      * @param inactiveEnabled whether to display active badges (provided as parameter, in case this is called during settings change)
      * @returns
      */
-    public static rebuildCombatAreaMonsterTypeIndicators(): void {
-        combatAreaMenus.all.forEach((camValue: CombatAreaMenu, camKey: CombatAreaCategory) => {
-            // If first element is of type dungeon (any form, so AbyssDepth count too for example), then do process 1
-            // Otherwise it's a combat area like combat and slayer areas, so go with process 2 instead
-
-            CombatAreasUIManager.renderIndicatorBadges(camValue);
+    public static toggleCombatAreaMonsterTypeIndicators(visibilityConfig: CombatAreasIndicatorBadgesVisibilityConfiguration): void {
+        CmimUtils.log('=== CombatAreasUIManager.toggleCombatAreaMonsterTypeIndicators ===');
+        CombatAreasUIManager._badgeContainers.forEach((badgeContainer) => {
+            badgeContainer.toggleBadgesVisibility(visibilityConfig);
         });
+        CmimUtils.logObj(CombatAreasUIManager._badgeContainers);
+
+        //combatAreaMenus.all.forEach((camValue: CombatAreaMenu, camKey: CombatAreaCategory) => {
+        //    // If first element is of type dungeon (any form, so AbyssDepth count too for example), then do process 1
+        //    // Otherwise it's a combat area like combat and slayer areas, so go with process 2 instead
+
+        //    CombatAreasUIManager.renderIndicatorBadges(camValue);
+        //});
 
         //// Delete all existing
         //const container = document.getElementById(ModConstants.COMBAT_CONTAINER_ELEMENT_ID);
@@ -315,8 +332,8 @@ export class CombatAreasUIManager {
         if (game.combat.fightInProgress) {
             const requireDisplay = game.combat.player.modifiers.chanceToReduceAttackDamageToZero > 0
                 || game.combat.enemy.modifiers.chanceToReduceAttackDamageToZero > 0;
-        //    const requireDisplay = (game.combat.player.modifiers.increasedChanceToReduceAttackDamageToZero - game.combat.player.modifiers.decreasedChanceToReduceAttackDamageToZero) > 0
-        //        || (game.combat.enemy.modifiers.increasedChanceToReduceAttackDamageToZero - game.combat.enemy.modifiers.decreasedChanceToReduceAttackDamageToZero) > 0;
+            //    const requireDisplay = (game.combat.player.modifiers.increasedChanceToReduceAttackDamageToZero - game.combat.player.modifiers.decreasedChanceToReduceAttackDamageToZero) > 0
+            //        || (game.combat.enemy.modifiers.increasedChanceToReduceAttackDamageToZero - game.combat.enemy.modifiers.decreasedChanceToReduceAttackDamageToZero) > 0;
             if (requireDisplay) {
                 showElement(CombatAreasUIManager._modifierUIImpactIndicatorElement);
             } else {
@@ -325,69 +342,63 @@ export class CombatAreasUIManager {
         }
     }
 
-    private static renderIndicatorBadges(cam: CombatAreaMenu): void {
-        if (cam.areas.length > 0) {
-            const firstArea = cam.areas[0];
+    //private static renderIndicatorBadges(cam: CombatAreaMenu): void {
+    //    if (cam.areas.length > 0) {
+    //        const firstArea = cam.areas[0];
 
-            // Areas that do not allow starting a fight with one specific monster
-            if (firstArea instanceof Dungeon || firstArea instanceof Stronghold) {
-                cam.menuElems.forEach((menuElement: CombatAreaMenuElement, area: AnyCombatArea) => {
-                    // Build children (anew)
-                    let badges = CombatAreasUIHelper.createIndicatorBadgesForList(area.monsters);
+    //        // Areas that do not allow starting a fight with one specific monster
+    //        if (firstArea instanceof Dungeon || firstArea instanceof Stronghold) {
+    //            cam.menuElems.forEach((menuElement: CombatAreaMenuElement, area: AnyCombatArea) => {
+    //                CmimUtils.log(`=== CombatAreasUIManager.renderIndicatorBadges (dungeon or stronghold) | area: ${area.id} ===`);
+    //                CmimUtils.logObj(area);
+    //                CmimUtils.logObj(menuElement);
+    //                // Build children (anew)
+    //                let badges = CombatAreasUIHelper.createIndicatorBadgesForList(area.monsters);
 
-                    // Add elements to container
-                    let elements = menuElement.monsterCount.parentElement?.getElementsByClassName(ModConstants.COMBAT_AREAS_BADGE_CONTAINER_CLASS);
+    //                // Add elements to container
+    //                if (menuElement.indicatorBadgesContainer !== undefined) {
+    //                    menuElement.indicatorBadgesContainer.replaceChildren(); // no replacement provided, so just clear them
+    //                }
+    //                else {
+    //                    menuElement.indicatorBadgesContainer = CombatAreasUIHelper.createBadgeContainer();
+    //                    menuElement.monsterCount.parentElement!.insertBefore(menuElement.indicatorBadgesContainer, menuElement.monsterCount);
+    //                }
 
-                    if (elements !== undefined && elements.length > 0) {
-                        let badgeContainerElement = elements[0];
-                        badgeContainerElement.replaceChildren(); // no replacement provided, so just clears them
+    //                for (var i = 0; i < badges.length; i++) {
+    //                    menuElement.indicatorBadgesContainer.appendChild(badges[i]);
+    //                }
+    //            });
+    //        }
 
-                        badges.forEach(function (value) {
-                            badgeContainerElement.appendChild(value);
-                        });
-                    }
-                    else {
-                        let badgeContainerElement = CombatAreasUIHelper.createBadgeContainer();
-                        menuElement.monsterCount.parentElement!.insertBefore(badgeContainerElement, menuElement.monsterCount);
+    //        // Areas that do allow starting a fight with one specific monster
+    //        else {
+    //            cam.menuElems.forEach((menuElement: CombatAreaMenuElement, area: AnyCombatArea) => {
+    //                CmimUtils.log(`=== CombatAreasUIManager.renderIndicatorBadges (neither dungeon nor stronghold) | area: ${area.id} ===`);
+    //                CmimUtils.logObj(area);
+    //                CmimUtils.logObj(menuElement);
+    //                // TODO: For each row
+    //                menuElement
 
-                        badges.forEach(function (value) {
-                            badgeContainerElement.appendChild(value);
-                        });
-                    }
-                });
-            }
+    //                const rowElement = {} as MonsterSelectTableRowElement;
+    //                const rowMonster = {} as Monster;
 
-            // Areas that do allow starting a fight with one specific monster
-            else {
-                cam.menuElems.forEach((menuElement: CombatAreaMenuElement, area: AnyCombatArea) => {
-                    // TODO: For each row
-                    const rowElement = {} as MonsterSelectTableRowElement;
-                    const rowMonster = {} as Monster;
+    //                // Build children (anew)
+    //                let badges = CombatAreasUIHelper.createIndicatorBadges(rowMonster);
 
-                    // Build children (anew)
-                    let badges = CombatAreasUIHelper.createIndicatorBadges(rowMonster);
+    //                // Add elements to container
+    //                if (rowElement.indicatorBadgesContainer !== undefined) {
+    //                    rowElement.indicatorBadgesContainer.replaceChildren(); // no replacement provided, so just clear them
+    //                }
+    //                else {
+    //                    rowElement.indicatorBadgesContainer = CombatAreasUIHelper.createBadgeContainer();
+    //                    rowElement.attackType.parentElement!.insertBefore(rowElement.indicatorBadgesContainer, menuElement.monsterCount);
+    //                }
 
-                    // Add elements to container
-                    let elements = rowElement.attackType.parentElement?.getElementsByClassName(ModConstants.COMBAT_AREAS_BADGE_CONTAINER_CLASS);
-
-                    if (elements !== undefined && elements.length > 0) {
-                        let badgeContainerElement = elements[0];
-                        badgeContainerElement.replaceChildren(); // no replacement provided, so just clears them
-
-                        badges.forEach(function (value) {
-                            badgeContainerElement.appendChild(value);
-                        });
-                    }
-                    else {
-                        let badgeContainerElement = CombatAreasUIHelper.createBadgeContainer();
-                        rowElement.attackType.parentElement!.insertBefore(badgeContainerElement, rowElement.attackType);
-
-                        badges.forEach(function (value) {
-                            badgeContainerElement.appendChild(value);
-                        });
-                    }
-                });
-            }
-        }
-    }
+    //                for (var i = 0; i < badges.length; i++) {
+    //                    rowElement.indicatorBadgesContainer.appendChild(badges[i]);
+    //                }
+    //            });
+    //        }
+    //    }
+    //}
 }

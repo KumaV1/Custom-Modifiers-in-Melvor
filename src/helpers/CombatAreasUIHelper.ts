@@ -5,6 +5,8 @@ import { SettingsManager } from "../managers/SettingsManager";
 import { MonsterTypeManager } from "../managers/MonsterTypeManager";
 import { MonsterTypeCombatAreasIndicatorDefinition } from "../models/monsterTyping/MonsterTypeCombatAreasIndicatorDefinition";
 import { CmimUtils } from "../Utils";
+import { CombatAreasIndicatorBadge } from "../models/combatAreaUi/CombatAreasIndicatorBadge";
+import { CombatAreasIndicatorBadgeType } from "../models/combatAreaUi/CombatAreasIndicatorBadgeType";
 
 export class CombatAreasUIHelper {
 
@@ -15,12 +17,14 @@ export class CombatAreasUIHelper {
         return el;
     }
 
-    public static createIndicatorBadges(monster: Monster): HTMLElement[] {
-        let badges = [] as HTMLElement[];
+    public static createIndicatorBadges(monster: Monster): CombatAreasIndicatorBadge[] {
+        let badges = [] as CombatAreasIndicatorBadge[];
 
         // Build and add boss indicator
-        if (SettingsManager.getEnableBossIndicators) {
-            badges.push(CombatAreasUIHelper.createCombatAreaBossIndicatorBadge());
+        if (monster.isBoss) {
+            if (SettingsManager.getEnableBossIndicators) {
+                badges.push(CombatAreasUIHelper.createCombatAreaBossIndicatorBadge());
+            }
         }
 
         // Evaluate monster types
@@ -41,8 +45,8 @@ export class CombatAreasUIHelper {
      * Creates a collection of indicator badges, with the number of matching entries added to the badge
      * @param monsters
      */
-    public static createIndicatorBadgesForList(monsters: Monster[]): HTMLElement[] {
-        let badges = [] as HTMLElement[];
+    public static createIndicatorBadgesForList(monsters: Monster[]): CombatAreasIndicatorBadge[] {
+        let badges = [] as CombatAreasIndicatorBadge[];
 
         if (SettingsManager.getEnableBossIndicators) {
             let bossCount = 0;
@@ -51,15 +55,15 @@ export class CombatAreasUIHelper {
                     bossCount++;
                 }
             });
-            if (bossCount > 1) { // only called for certain area types, where it's expected that the final monster is a boss, so this info is only relevant if there are actually more inside
+            if (bossCount > 0) {
                 badges.push(CombatAreasUIHelper.createCombatAreaBossIndicatorBadge(bossCount));
             }
         }
 
         let indicatorDefinitions = CombatAreasUIHelper.getMonsterTypeIndicatorDefinitions();
-        for (var i = 0; i < length; i++) {
+        for (var i = 0; i < indicatorDefinitions.length; i++) {
             const definition = indicatorDefinitions[i];
-            let count: number = 0;
+            let count = 0;
 
             monsters.forEach(function (value: Monster) {
                 if (MonsterTypeManager.monsterIsOfType(value, definition.type.singularName)) {
@@ -82,7 +86,7 @@ export class CombatAreasUIHelper {
      * @param count how many monsters are currently relevant for this method call
      * @param displayCount whether the count should be included in the text returned
      */
-    public static createCombatAreaIndicatorBadge(type: MonsterTypeDefinition, typeActive: boolean, count: number, displayCount: boolean): HTMLElement {
+    public static createCombatAreaIndicatorBadge(type: MonsterTypeDefinition, typeActive: boolean, count: number, displayCount: boolean): CombatAreasIndicatorBadge {
         let badgeEl = document.createElement('span');
         badgeEl.classList.add('badge');
         badgeEl.classList.add('bage-pill');
@@ -97,14 +101,14 @@ export class CombatAreasUIHelper {
             ? TranslationManager.getMonsterTypePluralNameTranslation(type.singularName, type.pluralName)
             : TranslationManager.getMonsterTypeSingularNameTranslation(type.singularName);
 
-        return badgeEl;
+        return new CombatAreasIndicatorBadge(badgeEl, typeActive ? CombatAreasIndicatorBadgeType.ActiveMonsterType : CombatAreasIndicatorBadgeType.InactiveMonsterType);
     }
     /**
      * Creates a br with class(es), which are used before/after badges at times and should also be targetable through defined classes
      * @param optionally provide an information about how many bosses the text should mention
      * @returns
      */
-    public static createCombatAreaBossIndicatorBadge(count?: number): HTMLElement {
+    public static createCombatAreaBossIndicatorBadge(count?: number): CombatAreasIndicatorBadge {
         let badgeEl = document.createElement('span');
         badgeEl.classList.add('badge', 'bage-pill', 'mr-1', 'badge-success', ModConstants.COMBAT_AREAS_INDICATOR_BADGE_CLASS);
 
@@ -126,7 +130,7 @@ export class CombatAreasUIHelper {
             );
         }
 
-        return badgeEl;
+        return new CombatAreasIndicatorBadge(badgeEl, CombatAreasIndicatorBadgeType.Boss);
     }
 
     /**

@@ -159,7 +159,8 @@ export class MonsterTypeManager {
      */
     public static ensureEarlyTempMonsterTypeModifierData(type: MonsterTypeDefinition) {
         const modifierManager = new CustomModifiersManager(ModContextMemoizer.ctx);
-        modifierManager.registerMonsterTypeModifierData(type);
+        //modifierManager.registerMonsterTypeModifierData(type);
+        modifierManager.registerMonsterTypes([type]);
     }
 
     /**
@@ -176,8 +177,8 @@ export class MonsterTypeManager {
             const translationManager = new TranslationManager(ctx);
             translationManager.registerMonsterTypes(types);
 
-            const modifierManager = new CustomModifiersManager(ctx);
-            modifierManager.registerMonsterTypes(types);
+            //const modifierManager = new CustomModifiersManager(ctx);
+            //modifierManager.registerMonsterTypes(types);
 
             const tinyIconsCompatibility = new TinyIconsCompatibility(ctx);
             tinyIconsCompatibility.registerMonsterTypes(types);

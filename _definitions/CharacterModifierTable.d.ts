@@ -45,14 +45,14 @@ declare global {
         /** Flag (by the custom effect) that effect has been applied, it's NOT an increasing value */
         // TODO: An effect, so same as above; also think about using this opportunity to rework the logic behind death marks and counting them up/down, depending on what the combat effect refactor allows
         readonly deathMark: number;
-        readonly increasedDeathMarkOnHit: number;
-        readonly increasedChanceToApplyStackOfDeathMark: number;
-        readonly decreasedChanceToApplyStackOfDeathMark: number;
-        readonly increasedDeathMarkImmunity: number;
-        readonly decreasedDeathMarkImmunity: number;
-        readonly applyDeathMarkOnSpawn: number;
+        //readonly increasedDeathMarkOnHit: number;
+        //readonly increasedChanceToApplyStackOfDeathMark: number;
+        //readonly decreasedChanceToApplyStackOfDeathMark: number;
+        readonly deathMarkImmunity: number; // TODO: Add this as alias for "effectIgnoreChance", while possibly using a "deathMarkLike" id, depending on whether this is about combat effect (where more than one variant of death mark application may exist), or more about a "category", that can just be called death mark
+        //readonly decreasedDeathMarkImmunity: number;
+        //readonly applyDeathMarkOnSpawn: number;
 
-        readonly magicDamage: number; // giving an enemy this as an 'enemyModifier' to increase the damage taken
+        //readonly magicDamage: number; magic spell damage taken moved to "magic max hit" via enemy Modifier and with spell scoping
 
         // Only for monster types defined by this base mod
         readonly animalTraitApplied: number;

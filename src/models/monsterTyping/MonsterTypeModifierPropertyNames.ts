@@ -28,12 +28,12 @@ export interface MonsterTypeModifierPropertyNames {
     flatResistance: string,
     //increasedDamageReduction: string,
     //decreasedDamageReduction: string,
-    chanceToApplyTraitInfiniteOnSpawn: string, // TODO: REPLACE BY COMBAT EFFECT INSTEAD
+    //chanceToApplyTraitInfiniteOnSpawn: string, // TODO: REPLACE BY COMBAT EFFECT INSTEAD - no equivalent modifier, so just remove as is?
     //increasedChanceToApplyTraitInfiniteOnSpawn: string,
     //decreasedChanceToApplyTraitInfiniteOnSpawn: string,
-    applyTraitTurnsOnSpawn: string, // TODO: REPLACE BY COMBAT EFFECT INSTEAD
-    chanceToApplyTrait: string, // TODO: REPLACE BY COMBAT EFFECT INSTEAD
+    //applyTraitTurnsOnSpawn: string, // TODO: REPLACE BY COMBAT EFFECT INSTEAD - no equivalent modifier, so just remove as is?
+    //chanceToApplyTrait: string, // TODO: REPLACE BY COMBAT EFFECT INSTEAD - no equivalent modifier, so just remove as is?
     //increasedChanceToApplyTrait: string,
     //decreasedChanceToApplyTrait: string,
-    applyTraitTurns: string // TODO: REPLACE BY COMBAT EFFECT INSTEAD
+    //applyTraitTurns: string // TODO: REPLACE BY COMBAT EFFECT INSTEAD - no equivalent modifier, so just remove as is?
 }

@@ -11,6 +11,7 @@ export class GameObjectDataWrapperInitializer {
             //stackingEffects: {},
             //customModifierEffects: {},
             //specialAttacks: {},
+            dynamicallyBuiltDataPackages: [],
             originalFunctions: {
                 utils: {
                     stunNotify: stunNotify

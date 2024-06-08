@@ -16,6 +16,7 @@ declare global {
             //stackingEffects: CmimStackingEffectCollection
             //customModifierEffects: CmimCustomModifierEffectCollection
             //specialAttacks: CmimSpecialAttackCollection,
+            dynamicallyBuiltDataPackages: GameDataPackage[]
             originalFunctions: {
                 utils: {
                     stunNotify(damage: number): void

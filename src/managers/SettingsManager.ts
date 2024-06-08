@@ -35,7 +35,11 @@ export class SettingsManager {
                 hint: TranslationManager.getLangString("Settings_Setting_Hint_Enable_Boss_Indicators", true),
                 default: true,
                 onChange(value: boolean, previousValue: boolean): void {
-                    CombatAreasUIManager.rebuildCombatAreaMonsterTypeIndicators();
+                    CombatAreasUIManager.toggleCombatAreaMonsterTypeIndicators({
+                        showBoss: value,
+                        showActiveMonsterTypes: SettingsManager.getEnableActiveMonsterTypeIndicators,
+                        showInactiveMonsterTypes: SettingsManager.getEnableInactiveMonsterTypeIndicators
+                    });
                     //    (
                     //    value,
                     //    SettingsManager.getEnableActiveMonsterTypeIndicators,
@@ -50,7 +54,11 @@ export class SettingsManager {
                 hint: TranslationManager.getLangString("Settings_Setting_Hint_Enable_Active_Monster_Type_Indicators", true),
                 default: true,
                 onChange(value: boolean, previousValue: boolean): void {
-                    CombatAreasUIManager.rebuildCombatAreaMonsterTypeIndicators();
+                    CombatAreasUIManager.toggleCombatAreaMonsterTypeIndicators({
+                        showBoss: SettingsManager.getEnableBossIndicators,
+                        showActiveMonsterTypes: value,
+                        showInactiveMonsterTypes: SettingsManager.getEnableInactiveMonsterTypeIndicators
+                    });
                     //(
                     //    SettingsManager.getEnableBossIndicators,
                     //    value,
@@ -65,40 +73,39 @@ export class SettingsManager {
                 hint: TranslationManager.getLangString("Settings_Setting_Hint_Enable_Inactive_Monster_Type_Indicators", true),
                 default: true,
                 onChange(value: boolean, previousValue: boolean): void {
-                    CombatAreasUIManager.rebuildCombatAreaMonsterTypeIndicators();
-                    //(
-                    //    SettingsManager.getEnableBossIndicators,
-                    //    SettingsManager.getEnableActiveMonsterTypeIndicators,
-                    //    value
-                    //);
+                    CombatAreasUIManager.toggleCombatAreaMonsterTypeIndicators({
+                        showBoss: SettingsManager.getEnableBossIndicators,
+                        showActiveMonsterTypes: SettingsManager.getEnableActiveMonsterTypeIndicators,
+                        showInactiveMonsterTypes: value
+                    });
                 }
             } as Modding.Settings.SwitchConfig,
         ]);
 
-        ctx.settings.section(TranslationManager.getLangString("Settings_Section_Disabling", true)).add([
-            {
-                type: 'label',
-                name: 'disabling-info',
-                label: TranslationManager.getLangString("Settings_Setting_Label_Disabling_Info", true),
-            } as Modding.Settings.SettingConfig,
-            {
-                type: 'switch',
-                name: 'disable-all-on-spawn-modifiers',
-                label: 'Disable on-spawn modifiers',
-                hint: 'Disables all on spawn modifiers added by this mod',
-                onChange(value: boolean, previousValue: boolean): void {
-                    SettingsManager._onSpawnModifiersDisabled = value;
-                }
-            } as Modding.Settings.SwitchConfig
-        ]);
+        //ctx.settings.section(TranslationManager.getLangString("Settings_Section_Disabling", true)).add([
+        //    {
+        //        type: 'label',
+        //        name: 'disabling-info',
+        //        label: TranslationManager.getLangString("Settings_Setting_Label_Disabling_Info", true),
+        //    } as Modding.Settings.SettingConfig,
+        //    {
+        //        type: 'switch',
+        //        name: 'disable-all-on-spawn-modifiers',
+        //        label: 'Disable on-spawn modifiers',
+        //        hint: 'Disables all on spawn modifiers added by this mod',
+        //        onChange(value: boolean, previousValue: boolean): void {
+        //            SettingsManager._onSpawnModifiersDisabled = value;
+        //        }
+        //    } as Modding.Settings.SwitchConfig
+        //]);
 
-        ctx.settings.section(TranslationManager.getLangString("Settings_Section_Enabling", true)).add([
-            {
-                type: 'label',
-                name: 'enabling-info',
-                label: TranslationManager.getLangString("Settings_Setting_Label_Enabling_Info", true),
-            } as Modding.Settings.SettingConfig,
-        ]);
+        //ctx.settings.section(TranslationManager.getLangString("Settings_Section_Enabling", true)).add([
+        //    {
+        //        type: 'label',
+        //        name: 'enabling-info',
+        //        label: TranslationManager.getLangString("Settings_Setting_Label_Enabling_Info", true),
+        //    } as Modding.Settings.SettingConfig,
+        //]);
 
         ctx.settings.section(TranslationManager.getLangString("Settings_Section_Save_And_Reload", true)).add([
             {
@@ -145,19 +152,19 @@ export class SettingsManager {
 
         // On character load, use settings to potentially disable/enable certain types that would otherwise be active
         // Also cache one setting's value, as it is accessed very often compared to most other settings, which are not checked much per character load
-        ctx.onCharacterLoaded(function () {
-            //SettingsManager.getDisableSpecificMonsterTypes.forEach(function (value: string) {
-            //    MonsterTypeManager.trySetTypeInactive(value);
-            //});
+        //ctx.onCharacterLoaded(function () {
+        //    //SettingsManager.getDisableSpecificMonsterTypes.forEach(function (value: string) {
+        //    //    MonsterTypeManager.trySetTypeInactive(value);
+        //    //});
 
-            //SettingsManager.getEnableSpecificMonsterTypes.forEach(function (value: string) {
-            //    MonsterTypeManager.trySetTypeActive(value);
-            //});
+        //    //SettingsManager.getEnableSpecificMonsterTypes.forEach(function (value: string) {
+        //    //    MonsterTypeManager.trySetTypeActive(value);
+        //    //});
 
-            SettingsManager._onSpawnModifiersDisabled = ctx.settings
-                .section(TranslationManager.getLangString("Settings_Section_Disabling", true))
-                .get('disable-all-on-spawn-modifiers') as boolean ?? false;
-        });
+        //    SettingsManager._onSpawnModifiersDisabled = ctx.settings
+        //        .section(TranslationManager.getLangString("Settings_Section_Disabling", true))
+        //        .get('disable-all-on-spawn-modifiers') as boolean ?? false;
+        //});
     }
 
     /**
@@ -200,9 +207,9 @@ export class SettingsManager {
      * Get CACHED VALUE of setting field
      * @returns
      */
-    public static getDisableAllOnSpawnModifiers(): boolean {
-        return SettingsManager._onSpawnModifiersDisabled;
-    }
+    //public static getDisableAllOnSpawnModifiers(): boolean {
+    //    return SettingsManager._onSpawnModifiersDisabled;
+    //}
 
     /**
      * Get corresponding setting field's value

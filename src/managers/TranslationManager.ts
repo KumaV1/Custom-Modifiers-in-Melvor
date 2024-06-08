@@ -41,7 +41,7 @@ export class TranslationManager {
             'COMBAT_MISC',
             'MODIFIER_DATA',
             'PAGE_NAME',
-
+            'EFFECT_GROUP',
             'MONSTER_TYPE_SINGULAR',
             'MONSTER_TYPE_PLURAL'
         ];
@@ -84,11 +84,11 @@ export class TranslationManager {
             loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.accuracyRating}`] = loadedLangJson["MODIFIER_DATA_accuracyRatingAgainstMonsterType"].replace("${monsterType}", typePluralName);
             loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.flatResistance}`] = loadedLangJson["MODIFIER_DATA_flatResistanceAgainstMonsterType"].replace("${monsterType}", typePluralName);
 
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.chanceToApplyTraitInfiniteOnSpawn}`] = loadedLangJson["MODIFIER_DATA_chanceToApplyMonsterTypeTraitInfiniteOnSpawn"].replace("${monsterType}", typeSingularName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.applyTraitTurnsOnSpawn}`] = loadedLangJson["MODIFIER_DATA_applyMonserTypeTraitTurnsOnSpawn"].replace("${monsterType}", typeSingularName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.chanceToApplyTraitInfiniteOnSpawn}`] = loadedLangJson["MODIFIER_DATA_chanceToApplyMonsterTypeTraitInfiniteOnSpawn"].replace("${monsterType}", typeSingularName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.applyTraitTurnsOnSpawn}`] = loadedLangJson["MODIFIER_DATA_applyMonserTypeTraitTurnsOnSpawn"].replace("${monsterType}", typeSingularName);
 
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.chanceToApplyTrait}`] = loadedLangJson["MODIFIER_DATA_chanceToApplyMonsterTypeTrait"].replace("${monsterType}", typeSingularName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.applyTraitTurns}`] = loadedLangJson["MODIFIER_DATA_applyMonsterTypeTraitTurns"].replace("${monsterType}", typeSingularName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.chanceToApplyTrait}`] = loadedLangJson["MODIFIER_DATA_chanceToApplyMonsterTypeTrait"].replace("${monsterType}", typeSingularName);
+            //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.applyTraitTurns}`] = loadedLangJson["MODIFIER_DATA_applyMonsterTypeTraitTurns"].replace("${monsterType}", typeSingularName);
 
             //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.traitApplied}`] = loadedLangJson["MODIFIER_DATA_MonsterTypeTraitApplied"].replace("${monsterType}", typeSingularName);
             //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.increasedDamage}`] = loadedLangJson["MODIFIER_DATA_increasedDamageAgainstMonsterType"].replace("${monsterType}", typePluralName);

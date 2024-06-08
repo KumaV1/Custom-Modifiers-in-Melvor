@@ -101,25 +101,20 @@ export class CustomModifiersRegistrationHelper {
      */
     public static createModifierModificationData(modifierId: string, scopes?: TrueFlags<IModifierScope>, descriptions?: ModifierDescriptionData[], posAliases?: ModifierAliasData[] | string[], negAliases?: ModifierAliasData[] | string[]): ModifierModificationData {
         let obj = {
+            id: modifierId,
             allowedScopes: [] as ModifierScopingModificationData[]
         } as ModifierModificationData;
 
-        let modificationObj = {
-            scopes: scopes ?? {}
+        let scopeObj = {
+            scopes: scopes ?? {},
+            descriptions: descriptions ?? [CustomModifiersRegistrationHelper.createDefaultModifierDescription(modifierId.split(':')[1])]
         } as ModifierScopingModificationData;
 
-        if (descriptions !== undefined) {
-            modificationObj.descriptions = [] as ModifierDescriptionData[];
-            for (var i = 0; i < descriptions.length; i++) {
-                modificationObj.descriptions.push(descriptions[i]);
-            }
-        }
-
         if (posAliases !== undefined) {
-            modificationObj.posAliases = [] as ModifierAliasData[];
+            scopeObj.posAliases = [] as ModifierAliasData[];
             for (var i = 0; i < posAliases.length; i++) {
                 const alias = posAliases[i];
-                modificationObj.posAliases.push(
+                scopeObj.posAliases.push(
                     typeof (alias) === 'string'
                         ? CustomModifiersRegistrationHelper.createDefaultModifierAlias(alias)
                         : alias
@@ -128,10 +123,10 @@ export class CustomModifiersRegistrationHelper {
         }
 
         if (negAliases !== undefined) {
-            modificationObj.negAliases = [] as ModifierAliasData[];
+            scopeObj.negAliases = [] as ModifierAliasData[];
             for (var i = 0; i < negAliases.length; i++) {
                 const alias = negAliases[i];
-                modificationObj.negAliases.push(
+                scopeObj.negAliases.push(
                     typeof (alias) === 'string'
                         ? CustomModifiersRegistrationHelper.createDefaultModifierAlias(alias)
                         : alias
@@ -139,6 +134,7 @@ export class CustomModifiersRegistrationHelper {
             }
         }
 
+        obj.allowedScopes.push(scopeObj);
         return obj;
     }
 
