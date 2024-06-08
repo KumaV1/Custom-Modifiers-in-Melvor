@@ -17,20 +17,82 @@
         }
       }
     ],
-    "stackingEffects": [
+    "combatEffects": [
       {
         "id": "Death_Mark_Effect",
-        "stacksToAdd": 1,
-        "maxStacks": 20,
-        "modifiers": {
-          "deathMark": 1
-        },
-        "name": "Death mark",
+        "templateID": "melvorD:Stacking",
+        "name": "Death Mark (Stacking)",
         "media": "assets/customModifiersInMelvor/Death_Mark.png",
-        "langname": {
-          "category": "COMBAT_MISC",
-          "id": "Death_Mark_Effect"
-        }
+        "statGroups": [
+          {
+            "name": "stacks",
+            "modifiers": {
+              "customModifiersInMelvor:deathMark": 1
+            }
+          }
+        ],
+        "parameters": [
+          {
+            "name": "stacksToAdd",
+            "initialValue": 1
+          },
+          {
+            "name": "maxStacks",
+            "initialValue": 20
+          }
+        ]
+      }
+    ],
+    "combatEffectGroups": [
+      {
+        "id": "MonsterTypeTraitApplication",
+        "name": "Monster type trait",
+        "nameLang": "EFFECT_GROUP_MonsterTypeTraitApplication",
+        "adjective": "Affected by monster type trait(s)"
+      }
+    ],
+    "modifiers": [
+      {
+        "id": "deathMark",
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "If percentage of max HP left is lower than the amount of stacks (MAX 20% / 5,000), get executed immediately",
+                "lang": "MODIFIER_DATA_deathMark"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "deathMarkImmunity",
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% chance to resist application of death mark stacks",
+                "lang": "MODIFIER_DATA_deathMarkImmunity"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedDeathMarkImmunity"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedDeathMarkImmunity"
+              }
+            ]
+          }
+        ]
       }
     ]
   }
