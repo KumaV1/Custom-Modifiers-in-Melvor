@@ -524,15 +524,17 @@ export class MonsterTypeHelper {
      */
     public static entityIsTreatedAsType(entity: Character, type: MonsterTypeDefinition): boolean {
         // @ts-ignore - We know that behind this property lies a boolean. And if not, well "falsey" check work too
-        const isOfType: boolean = entity[type.isTypePropertyName];
-        // @ts-ignore - We know that behind this property lies a boolean. And if not, well "falsey" check work too
-        //console.log(`entityIsTreatedAsType | isOfType | propertyName: ${type.isTypePropertyName} / value: ${entity.target[type.isTypePropertyName]}, ${isOfType}`);
-        // @ts-ignore - We know that behind this property lies a boolean. And if not, well "falsey" check work too
-        const traitApplied: number = entity.modifiers[type.modifierPropertyNames.traitApplied];
-        // @ts-ignore - We know that behind this property lies a boolean. And if not, well "falsey" check work too
-        //console.log(`entityIsTreatedAsType | isOfType | propertyName: ${type.modifierPropertyNames.traitApplied} / value: ${entity.target.modifiers[type.modifierPropertyNames.traitApplied]}, ${traitApplied}`);
+        const isOfType: boolean | undefined = entity[type.isTypePropertyName];
+        if (isOfType) {
+            return true;
+        }
 
-        return isOfType || traitApplied > 0;
+        const traitApplied: number = entity.modifiers.getValue(`${ModConstants.MOD_NAMESPACE_NAME}:${[type.modifierPropertyNames.traitApplied]}`, ModifierQuery.EMPTY);
+        if (traitApplied > 0) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

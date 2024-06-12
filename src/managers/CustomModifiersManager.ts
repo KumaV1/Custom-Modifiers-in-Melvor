@@ -56,7 +56,7 @@ export class CustomModifiersManager {
         this.patchAttackDamageCalculations();
         this.patchDamageModifierCalculations();
         this.patchAccuracyCalculations();
-        this.patchDamageReductionCalculations();
+        this.patchResistanceCalculations(); // formerly known as damage reduction
         this.patchDamage();
         this.patchUtils();
     }
@@ -159,9 +159,9 @@ export class CustomModifiersManager {
         let modifiers = [] as ModifierData[];
 
         modifiers.push(CustomModifiersRegistrationHelper.createMultiScopeSkillingModifierData(
-            'skillXPPerLevel',
+            ModifierConstants.KEYS.PLAYER.skillXPPerLevel,
             CustomModifiersRegistrationHelper.createDefaultModifierScopingDataArray(
-                'skillXPPerLevel',
+                ModifierConstants.KEYS.PLAYER.skillXPPerLevel,
                 [
                     {
                         scopes: {},
@@ -179,9 +179,9 @@ export class CustomModifiersManager {
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createMultiScopeSkillingModifierData(
-            'flatSkillXPPerLevel',
+            ModifierConstants.KEYS.PLAYER.flatSkillXPPerLevel,
             CustomModifiersRegistrationHelper.createDefaultModifierScopingDataArray(
-                'flatSkillXPPerLevel',
+                ModifierConstants.KEYS.PLAYER.flatSkillXPPerLevel,
                 [
                     {
                         scopes: {},
@@ -199,9 +199,9 @@ export class CustomModifiersManager {
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createMultiScopeSkillingModifierData(
-            'flatSkillXP',
+            ModifierConstants.KEYS.PLAYER.flatSkillXP,
             CustomModifiersRegistrationHelper.createDefaultModifierScopingDataArray(
-                'flatSkillXP',
+                ModifierConstants.KEYS.PLAYER.flatSkillXP,
                 [
                     {
                         scopes: {},
@@ -219,7 +219,7 @@ export class CustomModifiersManager {
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData(
-            'thievingDamagePreventionThreshold',
+            ModifierConstants.KEYS.PLAYER.thievingDamagePreventionThreshold,
             false,
             'increasedThievingDamagePreventionThreshold',
             'decreasedThievingDamagePreventionThreshold'
@@ -346,42 +346,42 @@ export class CustomModifiersManager {
         let modifiers = [] as ModifierData[];
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'maxHitPercentToCombatAreaMonsters',
+            ModifierConstants.KEYS.PLAYER.maxHitPercentToCombatAreaMonsters,
             false,
             'increasedMaxHitPercentToCombatAreaMonsters',
             'decreasedMaxHitPercentToCombatAreaMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'maxHitFlatToCombatAreaMonsters',
+            ModifierConstants.KEYS.PLAYER.maxHitFlatToCombatAreaMonsters,
             false,
             'increasedMaxHitFlatToCombatAreaMonsters',
             'decreasedMaxHitFlatToCombatAreaMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'flatMinHitToCombatAreaMonsters',
+            ModifierConstants.KEYS.PLAYER.flatMinHitToCombatAreaMonsters,
             false,
             'increasedFlatMinHitToCombatAreaMonsters',
             'decreasedFlatMinHitToCombatAreaMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'minHitBasedOnMaxHitToCombatAreaMonsters',
+            ModifierConstants.KEYS.PLAYER.minHitBasedOnMaxHitToCombatAreaMonsters,
             false,
             'increasedMinHitBasedOnMaxHitToCombatAreaMonsters',
             'decreasedMinHitBasedOnMaxHitToCombatAreaMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'accuracyRatingAgainstCombatAreaMonsters',
+            ModifierConstants.KEYS.PLAYER.accuracyRatingAgainstCombatAreaMonsters,
             false,
             'increasedGlobalAccuracyAgainstCombatAreaMonsters',
             'decreasedGlobalAccuracyAgainstCombatAreaMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'flatResistanceAgainstCombatAreaMonsters',
+            ModifierConstants.KEYS.PLAYER.flatResistanceAgainstCombatAreaMonsters,
             false,
             'increasedDamageReductionAgainstCombatAreaMonsters',
             'decreasedDamageReductionAgainstCombatAreaMonsters'
@@ -397,42 +397,42 @@ export class CustomModifiersManager {
         let modifiers = [] as ModifierData[];
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'maxHitPercentToSlayerAreaMonsters',
+            ModifierConstants.KEYS.PLAYER.maxHitPercentToSlayerAreaMonsters,
             false,
             'increasedMaxHitPercentToSlayerAreaMonsters',
             'decreasedMaxHitPercentToSlayerAreaMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'maxHitFlatToSlayerAreaMonsters',
+            ModifierConstants.KEYS.PLAYER.maxHitFlatToSlayerAreaMonsters,
             false,
             'increasedMaxHitFlatToSlayerAreaMonsters',
             'decreasedMaxHitFlatToSlayerAreaMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'flatMinHitToSlayerAreaMonsters',
+            ModifierConstants.KEYS.PLAYER.flatMinHitToSlayerAreaMonsters,
             false,
             'increasedFlatMinHitToSlayerAreaMonsters',
             'decreasedFlatMinHitToSlayerAreaMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'minHitBasedOnMaxHitToSlayerAreaMonsters',
+            ModifierConstants.KEYS.PLAYER.minHitBasedOnMaxHitToSlayerAreaMonsters,
             false,
             'increasedMinHitBasedOnMaxHitToSlayerAreaMonsters',
             'decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'accuracyRatingAgainstSlayerAreaMonsters',
+            ModifierConstants.KEYS.PLAYER.accuracyRatingAgainstSlayerAreaMonsters,
             false,
             'increasedGlobalAccuracyAgainstSlayerAreaMonsters',
             'decreasedGlobalAccuracyAgainstSlayerAreaMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'flatResistanceAgainstSlayerAreaMonsters',
+            ModifierConstants.KEYS.PLAYER.flatResistanceAgainstSlayerAreaMonsters,
             false,
             'increasedDamageReductionAgainstSlayerAreaMonsters',
             'decreasedDamageReductionAgainstSlayerAreaMonsters'
@@ -448,42 +448,42 @@ export class CustomModifiersManager {
         let modifiers = [] as ModifierData[];
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'maxHitPercentToDungeonMonsters',
+            ModifierConstants.KEYS.PLAYER.maxHitPercentToDungeonMonsters,
             false,
             'increasedMaxHitPercentToDungeonMonsters',
             'decreasedMaxHitPercentToDungeonMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'maxHitFlatToDungeonMonsters',
+            ModifierConstants.KEYS.PLAYER.maxHitFlatToDungeonMonsters,
             false,
             'increasedMaxHitFlatToDungeonMonsters',
             'decreasedMaxHitFlatToDungeonMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'flatMinHitToDungeonMonsters',
+            ModifierConstants.KEYS.PLAYER.flatMinHitToDungeonMonsters,
             false,
             'increasedFlatMinHitToDungeonMonsters',
             'decreasedFlatMinHitToDungeonMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'minHitBasedOnMaxHitToDungeonMonsters',
+            ModifierConstants.KEYS.PLAYER.minHitBasedOnMaxHitToDungeonMonsters,
             false,
             'increasedMinHitBasedOnMaxHitToDungeonMonsters',
             'decreasedMinHitBasedOnMaxHitToDungeonMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'accuracyRatingAgainstDungeonMonsters',
+            ModifierConstants.KEYS.PLAYER.accuracyRatingAgainstDungeonMonsters,
             false,
             'increasedGlobalAccuracyAgainstDungeonMonsters',
             'decreasedGlobalAccuracyAgainstDungeonMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'flatResistanceAgainstDungeonMonsters',
+            ModifierConstants.KEYS.PLAYER.flatResistanceAgainstDungeonMonsters,
             false,
             'increasedDamageReductionAgainstDungeonMonsters',
             'decreasedDamageReductionAgainstDungeonMonsters'
@@ -500,35 +500,35 @@ export class CustomModifiersManager {
         let modifiers = [] as ModifierData[];
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'maxHitPercentToSlayerTasks',
+            ModifierConstants.KEYS.PLAYER.maxHitPercentToSlayerTasks,
             false,
             'increasedMaxHitPercentToSlayerTasks',
             'decreasedMaxHitPercentToSlayerTasks'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'maxHitFlatToSlayerTasks',
+            ModifierConstants.KEYS.PLAYER.maxHitFlatToSlayerTasks,
             false,
             'increasedMaxHitFlatToSlayerTasks',
             'decreasedMaxHitFlatToSlayerTasks'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'minHitBasedOnMaxHitToSlayerTasks',
+            ModifierConstants.KEYS.PLAYER.minHitBasedOnMaxHitToSlayerTasks,
             false,
             'increasedFlatMinHitToSlayerTasks',
             'decreasedFlatMinHitToSlayerTasks'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'flatMinHitToSlayerTasks',
+            ModifierConstants.KEYS.PLAYER.flatMinHitToSlayerTasks,
             false,
             'increasedMinHitBasedOnMaxHitToSlayerTasks',
             'decreasedMinHitBasedOnMaxHitToSlayerTasks'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'accuracyRatingAgainstSlayerTasks',
+            ModifierConstants.KEYS.PLAYER.accuracyRatingAgainstSlayerTasks,
             false,
             'increasedGlobalAccuracyAgainstSlayerTasks',
             'decreasedGlobalAccuracyAgainstSlayerTasks'
@@ -563,35 +563,35 @@ export class CustomModifiersManager {
         let modifiers = [] as ModifierData[];
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'maxHitPercentAgainstBosses',
+            ModifierConstants.KEYS.PLAYER.maxHitPercentAgainstBosses,
             false,
             'increasedMaxHitPercentAgainstBosses',
             'decreasedMaxHitPercentAgainstBosses'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'maxHitFlatAgainstBosses',
+            ModifierConstants.KEYS.PLAYER.maxHitFlatAgainstBosses,
             false,
             'increasedMaxHitFlatAgainstBosses',
             'decreasedMaxHitFlatAgainstBosses'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'flatMinHitAgainstBosses',
+            ModifierConstants.KEYS.PLAYER.flatMinHitAgainstBosses,
             false,
             'increasedFlatMinHitAgainstBosses',
             'decreasedFlatMinHitAgainstBosses'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'minHitBasedOnMaxHitAgainstBosses',
+            ModifierConstants.KEYS.PLAYER.minHitBasedOnMaxHitAgainstBosses,
             false,
             'increasedMinHitBasedOnMaxHitAgainstBosses',
             'decreasedMinHitBasedOnMaxHitAgainstBosses'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'accuracyRatingAgainstBosses',
+            ModifierConstants.KEYS.PLAYER.accuracyRatingAgainstBosses,
             false,
             'increasedGlobalAccuracyAgainstBosses',
             'decreasedGlobalAccuracyAgainstBosses'
@@ -667,49 +667,49 @@ export class CustomModifiersManager {
         let modifiers = [] as ModifierData[];
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'chanceToReduceAttackDamageToZero',
+            ModifierConstants.KEYS.CHARACTER.chanceToReduceAttackDamageToZero,
             false,
             'increasedChanceToReduceAttackDamageToZero',
             'decreasedChanceToReduceAttackDamageToZero'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'damageFlatWhileTargetHasMaxHP',
+            ModifierConstants.KEYS.CHARACTER.damageFlatWhileTargetHasMaxHP,
             false,
             'increasedDamageFlatWhileTargetHasMaxHP',
             'decreasedDamageFlatWhileTargetHasMaxHP'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'damagePercentWhileTargetHasMaxHP',
+            ModifierConstants.KEYS.CHARACTER.damagePercentWhileTargetHasMaxHP,
             false,
             'increasedDamagePercentWhileTargetHasMaxHP',
             'decreasedDamagePercentWhileTargetHasMaxHP'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'damageFlatIgnoringResistance',
+            ModifierConstants.KEYS.CHARACTER.damageFlatIgnoringResistance,
             false,
             'increasedDamageFlatIgnoringDamageReduction',
             'decreasedDamageFlatIgnoringDamageReduction'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'damagePreventionThreshold',
+            ModifierConstants.KEYS.CHARACTER.damagePreventionThreshold,
             false,
             'increasedGlobalDamagePreventionThreshold',
             'decreasedGlobalDamagePreventionThreshold'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'combatDamagePreventionThreshold',
+            ModifierConstants.KEYS.CHARACTER.combatDamagePreventionThreshold,
             false,
             'increasedDamagePreventionThreshold',
             'decreasedDamagePreventionThreshold'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            'combatBarrierDamagePreventionThreshold',
+            ModifierConstants.KEYS.PLAYER.combatBarrierDamagePreventionThreshold,
             false,
             'increasedBarrierDamagePreventionThreshold',
             'decreasedBarrierDamagePreventionThreshold'
@@ -741,9 +741,22 @@ export class CustomModifiersManager {
          * Add flat xp modifiers
          */
         // @ts-ignore You can actually patch base classes no problem
-        this.context.patch(Skill, "modifyXP").after(function (returnValue, amount: number, action?: NamedObject) {
+        this.context.patch(Skill, "modifyXP").after(function (returnValue: number, amount: number, action?: NamedObject) {
             return returnValue += CustomModifiersCalculationHelper.getFlatXpModification(this, action);
         });
+
+        /**
+         * Add custom modifiers to modifier value source buider
+         */
+        // @ts-ignore You can actually patch base classes no problem
+        this.context.patch(Skill, '_buildXPSources').after(function (returnValue: ModifierSourceBuilder, action?: NamedObject) {
+            const query = this.getActionModifierQuery(action);
+            returnValue.addSources(ModifierConstants.IDS.PLAYER.skillXPPerLevel, query);
+            returnValue.addSources(ModifierConstants.IDS.PLAYER.flatSkillXP, query);
+            returnValue.addSources(ModifierConstants.IDS.PLAYER.flatSkillXPPerLevel, query);
+
+            return returnValue;
+        })
     }
 
     /**
@@ -1099,13 +1112,27 @@ export class CustomModifiersManager {
      * instead just used after patch as usual, repeating the "clampValue" call at the end to avoid invalid values
      */
     private patchMinHitCalculations() {
+        /**
+         * Patch percentage modifier for min hit based on max hit
+         */
+        this.context.patch(Player, 'getMinHitFromMaxHitPercent').after(function (returnValue: number): number {
+            return returnValue + CustomModifiersCalculationHelper.getPlayerMinHitFromMaxHitPercentModification(this);
+        });
+
+        this.context.patch(Enemy, 'getMinHitFromMaxHitPercent').after(function (returnValue: number): number {
+            return returnValue + CustomModifiersCalculationHelper.getEnemyMinHitFromMaxHitPercentModification(this);
+        });
+
+        /**
+         * Patch min hit flat modification, repeating the clamping logic
+         */
         this.context.patch(Player, "modifyMinHit").after(function (minHit: number) {
-            minHit += CustomModifiersCalculationHelper.getPlayerMinHitModification(this);
+            minHit += CustomModifiersCalculationHelper.getPlayerMinHitFlatModification(this);
 
             return clampValue(minHit, 1, this.stats.maxHit);
         });
         this.context.patch(Enemy, "modifyMinHit").after(function (minHit: number) {
-            minHit += CustomModifiersCalculationHelper.getEnemyMinHitModification(this);
+            minHit += CustomModifiersCalculationHelper.getEnemyMinHitFlatModification(this);
 
             return clampValue(minHit, 1, this.stats.maxHit);
         });
@@ -1115,22 +1142,20 @@ export class CustomModifiersManager {
      * Patches new max hit changing modifiers (both percentage and flat) into base logic
      */
     private patchMaxHitCalculations() {
-        this.context.patch(Player, "getMaxHitModifier").after(function (maxHitModifier: number): number {
-            return maxHitModifier += CustomModifiersCalculationHelper.getPlayerMaxHitPercentageModification(this);
+        /** Percentage modification of max hit */
+        this.context.patch(Player, "getMaxHitModifier").after(function (returnValue: number): number {
+            return returnValue += CustomModifiersCalculationHelper.getPlayerMaxHitPercentageModification(this);
         });
-        this.context.patch(Enemy, "getMaxHitModifier").after(function (maxHitModifier: number): number {
-            return maxHitModifier += CustomModifiersCalculationHelper.getEnemyMaxHitPercentageModification(this);
+        this.context.patch(Enemy, "getMaxHitModifier").after(function (returnValue: number): number {
+            return returnValue += CustomModifiersCalculationHelper.getEnemyMaxHitPercentageModification(this);
         });
 
-        this.context.patch(Player, "modifyMaxHit").after(function (maxHit) {
-            maxHit += CustomModifiersCalculationHelper.getPlayerMaxHitFlatModification(this);
-
-            return Math.max(maxHit, 1);
+        /** Flat modification of max hit */
+        this.context.patch(Player, 'getFlatMaxHitModifier').after(function (returnValue: number): number {
+            return returnValue + CustomModifiersCalculationHelper.getPlayerMaxHitFlatModification(this);
         });
-        this.context.patch(Enemy, "modifyMaxHit").after(function (maxHit) {
-            maxHit += CustomModifiersCalculationHelper.getEnemyMaxHitFlatModification(this);
-
-            return Math.max(maxHit, 1);
+        this.context.patch(Enemy, 'getFlatMaxHitModifier').after(function (returnValue: number): number {
+            return returnValue + CustomModifiersCalculationHelper.getEnemyMaxHitFlatModification(this);
         });
     }
 
@@ -1162,11 +1187,19 @@ export class CustomModifiersManager {
      * As example, the base method includes things like "increasedDamageTaken" and the increases through effects like Stun
      */
     private patchDamageModifierCalculations() {
-        this.context.patch(Player, "getDamageModifiers").after(function (totalModifier: number, target: Character) {
-            return totalModifier += CustomModifiersCalculationHelper.getPlayerDamagePercentageModification(this, target);
+        this.context.patch(Player, "getDamageDealtModifier").after(function (totalModifier: number) {
+            return totalModifier += CustomModifiersCalculationHelper.getPlayerDamageDealtPercentageModification(this);
         });
-        this.context.patch(Enemy, "getDamageModifiers").after(function (totalModifier: number, target: Character) {
-            return totalModifier += CustomModifiersCalculationHelper.getEnemyDamagePercentageModification(this, target);
+        this.context.patch(Enemy, "getDamageDealtModifier").after(function (totalModifier: number) {
+            return totalModifier += CustomModifiersCalculationHelper.getEnemyDamageDealtPercentageModification(this);
+        });
+
+        /** Specifically called on the target */
+        this.context.patch(Player, "getDamageTakenModifier").after(function (totalModifier: number) {
+            return totalModifier += CustomModifiersCalculationHelper.getPlayerDamageTakenPercentageModification(this);
+        });
+        this.context.patch(Enemy, "getDamageTakenModifier").after(function (totalModifier: number) {
+            return totalModifier += CustomModifiersCalculationHelper.getEnemyDamageTakenPercentageModification(this);
         });
     }
 
@@ -1174,43 +1207,23 @@ export class CustomModifiersManager {
      * Patches new accuracy (percentage) changing modifiers into base logic
      */
     private patchAccuracyCalculations() {
-        /**
-         * @param returnValue the current flat accuracy, afer 'modifyAccuracy' ran (which includes several percentage based modifiers)
-         * @param accuracy the accuracy originally provided to the method, the value we use to calculate our percentage boosts with,
-         *                 as there is no flat accuracy bonus between the start of the method and the addition of percentage based boosts
-         */
-        this.context.patch(Player, "modifyAccuracy").after(function (returnValue, accuracy) {
-            return returnValue += CustomModifiersCalculationHelper.getPlayerAccuracyFlatModification(this, accuracy);
+        this.context.patch(Player, "getAccuracyModifier").after(function (returnValue: number) {
+            return returnValue += CustomModifiersCalculationHelper.getPlayerAccuracyPercentModification(this);
         });
-        this.context.patch(Enemy, "modifyAccuracy").after(function (returnValue, accuracy) {
-            return returnValue += CustomModifiersCalculationHelper.getEnemyAccuracyFlatModification(this, accuracy);
+        this.context.patch(Enemy, "getAccuracyModifier").after(function (returnValue: number) {
+            return returnValue += CustomModifiersCalculationHelper.getEnemyAccuracyPercentModification(this);
         });
     }
 
     /**
      * Patches new damage reduction (flat percentage) changing modifiers into base logic
      */
-    private patchDamageReductionCalculations() {
-        // Btw, the method calling this one takes care of flooring whatever value we calculate
-        // May as well keep the following in, which I noted down while checking how to add the custom modifiers to the calculation
-        // #region Some explanation of what the base game does
-        // 1) First, a bunch of additive bonuses are added with each other
-        // 2) Then, both Player and Enemy call "super.modifyDamageReduction"
-        // 2.1) In there, some more additive bonus are added
-        // 2.2) Then, the total flat DR% summed up at this point is multiplicated by "increasedDamageReductionPercent - decreasedDamageReductionPercent"
-        // 2.3) THEN, that result is once again multiplicated, this time by "halveDamageReduction" (if set, that is)
-        // 2.4) That is the final result for the Enemy class
-        // 3) However, with the player, the following two things happen too
-        // 3.1) "increasedDamageReductionWithActivePrayer" is ADDITIVELY added to DR% (this was a bug and has since been patched)
-        // 3.2) Then, the final DR% at that point in time is multiplied by combat triangle (which based on mode may define something like "You are only 10% as accurate against monsters strong to your attack style")
-        // based on combat triangle, which has to be repeated for the overall custom DR% calculated for this case
-        // #endregion
-
-        this.context.patch(Player, "modifyResistance").after(function (returnValue, damageType: DamageType, resistance: number) {
-            return returnValue += CustomModifiersCalculationHelper.getPlayerDamageReductionFlatModification(this, damageType);
+    private patchResistanceCalculations() {
+        this.context.patch(Player, "modifyResistance").before(function (damageType: DamageType, resistance: number) {
+            return [damageType, resistance + CustomModifiersCalculationHelper.getPlayerDamageReductionFlatModification(this, damageType)];
         });
-        this.context.patch(Enemy, "modifyResistance").after(function (returnValue, damageType: DamageType, resistance: number) {
-            return returnValue += CustomModifiersCalculationHelper.getEnemyDamageReductionFlatModification(this, damageType);
+        this.context.patch(Enemy, "modifyResistance").before(function (damageType: DamageType, resistance: number) {
+            return [damageType, resistance + CustomModifiersCalculationHelper.getEnemyDamageReductionFlatModification(this, damageType)];
         });
     }
 
@@ -1223,8 +1236,8 @@ export class CustomModifiersManager {
             // Thieving
             if (thieving) {
                 const threshold: number = numberMultiplier * (
-                    this.modifiers.damagePreventionThreshold
-                    + this.modifiers.thievingDamagePreventionThreshold
+                    this.modifiers.getValue(ModifierConstants.IDS.CHARACTER.damagePreventionThreshold, ModifierQuery.EMPTY)
+                    + this.modifiers.getValue(ModifierConstants.IDS.PLAYER.thievingDamagePreventionThreshold, ModifierQuery.EMPTY)
                 );
             //    const threshold: number = numberMultiplier * (this.modifiers.increasedGlobalDamagePreventionThreshold
             //        - this.modifiers.decreasedGlobalDamagePreventionThreshold
@@ -1274,8 +1287,8 @@ export class CustomModifiersManager {
         // then we have to evaluate the barrier modifiers
         if (entity.isBarrierActive && canDamageBarrier) {
             const threshold = numberMultiplier * (
-                entity.modifiers.damagePreventionThreshold
-                + entity.modifiers.combatBarrierDamagePreventionThreshold
+                entity.modifiers.getValue(ModifierConstants.IDS.CHARACTER.damagePreventionThreshold, ModifierQuery.EMPTY)
+                + entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.combatBarrierDamagePreventionThreshold, ModifierQuery.EMPTY)
             );
             //const threshold = numberMultiplier * (entity.modifiers.increasedGlobalDamagePreventionThreshold
             //    - entity.modifiers.decreasedGlobalDamagePreventionThreshold
@@ -1288,8 +1301,8 @@ export class CustomModifiersManager {
 
         // Otherwise, no barrier is active, so we evaluate the non-barrier modifiers
         const threshold = numberMultiplier * (
-            entity.modifiers.damagePreventionThreshold
-            + entity.modifiers.combatDamagePreventionThreshold
+            entity.modifiers.getValue(ModifierConstants.IDS.CHARACTER.damagePreventionThreshold, ModifierQuery.EMPTY)
+            + entity.modifiers.getValue(ModifierConstants.IDS.CHARACTER.combatDamagePreventionThreshold, ModifierQuery.EMPTY)
         );
         //const threshold = numberMultiplier * (entity.modifiers.increasedGlobalDamagePreventionThreshold
         //    - entity.modifiers.decreasedGlobalDamagePreventionThreshold
@@ -1312,8 +1325,8 @@ export class CustomModifiersManager {
         let newFunc = function (damage: number): void {
             // Check the modifiers that may change how the original logic is supposed to behave
             const threshold: number = numberMultiplier * (
-                game.modifiers.damagePreventionThreshold
-                + game.modifiers.thievingDamagePreventionThreshold
+                game.modifiers.getValue(ModifierConstants.IDS.CHARACTER.damagePreventionThreshold, ModifierQuery.EMPTY)
+                + game.modifiers.getValue(ModifierConstants.IDS.PLAYER.thievingDamagePreventionThreshold, ModifierQuery.EMPTY)
             );
             //const threshold: number = numberMultiplier * (game.modifiers.increasedGlobalDamagePreventionThreshold
             //    - game.modifiers.decreasedGlobalDamagePreventionThreshold
