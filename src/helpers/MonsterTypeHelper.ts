@@ -7,6 +7,8 @@ import { MonsterTypeModifierPropertyNames } from '../models/monsterTyping/Monste
 import { MonsterTypeModifierType } from '../models/enums/MonsterTypeModifierType'
 
 import { languages } from '../languages';
+import { MonsterTypeManager } from '../managers/MonsterTypeManager';
+import { CustomModifiersRegistrationHelper } from './CustomModifiersRegistrationHelper';
 
 export class MonsterTypeHelper {
     /**
@@ -21,23 +23,22 @@ export class MonsterTypeHelper {
     /**
      * Creates an object of all modifiers added for the given type,
      * with the names dynamically created based on the name of the type
-     * @param typeSingularName
-     * @param typePluralName
+     * @param typeName
      * @returns
      */
-    public static createModifierPropertyNames(typeSingularName: string, typePluralName: string): MonsterTypeModifierPropertyNames {
-        const typeSingularNameLower = `${typeSingularName[0].toLowerCase()}${typeSingularName.substring(1)}`;
+    public static createModifierPropertyNames(typeName: string): MonsterTypeModifierPropertyNames {
+        //const typeSingularNameLower = `${typeSingularName[0].toLowerCase()}${typeSingularName.substring(1)}`;
 
         return {
-            traitApplied: `${typeSingularNameLower}TraitApplied`,
-            damage: `damageAgainst${typePluralName}`,
-            damageTaken: `damageTakenFrom${typePluralName}`, // TODO: Can arguably be removed by using "damage" as "enemyModifier" where applicable
-            maxHitPercent: `maxHitPercentAgainst${typePluralName}`,
-            maxHitFlat: `maxHitFlatAgainst${typePluralName}`,
-            minHitBasedOnMaxHit: `minHitBasedOnMaxHitAgainst${typePluralName}`,
-            flatMinHit: `flatMinHitAgainst${typePluralName}`,
-            accuracyRating: `accuracyRatingAgainst${typePluralName}`,
-            flatResistance: `flatResistanceAgainst${typePluralName}`
+            traitApplied: `traitApplied${typeName}`,
+            damage: `damage${typeName}`,
+            damageTaken: `damageTaken${typeName}`, // TODO: Can arguably be removed by using "damage" as "enemyModifier" where applicable
+            maxHitPercent: `maxHitPercent${typeName}`,
+            maxHitFlat: `maxHitFlat${typeName}`,
+            minHitBasedOnMaxHit: `minHitBasedOnMaxHit${typeName}`,
+            flatMinHit: `flatMinHit${typeName}`,
+            accuracyRating: `accuracyRating${typeName}`,
+            flatResistance: `flatResistance${typeName}`
             //chanceToApplyTraitInfiniteOnSpawn: `increasedChanceToApply${typeSingularName}TraitInfiniteOnSpawn`,
             //applyTraitTurnsOnSpawn: `apply${typeSingularName}TraitTurnsOnSpawn`,
             //chanceToApplyTrait: `chanceToApply${typeSingularName}Trait`,
@@ -172,9 +173,9 @@ export class MonsterTypeHelper {
                             // TODO: Check how "inverted" is handled here, whether it needs to match the above object's property
                             // scope is also not included, as currently only global scoping is implemented
                         }
-                    ] as ModifierDescriptionData[]
-                    //posAliases: [] as ModifierAliasData[], // TODO: merge modifiers together, actually making use of aliases
-                    //negAliases: [] as ModifierAliasData[] // TODO: merge modifiers together, actually making use of aliases
+                    ] as ModifierDescriptionData[],
+                    posAliases: [] as ModifierAliasData[],
+                    negAliases: [] as ModifierAliasData[]
                 }
             ] as ModifierScopingData[]
         } as ModifierData;
@@ -199,6 +200,48 @@ export class MonsterTypeHelper {
                 modifierObject["modifyValue"] = 'value*hpMultiplier';
                 break;
             default:
+        }
+
+        // Aliases for backwards compatbility
+        switch (modifierType) {
+            case MonsterTypeModifierType.TraitApplied:
+                const typeSingularNameLower = `${type.singularName[0].toLowerCase()}${type.singularName.substring(1)}`;
+                modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`${typeSingularNameLower}TraitApplied`));
+                break;
+            case MonsterTypeModifierType.Damage:
+                modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedDamageAgainst${type.pluralName}`));
+                modifierObject.allowedScopes[0].negAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedDamageAgainst${type.pluralName}`));
+                break;
+            case MonsterTypeModifierType.DamageTaken:
+                modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedDamageTakenFrom${type.pluralName}`));
+                modifierObject.allowedScopes[0].negAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedDamageTakenFrom${type.pluralName}`));
+                break;
+            case MonsterTypeModifierType.MaxHitPercent:
+                modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedMaxHitPercentAgainst${type.pluralName}`));
+                modifierObject.allowedScopes[0].negAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedMaxHitPercentAgainst${type.pluralName}`));
+                break;
+            case MonsterTypeModifierType.MaxHitFlat:
+                modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedMaxHitFlatAgainst${type.pluralName}`));
+                modifierObject.allowedScopes[0].negAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedMaxHitFlatAgainst${type.pluralName}`));
+                break;
+            case MonsterTypeModifierType.MinHitBasedOnMaxHit:
+                modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedMinHitBasedOnMaxHitAgainst${type.pluralName}`));
+                modifierObject.allowedScopes[0].negAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedMinHitBasedOnMaxHitAgainst${type.pluralName}`));
+                break;
+            case MonsterTypeModifierType.FlatMinHit:
+                modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedFlatMinHitAgainst${type.pluralName}`));
+                modifierObject.allowedScopes[0].negAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedFlatMinHitAgainst${type.pluralName}`));
+                break;
+            case MonsterTypeModifierType.AccuracyRating:
+                modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedGlobalAccuracyAgainst${type.pluralName}`));
+                modifierObject.allowedScopes[0].negAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedGlobalAccuracyAgainst${type.pluralName}`));
+                break;
+            case MonsterTypeModifierType.FlatResistance:
+                modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedDamageReductionAgainst${type.pluralName}`));
+                modifierObject.allowedScopes[0].negAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedDamageReductionAgainst${type.pluralName}`));
+                break;
+            default:
+                break;
         }
 
         return modifierObject;
@@ -631,5 +674,25 @@ export class MonsterTypeHelper {
 
         // Return result
         return ids;
+    }
+
+    /**
+     * Provides aliases for modifiers that have been removed with the V1.3 update
+     * @param type
+     * @returns
+     */
+    public static getBackwardsCompatibilityAliases(type: MonsterTypeDefinition): { posAliases: ModifierAliasData[], negAliases: ModifierAliasData[] } {
+        return {
+            posAliases: [
+                CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedChanceToApply${type.singularName}TraitInfiniteOnSpawn`),
+                CustomModifiersRegistrationHelper.createDefaultModifierAlias(`apply${type.singularName}TraitTurnsOnSpawn`),
+                CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedChanceToApply${type.singularName}Trait`),
+                CustomModifiersRegistrationHelper.createDefaultModifierAlias(`apply${type.singularName}TraitTurns`)
+            ],
+            negAliases: [
+                CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedChanceToApply${type.singularName}TraitInfiniteOnSpawn`),
+                CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedChanceToApply${type.singularName}Trait`)
+            ]
+        };
     }
 }

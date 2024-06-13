@@ -28,12 +28,12 @@ export enum MonsterTypeModifierType {
     FlatResistance = "flatResistance",
     //IncreasedDamageReduction = "increasedDamageReduction",
     //DecreasedDamageReduction = "decreasedDamageReduction",
-    ChanceToApplyTraitInfiniteOnSpawn = "chanceToApplyTraitInfiniteOnSpawn",
+    //ChanceToApplyTraitInfiniteOnSpawn = "chanceToApplyTraitInfiniteOnSpawn",
     //IncreasedChanceToApplyTraitInfiniteOnSpawn = "increasedChanceToApplyTraitInfiniteOnSpawn",
     //DecreasedChanceToApplyTraitInfiniteOnSpawn = "decreasedChanceToApplyTraitInfiniteOnSpawn",
-    ApplyTraitTurnsOnSpawn = "applyTraitTurnsOnSpawn",
-    ChanceToApplyTrait = "chanceToApplyTrait",
+    //ApplyTraitTurnsOnSpawn = "applyTraitTurnsOnSpawn",
+    //ChanceToApplyTrait = "chanceToApplyTrait",
     //IncreasedChanceToApplyTrait = "increasedChanceToApplyTrait",
     //DecreasedChanceToApplyTrait = "decreasedChanceToApplyTrait",
-    ApplyTraitTurns = "applyTraitTurns"
+    //ApplyTraitTurns = "applyTraitTurns"
 }

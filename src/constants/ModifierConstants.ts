@@ -88,8 +88,8 @@ export class ModifierConstants {
 
             // General Combat and Thieving
             damagePreventionThreshold: 'damagePreventionThreshold'
-        }
-
+        },
+        backwardsCompatibility: 'backwardsCompatibility'
     };
 
     static readonly IDS = {
@@ -151,6 +151,7 @@ export class ModifierConstants {
 
             // General Combat and Thieving
             damagePreventionThreshold: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.CHARACTER.damagePreventionThreshold}`
-        }
+        },
+        backwardsCompatibility: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.backwardsCompatibility}`
     }
 }

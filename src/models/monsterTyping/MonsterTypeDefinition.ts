@@ -11,6 +11,8 @@ export class MonsterTypeDefinition {
 
     /** Manually provided naming for type */
     public singularName: string
+
+    /** @depracated */
     public pluralName: string
 
     /** Used for effects and tiny icon support | As of now only supports full url */
@@ -36,7 +38,7 @@ export class MonsterTypeDefinition {
         this._monsters = monsters ??= [];
 
         this.isTypePropertyName = MonsterTypeHelper.createIsTypePropertyName(singularName);
-        this.modifierPropertyNames = MonsterTypeHelper.createModifierPropertyNames(singularName, pluralName);
+        this.modifierPropertyNames = MonsterTypeHelper.createModifierPropertyNames(singularName);
         this.effectPropertyObjectNames = MonsterTypeHelper.createEffectPropertyNames(singularName);
     }
 

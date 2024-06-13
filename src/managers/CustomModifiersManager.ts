@@ -68,6 +68,7 @@ export class CustomModifiersManager {
      */
     public registerMonsterTypes(types: MonsterTypeDefinition[]): void {
         let modifiers = [] as ModifierData[];
+        let modifierModifications = [] as ModifierModificationData[];
         let combatEffectTemplates = [] as CombatEffectTemplateData[];
         let combatEffects = [] as AnyCombatEffectData[];
 
@@ -95,6 +96,18 @@ export class CustomModifiersManager {
             combatEffects.push(MonsterTypeHelper.createTraitStaticEffectData(type));
             combatEffects.push(MonsterTypeHelper.createTraitStaticNonCountingEffectData(type));
             combatEffects.push(MonsterTypeHelper.createTraitStackingEffectData(type));
+
+
+            // IMPORTANT: THIS CURRENTLY ASSUMES THAT THIS IS CALLED AFTER "registerBackwardsCompatibilityModifier", SO THE MODIFIER TO MODIFY ACTUALLY EXISTS AT THIS POINT
+            const { posAliases, negAliases } = MonsterTypeHelper.getBackwardsCompatibilityAliases(type);
+            modifierModifications.push(CustomModifiersRegistrationHelper.createModifierModificationData(
+                ModifierConstants.IDS.backwardsCompatibility,
+                undefined,
+                undefined,
+                posAliases,
+                negAliases
+            ));
+
 
             // Create and register custom effect and stacking effect data
             // TODO: Only create a package to register instead, other mods can just reference it through id used in combat effects then
@@ -125,6 +138,13 @@ export class CustomModifiersManager {
         CmimUtils.logObj(types);
         CmimUtils.logObj(dataPackage);
         CmimUtils.registerDataPackage(dataPackage);
+
+        // Add modifications to pre-existing modifiers
+
+        const modificationDataPackage = CustomModifiersRegistrationHelper.createModifierModificationDataPackage(modifierModifications);
+        CmimUtils.log("=== CustomModifiersManager.registerMonsterTypes ===");
+        CmimUtils.logObj(modificationDataPackage);
+        CmimUtils.registerDataPackage(modificationDataPackage);
     }
 
     /**
@@ -730,7 +750,7 @@ export class CustomModifiersManager {
         let modifiers = [] as ModifierData[];
 
         modifiers.push({
-            id: 'backwardsCompatibility',
+            id: ModifierConstants.KEYS.backwardsCompatibility,
             isCombat: true,
             allowEnemy: true,
             allowedScopes: [{
