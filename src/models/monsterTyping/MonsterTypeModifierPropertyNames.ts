@@ -4,24 +4,24 @@
  * */
 export interface MonsterTypeModifierPropertyNames {
     traitApplied: string,
-    damage: string
+    damageDealt: string
     //increasedDamage: string,
     //decreasedDamage: string,
     damageTaken: string, // TODO: If I can add a custom scope, then this (among others here) could be added as a scope instead
     //increasedDamageTaken: string,
     //decreasedDamageTaken: string
-    maxHitPercent: string,
+    maxHit: string,
     //increasedMaxHitPercent: string,
     //decreasedMaxHitPercent: string,
-    maxHitFlat: string,
+    flatMaxHit: string,
     //increasedMaxHitFlat: string,
     //decreasedMaxHitFlat: string,
-    minHitBasedOnMaxHit: string,
-    //increasedMinHitBasedOnMaxHit: string,
-    //decreasedMinHitBasedOnMaxHit: string,
     flatMinHit: string,
     //increasedFlatMinHit: string,
     //decreasedFlatMinHit: string,
+    minHitBasedOnMaxHit: string,
+    //increasedMinHitBasedOnMaxHit: string,
+    //decreasedMinHitBasedOnMaxHit: string,
     accuracyRating: string,
     //increasedGlobalAccuracy: string,
     //decreasedGlobalAccuracy: string,

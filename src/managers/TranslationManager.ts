@@ -75,10 +75,10 @@ export class TranslationManager {
             loadedLangJson[`COMBAT_MISC_${type.singularName}_Trait_Stacking_Effect`] = loadedLangJson["COMBAT_MISC_Monster_Type_Trait_Stacking_Effect"].replace("${monsterType}", typeSingularName);
 
             loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.traitApplied}`] = loadedLangJson["MODIFIER_DATA_MonsterTypeTraitApplied"].replace("${monsterType}", typeSingularName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.damage}`] = loadedLangJson["MODIFIER_DATA_damageAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.damageDealt}`] = loadedLangJson["MODIFIER_DATA_damageAgainstMonsterType"].replace("${monsterType}", typePluralName);
             loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.damageTaken}`] = loadedLangJson["MODIFIER_DATA_damageTakenFromMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.maxHitPercent}`] = loadedLangJson["MODIFIER_DATA_maxHitPercentAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.maxHitFlat}`] = loadedLangJson["MODIFIER_DATA_maxHitFlatAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.maxHit}`] = loadedLangJson["MODIFIER_DATA_maxHitPercentAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.flatMaxHit}`] = loadedLangJson["MODIFIER_DATA_maxHitFlatAgainstMonsterType"].replace("${monsterType}", typePluralName);
             loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.minHitBasedOnMaxHit}`] = loadedLangJson["MODIFIER_DATA_minHitBasedOnMaxHitAgainstMonsterType"].replace("${monsterType}", typePluralName);
             loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.flatMinHit}`] = loadedLangJson["MODIFIER_DATA_flatMinHitAgainstMonsterType"].replace("${monsterType}", typePluralName);
             loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.accuracyRating}`] = loadedLangJson["MODIFIER_DATA_accuracyRatingAgainstMonsterType"].replace("${monsterType}", typePluralName);

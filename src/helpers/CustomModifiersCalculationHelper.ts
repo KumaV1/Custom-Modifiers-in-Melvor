@@ -92,7 +92,7 @@ export class CustomModifiersCalculationHelper {
             }
 
             if (entity.manager.onSlayerTask) {
-                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.minHitBasedOnMaxHitToSlayerTasks, ModifierQuery.EMPTY);
+                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.minHitBasedOnMaxHitSlayerTask, ModifierQuery.EMPTY);
             }
 
             modification += CustomModifiersCalculationHelper.getCharacterMinHitFromMaxHitPercentModification(entity);
@@ -141,19 +141,19 @@ export class CustomModifiersCalculationHelper {
 
             switch (entity.manager.areaType) {
                 case CombatAreaType.Combat:
-                    flatModification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMinHitToCombatAreaMonsters, ModifierQuery.EMPTY);
+                    flatModification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMinHitAgainstCombatAreaMonsters, ModifierQuery.EMPTY);
                     break;
                 case CombatAreaType.Slayer:
-                    flatModification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMinHitToSlayerAreaMonsters, ModifierQuery.EMPTY);
+                    flatModification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMinHitAgainstSlayerAreaMonsters, ModifierQuery.EMPTY);
                     break;
                 case CombatAreaType.Dungeon:
-                    flatModification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMinHitToDungeonMonsters, ModifierQuery.EMPTY);
+                    flatModification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMinHitAgainstDungeonMonsters, ModifierQuery.EMPTY);
                     break;
                 default:
             }
 
             if (entity.manager.onSlayerTask) {
-                flatModification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMinHitToSlayerTasks, ModifierQuery.EMPTY);
+                flatModification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMinHitSlayerTask, ModifierQuery.EMPTY);
             }
 
             flatModification += CustomModifiersCalculationHelper.getCharacterMinHitFlatModification(entity);
@@ -201,24 +201,24 @@ export class CustomModifiersCalculationHelper {
 
         if (entity.manager.fightInProgress) {
             if (entity.manager.enemy.isBoss) {
-                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitPercentAgainstBosses, ModifierQuery.EMPTY);
+                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitAgainstBosses, ModifierQuery.EMPTY);
             }
 
             switch (entity.manager.areaType) {
                 case CombatAreaType.Combat:
-                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitPercentToCombatAreaMonsters, ModifierQuery.EMPTY);
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitAgainstCombatAreaMonsters, ModifierQuery.EMPTY);
                     break;
                 case CombatAreaType.Slayer:
-                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitPercentToSlayerAreaMonsters, ModifierQuery.EMPTY);
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitAgainstSlayerAreaMonsters, ModifierQuery.EMPTY);
                     break;
                 case CombatAreaType.Dungeon:
-                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitPercentToDungeonMonsters, ModifierQuery.EMPTY);
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitAgainstDungeonMonsters, ModifierQuery.EMPTY);
                     break;
                 default:
             }
 
             if (entity.manager.onSlayerTask) {
-                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitPercentToSlayerTasks, ModifierQuery.EMPTY);
+                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitSlayerTask, ModifierQuery.EMPTY);
             }
 
             modification += CustomModifiersCalculationHelper.getCharacterMaxHitPercentageModification(entity);
@@ -246,7 +246,7 @@ export class CustomModifiersCalculationHelper {
      * @param entity
      */
     private static getCharacterMaxHitPercentageModification(entity: Character): number {
-        return CustomModifiersCalculationHelper.getTotalModificationForMonsterTypes(entity, 'maxHitPercent');
+        return CustomModifiersCalculationHelper.getTotalModificationForMonsterTypes(entity, 'maxHit');
     }
 
     // #endregion
@@ -263,24 +263,24 @@ export class CustomModifiersCalculationHelper {
 
         if (entity.manager.fightInProgress) {
             if (entity.manager.enemy.isBoss) {
-                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitFlatAgainstBosses, ModifierQuery.EMPTY);
+                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMaxHitAgainstBosses, ModifierQuery.EMPTY);
             }
 
             switch (entity.manager.areaType) {
                 case CombatAreaType.Combat:
-                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitFlatToCombatAreaMonsters, ModifierQuery.EMPTY);
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMaxHitAgainstCombatAreaMonsters, ModifierQuery.EMPTY);
                     break;
                 case CombatAreaType.Slayer:
-                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitFlatToSlayerAreaMonsters, ModifierQuery.EMPTY);
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMaxHitAgainstSlayerAreaMonsters, ModifierQuery.EMPTY);
                     break;
                 case CombatAreaType.Dungeon:
-                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitFlatToDungeonMonsters, ModifierQuery.EMPTY);
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMaxHitAgainstDungeonMonsters, ModifierQuery.EMPTY);
                     break;
                 default:
             }
 
             if (entity.manager.onSlayerTask) {
-                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitFlatToSlayerTasks, ModifierQuery.EMPTY);
+                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMaxHitSlayerTask, ModifierQuery.EMPTY);
             }
 
             modification += CustomModifiersCalculationHelper.getCharacterMaxHitFlatModification(entity);
@@ -309,7 +309,7 @@ export class CustomModifiersCalculationHelper {
      * @param entity
      */
     private static getCharacterMaxHitFlatModification(entity: Character): number {
-        return CustomModifiersCalculationHelper.getTotalModificationForMonsterTypes(entity, 'maxHitFlat');
+        return CustomModifiersCalculationHelper.getTotalModificationForMonsterTypes(entity, 'flatMaxHit');
     }
 
     // #endregion
@@ -452,7 +452,7 @@ export class CustomModifiersCalculationHelper {
      */
     private static getCharacterDamageDealtPercentageModifiers(entity: Character): number {
         return CustomModifiersCalculationHelper.getDamagePercentageModificationForStats(entity)
-            + CustomModifiersCalculationHelper.getTotalModificationForMonsterTypes(entity, 'damage');
+            + CustomModifiersCalculationHelper.getTotalModificationForMonsterTypes(entity, 'damageDealt');
     }
 
     /**
@@ -572,7 +572,7 @@ export class CustomModifiersCalculationHelper {
             }
 
             if (entity.manager.onSlayerTask) {
-                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.accuracyRatingAgainstSlayerTasks, ModifierQuery.EMPTY);
+                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.accuracyRatingSlayerTask, ModifierQuery.EMPTY);
             }
 
             modification += CustomModifiersCalculationHelper.getCharacterAccuracyPercentageModifiers(entity);

@@ -31,12 +31,12 @@ export class MonsterTypeHelper {
 
         return {
             traitApplied: `traitApplied${typeName}`,
-            damage: `damage${typeName}`,
-            damageTaken: `damageTaken${typeName}`, // TODO: Can arguably be removed by using "damage" as "enemyModifier" where applicable
-            maxHitPercent: `maxHitPercent${typeName}`,
-            maxHitFlat: `maxHitFlat${typeName}`,
-            minHitBasedOnMaxHit: `minHitBasedOnMaxHit${typeName}`,
+            damageDealt: `damageDealt${typeName}`,
+            damageTaken: `damageTaken${typeName}`,
+            maxHit: `maxHit${typeName}`,
+            flatMaxHit: `flatMaxHit${typeName}`,
             flatMinHit: `flatMinHit${typeName}`,
+            minHitBasedOnMaxHit: `minHitBasedOnMaxHit${typeName}`,
             accuracyRating: `accuracyRating${typeName}`,
             flatResistance: `flatResistance${typeName}`
             //chanceToApplyTraitInfiniteOnSpawn: `increasedChanceToApply${typeSingularName}TraitInfiniteOnSpawn`,

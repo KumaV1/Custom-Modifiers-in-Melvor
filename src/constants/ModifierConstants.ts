@@ -35,48 +35,48 @@ export class ModifierConstants {
             skillXPPerLevel: 'skillXPPerLevel',
             flatSkillXPPerLevel: 'flatSkillXPPerLevel',
             flatSkillXP: 'flatSkillXP',
-            thievingDamagePreventionThreshold: 'thievingDamagePreventionThreshold',
+            damagePreventionThresholdThieving: 'damagePreventionThresholdThieving',
 
             // Combat Area
-            maxHitPercentToCombatAreaMonsters: 'maxHitPercentToCombatAreaMonsters',
-            maxHitFlatToCombatAreaMonsters: 'maxHitFlatToCombatAreaMonsters',
-            flatMinHitToCombatAreaMonsters: 'flatMinHitToCombatAreaMonsters',
+            maxHitAgainstCombatAreaMonsters: 'maxHitAgainstCombatAreaMonsters',
+            flatMaxHitAgainstCombatAreaMonsters: 'flatMaxHitAgainstCombatAreaMonsters',
+            flatMinHitAgainstCombatAreaMonsters: 'flatMinHitAgainstCombatAreaMonsters',
             minHitBasedOnMaxHitToCombatAreaMonsters: 'minHitBasedOnMaxHitToCombatAreaMonsters',
             accuracyRatingAgainstCombatAreaMonsters: 'accuracyRatingAgainstCombatAreaMonsters',
             flatResistanceAgainstCombatAreaMonsters: 'flatResistanceAgainstCombatAreaMonsters',
 
             // Slayer Area
-            maxHitPercentToSlayerAreaMonsters: 'maxHitPercentToSlayerAreaMonsters',
-            maxHitFlatToSlayerAreaMonsters: 'maxHitFlatToSlayerAreaMonsters',
-            flatMinHitToSlayerAreaMonsters: 'flatMinHitToSlayerAreaMonsters',
+            maxHitAgainstSlayerAreaMonsters: 'maxHitAgainstSlayerAreaMonsters',
+            flatMaxHitAgainstSlayerAreaMonsters: 'flatMaxHitAgainstSlayerAreaMonsters',
+            flatMinHitAgainstSlayerAreaMonsters: 'flatMinHitAgainstSlayerAreaMonsters',
             minHitBasedOnMaxHitToSlayerAreaMonsters: 'minHitBasedOnMaxHitToSlayerAreaMonsters',
             accuracyRatingAgainstSlayerAreaMonsters: 'accuracyRatingAgainstSlayerAreaMonsters',
             flatResistanceAgainstSlayerAreaMonsters: 'flatResistanceAgainstSlayerAreaMonsters',
 
             // Dungeon
-            maxHitPercentToDungeonMonsters: 'maxHitPercentToDungeonMonsters',
-            maxHitFlatToDungeonMonsters: 'maxHitFlatToDungeonMonsters',
-            flatMinHitToDungeonMonsters: 'flatMinHitToDungeonMonsters',
+            maxHitAgainstDungeonMonsters: 'maxHitAgainstDungeonMonsters',
+            flatMaxHitAgainstDungeonMonsters: 'flatMaxHitAgainstDungeonMonsters',
+            flatMinHitAgainstDungeonMonsters: 'flatMinHitAgainstDungeonMonsters',
             minHitBasedOnMaxHitToDungeonMonsters: 'minHitBasedOnMaxHitToDungeonMonsters',
             accuracyRatingAgainstDungeonMonsters: 'accuracyRatingAgainstDungeonMonsters',
             flatResistanceAgainstDungeonMonsters: 'flatResistanceAgainstDungeonMonsters',
 
             // Slayer Task
-            maxHitPercentToSlayerTasks: 'maxHitPercentToSlayerTasks',
-            maxHitFlatToSlayerTasks: 'maxHitFlatToSlayerTasks',
-            minHitBasedOnMaxHitToSlayerTasks: 'minHitBasedOnMaxHitToSlayerTasks',
-            flatMinHitToSlayerTasks: 'flatMinHitToSlayerTasks',
-            accuracyRatingAgainstSlayerTasks: 'accuracyRatingAgainstSlayerTasks',
+            maxHitSlayerTask: 'maxHitSlayerTask',
+            flatMaxHitSlayerTask: 'flatMaxHitSlayerTask',
+            flatMinHitSlayerTask: 'flatMinHitSlayerTask',
+            minHitBasedOnMaxHitSlayerTask: 'minHitBasedOnMaxHitSlayerTask',
+            accuracyRatingSlayerTask: 'accuracyRatingSlayerTask',
 
             // Boss
-            maxHitPercentAgainstBosses: 'maxHitPercentAgainstBosses',
-            maxHitFlatAgainstBosses: 'maxHitFlatAgainstBosses',
+            maxHitAgainstBosses: 'maxHitAgainstBosses',
+            flatMaxHitAgainstBosses: 'flatMaxHitAgainstBosses',
             flatMinHitAgainstBosses: 'flatMinHitAgainstBosses',
             minHitBasedOnMaxHitAgainstBosses: 'minHitBasedOnMaxHitAgainstBosses',
             accuracyRatingAgainstBosses: 'accuracyRatingAgainstBosses',
 
             // General Combat
-            combatBarrierDamagePreventionThreshold: 'combatBarrierDamagePreventionThreshold',
+            damagePreventionThresholdBarrier: 'damagePreventionThresholdBarrier',
         },
         CHARACTER: {
             // General Combat
@@ -84,7 +84,7 @@ export class ModifierConstants {
             damageFlatWhileTargetHasMaxHP: 'damageFlatWhileTargetHasMaxHP',
             damagePercentWhileTargetHasMaxHP: 'damagePercentWhileTargetHasMaxHP',
             damageFlatIgnoringResistance: 'damageFlatIgnoringResistance',
-            combatDamagePreventionThreshold: 'combatDamagePreventionThreshold',
+            damagePreventionThresholdCombat: 'damagePreventionThresholdCombat',
 
             // General Combat and Thieving
             damagePreventionThreshold: 'damagePreventionThreshold'
@@ -98,48 +98,48 @@ export class ModifierConstants {
             skillXPPerLevel: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.skillXPPerLevel}`,
             flatSkillXPPerLevel: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatSkillXPPerLevel}`,
             flatSkillXP: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatSkillXP}`,
-            thievingDamagePreventionThreshold: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.thievingDamagePreventionThreshold}`,
+            damagePreventionThresholdThieving: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.damagePreventionThresholdThieving}`,
 
             // Combat Area
-            maxHitPercentToCombatAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.maxHitPercentToCombatAreaMonsters}`,
-            maxHitFlatToCombatAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.maxHitFlatToCombatAreaMonsters}`,
-            flatMinHitToCombatAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatMinHitToCombatAreaMonsters}`,
+            maxHitAgainstCombatAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.maxHitAgainstCombatAreaMonsters}`,
+            flatMaxHitAgainstCombatAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatMaxHitAgainstCombatAreaMonsters}`,
+            flatMinHitAgainstCombatAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatMinHitAgainstCombatAreaMonsters}`,
             minHitBasedOnMaxHitToCombatAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.minHitBasedOnMaxHitToCombatAreaMonsters}`,
             accuracyRatingAgainstCombatAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.accuracyRatingAgainstCombatAreaMonsters}`,
             flatResistanceAgainstCombatAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatResistanceAgainstCombatAreaMonsters}`,
 
             // Slayer Area
-            maxHitPercentToSlayerAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.maxHitPercentToSlayerAreaMonsters}`,
-            maxHitFlatToSlayerAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.maxHitFlatToSlayerAreaMonsters}`,
-            flatMinHitToSlayerAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatMinHitToSlayerAreaMonsters}`,
+            maxHitAgainstSlayerAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.maxHitAgainstSlayerAreaMonsters}`,
+            flatMaxHitAgainstSlayerAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatMaxHitAgainstSlayerAreaMonsters}`,
+            flatMinHitAgainstSlayerAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatMinHitAgainstSlayerAreaMonsters}`,
             minHitBasedOnMaxHitToSlayerAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.minHitBasedOnMaxHitToSlayerAreaMonsters}`,
             accuracyRatingAgainstSlayerAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.accuracyRatingAgainstSlayerAreaMonsters}`,
             flatResistanceAgainstSlayerAreaMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatResistanceAgainstSlayerAreaMonsters}`,
 
             // Dungeon
-            maxHitPercentToDungeonMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.maxHitPercentToDungeonMonsters}`,
-            maxHitFlatToDungeonMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.maxHitFlatToDungeonMonsters}`,
-            flatMinHitToDungeonMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatMinHitToDungeonMonsters}`,
+            maxHitAgainstDungeonMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.maxHitAgainstDungeonMonsters}`,
+            flatMaxHitAgainstDungeonMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatMaxHitAgainstDungeonMonsters}`,
+            flatMinHitAgainstDungeonMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatMinHitAgainstDungeonMonsters}`,
             minHitBasedOnMaxHitToDungeonMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.minHitBasedOnMaxHitToDungeonMonsters}`,
             accuracyRatingAgainstDungeonMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.accuracyRatingAgainstDungeonMonsters}`,
             flatResistanceAgainstDungeonMonsters: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatResistanceAgainstDungeonMonsters}`,
 
             // Slayer Task
-            maxHitPercentToSlayerTasks: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.maxHitPercentToSlayerTasks}`,
-            maxHitFlatToSlayerTasks: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.maxHitFlatToSlayerTasks}`,
-            minHitBasedOnMaxHitToSlayerTasks: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.minHitBasedOnMaxHitToSlayerTasks}`,
-            flatMinHitToSlayerTasks: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatMinHitToSlayerTasks}`,
-            accuracyRatingAgainstSlayerTasks: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.accuracyRatingAgainstSlayerTasks}`,
+            maxHitSlayerTask: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.maxHitSlayerTask}`,
+            flatMaxHitSlayerTask: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatMaxHitSlayerTask}`,
+            flatMinHitSlayerTask: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatMinHitSlayerTask}`,
+            minHitBasedOnMaxHitSlayerTask: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.minHitBasedOnMaxHitSlayerTask}`,
+            accuracyRatingSlayerTask: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.accuracyRatingSlayerTask}`,
 
             // Boss
-            maxHitPercentAgainstBosses: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.maxHitPercentAgainstBosses}`,
-            maxHitFlatAgainstBosses: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.maxHitFlatAgainstBosses}`,
+            maxHitAgainstBosses: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.maxHitAgainstBosses}`,
+            flatMaxHitAgainstBosses: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatMaxHitAgainstBosses}`,
             flatMinHitAgainstBosses: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.flatMinHitAgainstBosses}`,
             minHitBasedOnMaxHitAgainstBosses: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.minHitBasedOnMaxHitAgainstBosses}`,
             accuracyRatingAgainstBosses: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.accuracyRatingAgainstBosses}`,
 
             // General Combat
-            combatBarrierDamagePreventionThreshold: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.combatBarrierDamagePreventionThreshold}`,
+            damagePreventionThresholdBarrier: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.PLAYER.damagePreventionThresholdBarrier}`,
         },
         CHARACTER: {
             // General Combat
@@ -147,7 +147,7 @@ export class ModifierConstants {
             damageFlatWhileTargetHasMaxHP: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.CHARACTER.damageFlatWhileTargetHasMaxHP}`,
             damagePercentWhileTargetHasMaxHP: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.CHARACTER.damagePercentWhileTargetHasMaxHP}`,
             damageFlatIgnoringResistance: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.CHARACTER.damageFlatIgnoringResistance}`,
-            combatDamagePreventionThreshold: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.CHARACTER.combatDamagePreventionThreshold}`,
+            damagePreventionThresholdCombat: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.CHARACTER.damagePreventionThresholdCombat}`,
 
             // General Combat and Thieving
             damagePreventionThreshold: `${ModConstants.MOD_NAMESPACE_NAME}:${this.KEYS.CHARACTER.damagePreventionThreshold}`

@@ -3,10 +3,10 @@
 
     EFFECT_GROUP_MonsterTypeTraitApplication: 'Monster type trait affected (EN)',
 
-    MODIFIER_DATA_damageAgainstMonsterType: "${value}% Damage To ${monsterType}",
+    MODIFIER_DATA_damageDealtAgainstMonsterType: "${value}% Damage To ${monsterType}",
     MODIFIER_DATA_damageTakenFromMonsterType: "${value}% Damage taken from ${monsterType}",
-    MODIFIER_DATA_maxHitPercentAgainstMonsterType: "${value}% Max Hit when fighting ${monsterType}",
-    MODIFIER_DATA_maxHitFlatAgainstMonsterType: "${value} Max Hit when fighting ${monsterType}",
+    MODIFIER_DATA_maxHitAgainstMonsterType: "${value}% Max Hit when fighting ${monsterType}",
+    MODIFIER_DATA_flatMaxHitAgainstMonsterType: "${value} Max Hit when fighting ${monsterType}",
     MODIFIER_DATA_minHitBasedOnMaxHitAgainstMonsterType: "${value}% Minimum Hit when fighting ${monsterType}",
     MODIFIER_DATA_flatMinHitAgainstMonsterType: "${value} Minimum Hit when fighting ${monsterType}",
     MODIFIER_DATA_accuracyRatingAgainstMonsterType: '${value}% Accuracy Rating when fighting ${monsterType}',

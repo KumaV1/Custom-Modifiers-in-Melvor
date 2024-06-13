@@ -240,7 +240,7 @@ export class CustomModifiersManager {
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeSkillingModifierData(
-            ModifierConstants.KEYS.PLAYER.thievingDamagePreventionThreshold,
+            ModifierConstants.KEYS.PLAYER.damagePreventionThresholdThieving,
             false,
             'increasedThievingDamagePreventionThreshold',
             'decreasedThievingDamagePreventionThreshold'
@@ -367,21 +367,21 @@ export class CustomModifiersManager {
         let modifiers = [] as ModifierData[];
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.maxHitPercentToCombatAreaMonsters,
+            ModifierConstants.KEYS.PLAYER.maxHitAgainstCombatAreaMonsters,
             false,
             'increasedMaxHitPercentToCombatAreaMonsters',
             'decreasedMaxHitPercentToCombatAreaMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.maxHitFlatToCombatAreaMonsters,
+            ModifierConstants.KEYS.PLAYER.flatMaxHitAgainstCombatAreaMonsters,
             false,
             'increasedMaxHitFlatToCombatAreaMonsters',
             'decreasedMaxHitFlatToCombatAreaMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.flatMinHitToCombatAreaMonsters,
+            ModifierConstants.KEYS.PLAYER.flatMinHitAgainstCombatAreaMonsters,
             false,
             'increasedFlatMinHitToCombatAreaMonsters',
             'decreasedFlatMinHitToCombatAreaMonsters'
@@ -418,21 +418,21 @@ export class CustomModifiersManager {
         let modifiers = [] as ModifierData[];
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.maxHitPercentToSlayerAreaMonsters,
+            ModifierConstants.KEYS.PLAYER.maxHitAgainstSlayerAreaMonsters,
             false,
             'increasedMaxHitPercentToSlayerAreaMonsters',
             'decreasedMaxHitPercentToSlayerAreaMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.maxHitFlatToSlayerAreaMonsters,
+            ModifierConstants.KEYS.PLAYER.flatMaxHitAgainstSlayerAreaMonsters,
             false,
             'increasedMaxHitFlatToSlayerAreaMonsters',
             'decreasedMaxHitFlatToSlayerAreaMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.flatMinHitToSlayerAreaMonsters,
+            ModifierConstants.KEYS.PLAYER.flatMinHitAgainstSlayerAreaMonsters,
             false,
             'increasedFlatMinHitToSlayerAreaMonsters',
             'decreasedFlatMinHitToSlayerAreaMonsters'
@@ -469,21 +469,21 @@ export class CustomModifiersManager {
         let modifiers = [] as ModifierData[];
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.maxHitPercentToDungeonMonsters,
+            ModifierConstants.KEYS.PLAYER.maxHitAgainstDungeonMonsters,
             false,
             'increasedMaxHitPercentToDungeonMonsters',
             'decreasedMaxHitPercentToDungeonMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.maxHitFlatToDungeonMonsters,
+            ModifierConstants.KEYS.PLAYER.flatMaxHitAgainstDungeonMonsters,
             false,
             'increasedMaxHitFlatToDungeonMonsters',
             'decreasedMaxHitFlatToDungeonMonsters'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.flatMinHitToDungeonMonsters,
+            ModifierConstants.KEYS.PLAYER.flatMinHitAgainstDungeonMonsters,
             false,
             'increasedFlatMinHitToDungeonMonsters',
             'decreasedFlatMinHitToDungeonMonsters'
@@ -521,35 +521,35 @@ export class CustomModifiersManager {
         let modifiers = [] as ModifierData[];
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.maxHitPercentToSlayerTasks,
+            ModifierConstants.KEYS.PLAYER.maxHitSlayerTask,
             false,
             'increasedMaxHitPercentToSlayerTasks',
             'decreasedMaxHitPercentToSlayerTasks'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.maxHitFlatToSlayerTasks,
+            ModifierConstants.KEYS.PLAYER.flatMaxHitSlayerTask,
             false,
             'increasedMaxHitFlatToSlayerTasks',
             'decreasedMaxHitFlatToSlayerTasks'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.minHitBasedOnMaxHitToSlayerTasks,
+            ModifierConstants.KEYS.PLAYER.minHitBasedOnMaxHitSlayerTask,
             false,
             'increasedFlatMinHitToSlayerTasks',
             'decreasedFlatMinHitToSlayerTasks'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.flatMinHitToSlayerTasks,
+            ModifierConstants.KEYS.PLAYER.flatMinHitSlayerTask,
             false,
             'increasedMinHitBasedOnMaxHitToSlayerTasks',
             'decreasedMinHitBasedOnMaxHitToSlayerTasks'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.accuracyRatingAgainstSlayerTasks,
+            ModifierConstants.KEYS.PLAYER.accuracyRatingSlayerTask,
             false,
             'increasedGlobalAccuracyAgainstSlayerTasks',
             'decreasedGlobalAccuracyAgainstSlayerTasks'
@@ -584,14 +584,14 @@ export class CustomModifiersManager {
         let modifiers = [] as ModifierData[];
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.maxHitPercentAgainstBosses,
+            ModifierConstants.KEYS.PLAYER.maxHitAgainstBosses,
             false,
             'increasedMaxHitPercentAgainstBosses',
             'decreasedMaxHitPercentAgainstBosses'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.maxHitFlatAgainstBosses,
+            ModifierConstants.KEYS.PLAYER.flatMaxHitAgainstBosses,
             false,
             'increasedMaxHitFlatAgainstBosses',
             'decreasedMaxHitFlatAgainstBosses'
@@ -723,14 +723,14 @@ export class CustomModifiersManager {
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.CHARACTER.combatDamagePreventionThreshold,
+            ModifierConstants.KEYS.CHARACTER.damagePreventionThresholdCombat,
             false,
             'increasedDamagePreventionThreshold',
             'decreasedDamagePreventionThreshold'
         ));
 
         modifiers.push(CustomModifiersRegistrationHelper.createGlobalScopeCharacterCombatModifierData(
-            ModifierConstants.KEYS.PLAYER.combatBarrierDamagePreventionThreshold,
+            ModifierConstants.KEYS.PLAYER.damagePreventionThresholdBarrier,
             false,
             'increasedBarrierDamagePreventionThreshold',
             'decreasedBarrierDamagePreventionThreshold'
@@ -1333,7 +1333,7 @@ export class CustomModifiersManager {
             if (thieving) {
                 const threshold: number = numberMultiplier * (
                     this.modifiers.getValue(ModifierConstants.IDS.CHARACTER.damagePreventionThreshold, ModifierQuery.EMPTY)
-                    + this.modifiers.getValue(ModifierConstants.IDS.PLAYER.thievingDamagePreventionThreshold, ModifierQuery.EMPTY)
+                    + this.modifiers.getValue(ModifierConstants.IDS.PLAYER.damagePreventionThresholdThieving, ModifierQuery.EMPTY)
                 );
             //    const threshold: number = numberMultiplier * (this.modifiers.increasedGlobalDamagePreventionThreshold
             //        - this.modifiers.decreasedGlobalDamagePreventionThreshold
@@ -1384,7 +1384,7 @@ export class CustomModifiersManager {
         if (entity.isBarrierActive && canDamageBarrier) {
             const threshold = numberMultiplier * (
                 entity.modifiers.getValue(ModifierConstants.IDS.CHARACTER.damagePreventionThreshold, ModifierQuery.EMPTY)
-                + entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.combatBarrierDamagePreventionThreshold, ModifierQuery.EMPTY)
+                + entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.damagePreventionThresholdBarrier, ModifierQuery.EMPTY)
             );
             //const threshold = numberMultiplier * (entity.modifiers.increasedGlobalDamagePreventionThreshold
             //    - entity.modifiers.decreasedGlobalDamagePreventionThreshold
@@ -1398,7 +1398,7 @@ export class CustomModifiersManager {
         // Otherwise, no barrier is active, so we evaluate the non-barrier modifiers
         const threshold = numberMultiplier * (
             entity.modifiers.getValue(ModifierConstants.IDS.CHARACTER.damagePreventionThreshold, ModifierQuery.EMPTY)
-            + entity.modifiers.getValue(ModifierConstants.IDS.CHARACTER.combatDamagePreventionThreshold, ModifierQuery.EMPTY)
+            + entity.modifiers.getValue(ModifierConstants.IDS.CHARACTER.damagePreventionThresholdCombat, ModifierQuery.EMPTY)
         );
         //const threshold = numberMultiplier * (entity.modifiers.increasedGlobalDamagePreventionThreshold
         //    - entity.modifiers.decreasedGlobalDamagePreventionThreshold
@@ -1422,7 +1422,7 @@ export class CustomModifiersManager {
             // Check the modifiers that may change how the original logic is supposed to behave
             const threshold: number = numberMultiplier * (
                 game.modifiers.getValue(ModifierConstants.IDS.CHARACTER.damagePreventionThreshold, ModifierQuery.EMPTY)
-                + game.modifiers.getValue(ModifierConstants.IDS.PLAYER.thievingDamagePreventionThreshold, ModifierQuery.EMPTY)
+                + game.modifiers.getValue(ModifierConstants.IDS.PLAYER.damagePreventionThresholdThieving, ModifierQuery.EMPTY)
             );
             //const threshold: number = numberMultiplier * (game.modifiers.increasedGlobalDamagePreventionThreshold
             //    - game.modifiers.decreasedGlobalDamagePreventionThreshold
