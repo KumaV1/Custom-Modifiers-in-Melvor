@@ -6,6 +6,7 @@ import { MonsterTypeManager } from "../managers/MonsterTypeManager";
 import { SettingsManager } from "../managers/SettingsManager";
 import { CombatAreasIndicatorBadgeContainer } from "../models/combatAreaUi/CombatAreasIndicatorBadgeContainer";
 import { CombatAreasIndicatorBadgesVisibilityConfiguration } from "../models/combatAreaUi/CombatAreasIndicatorBadgesVisibilityConfiguration";
+import { ModifierConstants } from "../constants/ModifierConstants";
 
 export class CombatAreasUIManager {
     private static _modifierUIImpactIndicatorElement: HTMLElement;
@@ -330,8 +331,8 @@ export class CombatAreasUIManager {
      */
     private static evaluateModifierUIImpactIndicatorDisplay(): void {
         if (game.combat.fightInProgress) {
-            const requireDisplay = game.combat.player.modifiers.chanceToReduceAttackDamageToZero > 0
-                || game.combat.enemy.modifiers.chanceToReduceAttackDamageToZero > 0;
+            const requireDisplay = game.combat.player.modifiers.getValue(ModifierConstants.IDS.CHARACTER.chanceToReduceAttackDamageToZero, ModifierQuery.EMPTY) > 0
+                || game.combat.enemy.modifiers.getValue(ModifierConstants.IDS.CHARACTER.chanceToReduceAttackDamageToZero, ModifierQuery.EMPTY) > 0;
             //    const requireDisplay = (game.combat.player.modifiers.increasedChanceToReduceAttackDamageToZero - game.combat.player.modifiers.decreasedChanceToReduceAttackDamageToZero) > 0
             //        || (game.combat.enemy.modifiers.increasedChanceToReduceAttackDamageToZero - game.combat.enemy.modifiers.decreasedChanceToReduceAttackDamageToZero) > 0;
             if (requireDisplay) {
