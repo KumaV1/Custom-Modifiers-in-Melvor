@@ -36,6 +36,7 @@ export class CustomModifiersManager {
         //this.registerSpellModifiers();
         this.registerBossModifiers();
         this.registerGeneralModifiers();
+        this.registerBackwardsCompatibilityModifier();
     }
 
     /**
@@ -717,6 +718,81 @@ export class CustomModifiersManager {
 
         const dataPackage = CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers);
         CmimUtils.log("=== CustomModifiersManager.registerGeneralModifiers ===");
+        CmimUtils.logObj(dataPackage);
+        CmimUtils.registerDataPackage(dataPackage);
+    }
+
+    /**
+     * Creates a modifier not utilized at all, but with aliases for several removed modifiers, (which wouldn't fit any base game modifier),
+     * so that they don't potentially cause build errors for other mods
+     */
+    private registerBackwardsCompatibilityModifier(): void {
+        let modifiers = [] as ModifierData[];
+
+        modifiers.push({
+            id: 'backwardsCompatibility',
+            isCombat: true,
+            allowEnemy: true,
+            allowedScopes: [{
+                scopes: {},
+                descriptions: [
+                    {
+                        text: 'This modifier is no longer supported by CMiM. Please be so kind and let the Mod Developer know, that they are using a deprecated modifier'
+                    }
+                ],
+                posAliases: [
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedChanceToApplySlowOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedChanceToApplyStunOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('applyStunOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedChanceToApplyPoisonOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedChanceToApplyDeadlyPoisonOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedChanceToApplyAfflictionOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('applyAfflictionOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedChanceToApplyBleedOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedChanceToApplyBurnOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedChanceToApplyFreezeOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('applyFreezeOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedChanceToApplyFrostburnOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedChanceToApplyShockOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('applyShockOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedChanceToApplySleepOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('applySleepOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedChanceToApplyBleed'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedDeathMarkOnHit'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedChanceToApplyStackOfDeathMark'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedDeathMarkImmunity'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('applyDeathMarkOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedDamageTakenFromAirSpells'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedDamageTakenFromWaterSpells'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedDamageTakenFromEarthSpells'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedDamageTakenFromFireSpells')
+                ],
+                negAliases: [
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedChanceToApplySlowOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedChanceToApplyStunOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedChanceToApplyPoisonOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedChanceToApplyDeadlyPoisonOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedChanceToApplyAfflictionOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedChanceToApplyBleedOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedChanceToApplyBurnOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedChanceToApplyFreezeOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedChanceToApplyFrostburnOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedChanceToApplyShockOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedChanceToApplySleepOnSpawn'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedChanceToApplyBleed'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('deathMark'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedChanceToApplyStackOfDeathMark'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('decreasedDeathMarkImmunity'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedDamageTakenFromAirSpells'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedDamageTakenFromWaterSpells'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedDamageTakenFromEarthSpells'),
+                    CustomModifiersRegistrationHelper.createDefaultModifierAlias('increasedDamageTakenFromFireSpells')
+                ]
+            }]
+        });
+
+        const dataPackage = CustomModifiersRegistrationHelper.createModifierDataPackage(modifiers);
+        CmimUtils.log("=== CustomModifiersManager.registerBackwardsCompatibilityHolderModifier ===");
         CmimUtils.logObj(dataPackage);
         CmimUtils.registerDataPackage(dataPackage);
     }
