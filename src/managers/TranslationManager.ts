@@ -42,8 +42,8 @@ export class TranslationManager {
             'MODIFIER_DATA',
             'PAGE_NAME',
             'EFFECT_GROUP',
-            'MONSTER_TYPE_SINGULAR',
-            'MONSTER_TYPE_PLURAL'
+            'MONSTER_TYPE_NAME_SINGULAR',
+            'MONSTER_TYPE_NAME_PLURAL'
         ];
 
         // Based on how translation is retrieved,
@@ -75,14 +75,14 @@ export class TranslationManager {
             loadedLangJson[`COMBAT_MISC_${type.singularName}_Trait_Stacking_Effect`] = loadedLangJson["COMBAT_MISC_Monster_Type_Trait_Stacking_Effect"].replace("${monsterType}", typeSingularName);
 
             loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.traitApplied}`] = loadedLangJson["MODIFIER_DATA_MonsterTypeTraitApplied"].replace("${monsterType}", typeSingularName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.damageDealt}`] = loadedLangJson["MODIFIER_DATA_damageAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.damageTaken}`] = loadedLangJson["MODIFIER_DATA_damageTakenFromMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.maxHit}`] = loadedLangJson["MODIFIER_DATA_maxHitPercentAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.flatMaxHit}`] = loadedLangJson["MODIFIER_DATA_maxHitFlatAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.minHitBasedOnMaxHit}`] = loadedLangJson["MODIFIER_DATA_minHitBasedOnMaxHitAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.flatMinHit}`] = loadedLangJson["MODIFIER_DATA_flatMinHitAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.accuracyRating}`] = loadedLangJson["MODIFIER_DATA_accuracyRatingAgainstMonsterType"].replace("${monsterType}", typePluralName);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.flatResistance}`] = loadedLangJson["MODIFIER_DATA_flatResistanceAgainstMonsterType"].replace("${monsterType}", typePluralName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.damageDealt}`] = loadedLangJson["MODIFIER_DATA_damageDealtAgainstMonsterType"].replace("${monsterType}", typeSingularName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.damageTaken}`] = loadedLangJson["MODIFIER_DATA_damageTakenFromMonsterType"].replace("${monsterType}", typeSingularName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.maxHit}`] = loadedLangJson["MODIFIER_DATA_maxHitAgainstMonsterType"].replace("${monsterType}", typeSingularName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.flatMaxHit}`] = loadedLangJson["MODIFIER_DATA_flatMaxHitAgainstMonsterType"].replace("${monsterType}", typeSingularName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.flatMinHit}`] = loadedLangJson["MODIFIER_DATA_flatMinHitAgainstMonsterType"].replace("${monsterType}", typeSingularName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.minHitBasedOnMaxHit}`] = loadedLangJson["MODIFIER_DATA_minHitBasedOnMaxHitAgainstMonsterType"].replace("${monsterType}", typeSingularName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.accuracyRating}`] = loadedLangJson["MODIFIER_DATA_accuracyRatingAgainstMonsterType"].replace("${monsterType}", typeSingularName);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.flatResistance}`] = loadedLangJson["MODIFIER_DATA_flatResistanceAgainstMonsterType"].replace("${monsterType}", typeSingularName);
 
             //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.chanceToApplyTraitInfiniteOnSpawn}`] = loadedLangJson["MODIFIER_DATA_chanceToApplyMonsterTypeTraitInfiniteOnSpawn"].replace("${monsterType}", typeSingularName);
             //loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.applyTraitTurnsOnSpawn}`] = loadedLangJson["MODIFIER_DATA_applyMonserTypeTraitTurnsOnSpawn"].replace("${monsterType}", typeSingularName);
@@ -135,7 +135,7 @@ export class TranslationManager {
      * @returns
      */
     public static getMonsterTypeSingularNameTranslation(typeNameSingular: string): string {
-        return TranslationManager.getTranslationOrFallback(`MONSTER_TYPE_SINGULAR_${typeNameSingular}`, typeNameSingular);
+        return TranslationManager.getTranslationOrFallback(`MONSTER_TYPE_NAME_SINGULAR_${typeNameSingular}`, typeNameSingular);
     }
 
     /**
@@ -145,7 +145,7 @@ export class TranslationManager {
      * @returns
      */
     public static getMonsterTypePluralNameTranslation(typeNameSingular: string, typeNamePlural: string): string {
-        return TranslationManager.getTranslationOrFallback(`MONSTER_TYPE_PLURAL_${typeNameSingular}`, typeNamePlural);
+        return TranslationManager.getTranslationOrFallback(`MONSTER_TYPE_NAME_PLURAL_${typeNameSingular}`, typeNamePlural);
     }
 
     /**
