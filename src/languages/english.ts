@@ -21,14 +21,14 @@
     MODIFIER_DATA_flatMinHitAgainstSlayerAreaMonsters: '${value} Minimum Hit To Slayer Area Monsters',
     MODIFIER_DATA_minHitBasedOnMaxHitToSlayerAreaMonsters: '${value}% of Maximum Hit added to Minimum Hit against Slayer Area Monsters',
     MODIFIER_DATA_accuracyRatingAgainstSlayerAreaMonsters: '${value}% Accuracy Rating against Slayer Area Monsters',
-    MODIFIER_DATA_flatResistanceAgainstSlayerAreaMonsters: '${value}% ${resistanceName} against Slayer Area Monsters',
+    MODIFIER_DATA_flatResistanceAgainstSlayerAreaMonstersDamageType: '${value}% ${resistanceName} against Slayer Area Monsters',
 
     MODIFIER_DATA_maxHitAgainstDungeonMonsters: '${value}% Max Hit To Dungeon Monsters',
     MODIFIER_DATA_flatMaxHitAgainstDungeonMonsters: '${value} Max Hit To Dungeon Monsters',
     MODIFIER_DATA_flatMinHitAgainstDungeonMonsters: '${value} Minimum Hit To Dungeon Monsters',
     MODIFIER_DATA_minHitBasedOnMaxHitToDungeonMonsters: '${value}% of Maximum Hit added to Minimum Hit against Dungeon Monsters',
     MODIFIER_DATA_accuracyRatingAgainstDungeonMonsters: '${value}% Accuracy Rating against Dungeon Monsters',
-    MODIFIER_DATA_flatResistanceAgainstDungeonMonsters: '${value}% ${resistanceName} against Dungeon Monsters',
+    MODIFIER_DATA_flatResistanceAgainstDungeonMonstersDamageType: '${value}% ${resistanceName} against Dungeon Monsters',
 
     MODIFIER_DATA_maxHitSlayerTask: '${value}% Max Hit To Combat Area Monsters',
     MODIFIER_DATA_flatMaxHitSlayerTask: '${value} Max Hit To Combat Area Monsters',

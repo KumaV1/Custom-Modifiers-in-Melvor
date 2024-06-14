@@ -304,10 +304,10 @@ It won't result in an "UNDEFINED TRANSLATION" text appearing.
 
 ```js
 // Structure
-MONSTER_TYPE_SINGULAR_Monster type name singular: "Monster type name singular",
-MONSTER_TYPE_PLURAL_Monster type name singular: "Monster type name plural",
+MONSTER_TYPE_NAME_SINGULAR_Monster type name singular: "Monster type name singular",
+MONSTER_TYPE_NAME_PLURAL_Monster type name singular: "Monster type name plural",
 
 // Example
-MONSTER_TYPE_SINGULAR_Elf: "Elf",
-MONSTER_TYPE_PLURAL_Elf: "Elves",
+MONSTER_TYPE_NAME_SINGULAR_Elf: "Elf",
+MONSTER_TYPE_NAME_PLURAL_Elf: "Elves",
 ```

@@ -25,18 +25,18 @@ export class CustomModifiersManager {
      * Registers all non-dynamic custom modifers, so they are known by the game
      */
     public registerModifiers() {
-        this.registerSkillModifiers();
+        //this.registerSkillModifiers();
         //this.registerSpawnModifiers();
         //this.registerOnHitModifiers();
         //this.registerDeathMarkModifiers();
-        this.registerCombatAreaModifiers();
-        this.registerSlayerAreaModifiers();
-        this.registerDungeonModifiers();
-        this.registerSlayerTaskModifiers();
+        //this.registerCombatAreaModifiers();
+        //this.registerSlayerAreaModifiers();
+        //this.registerDungeonModifiers();
+        //this.registerSlayerTaskModifiers();
         //this.registerSpellModifiers();
-        this.registerBossModifiers();
-        this.registerGeneralModifiers();
-        this.registerBackwardsCompatibilityModifier();
+        //this.registerBossModifiers();
+        //this.registerGeneralModifiers();
+        //this.registerBackwardsCompatibilityModifier();
     }
 
     /**
