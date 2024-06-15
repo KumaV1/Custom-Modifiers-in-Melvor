@@ -8,7 +8,7 @@ import { TranslationManager } from "../../managers/TranslationManager";
 export class MonsterTypeCombatAreasIndicatorDefinition {
     public type: MonsterTypeDefinition
 
-    public translatedTypeSingularName: string
+    public typeNameTranslation: string
 
     public active: boolean
 
@@ -17,6 +17,6 @@ export class MonsterTypeCombatAreasIndicatorDefinition {
         this.active = active;
 
         // Get translated type of name, so later processes can use it for ordering by name
-        this.translatedTypeSingularName = TranslationManager.getMonsterTypeSingularNameTranslation(type.singularName);
+        this.typeNameTranslation = TranslationManager.getMonsterTypeSingularNameTranslation(type.name);
     }
 }

@@ -10,10 +10,13 @@ export class MonsterTypeDefinition {
     }
 
     /** Manually provided naming for type */
-    public singularName: string
+    public name: string
 
-    /** @depracated */
-    public pluralName: string
+    /**
+     * plural variant of type name
+     * @deprecated only still exists, because of its usage in old modifier names, which are therefore wanted to be preserved as aliases
+     */
+    public pluralName: string | undefined | null
 
     /** Used for effects and tiny icon support | As of now only supports full url */
     public iconResourceUrl: string // TODO: "Only supports full url" outdated, presumably
@@ -22,24 +25,20 @@ export class MonsterTypeDefinition {
     public isTypePropertyName: string
     public modifierPropertyNames: MonsterTypeModifierPropertyNames
 
-    public effectPropertyObjectNames: MonsterTypeEffectObjectNames
-
     /**
      * Create a new instance of a monster type definition
-     * @param singularName - the main name for the type
-     * @param pluralName - the plural variation, used for things like modifier names
+     * @param name - plural variant of type name
      * @param iconResourceUrl - Url to an icon, that will be used for various things, such as effects and tiny icon mod support
      * @param monsters - optionally already provide some monsters; duplicates are NOT filtered out
      */
-    constructor(singularName: string, pluralName: string, iconResourceUrl: string, monsters?: string[]) {
-        this.singularName = singularName;
+    constructor(name: string, pluralName: string | undefined | null, iconResourceUrl: string, monsters?: string[]) {
+        this.name = name;
         this.pluralName = pluralName;
         this.iconResourceUrl = iconResourceUrl;
         this._monsters = monsters ??= [];
 
-        this.isTypePropertyName = MonsterTypeHelper.createIsTypePropertyName(singularName);
-        this.modifierPropertyNames = MonsterTypeHelper.createModifierPropertyNames(singularName);
-        this.effectPropertyObjectNames = MonsterTypeHelper.createEffectPropertyNames(singularName);
+        this.isTypePropertyName = MonsterTypeHelper.createIsTypePropertyName(name);
+        this.modifierPropertyNames = MonsterTypeHelper.createModifierPropertyNames(name);
     }
 
     /**

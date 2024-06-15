@@ -55,17 +55,14 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
         // Get matching monsters
         let matchingMonsters: Monster[] = [];
         monsters.forEach(function (monster) {
-            if (MonsterTypeManager.monsterIsOfType(monster, type.singularName)) {
+            if (MonsterTypeManager.monsterIsOfType(monster, type.name)) {
                 //console.log(`monster name: ${monster.name} | _media: ${monster._media} | media: ${monster.media}`);
                 matchingMonsters.push(monster);
             }
         });
 
         // Try to translate type name
-        const name = TranslationManager.getMonsterTypePluralNameTranslation(
-            type.singularName,
-            type.pluralName
-        );
+        const name = TranslationManager.getMonsterTypePluralNameTranslation(type.name);
 
         // Register
         const obj: MonsterTypeOverviewMonsterType = {
@@ -86,7 +83,7 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
         // @ts-ignore
         if (game.combat.player.modifiers[type.modifierPropertyNames.traitApplied] > 0) {
             const name = TranslationManager.getMonsterTypeSingularNameTranslation(
-                type.singularName
+                type.name
             );
             // @ts-ignore
             const value: number = game.combat.player.modifiers[type.modifierPropertyNames.traitApplied];

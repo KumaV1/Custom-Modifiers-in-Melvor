@@ -985,7 +985,7 @@ export class CustomModifiersManager {
                 const type = types[i];
                 // console.log(`setStatsFromMonster | Checking to see whether or not to apply ${type.modifierPropertyNames.traitApplied}: ${isOfType}`);
                 // @ts-ignore - We add is{Type} dynamically
-                this[type.isTypePropertyName] = MonsterTypeManager.monsterIsOfType(monster, type.singularName);
+                this[type.isTypePropertyName] = MonsterTypeManager.monsterIsOfType(monster, type.name);
             }
         });
     }

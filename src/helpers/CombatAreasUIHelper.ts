@@ -33,7 +33,7 @@ export class CombatAreasUIHelper {
         // Create indicators for monster types
         for (var i = 0; i < indicatorDefinitions.length; i++) {
             const definition = indicatorDefinitions[i];
-            if (MonsterTypeManager.monsterIsOfType(monster, definition.type.singularName)) {
+            if (MonsterTypeManager.monsterIsOfType(monster, definition.type.name)) {
                 badges.push(CombatAreasUIHelper.createCombatAreaIndicatorBadge(definition.type, definition.active, 1, false));
             }
         }
@@ -66,7 +66,7 @@ export class CombatAreasUIHelper {
             let count = 0;
 
             monsters.forEach(function (value: Monster) {
-                if (MonsterTypeManager.monsterIsOfType(value, definition.type.singularName)) {
+                if (MonsterTypeManager.monsterIsOfType(value, definition.type.name)) {
                     count++;
                 }
             });
@@ -98,8 +98,8 @@ export class CombatAreasUIHelper {
             ? `${count} `
             : '';
         badgeEl.innerHTML += count > 1
-            ? TranslationManager.getMonsterTypePluralNameTranslation(type.singularName, type.pluralName)
-            : TranslationManager.getMonsterTypeSingularNameTranslation(type.singularName);
+            ? TranslationManager.getMonsterTypePluralNameTranslation(type.name)
+            : TranslationManager.getMonsterTypeSingularNameTranslation(type.name);
 
         return new CombatAreasIndicatorBadge(badgeEl, typeActive ? CombatAreasIndicatorBadgeType.ActiveMonsterType : CombatAreasIndicatorBadgeType.InactiveMonsterType);
     }
@@ -181,7 +181,7 @@ export class CombatAreasUIHelper {
             }
         }
 
-        CmimUtils.orderAlphabetically(indicatorDefinitions, "translatedTypeSingularName"); // Order them alphabetically
+        CmimUtils.orderAlphabetically(indicatorDefinitions, "typeNameTranslation"); // Order them alphabetically
 
         return indicatorDefinitions;
     }
