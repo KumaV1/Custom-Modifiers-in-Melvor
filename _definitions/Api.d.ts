@@ -18,7 +18,7 @@ declare namespace Modding {
             addMonsters: (type: string | MonsterType, monsterIds: string[]) => void
 
             /**
-             * Ensures that the given type will be "active", therefore registering modifiers, language data, etc.
+             * Sets the given type to be "active", resulting in related data to be utilized in calculations
              * @param type which type to ensure activation of
              * @returns
              */

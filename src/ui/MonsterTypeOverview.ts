@@ -1,7 +1,6 @@
 import { CmimUtils } from "../Utils";
 import { MonsterTypeDefinition } from "../models/monsterTyping/MonsterTypeDefinition";
 import { MonsterTypeManager } from "../managers/MonsterTypeManager"
-import { SettingsManager } from "../managers/SettingsManager";
 import { TranslationManager } from "../managers/TranslationManager";
 
 interface MonsterTypeOverviewPlayerTraitEntry {
@@ -15,14 +14,10 @@ interface MonsterTypeOverviewMonsterType {
     iconResourceUrl: string
 }
 
-interface MonsterTypeOverviewInactiveMonsterType extends MonsterTypeOverviewMonsterType {
-    keptInactiveByModSettings: boolean
-}
-
 interface MonsterTypeOverviewProps {
     traitsOnPlayer: MonsterTypeOverviewPlayerTraitEntry[]
     activeTypes: MonsterTypeOverviewMonsterType[], // add tooltip with "onShow"
-    inactiveTypes: MonsterTypeOverviewInactiveMonsterType[]
+    inactiveTypes: MonsterTypeOverviewMonsterType[]
 }
 
 // @ts-ignore: 'Component' is unknown for some reason
@@ -55,17 +50,13 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
         // Get matching monsters
         let matchingMonsters: Monster[] = [];
         monsters.forEach(function (monster) {
-            if (MonsterTypeManager.monsterIsOfType(monster, type.singularName)) {
-                //console.log(`monster name: ${monster.name} | _media: ${monster._media} | media: ${monster.media}`);
+            if (MonsterTypeManager.monsterIsOfType(monster, type.name)) {
                 matchingMonsters.push(monster);
             }
         });
 
         // Try to translate type name
-        const name = TranslationManager.getMonsterTypePluralNameTranslation(
-            type.singularName,
-            type.pluralName
-        );
+        const name = TranslationManager.getMonsterTypePluralNameTranslation(type.name);
 
         // Register
         const obj: MonsterTypeOverviewMonsterType = {
@@ -76,16 +67,13 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
         if (active) {
             props.activeTypes.push(obj);
         } else {
-            props.inactiveTypes.push({
-                ...obj,
-                keptInactiveByModSettings: SettingsManager.getDisableSpecificMonsterTypes.some(t => t === type.singularName)
-            });
+            props.inactiveTypes.push(obj);
         }
 
         // @ts-ignore
         if (game.combat.player.modifiers[type.modifierPropertyNames.traitApplied] > 0) {
             const name = TranslationManager.getMonsterTypeSingularNameTranslation(
-                type.singularName
+                type.name
             );
             // @ts-ignore
             const value: number = game.combat.player.modifiers[type.modifierPropertyNames.traitApplied];

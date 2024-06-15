@@ -83,8 +83,8 @@ ctx.gameData.addPackage(ModData);
   "equipRequirements": [...],
   "equipmentStats": [...],
   "modifiers": {
-    "increasedDamageAgainstUndead": 15,
-    "increasedGlobalAccuracyAgainstUndead": 15
+    "damageDealtUndead": 15,
+    "accuracyRatingUndead": 15
   }
 },
 
@@ -132,8 +132,8 @@ if (cmimLoaded) {
   "id": "runescapeEncountersInMelvor:Salve_Amulet",
   "modifiers": {
     "add": {
-      "increasedDamageAgainstUndead": 15,
-      "increasedGlobalAccuracyAgainstUndead": 15
+      "damageDealtUndead": 15,
+      "accuracyRatingUndead": 15
     }
   }
 },
@@ -192,10 +192,10 @@ Artificial type allocation (aka "trait") is applied through modifiers, and are t
 That being said, depending on what you are implementing, artificial type allocation might not be a valid condition.
 ```js
 // Structure
-character.modifiers.TYPETraitApplied
+character.modifiers.getValue("customModifiersInMelvor:traitAppliedTYPE")
 
 // Example
-if(game.combat.player.target.modifiers.humanTraitApplied > 0) {
+if(game.combat.player.target.modifiers.getValue("customModifiersInMelvor:humanTraitApplied") > 0) {
   // Do stuff
 }
 ```
@@ -255,14 +255,14 @@ addMonsters("Dragon", ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"]);
 // Structure
 /**
 * Registers (or updates) the given type. Do note, that some parameters may be ignored, if another mod has already provided data for the exact same data
-* @param typeNameSingular - the main identifier of the type. Affects modifier name(s)
-* @param typeNamePlural - the english plural variant of the type's name. Affects modifier name(s) 
+* @param typeName - the main identifier of the type. Affects modifier name(s)
+* @param typeNamePlural - deprecated, only used for backwards compatibility (modifier aliases, Game v1.3 update); If you implement this mod after v1.3, feel free to just provide undefined or null for this property (wish Javascript provided proper function overloading)
 * @param iconResourceUrl - a usable full URL to an image that will be used as icon for anything related to this type (e.g. "StackingEffects" or "Tiny Icon Mod Support")
 * @param monsterIds - a list of monster ids. If you are defining a type not covered by the base mod, you should include any Melvor monsters that may fit
 * @param active - whether the type should be set to active (can be omittet, in which case it will default to true) - as a mod consuming the api, this is basically always going to be true, but can technically be set to false as well
 * @returns void
 */
-registerOrUpdateType(typeNameSingular: string, typeNamePlural: string, iconResourceUrl: string, monsterIds: string[], active: boolean)
+registerOrUpdateType(typeName: string, typeNamePlural: string | undefined | null, iconResourceUrl: string, monsterIds: string[], active: boolean)
 
 // Example
 registerOrUpdateType("Dragon", "Dragons", "https://cdn.melvor.net/core/v018/assets/media/monsters/dragon_green.png", ["runescapeEncountersInMelvor:Gorvek_And_Vindicta"]);
@@ -304,10 +304,10 @@ It won't result in an "UNDEFINED TRANSLATION" text appearing.
 
 ```js
 // Structure
-MONSTER_TYPE_SINGULAR_Monster type name singular: "Monster type name singular",
-MONSTER_TYPE_PLURAL_Monster type name singular: "Monster type name plural",
+MONSTER_TYPE_NAME_SINGULAR_Monster type name singular: "Monster type name singular",
+MONSTER_TYPE_NAME_PLURAL_Monster type name singular: "Monster type name plural",
 
 // Example
-MONSTER_TYPE_SINGULAR_Elf: "Elf",
-MONSTER_TYPE_PLURAL_Elf: "Elves",
+MONSTER_TYPE_NAME_SINGULAR_Elf: "Elf",
+MONSTER_TYPE_NAME_PLURAL_Elf: "Elves",
 ```

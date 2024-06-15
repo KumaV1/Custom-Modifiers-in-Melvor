@@ -4,6 +4,8 @@ declare global {
         hasTotHEntitlementAndIsEnabled: boolean;
         hasAoDEntitlement: boolean;
         hasAoDEntitlementAndIsEnabled: boolean;
+        hasItAEntitlement: boolean;
+        hasItAEntitlementAndIsEnabled: boolean;
     }
 
     const cloudManager: CloudManager;

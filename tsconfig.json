@@ -103,7 +103,8 @@
   },
   "include": [
     "src/**/*",
-    "node_modules/melvor-types",
+    //"node_modules/melvor-types",
+    "node_modules/melvor-types-ita-beta",
     "_definitions/**/*"
   ]
 }

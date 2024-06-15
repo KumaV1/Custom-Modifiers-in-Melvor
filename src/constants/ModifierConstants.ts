@@ -1,3 +1,5 @@
+import { ModConstants } from "./ModConstants";
+
 export class ModifierConstants {
     static readonly DEATH_MARK_EFFECT_FULL_ID = "customModifiersInMelvor:Death_Mark_Effect";
     static readonly DEATH_MARK_MAX_PERCENT = 20;
@@ -26,4 +28,68 @@ export class ModifierConstants {
     static readonly MYTHICAL_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/griffin.png";
     static readonly SEA_CREATURE_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/large_crab.png";
     static readonly UNDEAD_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/skeleton.png";
+
+    static readonly IDS = {
+        PLAYER: {
+            // Skilling
+            skillXPPerLevel: CmimModifierIds.skillXPPerLevel,
+            flatSkillXPPerLevel: CmimModifierIds.flatSkillXPPerLevel,
+            flatSkillXP: CmimModifierIds.flatSkillXP,
+            damagePreventionThresholdThieving: CmimModifierIds.damagePreventionThresholdThieving,
+
+            // Combat Area
+            maxHitAgainstCombatAreaMonsters: CmimModifierIds.maxHitAgainstCombatAreaMonsters,
+            flatMaxHitAgainstCombatAreaMonsters: CmimModifierIds.flatMaxHitAgainstCombatAreaMonsters,
+            flatMinHitAgainstCombatAreaMonsters: CmimModifierIds.flatMinHitAgainstCombatAreaMonsters,
+            minHitBasedOnMaxHitToCombatAreaMonsters: CmimModifierIds.minHitBasedOnMaxHitToCombatAreaMonsters,
+            accuracyRatingAgainstCombatAreaMonsters: CmimModifierIds.accuracyRatingAgainstCombatAreaMonsters,
+            flatResistanceAgainstCombatAreaMonsters: CmimModifierIds.flatResistanceAgainstCombatAreaMonsters,
+
+            // Slayer Area
+            maxHitAgainstSlayerAreaMonsters: CmimModifierIds.maxHitAgainstSlayerAreaMonsters,
+            flatMaxHitAgainstSlayerAreaMonsters: CmimModifierIds.flatMaxHitAgainstSlayerAreaMonsters,
+            flatMinHitAgainstSlayerAreaMonsters: CmimModifierIds.flatMinHitAgainstSlayerAreaMonsters,
+            minHitBasedOnMaxHitToSlayerAreaMonsters: CmimModifierIds.minHitBasedOnMaxHitToSlayerAreaMonsters,
+            accuracyRatingAgainstSlayerAreaMonsters: CmimModifierIds.accuracyRatingAgainstSlayerAreaMonsters,
+            flatResistanceAgainstSlayerAreaMonsters: CmimModifierIds.flatResistanceAgainstSlayerAreaMonsters,
+
+            // Dungeon
+            maxHitAgainstDungeonMonsters: CmimModifierIds.maxHitAgainstDungeonMonsters,
+            flatMaxHitAgainstDungeonMonsters: CmimModifierIds.flatMaxHitAgainstDungeonMonsters,
+            flatMinHitAgainstDungeonMonsters: CmimModifierIds.flatMinHitAgainstDungeonMonsters,
+            minHitBasedOnMaxHitToDungeonMonsters: CmimModifierIds.minHitBasedOnMaxHitToDungeonMonsters,
+            accuracyRatingAgainstDungeonMonsters: CmimModifierIds.accuracyRatingAgainstDungeonMonsters,
+            flatResistanceAgainstDungeonMonsters: CmimModifierIds.flatResistanceAgainstDungeonMonsters,
+
+            // Slayer Tas
+            maxHitSlayerTask: CmimModifierIds.maxHitSlayerTask,
+            flatMaxHitSlayerTask: CmimModifierIds.flatMaxHitSlayerTask,
+            flatMinHitSlayerTask: CmimModifierIds.flatMinHitSlayerTask,
+            minHitBasedOnMaxHitSlayerTask: CmimModifierIds.minHitBasedOnMaxHitSlayerTask,
+            accuracyRatingSlayerTask: CmimModifierIds.accuracyRatingSlayerTask,
+
+            // Boss
+            maxHitAgainstBosses: CmimModifierIds.maxHitAgainstBosses,
+            flatMaxHitAgainstBosses: CmimModifierIds.flatMaxHitAgainstBosses,
+            flatMinHitAgainstBosses: CmimModifierIds.flatMinHitAgainstBosses,
+            minHitBasedOnMaxHitAgainstBosses: CmimModifierIds.minHitBasedOnMaxHitAgainstBosses,
+            accuracyRatingAgainstBosses: CmimModifierIds.accuracyRatingAgainstBosses,
+
+            // General Combat
+            damagePreventionThresholdBarrier: CmimModifierIds.damagePreventionThresholdBarrier,
+        },
+        CHARACTER: {
+            // General Combat
+            chanceToReduceAttackDamageToZero: CmimModifierIds.chanceToReduceAttackDamageToZero,
+            damageFlatWhileTargetHasMaxHP: CmimModifierIds.damageFlatWhileTargetHasMaxHP,
+            damagePercentWhileTargetHasMaxHP: CmimModifierIds.damagePercentWhileTargetHasMaxHP,
+            damageFlatIgnoringResistance: CmimModifierIds.damageFlatIgnoringResistance,
+            damagePreventionThresholdCombat: CmimModifierIds.damagePreventionThresholdCombat,
+
+            // General Combat and Thieving
+            damagePreventionThreshold: CmimModifierIds.damagePreventionThreshold
+        },
+
+        backwardsCompatibility: `${ModConstants.MOD_NAMESPACE_NAME}:backwardsCompatibility`
+    }
 }

@@ -1,4 +1,68 @@
 ﻿export const en = {
+    // ### POST-ItA MODIFIER TRANSLATIONS
+
+    MODIFIER_DATA_skillXPPerLevel: '${value}% Global Skill XP per level in currently training skill',
+    MODIFIER_DATA_skillXPPerLevelSkill: '${value}% ${skillName} Skill XP per level in ${skillName}',
+    MODIFIER_DATA_flatSkillXPPerLevel: '${value} Global Skill XP per level in currently training skill (added after % modifiers)',
+    MODIFIER_DATA_flatSkillXPPerLevelSkill: '${value} ${skillName} Skill XP per level in ${skillName} (added after % modifiers)',
+    MODIFIER_DATA_flatSkillXP: '${value} Global Skill XP (added after % modifiers)',
+    MODIFIER_DATA_flatSkillXPSkill: '${value} ${skillName} Skill XP (added after % modifiers)',
+    MODIFIER_DATA_damagePreventionThresholdThieving: '${value} Thieving Damage prevention threshold (any damage splat below the threshold is reduced to 0)',
+
+    MODIFIER_DATA_maxHitAgainstCombatAreaMonsters: '${value}% Max Hit To Combat Area Monsters',
+    MODIFIER_DATA_flatMaxHitAgainstCombatAreaMonsters: '${value} Max Hit To Combat Area Monsters',
+    MODIFIER_DATA_flatMinHitAgainstCombatAreaMonsters: '${value} Minimum Hit To Combat Area Monsters',
+    MODIFIER_DATA_minHitBasedOnMaxHitToCombatAreaMonsters: '${value}% of Maximum Hit added to Minimum Hit against Combat Area Monsters',
+    MODIFIER_DATA_accuracyRatingAgainstCombatAreaMonsters: '${value}% Accuracy Rating against Combat Area Monsters',
+    MODIFIER_DATA_flatResistanceAgainstCombatAreaMonstersDamageType: '${value}% ${resistanceName} against Combat Area Monsters',
+
+    MODIFIER_DATA_maxHitAgainstSlayerAreaMonsters: '${value}% Max Hit To Slayer Area Monsters',
+    MODIFIER_DATA_flatMaxHitAgainstSlayerAreaMonsters: '${value} Max Hit To Slayer Area Monsters',
+    MODIFIER_DATA_flatMinHitAgainstSlayerAreaMonsters: '${value} Minimum Hit To Slayer Area Monsters',
+    MODIFIER_DATA_minHitBasedOnMaxHitToSlayerAreaMonsters: '${value}% of Maximum Hit added to Minimum Hit against Slayer Area Monsters',
+    MODIFIER_DATA_accuracyRatingAgainstSlayerAreaMonsters: '${value}% Accuracy Rating against Slayer Area Monsters',
+    MODIFIER_DATA_flatResistanceAgainstSlayerAreaMonstersDamageType: '${value}% ${resistanceName} against Slayer Area Monsters',
+
+    MODIFIER_DATA_maxHitAgainstDungeonMonsters: '${value}% Max Hit To Dungeon Monsters',
+    MODIFIER_DATA_flatMaxHitAgainstDungeonMonsters: '${value} Max Hit To Dungeon Monsters',
+    MODIFIER_DATA_flatMinHitAgainstDungeonMonsters: '${value} Minimum Hit To Dungeon Monsters',
+    MODIFIER_DATA_minHitBasedOnMaxHitToDungeonMonsters: '${value}% of Maximum Hit added to Minimum Hit against Dungeon Monsters',
+    MODIFIER_DATA_accuracyRatingAgainstDungeonMonsters: '${value}% Accuracy Rating against Dungeon Monsters',
+    MODIFIER_DATA_flatResistanceAgainstDungeonMonstersDamageType: '${value}% ${resistanceName} against Dungeon Monsters',
+
+    MODIFIER_DATA_maxHitSlayerTask: '${value}% Max Hit To Combat Area Monsters',
+    MODIFIER_DATA_flatMaxHitSlayerTask: '${value} Max Hit To Combat Area Monsters',
+    MODIFIER_DATA_flatMinHitSlayerTask: '${value} Minimum Hit To Combat Area Monsters',
+    MODIFIER_DATA_minHitBasedOnMaxHitSlayerTask: '${value}% of Maximum Hit added to Minimum Hit against Combat Area Monsters',
+    MODIFIER_DATA_accuracyRatingSlayerTask: '${value}% Accuracy Rating against Combat Area Monsters',
+
+    MODIFIER_DATA_maxHitAgainstBosses: '${value}% Max Hit To Combat Area Monsters',
+    MODIFIER_DATA_flatMaxHitAgainstBosses: '${value} Max Hit To Combat Area Monsters',
+    MODIFIER_DATA_flatMinHitAgainstBosses: '${value} Minimum Hit To Combat Area Monsters',
+    MODIFIER_DATA_minHitBasedOnMaxHitAgainstBosses: '${value}% of Maximum Hit added to Minimum Hit against Combat Area Monsters',
+    MODIFIER_DATA_accuracyRatingAgainstBosses: '${value}% Accuracy Rating against Combat Area Monsters',
+
+    MODIFIER_DATA_damagePreventionThresholdBarrier: '${value} Barrier Damage prevention threshold (any damage splat against a barrier below the threshold is reduced to 0)',
+
+    MODIFIER_DATA_chanceToReduceAttackDamageToZero: '${value}% Chance (MAX: 90%) to reduce Damage Taken from an attack to 0 (still treated as being hit and does not affect calculation of on-hit-effects like damage-over-time)',
+    MODIFIER_DATA_damageFlatWhileTargetHasMaxHP: '${value} Damage while target has full HP',
+    MODIFIER_DATA_damagePercentWhileTargetHasMaxHP: '${value}% Damage while target has full HP',
+    MODIFIER_DATA_damageFlatIgnoringResistance: "${value} Damage, which is unaffected by the enemies' Resistance",
+    MODIFIER_DATA_damagePreventionThresholdCombat: '${value} Combat Damage prevention threshold (any damage splat against a barrier below the threshold is reduced to 0)',
+
+    MODIFIER_DATA_damagePreventionThreshold: '${value} Global Damage prevention threshold (any damage splat against a barrier below the threshold is reduced to 0)',
+
+    MODIFIER_DATA_damageDealtAgainstMonsterType: "${value}% Damage To ${monsterType}",
+    MODIFIER_DATA_damageTakenFromMonsterType: "${value}% Damage Taken from ${monsterType}",
+    MODIFIER_DATA_maxHitAgainstMonsterType: "${value}% Max Hit when fighting ${monsterType}",
+    MODIFIER_DATA_flatMaxHitAgainstMonsterType: "${value} Max Hit when fighting ${monsterType}",
+    MODIFIER_DATA_flatMinHitAgainstMonsterType: "${value} Minimum Hit when fighting ${monsterType}",
+    MODIFIER_DATA_minHitBasedOnMaxHitAgainstMonsterType: "${value}% Minimum Hit when fighting ${monsterType}",
+    MODIFIER_DATA_accuracyRatingAgainstMonsterType: '${value}% Accuracy Rating when fighting ${monsterType}',
+    MODIFIER_DATA_flatResistanceAgainstMonsterTypeDamageType: '${value}% ${resistanceName} when fighting ${monsterType}',
+
+    // ### PRE-IA
+
     Combat_Modifier_UI_Impact_Indicator_Headline: 'Cmim-Mod warning',
     Combat_Modifier_UI_Impact_Indicator_Text: "At least one combatant is currently benefitting from a modifier that provides a chance to reduce the damage taken to 0. Due to how/where that modifier had to be implemented, it's possible that damage displays (e.g. max hit) may wrongly render as 0, even for enemies that are too strong for that to be realistically possible.",
     Combat_Modifier_UI_Impact_Indicator_Hint: 'This warning can be toggled off in the mod settings',
@@ -79,6 +143,8 @@
     Monster_Type_Overview_Inactive_Types_Affected_By_Mod_Settings: "Can't become active due to selection in mod settings",
 
     // ### Modifiers
+
+    // ### Modifiers | DEPRACATED NAMES
     // #### Directly affecting damage dealt
     MODIFIER_DATA_increasedChanceToReduceAttackDamageToZero: '+${value}% chance (MAX: 90%) to reduce damage taken from an attack to 0 (still treated as being hit and does not affect calculation of on-hit-effects like damage-over-time)',
     MODIFIER_DATA_decreasedChanceToReduceAttackDamageToZero: '-${value}% chance (MAX: 90%) to reduce damage taken from an attack to 0 (still treated as being hit and does not affect calculation of on-hit-effects like damage-over-time)',
@@ -210,24 +276,24 @@
 
     // #### Monster Type
     // ##### Generic; these will be used to dynamically build the ones further down below, as those also have to be dynamically built
-    MONSTER_TYPE_SINGULAR_Animal: "Animal",
-    MONSTER_TYPE_PLURAL_Animal: "Animals",
-    MONSTER_TYPE_SINGULAR_Demon: "Demon",
-    MONSTER_TYPE_PLURAL_Demon: "Demons",
-    MONSTER_TYPE_SINGULAR_Dragon: "Dragon",
-    MONSTER_TYPE_PLURAL_Dragon: "Dragons",
-    MONSTER_TYPE_SINGULAR_Elemental: "Elemental",
-    MONSTER_TYPE_PLURAL_Elemental: "Elementals",
-    MONSTER_TYPE_SINGULAR_Elf: "Elf",
-    MONSTER_TYPE_PLURAL_Elf: "Elves",
-    MONSTER_TYPE_SINGULAR_Human: "Human",
-    MONSTER_TYPE_PLURAL_Human: "Humans",
-    MONSTER_TYPE_SINGULAR_MythicalCreature: "Mythical Creature",
-    MONSTER_TYPE_PLURAL_MythicalCreature: "Mythical Creatures",
-    MONSTER_TYPE_SINGULAR_SeaCreature: "Sea Creature",
-    MONSTER_TYPE_PLURAL_SeaCreature: "Sea Creatures",
-    MONSTER_TYPE_SINGULAR_Undead: "Undead",
-    MONSTER_TYPE_PLURAL_Undead: "Undead",
+    MONSTER_TYPE_NAME_SINGULAR_Animal: "Animal",
+    MONSTER_TYPE_NAME_PLURAL_Animal: "Animals",
+    MONSTER_TYPE_NAME_SINGULAR_Demon: "Demon",
+    MONSTER_TYPE_NAME_PLURAL_Demon: "Demons",
+    MONSTER_TYPE_NAME_SINGULAR_Dragon: "Dragon",
+    MONSTER_TYPE_NAME_PLURAL_Dragon: "Dragons",
+    MONSTER_TYPE_NAME_SINGULAR_Elemental: "Elemental",
+    MONSTER_TYPE_NAME_PLURAL_Elemental: "Elementals",
+    MONSTER_TYPE_NAME_SINGULAR_Elf: "Elf",
+    MONSTER_TYPE_NAME_PLURAL_Elf: "Elves",
+    MONSTER_TYPE_NAME_SINGULAR_Human: "Human",
+    MONSTER_TYPE_NAME_PLURAL_Human: "Humans",
+    MONSTER_TYPE_NAME_SINGULAR_MythicalCreature: "Mythical Creature",
+    MONSTER_TYPE_NAME_PLURAL_MythicalCreature: "Mythical Creatures",
+    MONSTER_TYPE_NAME_SINGULAR_SeaCreature: "Sea Creature",
+    MONSTER_TYPE_NAME_PLURAL_SeaCreature: "Sea Creatures",
+    MONSTER_TYPE_NAME_SINGULAR_Undead: "Undead",
+    MONSTER_TYPE_NAME_PLURAL_Undead: "Undead",
 
     COMBAT_MISC_Monster_Type_Trait_Modifier_Effect: "${monsterType} Trait",
     COMBAT_MISC_Monster_Type_Trait_Stacking_Effect: "${monsterType} Trait",

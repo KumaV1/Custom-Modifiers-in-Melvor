@@ -1,66 +1,41 @@
+import { CustomModifiersRegistrationHelper } from './CustomModifiersRegistrationHelper';
 import { ModConstants } from '../constants/ModConstants';
-import { ModifierConstants } from '../constants/ModifierConstants';
 import { MonsterTypeConstants } from '../constants/MonsterTypeConstants'
 import { MonsterTypeDefinition } from '../models/monsterTyping/MonsterTypeDefinition';
-import { MonsterTypeEffectObjectNames } from '../models/monsterTyping/MonsterTypeEffectObjectNames';
 import { MonsterTypeModifierPropertyNames } from '../models/monsterTyping/MonsterTypeModifierPropertyNames'
-import { MonsterTypeModifierType } from '../models/enums/MonsterTypeModifierType'
 
 import { languages } from '../languages';
 
 export class MonsterTypeHelper {
     /**
      * Creates the name of the property saved on spawn, to enable bool-checks rather than array checks
-     * @param typeSingularName
+     * @param typeName
      * @returns
      */
-    public static createIsTypePropertyName(typeSingularName: string): string {
-        return `is${typeSingularName}`;
+    public static createIsTypePropertyName(typeName: string): string {
+        return `is${typeName}`;
     }
 
     /**
      * Creates an object of all modifiers added for the given type,
      * with the names dynamically created based on the name of the type
-     * @param typeSingularName
-     * @param typePluralName
+     * @param typeName
      * @returns
      */
-    public static createModifierPropertyNames(typeSingularName: string, typePluralName: string): MonsterTypeModifierPropertyNames {
-        const typeSingularNameLower = `${typeSingularName[0].toLowerCase()}${typeSingularName.substring(1)}`;
-        return {
-            traitApplied: `${typeSingularNameLower}TraitApplied`,
-            increasedDamage: `increasedDamageAgainst${typePluralName}`,
-            decreasedDamage: `decreasedDamageAgainst${typePluralName}`,
-            increasedDamageTaken: `increasedDamageTakenFrom${typePluralName}`,
-            decreasedDamageTaken: `decreasedDamageTakenFrom${typePluralName}`,
-            increasedMaxHitPercent: `increasedMaxHitPercentAgainst${typePluralName}`,
-            decreasedMaxHitPercent: `decreasedMaxHitPercentAgainst${typePluralName}`,
-            increasedMaxHitFlat: `increasedMaxHitFlatAgainst${typePluralName}`,
-            decreasedMaxHitFlat: `decreasedMaxHitFlatAgainst${typePluralName}`,
-            increasedMinHitBasedOnMaxHit: `increasedMinHitBasedOnMaxHitAgainst${typePluralName}`,
-            decreasedMinHitBasedOnMaxHit: `decreasedMinHitBasedOnMaxHitAgainst${typePluralName}`,
-            increasedFlatMinHit: `increasedFlatMinHitAgainst${typePluralName}`,
-            decreasedFlatMinHit: `decreasedFlatMinHitAgainst${typePluralName}`,
-            increasedGlobalAccuracy: `increasedGlobalAccuracyAgainst${typePluralName}`,
-            decreasedGlobalAccuracy: `decreasedGlobalAccuracyAgainst${typePluralName}`,
-            increasedDamageReduction: `increasedDamageReductionAgainst${typePluralName}`,
-            decreasedDamageReduction: `decreasedDamageReductionAgainst${typePluralName}`,
-            increasedChanceToApplyTraitInfiniteOnSpawn: `increasedChanceToApply${typeSingularName}TraitInfiniteOnSpawn`,
-            decreasedChanceToApplyTraitInfiniteOnSpawn: `decreasedChanceToApply${typeSingularName}TraitInfiniteOnSpawn`,
-            applyTraitTurnsOnSpawn: `apply${typeSingularName}TraitTurnsOnSpawn`,
-            increasedChanceToApplyTrait: `increasedChanceToApply${typeSingularName}Trait`,
-            decreasedChanceToApplyTrait: `decreasedChanceToApply${typeSingularName}Trait`,
-            applyTraitTurns: `apply${typeSingularName}TraitTurns`
-        };
-    }
+    public static createModifierPropertyNames(typeName: string): MonsterTypeModifierPropertyNames {
+        //const typeSingularNameLower = `${typeSingularName[0].toLowerCase()}${typeSingularName.substring(1)}`;
 
-    public static createEffectPropertyNames(typeSingularName: string): MonsterTypeEffectObjectNames {
-        const typeSingularNameLower = `${typeSingularName[0].toLowerCase()}${typeSingularName.substring(1)}`;
         return {
-            traitApplicationCustomModifierEffect: `${typeSingularNameLower}TraitApplicationCustomEffect`,
-            traitApplicationStackingEffect: `${typeSingularNameLower}TraitApplicationStackingEffect`,
-            traitApplicationCustomModifierEffectAttack: `${typeSingularNameLower}TraitApplyingAttack`
-        };
+            traitApplied: `traitApplied${typeName}`,
+            damageDealt: `damageDealt${typeName}`,
+            damageTaken: `damageTaken${typeName}`,
+            maxHit: `maxHit${typeName}`,
+            flatMaxHit: `flatMaxHit${typeName}`,
+            flatMinHit: `flatMinHit${typeName}`,
+            minHitBasedOnMaxHit: `minHitBasedOnMaxHit${typeName}`,
+            accuracyRating: `accuracyRating${typeName}`,
+            flatResistance: `flatResistance${typeName}`
+        }
     }
 
     /**
@@ -70,170 +45,261 @@ export class MonsterTypeHelper {
      * @param modifierName
      * @returns
      */
-    public static createModifierDataObject(type: MonsterTypeDefinition, modifierType: MonsterTypeModifierType, modifierName: string) {
+    public static createModifierDataObject(type: MonsterTypeDefinition, modifierType: keyof (MonsterTypeModifierPropertyNames), modifierName: string): ModifierData {
         // First, create the default state of the object to create
         let modifierObject = {
-            get langDescription() {
-                return getLangString(`MODIFIER_DATA_${modifierName}`);
-            },
-            description: '',
-            isSkill: false,
-            isNegative: false,
-            tags: ['combat']
-        };
+            id: modifierName,
+            inverted: false, // default, may be overwritten
+            isCombat: true,
+            allowEnemy: true,
+            allowedScopes: [
+                {
+                    scopes: {}, // for now, only a global scope
+                    // skip scope source, as not relevant for monster type modifiers (unless something like increased spell damage against undead is added :D *cough* crumble undead *cough*)
+                    descriptions: [
+                        {
+                            // Set up an english description (mainly for mod synergy support)
+                            // Actually rendered text uses the translation pipeline, so grammar isn't optimized here
+                            text: (modifierType === 'traitApplied'
+                                ? languages.en[`MODIFIER_DATA_MonsterTypeTraitApplied`]
+                                // @ts-ignore Ignore implicit any error
+                                : languages.en[`MODIFIER_DATA_${modifierType}AgainstMonsterType`])
+                                    ?.replace("${monsterType}", type.name)
+                                ?? '',
+                            lang: (modifierType === 'flatResistance'
+                                ? `MODIFIER_DATA_${modifierName}DamageType`
+                                : `MODIFIER_DATA_${modifierName}`)
+                        }
+                    ] as ModifierDescriptionData[],
+                    posAliases: [] as ModifierAliasData[],
+                    negAliases: [] as ModifierAliasData[]
+                }
+            ] as ModifierScopingData[]
+        } as ModifierData;
 
-        // Set up an english description (mainly for mod synergy support)
+
+        // Set up an english descriptions (mainly for mod synergy support)
         // Actually rendered text uses the translation pipeline, so grammar isn't optimized here
-        modifierObject.description = modifierType === MonsterTypeModifierType.TraitApplied
-            ? languages.en[`MODIFIER_DATA_MonsterTypeTraitApplied`]
-            // @ts-ignore Ignore implicit any error
-            : languages.en[`MODIFIER_DATA_${modifierType}AgainstMonsterType`];
-        modifierObject.description = modifierObject.description?.replace("${monsterType}", type.singularName) ?? '';
 
-        // Modify negative flag
+        // Some modifiers actually don't allow for a global scope
         switch (modifierType) {
-            case MonsterTypeModifierType.DecreasedDamage:
-            case MonsterTypeModifierType.IncreasedDamageTaken:
-            case MonsterTypeModifierType.DecreasedMaxHitPercent:
-            case MonsterTypeModifierType.DecreasedMaxHitFlat:
-            case MonsterTypeModifierType.DecreasedMinHitBasedOnMaxHit:
-            case MonsterTypeModifierType.DecreasedFlatMinHit:
-            case MonsterTypeModifierType.DecreasedGlobalAccuracy:
-            case MonsterTypeModifierType.DecreasedDamageReduction:
-            case MonsterTypeModifierType.DecreasedChanceToApplyTraitInfiniteOnSpawn:
-            case MonsterTypeModifierType.DecreasedChanceToApplyTrait:
-                modifierObject.isNegative = true;
+            case 'flatResistance':
+                modifierObject.allowedScopes[0].scopes = { damageType: true };
+                break;
+            default:
+                break;
+        }
+
+        // Some modifiers may have a positive value, but result in negative effects
+        switch (modifierType) {
+            case 'damageTaken':
+                modifierObject.inverted = true;
                 break;
             default:
         }
 
         // Modify value modifier
         switch (modifierType) {
-            case MonsterTypeModifierType.IncreasedMaxHitFlat:
-            case MonsterTypeModifierType.DecreasedMaxHitFlat:
-            case MonsterTypeModifierType.IncreasedFlatMinHit:
-            case MonsterTypeModifierType.DecreasedFlatMinHit:
+            case 'flatMaxHit':
+            case 'flatMinHit':
                 // @ts-ignore Ignore implicit any error
-                modifierObject["modifyValue"] = multiplyByNumberMultiplier;
+                modifierObject["modifyValue"] = 'value*hpMultiplier';
                 break;
             default:
+        }
+
+        // Aliases for backwards compatbility
+        switch (modifierType) {
+            case 'traitApplied':
+                const typeSingularNameLower = `${type.name[0].toLowerCase()}${type.name.substring(1)}`;
+                modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`${typeSingularNameLower}TraitApplied`));
+                break;
+            default:
+                break;
+        }
+
+        if (type.pluralName !== undefined && type.pluralName !== null) {
+            switch (modifierType) {
+                case 'damageDealt':
+                    modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedDamageAgainst${type.pluralName}`));
+                    modifierObject.allowedScopes[0].negAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedDamageAgainst${type.pluralName}`));
+                    break;
+                case 'damageTaken':
+                    modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedDamageTakenFrom${type.pluralName}`));
+                    modifierObject.allowedScopes[0].negAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedDamageTakenFrom${type.pluralName}`));
+                    break;
+                case 'maxHit':
+                    modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedMaxHitPercentAgainst${type.pluralName}`));
+                    modifierObject.allowedScopes[0].negAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedMaxHitPercentAgainst${type.pluralName}`));
+                    break;
+                case 'flatMaxHit':
+                    modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedMaxHitFlatAgainst${type.pluralName}`));
+                    modifierObject.allowedScopes[0].negAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedMaxHitFlatAgainst${type.pluralName}`));
+                    break;
+                case 'minHitBasedOnMaxHit':
+                    modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedMinHitBasedOnMaxHitAgainst${type.pluralName}`));
+                    modifierObject.allowedScopes[0].negAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedMinHitBasedOnMaxHitAgainst${type.pluralName}`));
+                    break;
+                case 'flatMinHit':
+                    modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedFlatMinHitAgainst${type.pluralName}`));
+                    modifierObject.allowedScopes[0].negAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedFlatMinHitAgainst${type.pluralName}`));
+                    break;
+                case 'accuracyRating':
+                    modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedGlobalAccuracyAgainst${type.pluralName}`));
+                    modifierObject.allowedScopes[0].negAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedGlobalAccuracyAgainst${type.pluralName}`));
+                    break;
+                case 'flatResistance':
+                    modifierObject.allowedScopes[0].posAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedDamageReductionAgainst${type.pluralName}`));
+                    modifierObject.allowedScopes[0].negAliases?.push(CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedDamageReductionAgainst${type.pluralName}`));
+                    break;
+                default:
+                    break;
+            }
         }
 
         return modifierObject;
     }
 
     /**
+     * Creates a data object by which to register an effect that can be used to forcibly apply a certain monster type to a character
      *
+     * Note: Using this base template in addition to something like `melvorD:StaticSelfCountingModifier`, `melvorD:StaticNonCountingModifier` and such should allow mods to define any kind of effect easily, without needing much custom work
      * @param type
+     */
+    public static createTraitEffectTemplateData(type: MonsterTypeDefinition): CombatEffectTemplateData {
+        // Compiler sugar, already defining a proper object to set the trait modifier
+        let effectModifiers = {} as ModifierValuesRecordData;
+        effectModifiers[`${ModConstants.MOD_NAMESPACE_NAME}:${type.modifierPropertyNames.traitApplied}`] = 1;
+
+        return {
+            id: `${type.name}_Trait_Effect_Base`,
+            description: 'A base template to apply some consistent data for any such effect',
+            baseTemplates: [] as string[], // 'melvorD:StackingModifiers' maybe? Will have to see what templates there are, but I generally any value > 0 should be treated the same, so a static value is fine, but things like whether the effect can be renewed may have to be defined, though will ultimately be overridable by other mods, as far as I understand
+            baseEffectData: {
+                name: `${type.name} Trait`,
+                nameLang: `MONSTER_TYPE_TRAIT_EFFECT_NAME_${type.name}`,
+                media: type.iconResourceUrl,
+                target: 'Target',
+                statGroups: [
+                    {
+                        name: 'stacks',
+                        modifiers: effectModifiers
+                    } as CombatEffectStatGroupData
+                ],
+                effectGroups: [
+                    `${ModConstants.MOD_NAMESPACE_NAME}:MonsterTypeTraitApplication`
+                ]
+            } as BaseCombatEffectData // base templates -> this object -> a mod's effect using this template and further overriding properties, so shouldn't be to problematic here, as it's ultimately just a template, not meant to be used as is (at least not without modifications)
+        } as CombatEffectTemplateData;
+    }
+
+    public static createTraitStaticEffectTemplateData(type: MonsterTypeDefinition): CombatEffectTemplateData {
+        return {
+            id: `${type.name}_Trait_Static_Effect_Base`,
+            baseTemplates: [
+                CombatEffectTemplateIDs.StaticSelfCountingModifier,
+                `${ModConstants.MOD_NAMESPACE_NAME}:${type.name}_Trait_Effect_Base`
+            ] as string[], // 'melvorD:StackingModifiers' maybe? Will have to see what templates there are, but I generally any value > 0 should be treated the same, so a static value is fine, but things like whether the effect can be renewed may have to be defined, though will ultimately be overridable by other mods, as far as I understand
+            baseEffectData: {
+                parameters: [
+                    {
+                        name: 'turns',
+                        initialValue: 1 // custom effects/implementations can override this, if they want the effect to stay longer
+                    }
+                ] as CombatEffectParameter[],
+            }
+        }
+    }
+
+    public static createTraitStaticNonCountingEffectTemplateData(type: MonsterTypeDefinition): CombatEffectTemplateData {
+        return {
+            id: `${type.name}_Trait_Static_Non_Counting_Effect_Base`,
+            baseTemplates: [
+                CombatEffectTemplateIDs.StaticNonCountingModifier,
+                `${ModConstants.MOD_NAMESPACE_NAME}:${type.name}_Trait_Effect_Base`
+            ] as string[], // 'melvorD:StackingModifiers' maybe? Will have to see what templates there are, but I generally any value > 0 should be treated the same, so a static value is fine, but things like whether the effect can be renewed may have to be defined, though will ultimately be overridable by other mods, as far as I understand
+            baseEffectData: {
+
+            }
+        }
+    }
+
+    public static createTraitStackingEffectTemplateData(type: MonsterTypeDefinition): CombatEffectTemplateData {
+        return {
+            id: `${type.name}_Trait_Stacking_Effect_Base`,
+            baseTemplates: [
+                CombatEffectTemplateIDs.StackingSelfCountingModifier,
+                `${ModConstants.MOD_NAMESPACE_NAME}:${type.name}_Trait_Effect_Base`
+            ] as string[], // 'melvorD:StackingModifiers' maybe? Will have to see what templates there are, but I generally any value > 0 should be treated the same, so a static value is fine, but things like whether the effect can be renewed may have to be defined, though will ultimately be overridable by other mods, as far as I understand
+            baseEffectData: {
+                parameters: [
+                    {
+                        name: 'turns',
+                        initialValue: 1 // custom effects/implementations can override this, if they want the effect to stay longer
+                    },
+                    {
+                        name: 'initialStacks',
+                        initialValue: 1
+                    },
+                    {
+                        name: 'stacksToAdd',
+                        initialValue: 1
+                    },
+                    {
+                        name: 'maxStacks',
+                        initialValue: Infinity
+                    }
+                ] as CombatEffectParameter[]
+            }
+        }
+    }
+
+    /**
+     * Primarily exists for backwards compatibility
+     * @param type
+     */
+    public static createTraitStaticEffectData(type: MonsterTypeDefinition): TemplatedCombatEffectData {
+        return {
+            id: `${type.name}_Trait_Static_Effect`, // follows naming of stacking, but generally didn't have ids before
+            templateID: `${ModConstants.MOD_NAMESPACE_NAME}:${type.name}_Trait_Static_Effect_Base`
+        } as TemplatedCombatEffectData;
+    }
+
+    public static createTraitStaticNonCountingEffectData(type: MonsterTypeDefinition): TemplatedCombatEffectData {
+        return {
+            id: `${type.name}_Trait_Static_Non_Counting_Effect`, // follows naming of stacking, but generally didn't have ids before
+            templateID: `${ModConstants.MOD_NAMESPACE_NAME}:${type.name}_Trait_Static_Non_Counting_Effect_Base`,
+        } as TemplatedCombatEffectData;
+    }
+
+    /**
+     * Primarily exists for backwards compatibility
+     * @param type
+     */
+    public static createTraitStackingEffectData(type: MonsterTypeDefinition): TemplatedCombatEffectData {
+        return {
+            id: `${type.name}_Trait_Stacking_Effect`, // same as before rewrite
+            templateID: `${ModConstants.MOD_NAMESPACE_NAME}:${type.name}_Trait_Stacking_Effect_Base`
+        } as TemplatedCombatEffectData;
+    }
+
+    /**
+     *
+     * @param modifiers
+     * @param combatEffectTemplates
+     * @param combatEffects
      * @returns
      */
-    public static createTraitStackingEffectGamePackage(type: MonsterTypeDefinition): GameDataPackage {
+    public static createMonsterTypeDataPackage(modifiers: ModifierData[], combatEffectTemplates: CombatEffectTemplateData[], combatEffects: AnyCombatEffectData[]): GameDataPackage {
         return {
             "$schema": ModConstants.SCHEMA,
-            "namespace": ModConstants.MOD_NAMESPACE,
-            "data": {
-                "stackingEffects": [MonsterTypeHelper.createTraitStackingEffectDataObject(type)]
+            namespace: ModConstants.MOD_NAMESPACE_NAME,
+            data: {
+                modifiers: modifiers,
+                combatEffectTemplates: combatEffectTemplates,
+                combatEffects: combatEffects
             }
         }
-    }
-
-    /**
-     *
-     * @param type
-     * @returns
-     */
-    private static createTraitStackingEffectDataObject(type: MonsterTypeDefinition): StackingEffectData {
-        let obj: StackingEffectData = {
-            id: `${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`,
-            stacksToAdd: 1,
-            maxStacks: 99,
-            name: `${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_NAME_SUFFIX}`,
-            langName: {
-                category: ModifierConstants.TRAIT_STACKING_EFFECT_LANGUAGE_CATEGORY,
-                id: `${type.singularName}${ModifierConstants.TRAIT_STACKING_EFFECT_ID_SUFFIX}`
-            },
-            media: type.iconResourceUrl,
-            modifiers: {
-
-            }
-        };
-
-        // @ts-ignore Ignore implicit any error
-        obj.modifiers[type.modifierPropertyNames.traitApplied] = 1;
-
-        return obj;
-    }
-
-    /**
-     * Custom effects that aren't specifically defined to be an exception to the rule (see "saveWriter.writeEffect"),
-     * must be identifiable through an Id, in order to be serializable to game character save file.
-     *
-     * This method takes care of creating a registerable package for said effect
-     * @param type
-     * @returns
-     */
-    public static createTraitCustomModifierEffectAttackGamePackage(type: MonsterTypeDefinition, customEffectData: CustomEffectData): GameDataPackage {
-        return {
-            "$schema": ModConstants.SCHEMA,
-            "namespace": ModConstants.MOD_NAMESPACE,
-            "data": {
-                "attacks": [MonsterTypeHelper.createTraitCustomEffectAttackDataObject(type, customEffectData)]
-            }
-        }
-    }
-
-    /**
-     *
-     * @param type
-     * @returns
-     */
-    private static createTraitCustomEffectAttackDataObject(type: MonsterTypeDefinition, customEffectData: CustomEffectData): AttackData {
-        let attack: AttackData = {
-            id: `${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_ATTACK_ID_SUFFIX}`,
-            defaultChance: 0, // only used for manual triggering, so irrelevant
-            damage: [{
-                damageType: "Normal",
-                amplitude: 0
-            }], // we only define a preHitEffect, this shouldn't deal any damage
-            prehitEffects: [customEffectData],
-            onhitEffects: [],
-            cantMiss: false,
-            attackCount: 1,
-            attackInterval: -1,
-            lifesteal: 0,
-            name: "Trait application",
-            description: "Performs a non-damaging, pre-hit-effect-only attack that applies the given trait"
-        }
-
-        return attack;
-    }
-
-    /**
-     *
-     * @param type
-     * @returns
-     */
-    public static createTraitCustomEffectDataInfiniteObject(type: MonsterTypeDefinition): CustomEffectData {
-        const obj: CustomEffectData = {
-            effectType: "Custom",
-            type: 'Modifier',
-            maxStacks: 1,
-            stacksToAdd: 1,
-            turns: Infinity,
-            character: "Target",
-            countsOn: "Target",
-            media: type.iconResourceUrl,
-            name: `${type.singularName}${ModifierConstants.TRAIT_CUSTOM_EFFECT_NAME_SUFFIX}`,
-            langName: `${ModifierConstants.TRAIT_CUSTOM_EFFECT_LANGUAGE_CATEGORY}_${type.singularName}_Trait_Modifier_Effect`,
-            modifiers: {
-
-            }
-        };
-
-        // @ts-ignore Ignore implicit any error
-        obj.modifiers[type.modifierPropertyNames.traitApplied] = 1;
-
-        return obj;
     }
 
     /**
@@ -245,15 +311,17 @@ export class MonsterTypeHelper {
      */
     public static entityIsTreatedAsType(entity: Character, type: MonsterTypeDefinition): boolean {
         // @ts-ignore - We know that behind this property lies a boolean. And if not, well "falsey" check work too
-        const isOfType: boolean = entity[type.isTypePropertyName];
-        // @ts-ignore - We know that behind this property lies a boolean. And if not, well "falsey" check work too
-        //console.log(`entityIsTreatedAsType | isOfType | propertyName: ${type.isTypePropertyName} / value: ${entity.target[type.isTypePropertyName]}, ${isOfType}`);
-        // @ts-ignore - We know that behind this property lies a boolean. And if not, well "falsey" check work too
-        const traitApplied: number = entity.modifiers[type.modifierPropertyNames.traitApplied];
-        // @ts-ignore - We know that behind this property lies a boolean. And if not, well "falsey" check work too
-        //console.log(`entityIsTreatedAsType | isOfType | propertyName: ${type.modifierPropertyNames.traitApplied} / value: ${entity.target.modifiers[type.modifierPropertyNames.traitApplied]}, ${traitApplied}`);
+        const isOfType: boolean | undefined = entity[type.isTypePropertyName];
+        if (isOfType) {
+            return true;
+        }
 
-        return isOfType || traitApplied > 0;
+        const traitApplied: number = entity.modifiers.getValue(`${ModConstants.MOD_NAMESPACE_NAME}:${[type.modifierPropertyNames.traitApplied]}`, ModifierQuery.EMPTY);
+        if (traitApplied > 0) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -350,5 +418,25 @@ export class MonsterTypeHelper {
 
         // Return result
         return ids;
+    }
+
+    /**
+     * Provides aliases for modifiers that have been removed with the V1.3 update
+     * @param type
+     * @returns
+     */
+    public static getBackwardsCompatibilityAliases(type: MonsterTypeDefinition): { posAliases: ModifierAliasData[], negAliases: ModifierAliasData[] } {
+        return {
+            posAliases: [
+                CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedChanceToApply${type.name}TraitInfiniteOnSpawn`),
+                CustomModifiersRegistrationHelper.createDefaultModifierAlias(`apply${type.name}TraitTurnsOnSpawn`),
+                CustomModifiersRegistrationHelper.createDefaultModifierAlias(`increasedChanceToApply${type.name}Trait`),
+                CustomModifiersRegistrationHelper.createDefaultModifierAlias(`apply${type.name}TraitTurns`)
+            ],
+            negAliases: [
+                CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedChanceToApply${type.name}TraitInfiniteOnSpawn`),
+                CustomModifiersRegistrationHelper.createDefaultModifierAlias(`decreasedChanceToApply${type.name}Trait`)
+            ]
+        };
     }
 }

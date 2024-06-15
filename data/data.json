@@ -17,20 +17,1344 @@
         }
       }
     ],
-    "stackingEffects": [
+    "combatEffects": [
       {
         "id": "Death_Mark_Effect",
-        "stacksToAdd": 1,
-        "maxStacks": 20,
-        "modifiers": {
-          "deathMark": 1
-        },
-        "name": "Death mark",
+        "templateID": "melvorD:Stacking",
+        "name": "Death Mark (Stacking)",
         "media": "assets/customModifiersInMelvor/Death_Mark.png",
-        "langname": {
-          "category": "COMBAT_MISC",
-          "id": "Death_Mark_Effect"
-        }
+        "statGroups": [
+          {
+            "name": "stacks",
+            "modifiers": {
+              "customModifiersInMelvor:deathMark": 1
+            }
+          }
+        ],
+        "parameters": [
+          {
+            "name": "stacksToAdd",
+            "initialValue": 1
+          },
+          {
+            "name": "maxStacks",
+            "initialValue": 20
+          }
+        ]
+      }
+    ],
+    "combatEffectGroups": [
+      {
+        "id": "MonsterTypeTraitApplication",
+        "name": "Monster type trait",
+        "nameLang": "EFFECT_GROUP_MonsterTypeTraitApplication",
+        "adjective": "Affected by monster type trait(s)"
+      }
+    ],
+    "modifiers": [
+      {
+        "id": "deathMark",
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "If percentage of max HP left is lower than the amount of stacks (MAX 20% / 5,000), get executed immediately",
+                "lang": "MODIFIER_DATA_deathMark"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "skillXPPerLevel",
+        "inverted": false,
+        "isCombat": false,
+        "allowEnemy": false,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% Global Skill XP per level in currently training skill",
+                "lang": "MODIFIER_DATA_skillXPPerLevel"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedGlobalSkillXPPerLevel"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedGlobalSkillXPPerLevel"
+              }
+            ]
+          },
+          {
+            "scopes": {
+              "skill": true
+            },
+            "descriptions": [
+              {
+                "text": "${value}% ${skillName} Skill XP per level in ${skillName}",
+                "lang": "MODIFIER_DATA_skillXPPerLevelSkill"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedSkillXPPerSkillLevel"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedSkillXPPerSkillLevel"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "flatSkillXPPerLevel",
+        "inverted": false,
+        "isCombat": false,
+        "allowEnemy": false,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Global Skill XP per level in currently training skill (added after % modifiers)",
+                "lang": "MODIFIER_DATA_flatSkillXPPerLevel"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedFlatGlobalSkillXPPerSkillLevel"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedFlatGlobalSkillXPPerSkillLevel"
+              }
+            ]
+          },
+          {
+            "scopes": {
+              "skill": true
+            },
+            "descriptions": [
+              {
+                "text": "${value} ${skillName} Skill XP per level in ${skillName} (added after % modifiers)",
+                "lang": "MODIFIER_DATA_flatSkillXPPerLevelSkill"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedFlatSkillXPPerSkillLevel"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedFlatSkillXPPerSkillLevel"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "flatSkillXP",
+        "inverted": false,
+        "isCombat": false,
+        "allowEnemy": false,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Global Skill XP (added after % modifiers)",
+                "lang": "MODIFIER_DATA_flatSkillXP"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedFlatGlobalSkillXP"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedFlatGlobalSkillXP"
+              }
+            ]
+          },
+          {
+            "scopes": {
+              "skill": true
+            },
+            "descriptions": [
+              {
+                "text": "${value} ${skillName} Skill XP (added after % modifiers)",
+                "lang": "MODIFIER_DATA_flatSkillXPSkill"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedFlatSkillXP"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedFlatSkillXP"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "damagePreventionThresholdThieving",
+        "inverted": false,
+        "isCombat": false,
+        "allowEnemy": false,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Thieving Damage prevention threshold (any damage splat below the threshold is reduced to 0)",
+                "lang": "MODIFIER_DATA_damagePreventionThresholdThieving"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedThievingDamagePreventionThreshold"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedThievingDamagePreventionThreshold"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "maxHitAgainstCombatAreaMonsters",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% Max Hit To Combat Area Monsters",
+                "lang": "MODIFIER_DATA_maxHitAgainstCombatAreaMonsters"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedMaxHitPercentToCombatAreaMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedMaxHitPercentToCombatAreaMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "flatMaxHitAgainstCombatAreaMonsters",
+        "modifyValue": "value*hpMultiplier",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Max Hit To Combat Area Monsters",
+                "lang": "MODIFIER_DATA_flatMaxHitAgainstCombatAreaMonsters"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedMaxHitFlatToCombatAreaMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedMaxHitFlatToCombatAreaMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "flatMinHitAgainstCombatAreaMonsters",
+        "modifyValue": "value*hpMultiplier",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Minimum Hit To Combat Area Monsters",
+                "lang": "MODIFIER_DATA_flatMinHitAgainstCombatAreaMonsters"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedFlatMinHitToCombatAreaMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedFlatMinHitToCombatAreaMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "minHitBasedOnMaxHitToCombatAreaMonsters",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% of Maximum Hit added to Minimum Hit against Combat Area Monsters",
+                "lang": "MODIFIER_DATA_minHitBasedOnMaxHitToCombatAreaMonsters"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedMinHitBasedOnMaxHitToCombatAreaMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedMinHitBasedOnMaxHitToCombatAreaMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "accuracyRatingAgainstCombatAreaMonsters",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% Accuracy Rating against Combat Area Monsters",
+                "lang": "MODIFIER_DATA_accuracyRatingAgainstCombatAreaMonsters"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedGlobalAccuracyAgainstCombatAreaMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedGlobalAccuracyAgainstCombatAreaMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "flatResistanceAgainstCombatAreaMonsters",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {
+              "damageType": true
+            },
+            "descriptions": [
+              {
+                "text": "${value}% ${resistanceName} against Combat Area Monsters",
+                "lang": "MODIFIER_DATA_flatResistanceAgainstCombatAreaMonstersDamageType"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedDamageReductionAgainstCombatAreaMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedDamageReductionAgainstCombatAreaMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "maxHitAgainstSlayerAreaMonsters",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% Max Hit To Slayer Area Monsters",
+                "lang": "MODIFIER_DATA_maxHitAgainstSlayerAreaMonsters"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedMaxHitPercentToSlayerAreaMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedMaxHitPercentToSlayerAreaMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "flatMaxHitAgainstSlayerAreaMonsters",
+        "modifyValue": "value*hpMultiplier",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Max Hit To Slayer Area Monsters",
+                "lang": "MODIFIER_DATA_flatMaxHitAgainstSlayerAreaMonsters"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedMaxHitFlatToSlayerAreaMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedMaxHitFlatToSlayerAreaMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "flatMinHitAgainstSlayerAreaMonsters",
+        "modifyValue": "value*hpMultiplier",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Minimum Hit To Slayer Area Monsters",
+                "lang": "MODIFIER_DATA_flatMinHitAgainstSlayerAreaMonsters"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedFlatMinHitToSlayerAreaMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedFlatMinHitToSlayerAreaMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "minHitBasedOnMaxHitToSlayerAreaMonsters",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% of Maximum Hit added to Minimum Hit against Slayer Area Monsters",
+                "lang": "MODIFIER_DATA_minHitBasedOnMaxHitToSlayerAreaMonsters"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedMinHitBasedOnMaxHitToSlayerAreaMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "accuracyRatingAgainstSlayerAreaMonsters",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% Accuracy Rating against Slayer Area Monsters",
+                "lang": "MODIFIER_DATA_accuracyRatingAgainstSlayerAreaMonsters"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedGlobalAccuracyAgainstSlayerAreaMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedGlobalAccuracyAgainstSlayerAreaMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "flatResistanceAgainstSlayerAreaMonsters",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {
+              "damageType": true
+            },
+            "descriptions": [
+              {
+                "text": "${value}% ${resistanceName} against Slayer Area Monsters",
+                "lang": "MODIFIER_DATA_flatResistanceAgainstSlayerAreaMonstersDamageType"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedDamageReductionAgainstSlayerAreaMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedDamageReductionAgainstSlayerAreaMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "maxHitAgainstDungeonMonsters",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% Max Hit To Dungeon Monsters",
+                "lang": "MODIFIER_DATA_maxHitAgainstDungeonMonsters"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedMaxHitPercentToDungeonMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedMaxHitPercentToDungeonMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "flatMaxHitAgainstDungeonMonsters",
+        "modifyValue": "value*hpMultiplier",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Max Hit To Dungeon Monsters",
+                "lang": "MODIFIER_DATA_flatMaxHitAgainstDungeonMonsters"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedMaxHitFlatToDungeonMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedMaxHitFlatToDungeonMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "flatMinHitAgainstDungeonMonsters",
+        "modifyValue": "value*hpMultiplier",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Minimum Hit To Dungeon Monsters",
+                "lang": "MODIFIER_DATA_flatMinHitAgainstDungeonMonsters"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedFlatMinHitToDungeonMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedFlatMinHitToDungeonMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "minHitBasedOnMaxHitToDungeonMonsters",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% of Maximum Hit added to Minimum Hit against Dungeon Monsters",
+                "lang": "MODIFIER_DATA_minHitBasedOnMaxHitToDungeonMonsters"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedMinHitBasedOnMaxHitToDungeonMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedMinHitBasedOnMaxHitToDungeonMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "accuracyRatingAgainstDungeonMonsters",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% Accuracy Rating against Dungeon Monsters",
+                "lang": "MODIFIER_DATA_accuracyRatingAgainstDungeonMonsters"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedGlobalAccuracyAgainstDungeonMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedGlobalAccuracyAgainstDungeonMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "flatResistanceAgainstDungeonMonsters",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {
+              "damageType": true
+            },
+            "descriptions": [
+              {
+                "text": "${value}% ${resistanceName} against Dungeon Monsters",
+                "lang": "MODIFIER_DATA_flatResistanceAgainstDungeonMonstersDamageType"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedDamageReductionAgainstDungeonMonsters"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedDamageReductionAgainstDungeonMonsters"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "maxHitSlayerTask",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% Max Hit To Combat Area Monsters",
+                "lang": "MODIFIER_DATA_maxHitSlayerTask"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedMaxHitPercentToSlayerTasks"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedMaxHitPercentToSlayerTasks"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "flatMaxHitSlayerTask",
+        "modifyValue": "value*hpMultiplier",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Max Hit To Combat Area Monsters",
+                "lang": "MODIFIER_DATA_flatMaxHitSlayerTask"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedMaxHitFlatToSlayerTasks"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedMaxHitFlatToSlayerTasks"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "minHitBasedOnMaxHitSlayerTask",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% of Maximum Hit added to Minimum Hit against Combat Area Monsters",
+                "lang": "MODIFIER_DATA_minHitBasedOnMaxHitSlayerTask"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedFlatMinHitToSlayerTasks"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedFlatMinHitToSlayerTasks"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "flatMinHitSlayerTask",
+        "modifyValue": "value*hpMultiplier",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Minimum Hit To Combat Area Monsters",
+                "lang": "MODIFIER_DATA_flatMinHitSlayerTask"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedMinHitBasedOnMaxHitToSlayerTasks"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedMinHitBasedOnMaxHitToSlayerTasks"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "accuracyRatingSlayerTask",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% Accuracy Rating against Combat Area Monsters",
+                "lang": "MODIFIER_DATA_accuracyRatingSlayerTask"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedGlobalAccuracyAgainstSlayerTasks"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedGlobalAccuracyAgainstSlayerTasks"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "maxHitAgainstBosses",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% Max Hit To Combat Area Monsters",
+                "lang": "MODIFIER_DATA_maxHitAgainstBosses"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedMaxHitPercentAgainstBosses"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedMaxHitPercentAgainstBosses"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "flatMaxHitAgainstBosses",
+        "modifyValue": "value*hpMultiplier",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Max Hit To Combat Area Monsters",
+                "lang": "MODIFIER_DATA_flatMaxHitAgainstBosses"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedMaxHitFlatAgainstBosses"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedMaxHitFlatAgainstBosses"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "flatMinHitAgainstBosses",
+        "modifyValue": "value*hpMultiplier",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Minimum Hit To Combat Area Monsters",
+                "lang": "MODIFIER_DATA_flatMinHitAgainstBosses"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedFlatMinHitAgainstBosses"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedFlatMinHitAgainstBosses"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "minHitBasedOnMaxHitAgainstBosses",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% of Maximum Hit added to Minimum Hit against Combat Area Monsters",
+                "lang": "MODIFIER_DATA_minHitBasedOnMaxHitAgainstBosses"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedMinHitBasedOnMaxHitAgainstBosses"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedMinHitBasedOnMaxHitAgainstBosses"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "accuracyRatingAgainstBosses",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% Accuracy Rating against Combat Area Monsters",
+                "lang": "MODIFIER_DATA_accuracyRatingAgainstBosses"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedGlobalAccuracyAgainstBosses"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedGlobalAccuracyAgainstBosses"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "chanceToReduceAttackDamageToZero",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% Chance (MAX: 90%) to reduce Damage Taken from an attack to 0 (still treated as being hit and does not affect calculation of on-hit-effects like damage-over-time)",
+                "lang": "MODIFIER_DATA_chanceToReduceAttackDamageToZero"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedChanceToReduceAttackDamageToZero"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedChanceToReduceAttackDamageToZero"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "damageFlatWhileTargetHasMaxHP",
+        "modifyValue": "value*hpMultiplier",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Damage while target has full HP",
+                "lang": "MODIFIER_DATA_damageFlatWhileTargetHasMaxHP"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedDamageFlatWhileTargetHasMaxHP"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedDamageFlatWhileTargetHasMaxHP"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "damagePercentWhileTargetHasMaxHP",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value}% Damage while target has full HP",
+                "lang": "MODIFIER_DATA_damagePercentWhileTargetHasMaxHP"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedDamagePercentWhileTargetHasMaxHP"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedDamagePercentWhileTargetHasMaxHP"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "damageFlatIgnoringResistance",
+        "modifyValue": "value*hpMultiplier",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Damage, which is unaffected by the enemies' Resistance",
+                "lang": "MODIFIER_DATA_damageFlatIgnoringResistance"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedDamageFlatIgnoringDamageReduction"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedDamageFlatIgnoringDamageReduction"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "damagePreventionThreshold",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Global Damage prevention threshold (any damage splat against a barrier below the threshold is reduced to 0)",
+                "lang": "MODIFIER_DATA_damagePreventionThreshold"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedGlobalDamagePreventionThreshold"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedGlobalDamagePreventionThreshold"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "damagePreventionThresholdCombat",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Combat Damage prevention threshold (any damage splat against a barrier below the threshold is reduced to 0)",
+                "lang": "MODIFIER_DATA_damagePreventionThresholdCombat"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedDamagePreventionThreshold"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedDamagePreventionThreshold"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "damagePreventionThresholdBarrier",
+        "inverted": false,
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "${value} Barrier Damage prevention threshold (any damage splat against a barrier below the threshold is reduced to 0)",
+                "lang": "MODIFIER_DATA_damagePreventionThresholdBarrier"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedBarrierDamagePreventionThreshold"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedBarrierDamagePreventionThreshold"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "backwardsCompatibility",
+        "isCombat": true,
+        "allowEnemy": true,
+        "allowedScopes": [
+          {
+            "scopes": {},
+            "descriptions": [
+              {
+                "text": "This modifier is no longer supported by CMiM. Please be so kind and let the Mod Developer know, that they are using a deprecated modifier"
+              }
+            ],
+            "posAliases": [
+              {
+                "key": "increasedChanceToApplySlowOnSpawn"
+              },
+              {
+                "key": "increasedChanceToApplyStunOnSpawn"
+              },
+              {
+                "key": "applyStunOnSpawn"
+              },
+              {
+                "key": "increasedChanceToApplyPoisonOnSpawn"
+              },
+              {
+                "key": "increasedChanceToApplyDeadlyPoisonOnSpawn"
+              },
+              {
+                "key": "increasedChanceToApplyAfflictionOnSpawn"
+              },
+              {
+                "key": "applyAfflictionOnSpawn"
+              },
+              {
+                "key": "increasedChanceToApplyBleedOnSpawn"
+              },
+              {
+                "key": "increasedChanceToApplyBurnOnSpawn"
+              },
+              {
+                "key": "increasedChanceToApplyFreezeOnSpawn"
+              },
+              {
+                "key": "applyFreezeOnSpawn"
+              },
+              {
+                "key": "increasedChanceToApplyFrostburnOnSpawn"
+              },
+              {
+                "key": "increasedChanceToApplyShockOnSpawn"
+              },
+              {
+                "key": "applyShockOnSpawn"
+              },
+              {
+                "key": "increasedChanceToApplySleepOnSpawn"
+              },
+              {
+                "key": "applySleepOnSpawn"
+              },
+              {
+                "key": "increasedChanceToApplyBleed"
+              },
+              {
+                "key": "increasedDeathMarkOnHit"
+              },
+              {
+                "key": "increasedChanceToApplyStackOfDeathMark"
+              },
+              {
+                "key": "increasedDeathMarkImmunity"
+              },
+              {
+                "key": "applyDeathMarkOnSpawn"
+              },
+              {
+                "key": "decreasedDamageTakenFromAirSpells"
+              },
+              {
+                "key": "decreasedDamageTakenFromWaterSpells"
+              },
+              {
+                "key": "decreasedDamageTakenFromEarthSpells"
+              },
+              {
+                "key": "decreasedDamageTakenFromFireSpells"
+              }
+            ],
+            "negAliases": [
+              {
+                "key": "decreasedChanceToApplySlowOnSpawn"
+              },
+              {
+                "key": "decreasedChanceToApplyStunOnSpawn"
+              },
+              {
+                "key": "decreasedChanceToApplyPoisonOnSpawn"
+              },
+              {
+                "key": "decreasedChanceToApplyDeadlyPoisonOnSpawn"
+              },
+              {
+                "key": "decreasedChanceToApplyAfflictionOnSpawn"
+              },
+              {
+                "key": "decreasedChanceToApplyBleedOnSpawn"
+              },
+              {
+                "key": "decreasedChanceToApplyBurnOnSpawn"
+              },
+              {
+                "key": "decreasedChanceToApplyFreezeOnSpawn"
+              },
+              {
+                "key": "decreasedChanceToApplyFrostburnOnSpawn"
+              },
+              {
+                "key": "decreasedChanceToApplyShockOnSpawn"
+              },
+              {
+                "key": "decreasedChanceToApplySleepOnSpawn"
+              },
+              {
+                "key": "decreasedChanceToApplyBleed"
+              },
+              {
+                "key": "deathMark"
+              },
+              {
+                "key": "decreasedChanceToApplyStackOfDeathMark"
+              },
+              {
+                "key": "decreasedDeathMarkImmunity"
+              },
+              {
+                "key": "increasedDamageTakenFromAirSpells"
+              },
+              {
+                "key": "increasedDamageTakenFromWaterSpells"
+              },
+              {
+                "key": "increasedDamageTakenFromEarthSpells"
+              },
+              {
+                "key": "increasedDamageTakenFromFireSpells"
+              },
+              {
+                "key": "decreasedDamageReductionAgainstSlayerTasks"
+              }
+            ]
+          }
+        ]
       }
     ]
   }

@@ -1,5 +1,8 @@
 import { MonsterTypeDefinition } from '../models/monsterTyping/MonsterTypeDefinition';
 
+/**
+ * TODO: Refactor, if possible... new modifier system technically means the mod has to be updated first, though I guess I could get away with choosing neutral icons where possible
+ */
 export class TinyIconsCompatibility {
     /** Non-dynamic modifiers */
     private tinyIconCustomModifierTags = {
@@ -196,50 +199,71 @@ export class TinyIconsCompatibility {
                 let modifiers: Record<string, string> = {};
 
                 // Also add dynamic modifier entries based on tag
+                // TODO: Depending on how TinyIcons functions after v1.3, might be worthwhile to keep the old ones in? Not sure whether the render function patched by it uses the original name or alias
                 // @ts-ignore
                 modifiers[`${type.modifierPropertyNames.traitApplied}`] = [`${tagName}`, 'combat'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.increasedDamage}`] = [`${tagName}`, 'combat'];
+                modifiers[`${type.modifierPropertyNames.damage}`] = [`${tagName}`, 'combat'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.decreasedDamage}`] = [`${tagName}`, 'combat'];
+                //modifiers[`${type.modifierPropertyNames.increasedDamage}`] = [`${tagName}`, 'combat'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.increasedDamageTaken}`] = [`${tagName}`, 'ti_combat_dn'];
+                //modifiers[`${type.modifierPropertyNames.decreasedDamage}`] = [`${tagName}`, 'combat'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.decreasedDamageTaken}`] = [`${tagName}`, 'ti_combat_up'];
+                modifiers[`${type.modifierPropertyNames.damageTaken}`] = [`${tagName}`, 'ti_combat_dn'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.increasedMaxHitPercent}`] = [`${tagName}`, 'ti_combat_up'];
+                //modifiers[`${type.modifierPropertyNames.increasedDamageTaken}`] = [`${tagName}`, 'ti_combat_dn'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.decreasedMaxHitPercent}`] = [`${tagName}`, 'ti_combat_dn'];
+                //modifiers[`${type.modifierPropertyNames.decreasedDamageTaken}`] = [`${tagName}`, 'ti_combat_up'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.increasedMaxHitFlat}`] = [`${tagName}`, 'ti_combat_up'];
+                modifiers[`${type.modifierPropertyNames.maxHitPercent}`] = [`${tagName}`, 'ti_combat_up'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.decreasedMaxHitFlat}`] = [`${tagName}`, 'ti_combat_dn'];
+                //modifiers[`${type.modifierPropertyNames.increasedMaxHitPercent}`] = [`${tagName}`, 'ti_combat_up'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.increasedMinHitBasedOnMaxHit}`] = [`${tagName}`, 'ti_combat_up'];
+                //modifiers[`${type.modifierPropertyNames.decreasedMaxHitPercent}`] = [`${tagName}`, 'ti_combat_dn'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.decreasedMinHitBasedOnMaxHit}`] = [`${tagName}`, 'ti_combat_dn'];
+                modifiers[`${type.modifierPropertyNames.maxHitFlat}`] = [`${tagName}`, 'ti_combat_up'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.increasedFlatMinHit}`] = [`${tagName}`, 'ti_combat_up'];
+                //modifiers[`${type.modifierPropertyNames.increasedMaxHitFlat}`] = [`${tagName}`, 'ti_combat_up'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.decreasedFlatMinHit}`] = [`${tagName}`, 'ti_combat_dn'];
+                //modifiers[`${type.modifierPropertyNames.decreasedMaxHitFlat}`] = [`${tagName}`, 'ti_combat_dn'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.increasedGlobalAccuracy}`] = [`${tagName}`, 'ti_combat_up'];
+                modifiers[`${type.modifierPropertyNames.minHitBasedOnMaxHit}`] = [`${tagName}`, 'ti_combat_up'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.decreasedGlobalAccuracy}`] = [`${tagName}`, 'ti_combat_dn'];
+                //modifiers[`${type.modifierPropertyNames.increasedMinHitBasedOnMaxHit}`] = [`${tagName}`, 'ti_combat_up'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.increasedDamageReduction}`] = [`${tagName}`, 'ti_dr_up'];
+                //modifiers[`${type.modifierPropertyNames.decreasedMinHitBasedOnMaxHit}`] = [`${tagName}`, 'ti_combat_dn'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.decreasedDamageReduction}`] = [`${tagName}`, 'ti_dr_dn'];
+                modifiers[`${type.modifierPropertyNames.flatMinHit}`] = [`${tagName}`, 'ti_combat_up'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.increasedChanceToApplyTraitInfiniteOnSpawn}`] = [`${tagName}`, 'combat'];
+                //modifiers[`${type.modifierPropertyNames.increasedFlatMinHit}`] = [`${tagName}`, 'ti_combat_up'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.decreasedChanceToApplyTraitInfiniteOnSpawn}`] = [`${tagName}`, 'combat'];
+                //modifiers[`${type.modifierPropertyNames.decreasedFlatMinHit}`] = [`${tagName}`, 'ti_combat_dn'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.accuracyRating}`] = [`${tagName}`, 'ti_combat_up'];
+                // @ts-ignore
+                //modifiers[`${type.modifierPropertyNames.increasedGlobalAccuracy}`] = [`${tagName}`, 'ti_combat_up'];
+                // @ts-ignore
+                //modifiers[`${type.modifierPropertyNames.decreasedGlobalAccuracy}`] = [`${tagName}`, 'ti_combat_dn'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.flatResistance}`] = [`${tagName}`, 'ti_dr_up'];
+                // @ts-ignore
+                //modifiers[`${type.modifierPropertyNames.increasedDamageReduction}`] = [`${tagName}`, 'ti_dr_up'];
+                // @ts-ignore
+                //modifiers[`${type.modifierPropertyNames.decreasedDamageReduction}`] = [`${tagName}`, 'ti_dr_dn'];
+                // @ts-ignore
+                modifiers[`${type.modifierPropertyNames.chanceToApplyTraitInfiniteOnSpawn}`] = [`${tagName}`, 'combat'];
+                // @ts-ignore
+                //modifiers[`${type.modifierPropertyNames.increasedChanceToApplyTraitInfiniteOnSpawn}`] = [`${tagName}`, 'combat'];
+                // @ts-ignore
+                //modifiers[`${type.modifierPropertyNames.decreasedChanceToApplyTraitInfiniteOnSpawn}`] = [`${tagName}`, 'combat'];
                 // @ts-ignore
                 modifiers[`${type.modifierPropertyNames.applyTraitTurnsOnSpawn}`] = [`${tagName}`, 'combat'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.increasedChanceToApplyTrait}`] = [`${tagName}`, 'combat'];
+                modifiers[`${type.modifierPropertyNames.chanceToApplyTrait}`] = [`${tagName}`, 'combat'];
                 // @ts-ignore
-                modifiers[`${type.modifierPropertyNames.decreasedChanceToApplyTrait}`] = [`${tagName}`, 'combat'];
+                //modifiers[`${type.modifierPropertyNames.increasedChanceToApplyTrait}`] = [`${tagName}`, 'combat'];
+                // @ts-ignore
+                //modifiers[`${type.modifierPropertyNames.decreasedChanceToApplyTrait}`] = [`${tagName}`, 'combat'];
                 // @ts-ignore
                 modifiers[`${type.modifierPropertyNames.applyTraitTurns}`] = [`${tagName}`, 'combat'];
 

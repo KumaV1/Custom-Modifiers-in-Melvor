@@ -4,26 +4,12 @@
  * */
 export interface MonsterTypeModifierPropertyNames {
     traitApplied: string,
-    increasedDamage: string,
-    decreasedDamage: string,
-    increasedDamageTaken: string,
-    decreasedDamageTaken: string
-    increasedMaxHitPercent: string,
-    decreasedMaxHitPercent: string,
-    increasedMaxHitFlat: string,
-    decreasedMaxHitFlat: string,
-    increasedMinHitBasedOnMaxHit: string,
-    decreasedMinHitBasedOnMaxHit: string,
-    increasedFlatMinHit: string,
-    decreasedFlatMinHit: string,
-    increasedGlobalAccuracy: string,
-    decreasedGlobalAccuracy: string,
-    increasedDamageReduction: string,
-    decreasedDamageReduction: string,
-    increasedChanceToApplyTraitInfiniteOnSpawn: string,
-    decreasedChanceToApplyTraitInfiniteOnSpawn: string,
-    applyTraitTurnsOnSpawn: string,
-    increasedChanceToApplyTrait: string,
-    decreasedChanceToApplyTrait: string,
-    applyTraitTurns: string
+    damageDealt: string
+    damageTaken: string,
+    maxHit: string,
+    flatMaxHit: string,
+    flatMinHit: string,
+    minHitBasedOnMaxHit: string,
+    accuracyRating: string,
+    flatResistance: string,
 }

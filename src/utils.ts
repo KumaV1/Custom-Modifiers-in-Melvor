@@ -5,6 +5,10 @@ export class CmimUtils {
         console.log(`${CmimUtils.LOG_PREFIX} ${message}`);
     }
 
+    public static logObj(data: any): void {
+        console.log(data);
+    }
+
     public static warn(message: string) {
         console.warn(`${CmimUtils.LOG_PREFIX} ${message}`);
     }

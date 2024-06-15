@@ -1,7 +1,8 @@
 import { ModConstants } from '../constants/ModConstants';
-import { ModifierType } from '../models/enums/ModifierType';
 import { MonsterTypeHelper } from '../helpers/MonsterTypeHelper';
 import { MonsterTypeManager } from '../managers/MonsterTypeManager';
+import { ModifierConstants } from '../constants/ModifierConstants';
+import { MonsterTypeModifierPropertyNames } from '../models/monsterTyping/MonsterTypeModifierPropertyNames';
 
 /**
  * While the main patching is defined by the manager,
@@ -25,11 +26,9 @@ export class CustomModifiersCalculationHelper {
      * Calculates percentage-based change of xp to grant
      * @param skill
      */
-    public static getPercentagetXpModification(skill: Skill<BaseSkillData>): number {
-        let modifier = (skill.game.modifiers.increasedGlobalSkillXPPerLevel * skill.level)
-            - (skill.game.modifiers.decreasedGlobalSkillXPPerLevel * skill.level)
-            + (skill.game.modifiers.getSkillModifierValue('increasedSkillXPPerSkillLevel', skill) * skill.level)
-            - (skill.game.modifiers.getSkillModifierValue('decreasedSkillXPPerSkillLevel', skill) * skill.level);
+    public static getPercentagetXpModification(skill: Skill<BaseSkillData>, action?: NamedObject): number {
+        let modifier = skill.level
+            * skill.game.modifiers.getValue(ModifierConstants.IDS.PLAYER.skillXPPerLevel, skill.getActionModifierQuery(action));
 
         return Math.max(0, modifier);
     }
@@ -46,19 +45,13 @@ export class CustomModifiersCalculationHelper {
      * @param skill
      * @returns
      */
-    public static getFlatXpModification(skill: Skill<BaseSkillData>): number {
-        let flatXp = skill.game.modifiers.increasedFlatGlobalSkillXP
-            - skill.game.modifiers.decreasedFlatGlobalSkillXP
-            + (skill.game.modifiers.increasedFlatGlobalSkillXPPerSkillLevel * skill.level)
-            - (skill.game.modifiers.decreasedFlatGlobalSkillXPPerSkillLevel * skill.level)
-            + skill.game.modifiers.getSkillModifierValue('increasedFlatSkillXP', skill)
-            - skill.game.modifiers.getSkillModifierValue('decreasedFlatSkillXP', skill)
-            + (skill.game.modifiers.getSkillModifierValue('increasedFlatSkillXPPerSkillLevel', skill) * skill.level)
-            - (skill.game.modifiers.getSkillModifierValue('decreasedFlatSkillXPPerSkillLevel', skill) * skill.level);
+    public static getFlatXpModification(skill: Skill<BaseSkillData>, action?: NamedObject): number {
+        let flatXp = skill.game.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatSkillXP, skill.getActionModifierQuery(action))
+            + (skill.level * skill.game.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatSkillXPPerLevel, skill.getActionModifierQuery(action)));
 
         flatXp = Math.max(0, flatXp);
 
-        return skill.game.modifiers.halfSkillXP
+        return skill.game.modifiers.halveSkillXP
             ? flatXp / 2
             : flatXp;
     }
@@ -69,58 +62,116 @@ export class CustomModifiersCalculationHelper {
 
     // #region Min hit
 
-    // #region Percentage and Flat - Min hit
+    // #region Percentage - Min Hit
 
     /**
-     * Calculate change to min hit, both flat and percentage
+     * Calculate total percentage modification of min hit, from those based on max hit specifically
      * @param entity
      */
-    public static getPlayerMinHitModification(entity: Player) {
+    public static getPlayerMinHitFromMaxHitPercentModification(entity: Player): number {
         let modification = 0;
-        if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculationHelper.getCharacterMinHitModification(entity);
 
-            if (entity.manager.enemy.isBoss) {
-                modification += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitAgainstBosses - entity.modifiers.decreasedMinHitBasedOnMaxHitAgainstBosses)) / 100);
-                modification += numberMultiplier * (entity.modifiers.increasedFlatMinHitAgainstBosses - entity.modifiers.decreasedFlatMinHitAgainstBosses);
+        if (entity.manager.fightInProgress) {
+            if (entity.target.isBoss) {
+                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.minHitBasedOnMaxHitAgainstBosses, ModifierQuery.EMPTY);
             }
 
             switch (entity.manager.areaType) {
                 case CombatAreaType.Combat:
-                    modification += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitToCombatAreaMonsters - entity.modifiers.decreasedMinHitBasedOnMaxHitToCombatAreaMonsters)) / 100);
-                    modification += numberMultiplier * (entity.modifiers.increasedFlatMinHitToCombatAreaMonsters - entity.modifiers.decreasedFlatMinHitToCombatAreaMonsters);
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.minHitBasedOnMaxHitToCombatAreaMonsters, ModifierQuery.EMPTY);
                     break;
                 case CombatAreaType.Slayer:
-                    modification += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitToSlayerAreaMonsters - entity.modifiers.decreasedMinHitBasedOnMaxHitToSlayerAreaMonsters)) / 100);
-                    modification += numberMultiplier * (entity.modifiers.increasedFlatMinHitToSlayerAreaMonsters - entity.modifiers.decreasedFlatMinHitToSlayerAreaMonsters);
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.minHitBasedOnMaxHitToSlayerAreaMonsters, ModifierQuery.EMPTY);
                     break;
                 case CombatAreaType.Dungeon:
-                    modification += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitToDungeonMonsters - entity.modifiers.decreasedMinHitBasedOnMaxHitToDungeonMonsters)) / 100);
-                    modification += numberMultiplier * (entity.modifiers.increasedFlatMinHitToDungeonMonsters - entity.modifiers.decreasedFlatMinHitToDungeonMonsters);
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.minHitBasedOnMaxHitToDungeonMonsters, ModifierQuery.EMPTY);
                     break;
                 default:
+                    break;
             }
 
             if (entity.manager.onSlayerTask) {
-                modification += Math.floor((entity.stats.maxHit * (entity.modifiers.increasedMinHitBasedOnMaxHitToSlayerTasks - entity.modifiers.decreasedMinHitBasedOnMaxHitToSlayerTasks)) / 100);
-                modification += numberMultiplier * (entity.modifiers.increasedFlatMinHitToSlayerTasks - entity.modifiers.decreasedFlatMinHitToSlayerTasks);
+                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.minHitBasedOnMaxHitSlayerTask, ModifierQuery.EMPTY);
             }
+
+            modification += CustomModifiersCalculationHelper.getCharacterMinHitFromMaxHitPercentModification(entity);
         }
 
         return modification;
     }
 
     /**
+     * Calculate total percentage modification of min hit, from those based on max hit specifically
+     * @param entity
+     */
+    public static getEnemyMinHitFromMaxHitPercentModification(entity: Enemy): number {
+        let modififcation = 0;
+
+        if (entity.manager.fightInProgress) {
+            modififcation += CustomModifiersCalculationHelper.getCharacterMinHitFromMaxHitPercentModification(entity);
+        }
+
+        return modififcation;
+    }
+
+    /**
+     * Calculate total percentage modification of min hit, from those based on max hit specifically
+     * @param entity
+     */
+    private static getCharacterMinHitFromMaxHitPercentModification(entity: Character): number {
+        return CustomModifiersCalculationHelper.getTotalModificationForMonsterTypes(entity, 'minHitBasedOnMaxHit');
+    }
+
+    // #endregion
+
+    // #region Flat - Min hit
+
+    /**
      * Calculate change to min hit, both flat and percentage
      * @param entity
      */
-    public static getEnemyMinHitModification(entity: Enemy): number {
-        let modification = 0;
+    public static getPlayerMinHitFlatModification(entity: Player) {
+        let flatModification = 0;
+
         if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculationHelper.getCharacterMinHitModification(entity);
+            if (entity.manager.enemy.isBoss) {
+                flatModification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMinHitAgainstBosses, ModifierQuery.EMPTY);
+            }
+
+            switch (entity.manager.areaType) {
+                case CombatAreaType.Combat:
+                    flatModification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMinHitAgainstCombatAreaMonsters, ModifierQuery.EMPTY);
+                    break;
+                case CombatAreaType.Slayer:
+                    flatModification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMinHitAgainstSlayerAreaMonsters, ModifierQuery.EMPTY);
+                    break;
+                case CombatAreaType.Dungeon:
+                    flatModification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMinHitAgainstDungeonMonsters, ModifierQuery.EMPTY);
+                    break;
+                default:
+            }
+
+            if (entity.manager.onSlayerTask) {
+                flatModification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMinHitSlayerTask, ModifierQuery.EMPTY);
+            }
+
+            flatModification += CustomModifiersCalculationHelper.getCharacterMinHitFlatModification(entity);
         }
 
-        return modification;
+        return numberMultiplier * flatModification;
+    }
+
+    /**
+     * Calculate change to min hit, both flat and percentage
+     * @param entity
+     */
+    public static getEnemyMinHitFlatModification(entity: Enemy): number {
+        let flatModification = 0;
+        if (entity.manager.fightInProgress) {
+            flatModification += CustomModifiersCalculationHelper.getCharacterMinHitFlatModification(entity);
+        }
+
+        return numberMultiplier * flatModification;
     }
 
     /**
@@ -128,34 +179,8 @@ export class CustomModifiersCalculationHelper {
      * @param entity
      * @returns
      */
-    private static getCharacterMinHitModification(entity: Character): number {
-        return CustomModifiersCalculationHelper.getCharacterMinHitModificationForMonsterTypes(entity);
-    }
-
-    /**
-     * Calculate change to min hit, both flat and percentage, specifically based on monster type allocations (the logic shared between both player and enemy)
-     * @param entity
-     * @returns
-     */
-    private static getCharacterMinHitModificationForMonsterTypes(entity: Character): number {
-        let modification = 0;
-
-        const types = MonsterTypeManager.getActiveTypesAsArray();
-        for (var i = 0; i < types.length; i++) {
-            const type = types[i];
-
-            if (MonsterTypeHelper.entityIsTreatedAsType(entity.target, type)) {
-                // Min hit based on max hit
-                // @ts-ignore - We know these properties exist, as they were dynamically added before
-                modification += Math.floor((entity.stats.maxHit * (entity.modifiers[type.modifierPropertyNames.increasedMinHitBasedOnMaxHit] - entity.modifiers[type.modifierPropertyNames.decreasedMinHitBasedOnMaxHit])) / 100);
-
-                // Flat min hit
-                // @ts-ignore - We know these properties exist, as they were dynamically added before
-                modification += numberMultiplier * (entity.modifiers[type.modifierPropertyNames.increasedFlatMinHit] - entity.modifiers[type.modifierPropertyNames.decreasedFlatMinHit]);
-            }
-        }
-
-        return modification;
+    private static getCharacterMinHitFlatModification(entity: Character): number {
+        return CustomModifiersCalculationHelper.getTotalModificationForMonsterTypes(entity, 'flatMinHit');
     }
 
     // #endregion
@@ -172,29 +197,30 @@ export class CustomModifiersCalculationHelper {
      */
     public static getPlayerMaxHitPercentageModification(entity: Player) {
         let modification = 0;
-        if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculationHelper.getCharacterMaxHitPercentageModification(entity);
 
+        if (entity.manager.fightInProgress) {
             if (entity.manager.enemy.isBoss) {
-                modification += entity.modifiers.increasedMaxHitPercentAgainstBosses - entity.modifiers.decreasedMaxHitPercentAgainstBosses;
+                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitAgainstBosses, ModifierQuery.EMPTY);
             }
 
             switch (entity.manager.areaType) {
                 case CombatAreaType.Combat:
-                    modification += entity.modifiers.increasedMaxHitPercentToCombatAreaMonsters - entity.modifiers.decreasedMaxHitPercentToCombatAreaMonsters;
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitAgainstCombatAreaMonsters, ModifierQuery.EMPTY);
                     break;
                 case CombatAreaType.Slayer:
-                    modification += entity.modifiers.increasedMaxHitPercentToSlayerAreaMonsters - entity.modifiers.decreasedMaxHitPercentToSlayerAreaMonsters;
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitAgainstSlayerAreaMonsters, ModifierQuery.EMPTY);
                     break;
                 case CombatAreaType.Dungeon:
-                    modification += entity.modifiers.increasedMaxHitPercentToDungeonMonsters - entity.modifiers.decreasedMaxHitPercentToDungeonMonsters;
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitAgainstDungeonMonsters, ModifierQuery.EMPTY);
                     break;
                 default:
             }
 
             if (entity.manager.onSlayerTask) {
-                modification += entity.modifiers.increasedMaxHitPercentToSlayerTasks - entity.modifiers.decreasedMaxHitPercentToSlayerTasks;
+                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.maxHitSlayerTask, ModifierQuery.EMPTY);
             }
+
+            modification += CustomModifiersCalculationHelper.getCharacterMaxHitPercentageModification(entity);
         }
 
         return modification;
@@ -206,6 +232,7 @@ export class CustomModifiersCalculationHelper {
      */
     public static getEnemyMaxHitPercentageModification(entity: Enemy) {
         let modification = 0;
+
         if (entity.manager.fightInProgress) {
             modification += CustomModifiersCalculationHelper.getCharacterMaxHitPercentageModification(entity);
         }
@@ -218,27 +245,7 @@ export class CustomModifiersCalculationHelper {
      * @param entity
      */
     private static getCharacterMaxHitPercentageModification(entity: Character): number {
-        return CustomModifiersCalculationHelper.getCharacterMaxHitPercentageModificationForMonsterTypes(entity);
-    }
-
-    /**
-     * Calculates percentage-based change to max hit, specifically based on monster type allocations (logic shared between player and enemy)
-     * @param entity
-     */
-    private static getCharacterMaxHitPercentageModificationForMonsterTypes(entity: Character): number {
-        let modification = 0;
-
-        const types = MonsterTypeManager.getActiveTypesAsArray();
-        for (var i = 0; i < types.length; i++) {
-            const type = types[i];
-
-            if (MonsterTypeHelper.entityIsTreatedAsType(entity.target, type)) {
-                // @ts-ignore - We know these properties exist, as they were dynamically added before
-                modification += entity.modifiers[type.modifierPropertyNames.increasedMaxHitPercent] - entity.modifiers[type.modifierPropertyNames.decreasedMaxHitPercent];
-            }
-        }
-
-        return modification;
+        return CustomModifiersCalculationHelper.getTotalModificationForMonsterTypes(entity, 'maxHit');
     }
 
     // #endregion
@@ -251,34 +258,31 @@ export class CustomModifiersCalculationHelper {
      * @returns
      */
     public static getPlayerMaxHitFlatModification(entity: Player): number {
-        if (entity.usingAncient) {
-            return 0;
-        }
-
         let modification = 0;
-        if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculationHelper.getCharacterMaxHitFlatModification(entity);
 
+        if (entity.manager.fightInProgress) {
             if (entity.manager.enemy.isBoss) {
-                modification += numberMultiplier * (entity.modifiers.increasedMaxHitFlatAgainstBosses - entity.modifiers.decreasedMaxHitFlatAgainstBosses);
+                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMaxHitAgainstBosses, ModifierQuery.EMPTY);
             }
 
             switch (entity.manager.areaType) {
                 case CombatAreaType.Combat:
-                    modification += numberMultiplier * (entity.modifiers.increasedMaxHitFlatToCombatAreaMonsters - entity.modifiers.decreasedMaxHitFlatToCombatAreaMonsters);
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMaxHitAgainstCombatAreaMonsters, ModifierQuery.EMPTY);
                     break;
                 case CombatAreaType.Slayer:
-                    modification += numberMultiplier * (entity.modifiers.increasedMaxHitFlatToSlayerAreaMonsters - entity.modifiers.decreasedMaxHitFlatToSlayerAreaMonsters);
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMaxHitAgainstSlayerAreaMonsters, ModifierQuery.EMPTY);
                     break;
                 case CombatAreaType.Dungeon:
-                    modification += numberMultiplier * (entity.modifiers.increasedMaxHitFlatToDungeonMonsters - entity.modifiers.decreasedMaxHitFlatToDungeonMonsters);
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMaxHitAgainstDungeonMonsters, ModifierQuery.EMPTY);
                     break;
                 default:
             }
 
             if (entity.manager.onSlayerTask) {
-                modification += numberMultiplier * (entity.modifiers.increasedMaxHitFlatToSlayerTasks - entity.modifiers.decreasedMaxHitFlatToSlayerTasks);
+                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatMaxHitSlayerTask, ModifierQuery.EMPTY);
             }
+
+            modification += CustomModifiersCalculationHelper.getCharacterMaxHitFlatModification(entity);
         }
 
         return modification;
@@ -291,6 +295,7 @@ export class CustomModifiersCalculationHelper {
      */
     public static getEnemyMaxHitFlatModification(entity: Enemy): number {
         let modification = 0;
+
         if (entity.manager.fightInProgress) {
             modification += CustomModifiersCalculationHelper.getCharacterMaxHitFlatModification(entity);
         }
@@ -303,27 +308,7 @@ export class CustomModifiersCalculationHelper {
      * @param entity
      */
     private static getCharacterMaxHitFlatModification(entity: Character): number {
-        return CustomModifiersCalculationHelper.getCharacterMaxHitFlatModificationForMonsterTypes(entity);
-    }
-
-    /**
-     * Calculates flat change to max hit, specifically based on monster type allocations (logic shared across both player and enemy)
-     * @param entity
-     */
-    private static getCharacterMaxHitFlatModificationForMonsterTypes(entity: Character): number {
-        let modification = 0;
-
-        const types = MonsterTypeManager.getActiveTypesAsArray();
-        for (var i = 0; i < types.length; i++) {
-            const type = types[i];
-
-            if (MonsterTypeHelper.entityIsTreatedAsType(entity.target, type)) {
-                // @ts-ignore - We know these properties exist, as they were dynamically added before
-                modification += entity.modifiers[type.modifierPropertyNames.increasedMaxHitFlat] - entity.modifiers[type.modifierPropertyNames.decreasedMaxHitFlat];
-            }
-        }
-
-        return modification;
+        return CustomModifiersCalculationHelper.getTotalModificationForMonsterTypes(entity, 'flatMaxHit');
     }
 
     // #endregion
@@ -362,7 +347,7 @@ export class CustomModifiersCalculationHelper {
      */
     private static getCharacterFlatAttackDamageBonusModification(attacker: Character, target: Character): number {
         return target.hitpointsPercent === 100
-            ? numberMultiplier * (attacker.modifiers.increasedDamageFlatWhileTargetHasMaxHP - attacker.modifiers.decreasedDamageFlatWhileTargetHasMaxHP)
+            ? numberMultiplier * attacker.modifiers.getValue(ModifierConstants.IDS.CHARACTER.damageFlatWhileTargetHasMaxHP, ModifierQuery.EMPTY)
             : 0;
     }
 
@@ -413,18 +398,18 @@ export class CustomModifiersCalculationHelper {
 
         // If there are no restrictions, we can check whether to nullify the damage,
         // in which case we actually return the negative current damage, so it equals out to 0
-        const chanceToReduceDamageToZero = target.modifiers.increasedChanceToReduceAttackDamageToZero - target.modifiers.decreasedChanceToReduceAttackDamageToZero;
+        const chanceToReduceDamageToZero = target.modifiers.getValue(ModifierConstants.IDS.CHARACTER.chanceToReduceAttackDamageToZero, ModifierQuery.EMPTY);
         if (rollPercentage(Math.min(90, chanceToReduceDamageToZero))) {
             return -currentDamage;
         }
 
         // Otherwise, we check whether the character has a dr-ignoring bonus,
         // in which case we add that, while also re-applying percentage modifications like the patched method does
-        const flatDamageIgnoringReduction = numberMultiplier * (attacker.modifiers.increasedDamageFlatIgnoringDamageReduction - attacker.modifiers.decreasedDamageFlatIgnoringDamageReduction);
+        const flatDamageIgnoringReduction = numberMultiplier * attacker.modifiers.getValue(ModifierConstants.IDS.CHARACTER.damageFlatIgnoringResistance, ModifierQuery.EMPTY);
         return flatDamageIgnoringReduction > 0
             ? attack.isDragonbreath
-                ? attacker.applyDamageModifiers(target, flatDamageIgnoringReduction) * (1 - target.modifiers.decreasedDragonBreathDamage / 100)
-                : attacker.applyDamageModifiers(target, flatDamageIgnoringReduction)
+                ? Math.floor(attacker.applyDamageModifiers(target, flatDamageIgnoringReduction) * (1 + target.modifiers.dragonBreathDamage / 100))
+                : Math.floor(attacker.applyDamageModifiers(target, flatDamageIgnoringReduction))
             : 0;
     }
 
@@ -436,112 +421,85 @@ export class CustomModifiersCalculationHelper {
 
     // #region Percentage - (Total) Damage Percent
 
+    // #region Percentage - (Total) Damage Percent - Damage Dealt
+
     /**
      * Calculates change to percentage-based (total) damage value
-     * @param attacker
-     * @param target
+     * @param entity
      * @returns
      */
-    public static getPlayerDamagePercentageModification(attacker: Player, target: Character): number {
-        return CustomModifiersCalculationHelper.getCharacterDamagePercentageModifiers(attacker, target);
+    public static getPlayerDamageDealtPercentageModification(entity: Player): number {
+        return CustomModifiersCalculationHelper.getCharacterDamageDealtPercentageModifiers(entity);
     }
 
     /**
      * Calculates change to percentage-based (total) damage value
-     * @param attacker
-     * @param target
+     * @param entity
      * @returns
      */
-    public static getEnemyDamagePercentageModification(attacker: Enemy, target: Character): number {
-        return CustomModifiersCalculationHelper.getCharacterDamagePercentageModifiers(attacker, target);
+    public static getEnemyDamageDealtPercentageModification(entity: Enemy): number {
+        return CustomModifiersCalculationHelper.getCharacterDamageDealtPercentageModifiers(entity);
     }
 
     /**
      * Calculates change to percentage-based (total) damage value (logic shared across both player and enemy)
      *
      * REMARK: "damage" and "damage taken" run during the same calculation. Therefore:
-     * * increasedDamage -> Based on what THE TARGET is/uses and whether the THE ATTACKER has the corresponding modifiers
-     * * increasedDamageTaken -> Based on what THE ATTACKER is/uses and whether the THE TARGET has the corresponding modifiers
-     * @param attacker
-     * @param target
+     * * increasedDamage -> Based on what THE TARGET is/uses and whether the THE ATTACKER has the corresponding modifiers (e.g. "increased slayer area damage" increases damage, if the attacker has the corresponding modifier and the target is in slayer area)
+     * * increasedDamageTaken -> Based on what THE ATTACKER is/uses and whether the THE TARGET has the corresponding modifiers (e.g. "icreased fire spell damage taken" increases damage, if the attacker uses a fire spell, and the target has the modifier)
+     * @param entity the character attacking
      */
-    private static getCharacterDamagePercentageModifiers(attacker: Character, target: Character): number {
-        return CustomModifiersCalculationHelper.getDamagePercentageModificationForStats(attacker, target)
-            + CustomModifiersCalculationHelper.getDamagePercentageModificationForMonsterTypes(attacker, target)
-            + CustomModifiersCalculationHelper.getDamagePercentageModificationForSpellTypes(attacker, target);
+    private static getCharacterDamageDealtPercentageModifiers(entity: Character): number {
+        return CustomModifiersCalculationHelper.getDamagePercentageModificationForStats(entity)
+            + CustomModifiersCalculationHelper.getTotalModificationForMonsterTypes(entity, 'damageDealt');
     }
 
     /**
      * Calculates change to percentage-based (total) damage value,
      * specifically based on stats of either characters, and ongoing changes during battle (e.g., based on hp lost)
-     * @param attacker
-     * @param target
+     * @param entity the character attacking
      */
-    private static getDamagePercentageModificationForStats(attacker: Character, target: Character): number {
-        return target.hitpointsPercent === 100
-            ? attacker.modifiers.increasedDamagePercentWhileTargetHasMaxHP - attacker.modifiers.decreasedDamagePercentWhileTargetHasMaxHP
+    private static getDamagePercentageModificationForStats(entity: Character): number {
+        return entity.target.hitpointsPercent === 100
+            ? entity.modifiers.getValue(ModifierConstants.IDS.CHARACTER.damagePercentWhileTargetHasMaxHP, ModifierQuery.EMPTY)
             : 0;
     }
 
+    // #endregion
+
+    // #region Percentage - (Total) Damage Percent - Damage Dealt
+
     /**
-     * Calculates change to percentage-based (total) damage value,
-     * specifically based on the type of spell being used
-     * @param attacker
-     * @param target
+     * Calculates change to percentage-based (total) damage value
+     * @param entity
+     * @returns
      */
-    private static getDamagePercentageModificationForSpellTypes(attacker: Character, target: Character): number {
-        let modification = 0;
+    public static getPlayerDamageTakenPercentageModification(entity: Player): number {
+        return CustomModifiersCalculationHelper.getCharacterDamageTakenPercentageModifiers(entity);
+    }
 
-        if (attacker.attackType === ModConstants.ATTACK_TYPES_MAGIC) {
-            switch (attacker.spellSelection.standard?.spellType) {
-                case undefined:
-                    break;
-                case SpellTypes.Air:
-                    modification += target.modifiers.increasedDamageTakenFromAirSpells - target.modifiers.decreasedDamageTakenFromAirSpells;
-                    break;
-                case SpellTypes.Water:
-                    modification += target.modifiers.increasedDamageTakenFromWaterSpells - target.modifiers.decreasedDamageTakenFromWaterSpells;
-                    break;
-                case SpellTypes.Earth:
-                    modification += target.modifiers.increasedDamageTakenFromEarthSpells - target.modifiers.decreasedDamageTakenFromEarthSpells;
-                    break;
-                case SpellTypes.Fire:
-                    modification += target.modifiers.increasedDamageTakenFromFireSpells - target.modifiers.decreasedDamageTakenFromFireSpells;
-                    break;
-                default:
-            }
-        }
-
-        return modification;
+    /**
+     * Calculates change to percentage-based (total) damage value
+     * @param entity the character being attacked
+     * @returns
+     */
+    public static getEnemyDamageTakenPercentageModification(entity: Enemy): number {
+        return CustomModifiersCalculationHelper.getCharacterDamageTakenPercentageModifiers(entity);
     }
 
     /**
      * Calculates change to percentage-based (total) damage value (logic shared across both player and enemy)
-     * @param attacker
-     * @param target
+     *
+     * REMARK: "damage" and "damage taken" run during the same calculation. Therefore:
+     * * increasedDamage -> Based on what THE TARGET is/uses and whether the THE ATTACKER has the corresponding modifiers (e.g. "increased slayer area damage" increases damage, if the attacker has the corresponding modifier and the target is in slayer area)
+     * * increasedDamageTaken -> Based on what THE ATTACKER is/uses and whether the THE TARGET has the corresponding modifiers (e.g. "icreased fire spell damage taken" increases damage, if the attacker uses a fire spell, and the target has the modifier)
+     * @param entity the character being attacked
      */
-    private static getDamagePercentageModificationForMonsterTypes(attacker: Character, target: Character): number {
-        let modification = 0;
-
-        const types = MonsterTypeManager.getActiveTypesAsArray();
-        for (var i = 0; i < types.length; i++) {
-            const type = types[i];
-
-            if (MonsterTypeHelper.entityIsTreatedAsType(target, type)) {
-                // Damage Percent
-                // @ts-ignore - We know these properties exist, as they were dynamically added before
-                modification += attacker.modifiers[type.modifierPropertyNames.increasedDamage] - attacker.modifiers[type.modifierPropertyNames.decreasedDamage];
-            }
-
-            if (MonsterTypeHelper.entityIsTreatedAsType(attacker, type)) {
-                // Damage Percent
-                // @ts-ignore - We know these properties exist, as they were dynamically added before
-                modification += target.modifiers[type.modifierPropertyNames.increasedDamageTaken] - attacker.target.modifiers[type.modifierPropertyNames.decreasedDamageTaken];
-            }
-        }
-
-        return modification;
+    private static getCharacterDamageTakenPercentageModifiers(entity: Character): number {
+        return CustomModifiersCalculationHelper.getTotalModificationForMonsterTypes(entity, 'damageTaken');
     }
+
+    // #endregion
 
     // #endregion
 
@@ -549,7 +507,7 @@ export class CustomModifiersCalculationHelper {
 
     // #region Accuracy
 
-    // #region Flat - Accuracy
+    // #region Percentage - Accuracy
 
     /**
      * Calculates the change to accuracy, based on the originally provided accuracy value
@@ -557,39 +515,37 @@ export class CustomModifiersCalculationHelper {
      * @param accuracy flat value, as was originally provided to the unpatched method
      * @returns flat value
      */
-    public static getPlayerAccuracyFlatModification(entity: Player, accuracy: number): number {
+    public static getPlayerAccuracyPercentModification(entity: Player): number {
         // Calculate percentage-based modifier
-        let accuracyModifier = 0;
-        if (entity.manager.fightInProgress) {
-            accuracyModifier += CustomModifiersCalculationHelper.getCharacterAccuracyPercentageModifiers(entity);
+        let modification = 0;
 
+        if (entity.manager.fightInProgress) {
             if (entity.manager.enemy.isBoss) {
-                accuracyModifier += entity.modifiers.increasedGlobalAccuracyAgainstBosses - entity.modifiers.decreasedGlobalAccuracyAgainstBosses;
+                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.accuracyRatingAgainstBosses, ModifierQuery.EMPTY);
+                //accuracyModifier += entity.modifiers.increasedGlobalAccuracyAgainstBosses - entity.modifiers.decreasedGlobalAccuracyAgainstBosses;
             }
 
             switch (entity.manager.areaType) {
                 case CombatAreaType.Combat:
-                    accuracyModifier += entity.modifiers.increasedGlobalAccuracyAgainstCombatAreaMonsters - entity.modifiers.decreasedGlobalAccuracyAgainstCombatAreaMonsters;
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.accuracyRatingAgainstCombatAreaMonsters, ModifierQuery.EMPTY);
                     break;
                 case CombatAreaType.Slayer:
-                    accuracyModifier += entity.modifiers.increasedGlobalAccuracyAgainstSlayerAreaMonsters - entity.modifiers.decreasedGlobalAccuracyAgainstSlayerAreaMonsters;
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.accuracyRatingAgainstSlayerAreaMonsters, ModifierQuery.EMPTY);
                     break;
                 case CombatAreaType.Dungeon:
-                    accuracyModifier += entity.modifiers.increasedGlobalAccuracyAgainstDungeonMonsters - entity.modifiers.decreasedGlobalAccuracyAgainstDungeonMonsters;
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.accuracyRatingAgainstDungeonMonsters, ModifierQuery.EMPTY);
                     break;
                 default:
             }
 
             if (entity.manager.onSlayerTask) {
-                accuracyModifier += entity.modifiers.increasedGlobalAccuracyAgainstSlayerTasks - entity.modifiers.decreasedGlobalAccuracyAgainstSlayerTasks;
+                modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.accuracyRatingSlayerTask, ModifierQuery.EMPTY);
             }
+
+            modification += CustomModifiersCalculationHelper.getCharacterAccuracyPercentageModifiers(entity);
         }
 
-        // Get flat bonus, based on original value and percentage-bonus calculated
-        const accuracyModification = applyModifier(accuracy, accuracyModifier, ModifierType.MultiplyBaseByPercentageWithFlooring);
-
-        // Just like with the base game calculation, we have to keep the "globalAccuracyHPScaling" modifier in mind
-        return CustomModifiersCalculationHelper.applyGlobalAccuracyHpScaling(entity, accuracyModification);
+        return modification;
     }
 
     /**
@@ -598,17 +554,14 @@ export class CustomModifiersCalculationHelper {
      * @param accuracy flat value, as was originally provided to the unpatched method
      * @returns flat value
      */
-    public static getEnemyAccuracyFlatModification(entity: Enemy, accuracy: number): number {
-        let accuracyModifier = 0;
+    public static getEnemyAccuracyPercentModification(entity: Enemy): number {
+        let modification = 0;
+
         if (entity.manager.fightInProgress) {
-            accuracyModifier += CustomModifiersCalculationHelper.getCharacterAccuracyPercentageModifiers(entity);
+            modification += CustomModifiersCalculationHelper.getCharacterAccuracyPercentageModifiers(entity);
         }
 
-        // Get flat bonus, based on original value and percentage-bonus calculated
-        const accuracyModification = applyModifier(accuracy, accuracyModifier, ModifierType.MultiplyBaseByPercentageWithFlooring);
-
-        // Just like with the base game calculation, we have to keep the "globalAccuracyHPScaling" modifier in mind
-        return CustomModifiersCalculationHelper.applyGlobalAccuracyHpScaling(entity, accuracyModification);
+        return modification;
     }
 
     /**
@@ -616,42 +569,7 @@ export class CustomModifiersCalculationHelper {
      * @param entity
      */
     private static getCharacterAccuracyPercentageModifiers(entity: Character): number {
-        return CustomModifiersCalculationHelper.getCharacterAccuracyPercentageModifiersForMonsterTypes(entity);
-    }
-
-    /**
-     * Calculates accuracy percentage bonus to apply, specifically based on monster type allocations (logic shared across both player and enemy)
-     * @param entity
-     */
-    private static getCharacterAccuracyPercentageModifiersForMonsterTypes(entity: Character): number {
-        let modification = 0;
-
-        const types = MonsterTypeManager.getActiveTypesAsArray();
-        for (var i = 0; i < types.length; i++) {
-            const type = types[i];
-
-            if (MonsterTypeHelper.entityIsTreatedAsType(entity.target, type)) {
-                // @ts-ignore - We know these properties exist, as they were dynamically added before
-                modification += entity.modifiers[type.modifierPropertyNames.increasedGlobalAccuracy] - entity.modifiers[type.modifierPropertyNames.decreasedGlobalAccuracy];
-            }
-        }
-
-        return modification;
-    }
-
-    /**
-     * Apply "globalAccuracyHPScaling" to our calculated accuracy,
-     * just like how the original method finishes off adjusting the final accuracy value with that modifier
-     * @param entity
-     * @param accuracy
-     */
-    private static applyGlobalAccuracyHpScaling(entity: Character, accuracy: number): number {
-        if (entity.modifiers.globalAccuracyHPScaling > 0) {
-            const modifier = (entity.modifiers.globalAccuracyHPScaling * entity.hitpointsPercent) / 100;
-            return Math.floor(accuracy * modifier);
-        } else {
-            return accuracy;
-        }
+        return CustomModifiersCalculationHelper.getTotalModificationForMonsterTypes(entity, 'accuracyRating');
     }
 
     // #endregion
@@ -665,39 +583,42 @@ export class CustomModifiersCalculationHelper {
     /**
      * Calculate the flat change in DR%
      * @param entity
+     * @param damageType
      */
-    public static getPlayerDamageReductionFlatModification(entity: Player): number {
+    public static getPlayerDamageReductionFlatModification(entity: Player, damageType: DamageType): number {
         // First, run general logic
         let modification = 0;
-        if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculationHelper.getCharacterDamageReductionFlatModification(entity);
 
+        if (entity.manager.fightInProgress) {
             switch (entity.manager.areaType) {
                 case CombatAreaType.Combat:
-                    modification += entity.modifiers.increasedDamageReductionAgainstCombatAreaMonsters - entity.modifiers.decreasedDamageReductionAgainstCombatAreaMonsters;
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatResistanceAgainstCombatAreaMonsters, damageType.modQuery);
                     break;
                 case CombatAreaType.Slayer:
-                    modification += entity.modifiers.increasedDamageReductionAgainstSlayerAreaMonsters - entity.modifiers.decreasedDamageReductionAgainstSlayerAreaMonsters;
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatResistanceAgainstSlayerAreaMonsters, damageType.modQuery);
                     break;
                 case CombatAreaType.Dungeon:
-                    modification += entity.modifiers.increasedDamageReductionAgainstDungeonMonsters - entity.modifiers.decreasedDamageReductionAgainstDungeonMonsters;
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatResistanceAgainstDungeonMonsters, damageType.modQuery);
                     break;
                 default:
             }
 
-            if (entity.manager.onSlayerTask) {
-                // The game already comes with its own positive variant
-                modification -= entity.modifiers.decreasedDamageReductionAgainstSlayerTasks;
-            }
+            modification += CustomModifiersCalculationHelper.getCharacterDamageReductionFlatModification(entity, damageType);
+        }
 
-            // Then, we have to mimic multiplications based on a few conditions,
-            // based on the total change we calculated up to this point
-            modification = CustomModifiersCalculationHelper.applyCharacterDamageReductionPercentModification(entity, modification);
+        return modification;
+    }
 
-            // The player specifically also has one more multiplicative calculation to do
-            if (entity.manager.fightInProgress) {
-                modification *= entity.activeTriangle.reductionModifier[entity.attackType][entity.target.attackType];
-            }
+    /**
+     * Calculate the flat change in DR%
+     * @param entity
+     * @param damageType
+     */
+    public static getEnemyDamageReductionFlatModification(entity: Enemy, damageType: DamageType): number {
+        let modification = 0;
+
+        if (entity.manager.fightInProgress) {
+            modification += CustomModifiersCalculationHelper.getCharacterDamageReductionFlatModification(entity, damageType);
         }
 
         return modification;
@@ -707,30 +628,26 @@ export class CustomModifiersCalculationHelper {
      * Calculate the flat change in DR%
      * @param entity
      */
-    public static getEnemyDamageReductionFlatModification(entity: Enemy): number {
-        let modification = 0;
-        if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculationHelper.getCharacterDamageReductionFlatModification(entity);
-        }
-
-        // Then, we have to mimic multiplications based on a few conditions,
-        // based on the total change we calculated up to this point
-        return CustomModifiersCalculationHelper.applyCharacterDamageReductionPercentModification(entity, modification);
+    private static getCharacterDamageReductionFlatModification(entity: Character, damageType: DamageType): number {
+        return CustomModifiersCalculationHelper.getTotalModificationForMonsterTypes(entity, 'flatResistance', damageType.modQuery);
     }
 
-    /**
-     * Calculate the flat change in DR%
-     * @param entity
-     */
-    private static getCharacterDamageReductionFlatModification(entity: Character): number {
-        return CustomModifiersCalculationHelper.getCharacterDamageReductionFlatModificationForMonsterTypes(entity);
-    }
+    // #endregion
+
+    // #endregion
 
     /**
-     * Calculate the flat change in DR%, specifically based on monster type allocations
-     * @param entity
+     * Get total modification value for the given modifier, across all active monster types set on relevent entity
+     *
+     * IMPORTANT: Right now, the only modifier that would possibly change whether the type has to be checked on the entity with the modifier or its target, is the "damageTaken" modifier.
+     * However, the method patch is specifically called on the target, so even there the monster type has to be checked on the enemy.
+     * Just keep this special condition in mind, in case this behaviour, like a different method being patched, may end up not being consistent anymore
+     * @param entity the entity with the modifier
+     * @param typeModifierPropertyName property name of the specific the modifier name giving the bonus we want to retrieve
+     * @param modQuery Optional. Provides scoping data for the modifier to read out. Defaults to empty (aka global)
+     * @returns
      */
-    private static getCharacterDamageReductionFlatModificationForMonsterTypes(entity: Character): number {
+    private static getTotalModificationForMonsterTypes(entity: Character, typeModifierPropertyName: keyof (MonsterTypeModifierPropertyNames), modQuery: ModifierQuery = ModifierQuery.EMPTY) {
         let modification = 0;
 
         const types = MonsterTypeManager.getActiveTypesAsArray();
@@ -738,30 +655,10 @@ export class CustomModifiersCalculationHelper {
             const type = types[i];
 
             if (MonsterTypeHelper.entityIsTreatedAsType(entity.target, type)) {
-                // @ts-ignore - We know these properties exist, as they were dynamically added before
-                modification += entity.modifiers[type.modifierPropertyNames.increasedDamageReduction] - entity.modifiers[type.modifierPropertyNames.decreasedDamageReduction];
+                modification += entity.modifiers.getValue(`${ModConstants.MOD_NAMESPACE_NAME}:${type.modifierPropertyNames[typeModifierPropertyName]}`, modQuery);
             }
         }
 
         return modification;
     }
-
-    /**
-     * Applies multiplicative changes of the base game to our calculated DR%
-     * @param entity
-     * @param damageReduction
-     * @returns
-     */
-    private static applyCharacterDamageReductionPercentModification(entity: Character, damageReduction: number): number {
-        damageReduction *= 1 + (entity.modifiers.increasedDamageReductionPercent - entity.modifiers.decreasedDamageReductionPercent) / 100;
-        if (entity.modifiers.halveDamageReduction > 0) {
-            damageReduction *= 0.5;
-        }
-
-        return damageReduction;
-    }
-
-    // #endregion
-
-    // #endregion
 }
