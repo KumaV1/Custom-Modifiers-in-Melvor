@@ -1,5 +1,4 @@
 import { ModConstants } from '../constants/ModConstants';
-import { ModifierType } from '../models/enums/ModifierType';
 import { MonsterTypeHelper } from '../helpers/MonsterTypeHelper';
 import { MonsterTypeManager } from '../managers/MonsterTypeManager';
 import { ModifierConstants } from '../constants/ModifierConstants';
@@ -501,38 +500,6 @@ export class CustomModifiersCalculationHelper {
     }
 
     // #endregion
-
-    /**
-     * Calculates change to percentage-based (total) damage value,
-     * specifically based on the type of spell being used
-     * @param attacker
-     * @param target
-     */
-    //private static getDamagePercentageModificationForSpellTypes(attacker: Character, target: Character): number {
-    //    let modification = 0;
-
-    //    if (attacker.attackType === ModConstants.ATTACK_TYPES_MAGIC) {
-    //        switch (attacker.spellSelection.standard?.spellType) {
-    //            case undefined:
-    //                break;
-    //            case SpellTypes.Air:
-    //                modification += target.modifiers.increasedDamageTakenFromAirSpells - target.modifiers.decreasedDamageTakenFromAirSpells;
-    //                break;
-    //            case SpellTypes.Water:
-    //                modification += target.modifiers.increasedDamageTakenFromWaterSpells - target.modifiers.decreasedDamageTakenFromWaterSpells;
-    //                break;
-    //            case SpellTypes.Earth:
-    //                modification += target.modifiers.increasedDamageTakenFromEarthSpells - target.modifiers.decreasedDamageTakenFromEarthSpells;
-    //                break;
-    //            case SpellTypes.Fire:
-    //                modification += target.modifiers.increasedDamageTakenFromFireSpells - target.modifiers.decreasedDamageTakenFromFireSpells;
-    //                break;
-    //            default:
-    //        }
-    //    }
-
-    //    return modification;
-    //}
 
     // #endregion
 

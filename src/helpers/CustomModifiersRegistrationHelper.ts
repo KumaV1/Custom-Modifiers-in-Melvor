@@ -6,35 +6,6 @@ import { languages } from "../languages";
  * Also effects...
  * */
 export class CustomModifiersRegistrationHelper {
-    //public static createModifierDataObject(): ModifierData {
-    //    return null;
-    //}
-
-    private static TempTester(): void {
-        let array = [] as TriggeredCombatEffectApplicatorData[];
-        let obj = {} as TriggeredCombatEffectApplicatorData;
-
-        // # CombatEffectApplicatorTriggerData
-        obj.appliesWhen = 'StartOfFight'; // aka, on spawn
-        //obj.applyEffectWhenMerged // I presume this means, if an effect already exists, whether it should be re-applied
-        //obj.customDescription // as usual
-        //obj.descriptionLang // as usual
-        //obj.isNegative // whether the description is formatted positive or negative, basically depends on whether the bonus is beneficial or not
-
-        // # AnyCombatEffectApplicatorData => SingleCombatEffectApplicatorData/TableCombatEffectApplicatorData => CombatEffectApplicatorData
-        //obj.chance
-        //obj.condition // for example a buff with a chance of 100% to apply on start of fight, but only if applier has >50% of their max hitpoints at that time
-        //obj.targetOverride // similar to initialParams, I assume, an override but specificly of the target
-        //obj.bypassBarrier // whether the effect can be applied while a barrier is up
-
-        // # AnyCombatEffectApplicatorData => SingleCombatEffectApplicatorData
-        //obj.effectID // e.g. "cmim:Death_Mark_Static" or whatever; due to the any restriction, access to this via code is restricted, but is ultimately possible by manual type specification (or putting it in data package json file)
-        //obj.initialParams // overrider for initial values it seems, for example an effect being reused from a weaker to stronger monster, where you might want to increase the 'chance' to apply but re-use the rest
-
-        // # AnyCombatEffectApplicatorData => TableCombatEffectApplicatorData
-        //obj.tableID // can't say much here, I don't know anything about combat tables yet (but I guess it's basically a list of pre-defined effects?)
-    }
-
     public static createCombatEffectsDataPackage(templates: CombatEffectTemplateData[], effects: AnyCombatEffectData[]): GameDataPackage {
         return {
             "$schema": ModConstants.SCHEMA,
@@ -162,9 +133,6 @@ export class CustomModifiersRegistrationHelper {
             // @ts-ignore Ignore implicit any error
             text: languages.en[`MODIFIER_DATA_${modifierName}`],
             lang: `MODIFIER_DATA_${modifierName}`
-            // TODO: above, below and include sign are ignored for now, refactor it later
-            // TODO: Check how "inverted" is handled here, whether it needs to match the above object's property
-            // scope is also not included, as currently only global scoping is implemented
         }
     }
 
@@ -208,35 +176,7 @@ export class CustomModifiersRegistrationHelper {
             isCombat: isCombat,
             allowEnemy: allowEnemy,
             allowedScopes: scopes
-            //allowedScopes: [
-            //    {
-            //        scopes: {},
-            //        descriptions: [CustomModifiersRegistrationHelper.createDefaultModifierDescription(modifierName)]
-            //    }
-            //] as ModifierScopingData[]
         };
-
-        //if (posAliases !== undefined) {
-        //    for (var i = 0; i < posAliases.length; i++) {
-        //        const alias = posAliases[i];
-        //        obj.allowedScopes[0].posAliases?.push(
-        //            typeof (alias) === 'string'
-        //                ? CustomModifiersRegistrationHelper.createDefaultModifierAlias(alias)
-        //                : alias
-        //        );
-        //    }
-        //}
-
-        //if (negAliases !== undefined) {
-        //    for (var i = 0; i < negAliases.length; i++) {
-        //        const alias = negAliases[i];
-        //        obj.allowedScopes[0].negAliases?.push(
-        //            typeof (alias) === 'string'
-        //                ? CustomModifiersRegistrationHelper.createDefaultModifierAlias(alias)
-        //                : alias
-        //        );
-        //    }
-        //}
 
         return obj;
     }

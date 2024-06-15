@@ -1,7 +1,6 @@
 import { CmimUtils } from "../Utils";
 import { MonsterTypeDefinition } from "../models/monsterTyping/MonsterTypeDefinition";
 import { MonsterTypeManager } from "../managers/MonsterTypeManager"
-import { SettingsManager } from "../managers/SettingsManager";
 import { TranslationManager } from "../managers/TranslationManager";
 
 interface MonsterTypeOverviewPlayerTraitEntry {
@@ -14,10 +13,6 @@ interface MonsterTypeOverviewMonsterType {
     monsters: Monster[],
     iconResourceUrl: string
 }
-
-//interface MonsterTypeOverviewInactiveMonsterType extends MonsterTypeOverviewMonsterType {
-//    keptInactiveByModSettings: boolean
-//}
 
 interface MonsterTypeOverviewProps {
     traitsOnPlayer: MonsterTypeOverviewPlayerTraitEntry[]
@@ -56,7 +51,6 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
         let matchingMonsters: Monster[] = [];
         monsters.forEach(function (monster) {
             if (MonsterTypeManager.monsterIsOfType(monster, type.name)) {
-                //console.log(`monster name: ${monster.name} | _media: ${monster._media} | media: ${monster.media}`);
                 matchingMonsters.push(monster);
             }
         });
@@ -74,10 +68,6 @@ export function MonsterTypeOverview(): Component<MonsterTypeOverviewProps> {
             props.activeTypes.push(obj);
         } else {
             props.inactiveTypes.push(obj);
-            //props.inactiveTypes.push({
-            //    ...obj,
-            //    keptInactiveByModSettings: SettingsManager.getDisableSpecificMonsterTypes.some(t => t === type.singularName)
-            //});
         }
 
         // @ts-ignore

@@ -8,10 +8,6 @@
 export class GameObjectDataWrapperInitializer {
     public static process() {
         game.customModifiersInMelvor = {
-            //stackingEffects: {},
-            //customModifierEffects: {},
-            //specialAttacks: {},
-            dynamicallyBuiltDataPackages: [],
             originalFunctions: {
                 utils: {
                     stunNotify: stunNotify

@@ -58,21 +58,5 @@ export class CombatAreasIndicatorBadgeContainer {
                     break;
             }
         }
-
-        // TODO: May have to enable this, if empty div ends up affecting the UI in unexpected ways
-        //let hideContainer = true;
-        //for (var i = 0; i < this._badges.length; i++) {
-        //    const badge = this._badges[i];
-        //    if (!(badge.element.classList.contains('d-none'))) {
-        //        hideContainer = false;
-        //        break; // break out of loop, at least one badge to display exists
-        //    }
-        //}
-
-        //if (hideContainer) {
-        //    hideElement(this.element);
-        //} else {
-        //    showElement(this.element);
-        //}
     }
 }

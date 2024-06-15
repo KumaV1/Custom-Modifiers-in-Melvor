@@ -1,4 +1,3 @@
-import { MonsterTypeEffectObjectNames } from './MonsterTypeEffectObjectNames';
 import { MonsterTypeHelper } from '../../helpers/MonsterTypeHelper';
 import { MonsterTypeModifierPropertyNames } from './MonsterTypeModifierPropertyNames'
 

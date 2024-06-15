@@ -1,6 +1,6 @@
-import { ModifierConstants } from '../constants/ModifierConstants'
 import { CustomModifiersManager } from '../managers/CustomModifiersManager';
 import { ModContextMemoizer } from '../ModContextMemoizer';
+import { ModifierConstants } from '../constants/ModifierConstants'
 import { MonsterType } from '../models/enums/MonsterType'
 import { MonsterTypeHelper } from '../helpers/MonsterTypeHelper';
 import { MonsterTypeDefinition } from '../models/monsterTyping/MonsterTypeDefinition';
@@ -143,8 +143,6 @@ export class MonsterTypeManager {
         const typeDefinition = new MonsterTypeDefinition(typeNameSingular, typeNamePlural, iconResourceUrl, concatMonsterIds);
         MonsterTypeManager.ensureEarlyTempMonsterTypeModifierData(typeDefinition);
 
-        //console.log(`Processed registration of type ${typeDefinition.singularName} by other managers`);
-
         // Add to active list
         this._activeTypes[typeNameSingular] = typeDefinition;
 
@@ -194,8 +192,6 @@ export class MonsterTypeManager {
         if (this._inactiveTypes[type]) {
             this._activeTypes[type] = this._inactiveTypes[type];
 
-            //console.log("forceBaseModTypeActive");
-            //console.log(this._activeTypes[type]);
             delete this._inactiveTypes[type];
         }
     }
@@ -240,7 +236,6 @@ export class MonsterTypeManager {
      */
     public static addMonsters(type: string | MonsterType, monsterIds: string[]) {
         if (!type || !monsterIds) {
-            //console.log("addMonsters | Stopping because type or monster ids is undefined or empty")
             return;
         }
 
@@ -353,7 +348,6 @@ export class MonsterTypeManager {
      * @param active
      */
     private static addMonstersToType(type: string | MonsterType, monsterIds: string[]): void {
-        //console.log(`addMonstersToType | Called with type: ${type} and monsterIds: ${monsterIds}`);
         if (this._activeTypes[type]) {
             this._activeTypes[type].addMonsters(monsterIds);
         }
@@ -389,7 +383,6 @@ export class MonsterTypeManager {
      * @deprecated - due to dynamic type definition, "addMonster()" or "addMonsters()" should be used instead
      */
     public static addDragons(monsterIds: string[]): void {
-        //console.log(`addDragons | Called with following monster ids: ${monsterIds}`);
         MonsterTypeManager.addMonsters(MonsterType.Dragon, monsterIds);
     }
 

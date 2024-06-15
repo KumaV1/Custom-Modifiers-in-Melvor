@@ -78,14 +78,4 @@ export class CmimUtils {
     public static splashTypeIsHeal(type: SplashType) {
         return type === 'Heal' || type === 'Regen';
     }
-
-    /**
-     * Does some utility work before actually registering the data package.
-     * Do note, that {@see GameObjectDataWrapperInitializer} must have already been processed for this
-     * @param dataPackage
-     */
-    public static registerDataPackage(dataPackage: GameDataPackage) {
-        game.customModifiersInMelvor.dynamicallyBuiltDataPackages.push(dataPackage);
-        game.registerDataPackage(dataPackage);
-    }
 }

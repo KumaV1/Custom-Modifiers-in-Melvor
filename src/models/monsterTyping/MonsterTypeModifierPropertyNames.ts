@@ -5,35 +5,11 @@
 export interface MonsterTypeModifierPropertyNames {
     traitApplied: string,
     damageDealt: string
-    //increasedDamage: string,
-    //decreasedDamage: string,
-    damageTaken: string, // TODO: If I can add a custom scope, then this (among others here) could be added as a scope instead
-    //increasedDamageTaken: string,
-    //decreasedDamageTaken: string
+    damageTaken: string,
     maxHit: string,
-    //increasedMaxHitPercent: string,
-    //decreasedMaxHitPercent: string,
     flatMaxHit: string,
-    //increasedMaxHitFlat: string,
-    //decreasedMaxHitFlat: string,
     flatMinHit: string,
-    //increasedFlatMinHit: string,
-    //decreasedFlatMinHit: string,
     minHitBasedOnMaxHit: string,
-    //increasedMinHitBasedOnMaxHit: string,
-    //decreasedMinHitBasedOnMaxHit: string,
     accuracyRating: string,
-    //increasedGlobalAccuracy: string,
-    //decreasedGlobalAccuracy: string,
     flatResistance: string,
-    //increasedDamageReduction: string,
-    //decreasedDamageReduction: string,
-    //chanceToApplyTraitInfiniteOnSpawn: string, // TODO: REPLACE BY COMBAT EFFECT INSTEAD - no equivalent modifier, so just remove as is?
-    //increasedChanceToApplyTraitInfiniteOnSpawn: string,
-    //decreasedChanceToApplyTraitInfiniteOnSpawn: string,
-    //applyTraitTurnsOnSpawn: string, // TODO: REPLACE BY COMBAT EFFECT INSTEAD - no equivalent modifier, so just remove as is?
-    //chanceToApplyTrait: string, // TODO: REPLACE BY COMBAT EFFECT INSTEAD - no equivalent modifier, so just remove as is?
-    //increasedChanceToApplyTrait: string,
-    //decreasedChanceToApplyTrait: string,
-    //applyTraitTurns: string // TODO: REPLACE BY COMBAT EFFECT INSTEAD - no equivalent modifier, so just remove as is?
 }
