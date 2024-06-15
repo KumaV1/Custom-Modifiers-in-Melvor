@@ -1,32 +1,38 @@
 # Changelog
 
-## 2.5.5
+## v3.1.0
+* Updated implementations of modifiers and re-patched them into the corresponding calculation processes
+
+## v3.0.0
+* Initial update for 1.3 compatibility, disabling most modifiers and only keeping some data, so they can still be mapped from saves
+
+## v2.5.5
 _(Includes April fools (?8596) compatibility fixes)_
 * Updated checks whether an expansion was loaded
 * Added `thieving` tag to some modifiers that were previously missing it
 * Added new Monster Type `Elf` and swapped some monsters previously tagged as `Human` to it
 
-## 2.5.4
+## v2.5.4
 * Added monster type allocations for monsters of multiple mods
 * The `Show Skill Modifiers` mod will now display monster type related modifiers
 
-## 2.5.3
+## v2.5.3
 * Improved performance of toggling combat ui indicator settings in certain situations
 * Monster types defined by this mod now use paths for melvor assets
 * Minor adjustments to Monster type overview UI
 
-## 2.5.2
+## v2.5.2
 * Added machine translation for languages other than English and German
 
-## 2.5.1
+## v2.5.1
 * Fixed namespace casing issue for one monster in type allocation
 
-## 2.5.0
+## v2.5.0
 * Added some of the tes/Elder Scrolls modifiers (with permission)
 * Added "damage prevention threshold" modifiers
 * Fixed issue with effect applications running into errors
 
-## 2.4.0
+## v2.4.0
 * Added more on-spawn modifiers
 * Added setting to disable on-spawn modifiers
 * Added modifiers to apply bleed on hit (dealing 100% of max hit over 10s)

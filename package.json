@@ -1,6 +1,6 @@
 {
   "name": "custom-modifiers-in-melvor",
-  "version": "2.5.5",
+  "version": "3.1.0",
   "description": "MelvorIdle mod, adding custom modifiers",
   "main": "index.js",
   "scripts": {
@@ -28,7 +28,6 @@
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
     "melvor-types": "https://github.com/GamesByMalcsPtyLtd/Melvor-Typing-Project/tarball/bd5611f",
-    "melvor-types-ita-beta": "https://github.com/GamesByMalcsPtyLtd/Melvor-Typing-Project/tarball/ita-beta",
     "onchange": "^7.1.0",
     "style-loader": "^3.3.3",
     "ts-loader": "^9.5.0",
