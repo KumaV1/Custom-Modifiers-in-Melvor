@@ -64,9 +64,11 @@ export class MonsterTypeHelper {
                                 ? languages.en[`MODIFIER_DATA_MonsterTypeTraitApplied`]
                                 // @ts-ignore Ignore implicit any error
                                 : languages.en[`MODIFIER_DATA_${modifierType}AgainstMonsterType`])
-                                ?.replace("${monsterType}", type.name)
+                                    ?.replace("${monsterType}", type.name)
                                 ?? '',
-                            lang: `MODIFIER_DATA_${modifierName}`
+                            lang: (modifierType === 'flatResistance'
+                                ? `MODIFIER_DATA_${modifierName}DamageType`
+                                : `MODIFIER_DATA_${modifierName}`)
                         }
                     ] as ModifierDescriptionData[],
                     posAliases: [] as ModifierAliasData[],
@@ -78,6 +80,15 @@ export class MonsterTypeHelper {
 
         // Set up an english descriptions (mainly for mod synergy support)
         // Actually rendered text uses the translation pipeline, so grammar isn't optimized here
+
+        // Some modifiers actually don't allow for a global scope
+        switch (modifierType) {
+            case 'flatResistance':
+                modifierObject.allowedScopes[0].scopes = { damageType: true };
+                break;
+            default:
+                break;
+        }
 
         // Some modifiers may have a positive value, but result in negative effects
         switch (modifierType) {

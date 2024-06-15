@@ -59,7 +59,7 @@ export const ja = {
     MODIFIER_DATA_flatMinHitAgainstMonsterType: "${value} Minimum Hit when fighting ${monsterType}",
     MODIFIER_DATA_minHitBasedOnMaxHitAgainstMonsterType: "${value}% Minimum Hit when fighting ${monsterType}",
     MODIFIER_DATA_accuracyRatingAgainstMonsterType: '${value}% Accuracy Rating when fighting ${monsterType}',
-    MODIFIER_DATA_flatResistanceAgainstMonsterType: '${value}% Flat ${resistanceName} when fighting ${monsterType}',
+    MODIFIER_DATA_flatResistanceAgainstMonsterTypeDamageType: '${value}% ${resistanceName} when fighting ${monsterType}',
 
     // ### PRE-IA
 

@@ -79,7 +79,7 @@ export class TranslationManager {
             loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.flatMinHit}`] = loadedLangJson["MODIFIER_DATA_flatMinHitAgainstMonsterType"].replace("${monsterType}", typeNameTranslated);
             loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.minHitBasedOnMaxHit}`] = loadedLangJson["MODIFIER_DATA_minHitBasedOnMaxHitAgainstMonsterType"].replace("${monsterType}", typeNameTranslated);
             loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.accuracyRating}`] = loadedLangJson["MODIFIER_DATA_accuracyRatingAgainstMonsterType"].replace("${monsterType}", typeNameTranslated);
-            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.flatResistance}`] = loadedLangJson["MODIFIER_DATA_flatResistanceAgainstMonsterType"].replace("${monsterType}", typeNameTranslated);
+            loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.flatResistance}DamageType`] = loadedLangJson["MODIFIER_DATA_flatResistanceAgainstMonsterTypeDamageType"].replace("${monsterType}", typeNameTranslated);
         }
     }
 

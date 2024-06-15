@@ -592,18 +592,18 @@ export class CustomModifiersCalculationHelper {
         if (entity.manager.fightInProgress) {
             switch (entity.manager.areaType) {
                 case CombatAreaType.Combat:
-                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatResistanceAgainstCombatAreaMonsters, ModifierQuery.EMPTY);
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatResistanceAgainstCombatAreaMonsters, damageType.modQuery);
                     break;
                 case CombatAreaType.Slayer:
-                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatResistanceAgainstSlayerAreaMonsters, ModifierQuery.EMPTY);
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatResistanceAgainstSlayerAreaMonsters, damageType.modQuery);
                     break;
                 case CombatAreaType.Dungeon:
-                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatResistanceAgainstDungeonMonsters, ModifierQuery.EMPTY);
+                    modification += entity.modifiers.getValue(ModifierConstants.IDS.PLAYER.flatResistanceAgainstDungeonMonsters, damageType.modQuery);
                     break;
                 default:
             }
 
-            modification += CustomModifiersCalculationHelper.getCharacterDamageReductionFlatModification(entity);
+            modification += CustomModifiersCalculationHelper.getCharacterDamageReductionFlatModification(entity, damageType);
         }
 
         return modification;
@@ -618,7 +618,7 @@ export class CustomModifiersCalculationHelper {
         let modification = 0;
 
         if (entity.manager.fightInProgress) {
-            modification += CustomModifiersCalculationHelper.getCharacterDamageReductionFlatModification(entity);
+            modification += CustomModifiersCalculationHelper.getCharacterDamageReductionFlatModification(entity, damageType);
         }
 
         return modification;
@@ -628,8 +628,8 @@ export class CustomModifiersCalculationHelper {
      * Calculate the flat change in DR%
      * @param entity
      */
-    private static getCharacterDamageReductionFlatModification(entity: Character): number {
-        return CustomModifiersCalculationHelper.getTotalModificationForMonsterTypes(entity, 'flatResistance');
+    private static getCharacterDamageReductionFlatModification(entity: Character, damageType: DamageType): number {
+        return CustomModifiersCalculationHelper.getTotalModificationForMonsterTypes(entity, 'flatResistance', damageType.modQuery);
     }
 
     // #endregion
@@ -644,9 +644,10 @@ export class CustomModifiersCalculationHelper {
      * Just keep this special condition in mind, in case this behaviour, like a different method being patched, may end up not being consistent anymore
      * @param entity the entity with the modifier
      * @param typeModifierPropertyName property name of the specific the modifier name giving the bonus we want to retrieve
+     * @param modQuery Optional. Provides scoping data for the modifier to read out. Defaults to empty (aka global)
      * @returns
      */
-    private static getTotalModificationForMonsterTypes(entity: Character, typeModifierPropertyName: keyof(MonsterTypeModifierPropertyNames)) {
+    private static getTotalModificationForMonsterTypes(entity: Character, typeModifierPropertyName: keyof (MonsterTypeModifierPropertyNames), modQuery: ModifierQuery = ModifierQuery.EMPTY) {
         let modification = 0;
 
         const types = MonsterTypeManager.getActiveTypesAsArray();
@@ -654,7 +655,7 @@ export class CustomModifiersCalculationHelper {
             const type = types[i];
 
             if (MonsterTypeHelper.entityIsTreatedAsType(entity.target, type)) {
-                modification += entity.modifiers.getValue(`${ModConstants.MOD_NAMESPACE_NAME}:${type.modifierPropertyNames[typeModifierPropertyName]}`, ModifierQuery.EMPTY);
+                modification += entity.modifiers.getValue(`${ModConstants.MOD_NAMESPACE_NAME}:${type.modifierPropertyNames[typeModifierPropertyName]}`, modQuery);
             }
         }
 
