@@ -1,0 +1,1 @@
+export type CombatAreasIndicatorBadgeContainerCreator = 'MonsterSelectTableElement.createRow' | 'CombatAreaMenuElement.setArea' | 'ViewMonsterListTableRowElement.setRow'

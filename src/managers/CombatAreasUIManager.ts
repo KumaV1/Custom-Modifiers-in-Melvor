@@ -1,14 +1,17 @@
 import { CmimUtils } from "../Utils";
-import { CombatAreasUIHelper } from "../helpers/CombatAreasUIHelper";
-import { CombatAreasIndicatorBadgeContainer } from "../models/combatAreaUi/CombatAreasIndicatorBadgeContainer";
+import { CombatAreasIndicatorBadgeContainerMap } from "../models/combatAreaUi/CombatAreasIndicatorBadgeContainerMap";
 import { CombatAreasIndicatorBadgesVisibilityConfiguration } from "../models/combatAreaUi/CombatAreasIndicatorBadgesVisibilityConfiguration";
+import { CombatAreasUIHelper } from "../helpers/CombatAreasUIHelper";
 import { ModifierConstants } from "../constants/ModifierConstants";
 import { SettingsManager } from "../managers/SettingsManager";
 
 export class CombatAreasUIManager {
     private static _modifierUIImpactIndicatorElement: HTMLElement;
 
-    private static _badgeContainers: CombatAreasIndicatorBadgeContainer[] = [];
+    /**
+     * A nested map, each badge container being uniquely allocated to a combination of related combat area and where exactly it is located in there (or you could say, what class was responsible for creating it)
+     */
+    private static _badgeContainers: CombatAreasIndicatorBadgeContainerMap = new CombatAreasIndicatorBadgeContainerMap();
 
     /**
      * Patches multiple html element classes, to inject additional elements
@@ -20,19 +23,17 @@ export class CombatAreasUIManager {
          * Patch into row creation (apparently, 'MonsterSelectTableRowElement.setRow' isn't actually called... unfortunate, would have been a better place to patch into)
          */
         ctx.patch(MonsterSelectTableElement, 'createRow').after(function (returnValue: void, monster: Monster, area: AnyCombatArea) {
+            let badgeContainer = CombatAreasUIManager._badgeContainers.getContainer('MonsterSelectTableElement.createRow', { area: area, monster: monster });
+            if (badgeContainer === undefined) {
+                badgeContainer = CombatAreasUIManager._badgeContainers.createContainer('MonsterSelectTableElement.createRow', { area: area, monster: monster });
+            }
+
             const rowElement = this.tableBody.lastElementChild;
             const tdElements = rowElement?.getElementsByTagName('td');
             if (tdElements === undefined || tdElements === null || tdElements.length === 0) {
                 CmimUtils.log('this.tableBody does not have any td element');
                 return;
             }
-
-            const badgeContainer = new CombatAreasIndicatorBadgeContainer(
-                CombatAreasUIHelper.createBadgeContainer(),
-                [monster]
-            );
-            CombatAreasUIManager._badgeContainers.push(badgeContainer);
-
             const infoContainer = tdElements[0];
             infoContainer.insertBefore(badgeContainer.element, infoContainer.childNodes[0]);
         });
@@ -44,17 +45,22 @@ export class CombatAreasUIManager {
                 return;
             }
 
-            // Add an invisible container with its badges
-            const badgeContainer = new CombatAreasIndicatorBadgeContainer(
-                CombatAreasUIHelper.createBadgeContainer(),
-                area.monsters
-            );
-            CombatAreasUIManager._badgeContainers.push(badgeContainer);
+            let badgeContainer = CombatAreasUIManager._badgeContainers.getContainer('CombatAreaMenuElement.setArea', { area: area });
+            if (badgeContainer === undefined) {
+                badgeContainer = CombatAreasUIManager._badgeContainers.createContainer('CombatAreaMenuElement.setArea', { area: area });
+            }
 
             this.monsterCount.parentElement!.insertBefore(badgeContainer.element, this.monsterCount);
         });
 
+        ctx.patch(ViewMonsterListTableRowElement, 'setRow').after(function (returnValue: void, monster: Monster, count: number) {
+            let badgeContainer = CombatAreasUIManager._badgeContainers.getContainer('ViewMonsterListTableRowElement.setRow', { monster: monster });
+            if (badgeContainer === undefined) {
+                badgeContainer = CombatAreasUIManager._badgeContainers.createContainer('ViewMonsterListTableRowElement.setRow', { monster: monster });
+            }
 
+            this.monsterImg.parentElement!.parentElement!.parentElement!.insertBefore(badgeContainer.element, this.monsterImg.parentElement!.parentElement);
+        });
     }
 
     /**
@@ -107,9 +113,7 @@ export class CombatAreasUIManager {
      * @returns
      */
     public static toggleCombatAreaMonsterTypeIndicators(visibilityConfig: CombatAreasIndicatorBadgesVisibilityConfiguration): void {
-        CombatAreasUIManager._badgeContainers.forEach((badgeContainer) => {
-            badgeContainer.toggleBadgesVisibility(visibilityConfig);
-        });
+        CombatAreasUIManager._badgeContainers.toggleBadgesVisibility(visibilityConfig);
     }
 
     /**
