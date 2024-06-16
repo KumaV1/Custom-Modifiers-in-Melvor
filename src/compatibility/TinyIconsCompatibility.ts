@@ -193,7 +193,7 @@ export class TinyIconsCompatibility {
             if (type && type.iconResourceUrl) {
                 // Add dynamic tag source for monster type
                 let cmimTagSources: Record<string, string> = {};
-                const tagName = `cmim_${type.singularName}`;
+                const tagName = `cmim_${type.name}`;
                 cmimTagSources[tagName] = type.iconResourceUrl;
 
                 let modifiers: Record<string, string> = {};

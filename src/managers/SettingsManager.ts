@@ -38,11 +38,6 @@ export class SettingsManager {
                         showActiveMonsterTypes: SettingsManager.getEnableActiveMonsterTypeIndicators,
                         showInactiveMonsterTypes: SettingsManager.getEnableInactiveMonsterTypeIndicators
                     });
-                    //    (
-                    //    value,
-                    //    SettingsManager.getEnableActiveMonsterTypeIndicators,
-                    //    SettingsManager.getEnableInactiveMonsterTypeIndicators
-                    //);
                 }
             } as Modding.Settings.SwitchConfig,
             {
@@ -57,11 +52,6 @@ export class SettingsManager {
                         showActiveMonsterTypes: value,
                         showInactiveMonsterTypes: SettingsManager.getEnableInactiveMonsterTypeIndicators
                     });
-                    //(
-                    //    SettingsManager.getEnableBossIndicators,
-                    //    value,
-                    //    SettingsManager.getEnableInactiveMonsterTypeIndicators
-                    //);
                 }
             } as Modding.Settings.SwitchConfig,
             {

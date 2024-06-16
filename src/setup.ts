@@ -32,6 +32,7 @@ export async function setup(ctx: Modding.ModContext) {
     // logLifecycleHookStarts(ctx);
 
     // Register our GameData
+    // @ts-ignore I don't know what issue the modifier list is supposed to have...
     await ctx.gameData.addPackage(ModData);
 
     initGameObjectDataWrapper();
@@ -119,7 +120,6 @@ function initApiEndpoints(ctx: Modding.ModContext) {
 function initCustomModifiers(ctx: Modding.ModContext) {
     const cmm = new CustomModifiersManager(ctx);
 
-    cmm.registerModifiers();
     cmm.patchMethods();
 }
 
