@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.1.1
+* Added indicator badges to 'View Monster List' modal
+* Fixed test data actually having found its way into the v3.1 build
+
 ## v3.1.0
 * Updated implementations of modifiers and re-patched them into the corresponding calculation processes
 
