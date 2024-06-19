@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.1.2
+* Added Monster Type allocations for ItA monsters
+
 ## v3.1.1
 * Added indicator badges to 'View Monster List' modal
 * Fixed test data actually having found its way into the v3.1 build
