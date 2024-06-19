@@ -1,3 +1,7 @@
+/**
+ * List of monsters and their type allocations, for the base game and the expansions
+ * Do note, that mods are only available with the full game, so no differentiation between "melvorD" and "melvorF" necessary
+ */
 export class MonsterTypeConstants {
     static readonly ANIMALS_BASE: MonsterIDs[] = [
         MonsterIDs.Chicken,
@@ -37,6 +41,21 @@ export class MonsterTypeConstants {
         MonsterIDs.GuardianSpider
     ];
     static readonly ANIMALS_AOD: MonsterIDs[] = [];
+    static readonly ANIMALS_ITA: MonsterIDs[] = [
+        MonsterIDs.MutatingChicken,
+        MonsterIDs.MutatingCow,
+        MonsterIDs.AbyssalChicken,
+        MonsterIDs.AbyssalCow,
+        MonsterIDs.AbyssalBat,
+        MonsterIDs.CrimsonViper,
+        MonsterIDs.CrimsonHound,
+        MonsterIDs.TangledSerpent,
+        MonsterIDs.ToxicSerpent,
+        MonsterIDs.BlightedMantis,
+        MonsterIDs.BlightedMoth,
+        MonsterIDs.BlightedShadewing,
+        MonsterIDs.CatacombTerror
+    ];
 
     static readonly DEMONS_BASE: MonsterIDs[] = [
         MonsterIDs.RedDevil,
@@ -50,6 +69,7 @@ export class MonsterTypeConstants {
         MonsterIDs.GuardianoftheHerald
     ];
     static readonly DEMONS_AOD: MonsterIDs[] = [];
+    static readonly DEMONS_ITA: MonsterIDs[] = [];
 
     static readonly DRAGONS_BASE: MonsterIDs[] = [
         MonsterIDs.PratTheProtectorOfSecrets,
@@ -63,13 +83,19 @@ export class MonsterTypeConstants {
         MonsterIDs.HuntingGreaterDragon,
         MonsterIDs.WickedGreaterDragon,
         MonsterIDs.MalcsTheLeaderOfDragons,
-        MonsterIDs.GreaterSkeletalDragon
+        MonsterIDs.GreaterSkeletalDragon,
+        MonsterIDs.MalcsTheGuardianOfStrongholds
     ];
     static readonly DRAGONS_TOTH: MonsterIDs[] = [
         MonsterIDs.TwinSeaDragonSerpent,
         MonsterIDs.RaZu
     ];
     static readonly DRAGONS_AOD: MonsterIDs[] = [];
+    static readonly DRAGONS_ITA: MonsterIDs[] = [
+        MonsterIDs.PetrifyingDrake,
+        MonsterIDs.FracturedWyvern,
+        MonsterIDs.Voidmaw
+    ];
 
     static readonly ELEMENTALS_BASE: MonsterIDs[] = [
         MonsterIDs.Ice,
@@ -88,6 +114,12 @@ export class MonsterTypeConstants {
         MonsterIDs.LightningSpirit
     ];
     static readonly ELEMENTALS_AOD: MonsterIDs[] = [];
+    static readonly ELEMENTALS_ITA: MonsterIDs[] = [
+        MonsterIDs.SmogGolem,
+        MonsterIDs.SmogSlime,
+        MonsterIDs.SmogFiend,
+        MonsterIDs.SmogVirefang
+    ];
 
     static readonly ELVES_BASE: MonsterIDs[] = [
         MonsterIDs.FrozenArcher,
@@ -95,6 +127,7 @@ export class MonsterTypeConstants {
     ];
     static readonly ELVES_TOTH: MonsterIDs[] = [];
     static readonly ELVES_AOD: MonsterIDs[] = [];
+    static readonly ELVES_ITA: MonsterIDs[] = [];
 
     static readonly HUMANS_BASE: MonsterIDs[] = [
         MonsterIDs.BlackKnight,
@@ -132,6 +165,9 @@ export class MonsterTypeConstants {
         MonsterIDs.BlindMage,
         MonsterIDs.SoulTakerWitch
     ];
+    static readonly HUMANS_ITA: MonsterIDs[] = [
+        MonsterIDs.VoidDoppelganger
+    ];
 
     static readonly MYTHICAL_CREATURES_BASE: MonsterIDs[] = [
         MonsterIDs.ElerineMage,
@@ -151,6 +187,9 @@ export class MonsterTypeConstants {
         MonsterIDs.Manticore
     ];
     static readonly MYTHICAL_CREATURES_AOD: MonsterIDs[] = [];
+    static readonly MYTHICAL_CREATURES_ITA: MonsterIDs[] = [
+        MonsterIDs.FracturedManticore
+    ];
 
     static readonly SEA_CREATURES_BASE: MonsterIDs[] = [
         MonsterIDs.GiantCrab,
@@ -179,6 +218,15 @@ export class MonsterTypeConstants {
         MonsterIDs.TreacherousJellyfish,
         MonsterIDs.Nagaia
     ];
+    static readonly SEA_CREATURES_ITA: MonsterIDs[] = [
+        MonsterIDs.SilentsnapGiantcrab,
+        MonsterIDs.SilentsnapTortoise,
+        MonsterIDs.SilentsnapSiren,
+        MonsterIDs.WhisperingManta,
+        MonsterIDs.WhisperingOctopus,
+        MonsterIDs.WhisperingDrifter,
+        MonsterIDs.HollowNightmare
+    ];
 
     static readonly UNDEAD_BASE: MonsterIDs[] = [
         MonsterIDs.PirateCaptain,
@@ -205,5 +253,22 @@ export class MonsterTypeConstants {
         MonsterIDs.GhostSailor,
         MonsterIDs.GhostMercenary,
         MonsterIDs.CursedPirateCaptain
+    ];
+    static readonly UNDEAD_ITA: MonsterIDs[] = [
+        MonsterIDs.DreadwalkerWight,
+        MonsterIDs.DreadwalkerGhoul,
+        MonsterIDs.DreadwalkerRevenant,
+        MonsterIDs.WailingAmbusher,
+        MonsterIDs.WailingPoltergeist,
+        MonsterIDs.WailingShade,
+        MonsterIDs.WitheringBonearcher,
+        MonsterIDs.WitheringBoneguard,
+        MonsterIDs.WitheringBonemage,
+        MonsterIDs.CatacombWraith,
+        MonsterIDs.EchoSpecter,
+        MonsterIDs.EchoWalker,
+        MonsterIDs.EchoDrifter,
+        MonsterIDs.EldritchPhantom,
+        MonsterIDs.EldritchGhoul
     ];
 }

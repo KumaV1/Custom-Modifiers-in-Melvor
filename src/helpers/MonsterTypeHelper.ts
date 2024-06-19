@@ -329,88 +329,117 @@ export class MonsterTypeHelper {
      * @param type
      */
     public static getNonModMonsterIds(type: string): MonsterIDs[] {
+        const includeTotH = cloudManager.hasTotHEntitlementAndIsEnabled;
+        const includeAoD = cloudManager.hasAoDEntitlementAndIsEnabled;
+        const includeItA = cloudManager.hasItAEntitlementAndIsEnabled;
         let ids: MonsterIDs[] = [];
-
         switch (type) {
             case MonsterType.Animal:
                 ids = ids.concat(MonsterTypeConstants.ANIMALS_BASE);
-                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
+                if (includeTotH) {
                     ids = ids.concat(MonsterTypeConstants.ANIMALS_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
+                if (includeAoD) {
                     ids = ids.concat(MonsterTypeConstants.ANIMALS_AOD);
+                }
+                if (includeItA) {
+                    ids = ids.concat(MonsterTypeConstants.ANIMALS_ITA);
                 }
                 break;
             case MonsterType.Demon:
                 ids = ids.concat(MonsterTypeConstants.DEMONS_BASE);
-                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
+                if (includeTotH) {
                     ids = ids.concat(MonsterTypeConstants.DEMONS_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
+                if (includeAoD) {
                     ids = ids.concat(MonsterTypeConstants.DEMONS_AOD);
+                }
+                if (includeItA) {
+                    ids = ids.concat(MonsterTypeConstants.DEMONS_ITA);
                 }
                 break;
             case MonsterType.Dragon:
                 ids = ids.concat(MonsterTypeConstants.DRAGONS_BASE);
-                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
+                if (includeTotH) {
                     ids = ids.concat(MonsterTypeConstants.DRAGONS_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
+                if (includeAoD) {
                     ids = ids.concat(MonsterTypeConstants.DRAGONS_AOD);
+                }
+                if (includeItA) {
+                    ids = ids.concat(MonsterTypeConstants.DRAGONS_ITA);
                 }
                 break;
             case MonsterType.Elemental:
                 ids = ids.concat(MonsterTypeConstants.ELEMENTALS_BASE);
-                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
+                if (includeTotH) {
                     ids = ids.concat(MonsterTypeConstants.ELEMENTALS_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
+                if (includeAoD) {
                     ids = ids.concat(MonsterTypeConstants.ELEMENTALS_AOD);
+                }
+                if (includeItA) {
+                    ids = ids.concat(MonsterTypeConstants.ELEMENTALS_ITA);
                 }
                 break;
             case MonsterType.Elf:
                 ids = ids.concat(MonsterTypeConstants.ELVES_BASE);
-                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
+                if (includeTotH) {
                     ids = ids.concat(MonsterTypeConstants.ELVES_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
+                if (includeAoD) {
                     ids = ids.concat(MonsterTypeConstants.ELVES_AOD);
+                }
+                if (includeItA) {
+                    ids = ids.concat(MonsterTypeConstants.ELVES_ITA);
                 }
                 break;
             case MonsterType.Human:
                 ids = ids.concat(MonsterTypeConstants.HUMANS_BASE);
-                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
+                if (includeTotH) {
                     ids = ids.concat(MonsterTypeConstants.HUMANS_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
+                if (includeAoD) {
                     ids = ids.concat(MonsterTypeConstants.HUMANS_AOD);
+                }
+                if (includeItA) {
+                    ids = ids.concat(MonsterTypeConstants.HUMANS_ITA);
                 }
                 break;
             case MonsterType.MythicalCreature:
                 ids = ids.concat(MonsterTypeConstants.MYTHICAL_CREATURES_BASE);
-                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
+                if (includeTotH) {
                     ids = ids.concat(MonsterTypeConstants.MYTHICAL_CREATURES_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
+                if (includeAoD) {
                     ids = ids.concat(MonsterTypeConstants.MYTHICAL_CREATURES_AOD);
+                }
+                if (includeItA) {
+                    ids = ids.concat(MonsterTypeConstants.MYTHICAL_CREATURES_ITA);
                 }
                 break;
             case MonsterType.SeaCreature:
                 ids = ids.concat(MonsterTypeConstants.SEA_CREATURES_BASE);
-                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
+                if (includeTotH) {
                     ids = ids.concat(MonsterTypeConstants.SEA_CREATURES_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
+                if (includeAoD) {
                     ids = ids.concat(MonsterTypeConstants.SEA_CREATURES_AOD);
+                }
+                if (includeItA) {
+                    ids = ids.concat(MonsterTypeConstants.SEA_CREATURES_ITA);
                 }
                 break;
             case MonsterType.Undead:
                 ids = ids.concat(MonsterTypeConstants.UNDEAD_BASE);
-                if (cloudManager.hasTotHEntitlementAndIsEnabled) {
+                if (includeTotH) {
                     ids = ids.concat(MonsterTypeConstants.UNDEAD_TOTH);
                 }
-                if (cloudManager.hasAoDEntitlementAndIsEnabled) {
+                if (includeAoD) {
                     ids = ids.concat(MonsterTypeConstants.UNDEAD_AOD);
+                }
+                if (includeItA) {
+                    ids = ids.concat(MonsterTypeConstants.UNDEAD_ITA);
                 }
                 break;
             default:
