@@ -130,23 +130,20 @@ export class MonsterTypeManager {
         // In that case, we check for an inactive type to possibly extract previously defined monster allocation from.
         // before creating a new type definition from scratch and registering everything necessary for usage of it
 
-        // Create type definition
-        let concatMonsterIds: string[] = monsterIds;
-        if (this._inactiveTypes[typeNameSingular]) {
-            for (var i = 0; i < this._inactiveTypes[typeNameSingular].monsters.length; i++) {
-                const mId = this._inactiveTypes[typeNameSingular].monsters[i];
-                if (concatMonsterIds.indexOf(mId) === -1) {
-                    concatMonsterIds.push(mId);
-                }
-            }
-        }
-        const typeDefinition = new MonsterTypeDefinition(typeNameSingular, typeNamePlural, iconResourceUrl, concatMonsterIds);
-        MonsterTypeManager.ensureEarlyTempMonsterTypeModifierData(typeDefinition);
+        // (Re-)create basic new type definition
+        const typeDefinition = new MonsterTypeDefinition(typeNameSingular, typeNamePlural, iconResourceUrl, monsterIds);
 
-        // Add to active list
+        // Depending on whether an inactive type already exists, we have to either migrate existing data, or register some base data
+        if (this._inactiveTypes[typeNameSingular]) {
+            typeDefinition.addMonsters(this._inactiveTypes[typeNameSingular].monsters);
+        } else {
+            MonsterTypeManager.ensureEarlyTempMonsterTypeModifierData(typeDefinition);
+        }
+
+        // Add new type definition to active list
         this._activeTypes[typeNameSingular] = typeDefinition;
 
-        // Remove from inactive list, if existent
+        // And remove from inactive list, if existent
         delete this._inactiveTypes[typeNameSingular];
     }
 
