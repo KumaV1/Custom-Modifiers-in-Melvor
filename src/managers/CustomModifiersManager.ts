@@ -117,24 +117,21 @@ export class CustomModifiersManager {
         /**
          * Add percentage-based xp modifiers
          */
-        // @ts-ignore You can actually patch base classes no problem
-        this.context.patch(Skill, "getXPModifier").after(function (returnValue: number, action?: NamedObject) {
+        this.context.patch(Skill<BaseSkillData, SkillEvents, BaseSkillModificationData>, "getXPModifier").after(function (returnValue: number, action?: NamedObject) {
             return returnValue += CustomModifiersCalculationHelper.getPercentagetXpModification(this, action);
         });
 
         /**
          * Add flat xp modifiers
          */
-        // @ts-ignore You can actually patch base classes no problem
-        this.context.patch(Skill, "modifyXP").after(function (returnValue: number, amount: number, action?: NamedObject) {
+        this.context.patch(Skill<BaseSkillData, SkillEvents, BaseSkillModificationData>, "modifyXP").after(function (returnValue: number, amount: number, action?: NamedObject) {
             return returnValue += CustomModifiersCalculationHelper.getFlatXpModification(this, action);
         });
 
         /**
          * Add custom modifiers to modifier value source buider
          */
-        // @ts-ignore You can actually patch base classes no problem
-        this.context.patch(Skill, '_buildXPSources').after(function (returnValue: ModifierSourceBuilder, action?: NamedObject) {
+        this.context.patch(Skill<BaseSkillData, SkillEvents, BaseSkillModificationData>, '_buildXPSources').after(function (returnValue: ModifierSourceBuilder, action?: NamedObject) {
             const query = this.getActionModifierQuery(action);
             returnValue.addSources(ModifierConstants.IDS.PLAYER.skillXPPerLevel, query);
             returnValue.addSources(ModifierConstants.IDS.PLAYER.flatSkillXP, query);
