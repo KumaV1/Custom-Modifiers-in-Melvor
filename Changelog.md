@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.1.3
+* Fixed an API endpoint trying to re-register certain modifiers in some circumstances
+
 ## v3.1.2
 * Added Monster Type allocations for ItA monsters
 
