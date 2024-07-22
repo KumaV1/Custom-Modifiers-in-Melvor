@@ -19,15 +19,15 @@ export class ModifierConstants {
     static readonly GENERIC_MODIFIER_ICON_RESOURCE_PATH = "assets/customModifiersInMelvor/Generic_Monster_Type_Icon.png";
 
     // (Non-mod) Images can just be referenced using their path (which preferably checks the game directory and falls back to cdn)
-    static readonly ANIMAL_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/frozen_mammoth.png";
-    static readonly DEMON_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/fierce_devil.png";
-    static readonly DRAGON_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/dragon_green.png";
-    static readonly ELEMENTAL_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/fire_spirit.png";
-    static readonly ELF_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/elder_wizard.png";
-    static readonly HUMAN_MODIFIER_ICON_RESOURCE_URL = "assets/media/skills/thieving/man.svg";
-    static readonly MYTHICAL_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/griffin.png";
-    static readonly SEA_CREATURE_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/large_crab.png";
-    static readonly UNDEAD_MODIFIER_ICON_RESOURCE_URL = "assets/media/monsters/skeleton.png";
+    static readonly ANIMAL_MODIFIER_ICON_RESOURCE_URL = "melvor:assets/media/monsters/frozen_mammoth.png";
+    static readonly DEMON_MODIFIER_ICON_RESOURCE_URL = "melvor:assets/media/monsters/fierce_devil.png";
+    static readonly DRAGON_MODIFIER_ICON_RESOURCE_URL = "melvor:assets/media/monsters/dragon_green.png";
+    static readonly ELEMENTAL_MODIFIER_ICON_RESOURCE_URL = "melvor:assets/media/monsters/fire_spirit.png";
+    static readonly ELF_MODIFIER_ICON_RESOURCE_URL = "melvor:assets/media/monsters/elder_wizard.png";
+    static readonly HUMAN_MODIFIER_ICON_RESOURCE_URL = "melvor:assets/media/skills/thieving/man.svg";
+    static readonly MYTHICAL_MODIFIER_ICON_RESOURCE_URL = "melvor:assets/media/monsters/griffin.png";
+    static readonly SEA_CREATURE_MODIFIER_ICON_RESOURCE_URL = "melvor:assets/media/monsters/large_crab.png";
+    static readonly UNDEAD_MODIFIER_ICON_RESOURCE_URL = "melvor:assets/media/monsters/skeleton.png";
 
     static readonly IDS = {
         PLAYER: {

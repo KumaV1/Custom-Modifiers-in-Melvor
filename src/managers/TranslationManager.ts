@@ -43,7 +43,8 @@ export class TranslationManager {
             'PAGE_NAME',
             'EFFECT_GROUP',
             'MONSTER_TYPE_NAME_SINGULAR',
-            'MONSTER_TYPE_NAME_PLURAL'
+            'MONSTER_TYPE_NAME_PLURAL',
+            'MONSTER_TYPE_TRAIT_EFFECT'
         ];
 
         // Based on how translation is retrieved,
@@ -70,6 +71,8 @@ export class TranslationManager {
 
             loadedLangJson[`COMBAT_MISC_${type.name}_Trait_Modifier_Effect`] = loadedLangJson["COMBAT_MISC_Monster_Type_Trait_Modifier_Effect"].replace("${monsterType}", typeNameTranslated);
             loadedLangJson[`COMBAT_MISC_${type.name}_Trait_Stacking_Effect`] = loadedLangJson["COMBAT_MISC_Monster_Type_Trait_Stacking_Effect"].replace("${monsterType}", typeNameTranslated);
+
+            loadedLangJson[`MONSTER_TYPE_TRAIT_EFFECT_NAME_${type.name}`] = loadedLangJson["MONSTER_TYPE_TRAIT_EFFECT_NAME_MONSTER_TYPE"].replace("${monsterType}", typeNameTranslated);
 
             loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.traitApplied}`] = loadedLangJson["MODIFIER_DATA_MonsterTypeTraitApplied"].replace("${monsterType}", typeNameTranslated);
             loadedLangJson[`MODIFIER_DATA_${type.modifierPropertyNames.damageDealt}`] = loadedLangJson["MODIFIER_DATA_damageDealtAgainstMonsterType"].replace("${monsterType}", typeNameTranslated);
