@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.1.4
+* Fixed combat effects missing certain translations and icons after migration to new combat effect structure
+
 ## v3.1.3
 * Fixed an API endpoint trying to re-register certain modifiers in some circumstances
 
