@@ -61,6 +61,10 @@
     MODIFIER_DATA_accuracyRatingAgainstMonsterType: '${value}% Accuracy Rating when fighting ${monsterType}',
     MODIFIER_DATA_flatResistanceAgainstMonsterTypeDamageType: '${value}% ${resistanceName} when fighting ${monsterType}',
 
+
+    // ## POST-ItA Monster type related lang strings
+    MONSTER_TYPE_TRAIT_EFFECT_NAME_MONSTER_TYPE: '${monsterType} Trait',
+
     // ### PRE-IA
 
     Combat_Modifier_UI_Impact_Indicator_Headline: 'Cmim-Mod 警告',
