@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.1.5
+* Fixed missing monster type effect translation, causing an error and therefore more translations missing, in any language other than English
+
 ## v3.1.4
 * Fixed combat effects missing certain translations and icons after migration to new combat effect structure
 
