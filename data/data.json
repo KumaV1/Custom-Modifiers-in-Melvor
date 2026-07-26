@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "https://melvoridle.com/assets/schema/gameData.json",
   "namespace": "customModifiersInMelvor",
   "data": {
@@ -25,7 +25,7 @@
         "media": "assets/customModifiersInMelvor/Death_Mark.png",
         "statGroups": [
           {
-            "name": "stacks",
+            "name": "debuff",
             "modifiers": {
               "customModifiersInMelvor:deathMark": 1
             }
@@ -40,7 +40,8 @@
             "name": "maxStacks",
             "initialValue": 20
           }
-        ]
+        ],
+        "effectGroups": [ "melvorD:Debuff" ]
       }
     ],
     "combatEffectGroups": [
