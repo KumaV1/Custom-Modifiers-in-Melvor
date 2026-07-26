@@ -1,4 +1,7 @@
-# Changelog
+﻿# Changelog
+
+## v3.1.6
+* Fixed stat group and added "debuff" effect group to "Death mark" combat effect
 
 ## v3.1.5
 * Fixed missing monster type effect translation, causing an error and therefore more translations missing, in any language other than English
